@@ -1,30 +1,99 @@
 {
 
-  description = "My first flake!";
+  description = "Flake of Sravan's NixOS";
   
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
+
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    stylix.url = "github:danth/stylix";
   };
 
-  outputs = { self, nixpkgs, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, home-manager, stylix, ... }:
     let
-      system = "x86_64-linux";
-      lib = nixpkgs.lib;
-      pkgs = import nixpkgs {
-        inherit system;
+      # --- SYSTEM SETTINGS --- #
+      systemSettings = {
+        system = "x86_64-linux";       # System Architecture
+        hostname = "oryp7";            # Hostname
+        profile = "personal";          # Select a profile defined from profiles directory
+        timezone = "America/New_York"; # Time Zone
+        locale = "en_US.UTF-8";        # Locale
+        bootMode = "uefi";             # uefi or bios
+        bootMountPath = "/boot";       # Mount path for efi boot partition; only used for uefi boot mode
+        grubDevice = "";               # Device identifier for grub; only used for legacy (bios) boot mode
       };
-      username = "sravan";
-      name = "Sravan Balaji";
+
+      # --- USER SETTINGS --- #
+      userSettings = rec {
+        username = "sravan";          # Username
+        name = "Sravan Balaji";       # Name/Identifier
+        email = "balajsra@umich.edu"; # Email (used for certain configurations)
+        dotfilesDir = "~/.dotfiles";  # Absolute path of the local repo
+        theme = "dracula";            # Selected theme from themes directory
+        wm = "dwm";                   # Selected window manager or desktop environment
+        wmType = "x11";               # x11 or wayland
+        browser = "vivaldi";          # Default browser
+        term = "kitty";               # Default terminal command
+        editor = "emacsclient";       # Default editor
+        spawnEditor =
+          if (editor == "emacsclient") then
+            "emacsclient -c -a 'emacs'"
+          else
+            (if (editor == "vim") then
+               "exec " + term + " -e " + editor
+             else
+               editor
+            );
+      };
+
+      pkgs = import nixpkgs {
+        system = systemSettings.system;
+        config = {
+          allowUnfree = true;
+          allowUnfreePredicate = (_: true);
+        };
+      };
+
+      pkgs-stable = import nixpkgs-stable {
+        system = systemSettings.system;
+        config = {
+          allowUnfree = true;
+          allowUnfreePredicate = (_: true);
+        };
+      };
+
+      lib = nixpkgs.lib;
+
     in {
-      nixosConfigurations = {
-        nixos-vm = lib.nixosSystem {
-          inherit system;
+      homeConfigurations = {
+        user = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
           modules = [
-            ./configuration.nix
+            (./. + "/profiles" + ("/" systemSettings.profile) + "/home.nix")
+          ];
+          extraSpecialArgs = {
+            inherit pkgs-stable;
+            inherit systemSettings;
+            inherit userSettings;
+            inherit (inputs) stylix;
+          };
+        };
+      };
+
+      nixosConfigurations = {
+        system = lib.nixosSystem {
+          system = systemSettings.system;
+          modules = [
+            (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
           ];
           specialArgs = {
-            inherit username;
-            inherit name;
+            inherit pkgs-stable;
+            inherit systemSettings;
+            inherit userSettings;
+            inherit (inputs) stylix;
           };
         };
       };
