@@ -8,6 +8,17 @@
   imports = [
     ../../system/hardware-configuration.nix
     ../../disko/${systemSettings.diskoConfig}.nix
+    ../../system/hardware/kernel.nix
+    ../../system/hardware/bluetooth.nix
+    ../../system/hardware/opengl.nix
+    ../../system/hardware/openrgb.nix
+    ../../system/hardware/printing.nix
+    ../../system/hardware/automount.nix
+    ../../system/security/firewall.nix
+    ../../system/app/gaming/steam.nix
+    ../../system/app/gaming/gamemode.nix
+    ../../system/hardware/audio.nix
+    ../../system/gui/dwm.nix
   ];
 
   nix = {
