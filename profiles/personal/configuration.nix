@@ -32,16 +32,14 @@
   boot = {
     initrd.enable = true;
     loader = {
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
-      };
+      systemd-boot.enable = false;
+      efi.canTouchEfiVariables = false;
       grub = {
         enable = true;
-        device = "nodev";
         efiSupport = true;
         enableCryptodisk = true;
         useOSProber = true;
+        efiInstallAsRemovable = true;
       };
     };
   };

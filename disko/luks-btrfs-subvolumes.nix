@@ -1,7 +1,7 @@
 let
   installDisk = "sda";
   bootPartitionSize = "512M";
-  swapfileSize = "34G";
+  swapfileSize = "10G";
 in {
   disko.devices = {
     disk = {
@@ -11,6 +11,10 @@ in {
         content = {
           type = "gpt";
           partitions = {
+            boot = {
+              size = "1M";
+              type = "EF02"; # for grub MBR
+            };
             ESP = {
               size = bootPartitionSize;
               type = "EF00";
@@ -27,31 +31,30 @@ in {
               size = "100%";
               content = {
                 type = "luks";
-                name = "crypted";
+                name = "cryptroot";
                 settings.allowDiscards = true;
-                # passwordFile = "/tmp/secret.key"; # Interactive
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
                   subvolumes = {
-                    "/root" = {
+                    "@" = {
                       mountpoint = "/";
                       mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
                     };
-                    "/home" = {
+                    "@home" = {
                       mountpoint = "/home";
                       mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
                     };
-                    "/.snapshots" = {
+                    "@.snapshots" = {
                       mountpoint = "/.snapshots";
                       mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
                     };
-                    "/nix" = {
+                    "@nix" = {
                       mountpoint = "/nix";
                       mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
                     };
-                    "/swap" = {
-                      mountpoint = "/.swapvol";
+                    "@swap" = {
+                      mountpoint = "/swap";
                       swap.swapfile.size = swapfileSize;
                     };
                   };
