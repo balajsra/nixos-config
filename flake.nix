@@ -10,9 +10,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     stylix.url = "github:danth/stylix";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, home-manager, stylix, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, home-manager, stylix, disko, ... }:
     let
       # --- SYSTEM SETTINGS --- #
       systemSettings = {
@@ -21,7 +24,7 @@
         profile = "personal";                  # Select a profile defined from profiles directory
         timezone = "America/New_York";         # Time Zone
         locale = "en_US.UTF-8";                # Locale
-        diskoConfig = "luks-btrfs-subvolumes"; # Disko Partition Configuration
+        diskoConfig = "luks-btrfs-subvolumes"; # Select the disko config that was used to partition drive
       };
 
       # --- USER SETTINGS --- #
@@ -86,6 +89,7 @@
           system = systemSettings.system;
           modules = [
             (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
+            disko.nixosModules.disko
           ];
           specialArgs = {
             inherit pkgs-stable;
