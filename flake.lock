@@ -147,6 +147,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1711261295,
+        "narHash": "sha256-5DUNQl9BSmLxgGLbF05G7hi/UTk9DyZq8AuEszhQA7Q=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "5d2d3e421ade554b19b4dbb0d11a04023378a330",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -288,6 +308,7 @@
     },
     "root": {
       "inputs": {
+        "disko": "disko",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
@@ -311,11 +332,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1711106191,
-        "narHash": "sha256-WX1Tyb94jB3ksSQ5UtlTY/1UBsO7FlFNPjG3BXt9/0Q=",
+        "lastModified": 1711224130,
+        "narHash": "sha256-RyOvyQASi5lvKLH5ISiGGkdX1eJxYF25aQALGfN9U0k=",
         "owner": "danth",
         "repo": "stylix",
-        "rev": "4da2d793e586f3f45a54fb9755ee9bf39d3cd52e",
+        "rev": "53d3e5d5b36a5227b906e00d7e884dcfb7852403",
         "type": "github"
       },
       "original": {
