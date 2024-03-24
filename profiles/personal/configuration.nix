@@ -7,7 +7,7 @@
 {
   imports = [
     ../../system/hardware-configuration.nix
-    "../../disko/" + systemSettings.diskoConfig
+    ../../disko/${systemSettings.diskoConfig}.nix
   ];
 
   nix = {
@@ -28,7 +28,7 @@
       grub = {
         enable = true;
         efiSupport = true;
-        efiInstallAsRemovable = true;
+        device = "nodev";
       };
     };
   };
