@@ -27,31 +27,31 @@ in {
               size = "100%";
               content = {
                 type = "luks";
-                name = "cryptroot";
+                name = "crypted";
                 settings.allowDiscards = true;
                 # passwordFile = "/tmp/secret.key"; # Interactive
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
                   subvolumes = {
-                    "@" = {
+                    "/root" = {
                       mountpoint = "/";
                       mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
                     };
-                    "@home" = {
+                    "/home" = {
                       mountpoint = "/home";
                       mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
                     };
-                    "@snapshots" = {
+                    "/.snapshots" = {
                       mountpoint = "/.snapshots";
                       mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
                     };
-                    "@nix" = {
+                    "/nix" = {
                       mountpoint = "/nix";
                       mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
                     };
-                    "@swap" = {
-                      mountpoint = "/swap";
+                    "/swap" = {
+                      mountpoint = "/.swapvol";
                       swap.swapfile.size = swapfileSize;
                     };
                   };
