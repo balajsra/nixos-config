@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = [ pkgs.pipewire ];
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
   sound.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {

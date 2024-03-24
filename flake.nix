@@ -90,6 +90,7 @@
           modules = [
             (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
             disko.nixosModules.disko
+            (./. + "/disko" + ("/" + systemSettings.diskoConfig) + ".nix")
           ];
           specialArgs = {
             inherit pkgs-stable;

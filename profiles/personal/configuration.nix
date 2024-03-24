@@ -7,7 +7,6 @@
 {
   imports = [
     ../../system/hardware-configuration.nix
-    ../../disko/${systemSettings.diskoConfig}.nix
     ../../system/hardware/kernel.nix
     ../../system/hardware/bluetooth.nix
     ../../system/hardware/opengl.nix
@@ -35,7 +34,7 @@
     loader = {
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/EFI";
+        efiSysMountPoint = "/boot";
       };
       grub = {
         enable = true;
