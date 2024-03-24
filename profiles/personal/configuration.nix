@@ -7,6 +7,8 @@
 {
   imports = [
     ../../system/hardware-configuration.nix
+    "${builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz"}/module.nix"
+    "../../disko/${systemSettings.diskoConfiguration}.nix"
   ];
 
   nix = {

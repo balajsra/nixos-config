@@ -16,11 +16,12 @@
     let
       # --- SYSTEM SETTINGS --- #
       systemSettings = {
-        system = "x86_64-linux";       # System Architecture
-        hostname = "oryp7";            # Hostname
-        profile = "personal";          # Select a profile defined from profiles directory
-        timezone = "America/New_York"; # Time Zone
-        locale = "en_US.UTF-8";        # Locale
+        system = "x86_64-linux";               # System Architecture
+        hostname = "oryp7";                    # Hostname
+        profile = "personal";                  # Select a profile defined from profiles directory
+        timezone = "America/New_York";         # Time Zone
+        locale = "en_US.UTF-8";                # Locale
+        diskoConfig = "luks-btrfs-subvolumes"; # Disko Partition Configuration
       };
 
       # --- USER SETTINGS --- #
