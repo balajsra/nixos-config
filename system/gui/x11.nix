@@ -9,8 +9,10 @@
 
   services.xserver = {
     enable = true;
-    layout = "us";
-    xkbVariant = "";
-    xkbOptions = "";
+    xkb = {
+      layout = "us";
+      variant = "";
+      options = "";
+    };
   };
 }

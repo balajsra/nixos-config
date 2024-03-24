@@ -31,6 +31,7 @@
   nixpkgs.config.allowUnfree = true;
 
   boot = {
+    initrd.enable = true;
     loader = {
       efi = {
         canTouchEfiVariables = true;
