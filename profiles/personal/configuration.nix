@@ -6,7 +6,7 @@
 
 {
   imports = [
-    ../../system/hardware-configuration.nix
+    (./. + "../../hardware" + ("/" + systemSettings.hardwareConfiguration) + ".nix")
     ../../system/hardware/kernel.nix
     ../../system/hardware/bluetooth.nix
     ../../system/hardware/opengl.nix

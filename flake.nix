@@ -26,6 +26,7 @@
         locale = "en_US.UTF-8";                # Locale
         diskoConfig = "luks-btrfs-subvolumes"; # Select the disko config that was used to partition drive
         desktopEnvironment = "gnome";          # Window Manager / Desktop Environment to use
+        hardwareConfiguration = "qemu-vm";     # Select the hardware config from hardware directory
       };
 
       # --- USER SETTINGS --- #
