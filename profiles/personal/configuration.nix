@@ -86,14 +86,14 @@
 
   fonts.fontDir.enable = true;
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal
-      pkgs.xdg-desktop-portal-gtk
-    ];
-    config.common.default = [ "gtk" ];
-  };
+  # xdg.portal = {
+  #   enable = true;
+  #   extraPortals = [
+  #     pkgs.xdg-desktop-portal
+  #     pkgs.xdg-desktop-portal-gtk
+  #   ];
+  #   config.common.default = [ "gtk" ];
+  # };
 
   # The first version of NixOS installed on this particular machine
   # Is used to maintain compatibility with application data
