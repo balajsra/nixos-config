@@ -17,7 +17,7 @@
     ../../system/app/gaming/steam.nix
     ../../system/app/gaming/gamemode.nix
     ../../system/hardware/audio.nix
-    ../../system/gui/dwm.nix
+    (./. + "../../system/gui" + ("/" + systemSettings.desktopEnvironment) + ".nix")
   ];
 
   nix = {

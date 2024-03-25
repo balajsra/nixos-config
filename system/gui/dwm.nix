@@ -9,7 +9,6 @@
     ../app/launcher/rofi.nix
   ];
 
-  environment.systemPackages = [ pkgs.dwm ];
   services.xserver.windowManager.dwm.enable = true;
   services.xserver.displayManager.defaultSession = "none+dwm";
 }
