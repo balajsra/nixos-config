@@ -6,7 +6,7 @@
 
 {
   imports = [
-    (./. + "../../hardware" + ("/" + systemSettings.hardwareConfiguration) + ".nix")
+    (../../hardware + "/${systemSettings.hardwareConfiguration}.nix")
     ../../system/hardware/kernel.nix
     ../../system/hardware/bluetooth.nix
     ../../system/hardware/opengl.nix
@@ -17,7 +17,7 @@
     ../../system/app/gaming/steam.nix
     ../../system/app/gaming/gamemode.nix
     ../../system/hardware/audio.nix
-    (./. + "../../system/gui" + ("/" + systemSettings.desktopEnvironment) + ".nix")
+    (../../system/gui + "/${systemSettings.desktopEnvironment}.nix")
   ];
 
   nix = {
