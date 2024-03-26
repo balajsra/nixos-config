@@ -1,5 +1,5 @@
 let
-  installDisk = "sda";
+  installDisk = "vda";
   bootPartitionSize = "512M";
   swapfileSize = "10G";
 in {
