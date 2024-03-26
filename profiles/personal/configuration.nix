@@ -72,7 +72,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    vim
     wget
     zsh
     git

@@ -40,7 +40,7 @@
         wmType = "x11";               # x11 or wayland
         browser = "vivaldi";          # Default browser
         term = "kitty";               # Default terminal command
-        editor = "emacsclient";       # Default editor
+        editor = "vim";               # Default editor
         spawnEditor =
           if (editor == "emacsclient") then
             "emacsclient -c -a 'emacs'"
