@@ -25,7 +25,7 @@
         timezone = "America/New_York";         # Time Zone
         locale = "en_US.UTF-8";                # Locale
         diskoConfig = "luks-btrfs-subvolumes"; # Select the disko config that was used to partition drive
-        hardwareConfiguration = "qemu-vm";     # Select the hardware config from hardware directory
+        hardwareConfiguration = "system76-oryx-pro-7";     # Select the hardware config from hardware directory
       };
 
       # --- USER SETTINGS --- #

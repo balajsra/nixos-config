@@ -1,7 +1,7 @@
 let
-  installDisk = "vda";
+  installDisk = "sda";
   bootPartitionSize = "512M";
-  swapfileSize = "10G";
+  swapfileSize = "34G";
 in {
   disko.devices = {
     disk = {
