@@ -9,16 +9,8 @@
     (../../hosts + "/${systemSettings.hardwareConfiguration}.nix")
     (../../system/gui + "/${userSettings.desktop}.nix")
     ../../system/hardware/default.nix
-    (../../system/programs/browser + "/${userSettings.browser}.nix")
-    ../../system/programs/development/default.nix
-    ../../system/programs/gaming/default.nix
-    ../../system/programs/launcher/default.nix
-    ../../system/programs/media/default.nix
-    ../../system/programs/productivity/default.nix
-    (../../system/programs/terminal + "/${userSettings.term}.nix")
-    ../../system/programs/utilities/default.nix
     ../../system/security/default.nix
-    ../../system/util/default.nix
+    ../../system/utilities/default.nix
   ];
 
   nix = {
@@ -72,15 +64,8 @@
     uid = 1000;
   };
 
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    zsh
-    git
-    rsync
-    cryptsetup
-    home-manager
-  ];
+  # environment.systemPackages = with pkgs; [
+  # ];
 
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;

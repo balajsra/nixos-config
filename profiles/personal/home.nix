@@ -9,8 +9,19 @@
 
   home.stateVersion = "23.11";
 
-  home.packages = (with pkgs; [
-  ]);
+  imports = [
+    (../../user/browser + "/${userSettings.browser}.nix")
+    ../../user/development/default.nix
+    ../../user/gaming/default.nix
+    ../../user/launcher/default.nix
+    ../../user/media/default.nix
+    ../../user/productivity/default.nix
+    (../../user/terminal + "/${userSettings.term}.nix")
+    ../../user/utilities/default.nix
+  ];
+
+  # home.packages = (with pkgs; [
+  # ]);
 
   xdg.enable = true;
   xdg.userDirs = {

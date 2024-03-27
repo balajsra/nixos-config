@@ -7,9 +7,9 @@
     # enableRenice = true;
   };
 
-  environment.systemPackages = with pkgs; [
+  home.packages = (with pkgs; [
     mangohud
     goverlay
     vkbasalt
-  ];
+  ]);
 }

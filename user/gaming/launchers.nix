@@ -7,10 +7,10 @@
     gamescopeSession.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
+  home.packages = (with pkgs; [
     bottles
     lutris
     heroic
     prismlauncher
-  ];
+  ]);
 }
