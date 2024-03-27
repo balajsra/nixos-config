@@ -5,5 +5,6 @@
     ./dbus.nix
     ./gnome-keyring.nix
     ./miscellaneous.nix
+    ./gaming.nix
   ];
 }
