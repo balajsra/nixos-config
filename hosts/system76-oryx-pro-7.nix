@@ -29,6 +29,7 @@
   # Manually Added Section #
   ##########################
   hardware.system76.enableAll = true;
+  hardware.system76.kernel-modules.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
