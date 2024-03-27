@@ -2,11 +2,8 @@
 
 {
   imports = [
-    ./x11.nix
+    ./default.nix
     ./lightdm.nix
-    ../app/terminal/kitty.nix
-    ../app/launcher/dmenu.nix
-    ../app/launcher/rofi.nix
   ];
 
   services.xserver.windowManager.dwm.enable = true;

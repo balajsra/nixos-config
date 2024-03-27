@@ -25,7 +25,6 @@
         timezone = "America/New_York";         # Time Zone
         locale = "en_US.UTF-8";                # Locale
         diskoConfig = "luks-btrfs-subvolumes"; # Select the disko config that was used to partition drive
-        desktopEnvironment = "gnome";          # Window Manager / Desktop Environment to use
         hardwareConfiguration = "qemu-vm";     # Select the hardware config from hardware directory
       };
 
@@ -36,8 +35,8 @@
         email = "balajsra@umich.edu"; # Email (used for certain configurations)
         dotfilesDir = "~/.dotfiles";  # Absolute path of the local repo
         theme = "dracula";            # Selected theme from themes directory
-        wm = "dwm";                   # Selected window manager or desktop environment
-        wmType = "x11";               # x11 or wayland
+        desktop = "gnome";            # Selected window manager or desktop environment
+        desktopType = "x11";          # x11 or wayland
         browser = "vivaldi";          # Default browser
         term = "kitty";               # Default terminal command
         editor = "vim";               # Default editor

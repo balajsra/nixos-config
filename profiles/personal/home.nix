@@ -10,62 +10,7 @@
   home.stateVersion = "23.11";
 
   home.packages = (with pkgs; [
-    # Terminal
-    kitty
-
-    # Browser
-    vivaldi
-
-    # Launcher
-    dmenu
-    rofi
-
-    # Development
-    vscode
-
-    # Utilities
-    syncthing
-    bitwarden
-    ventoy
-    via
-    prusa-slicer
-
-    # Office
-    xournalpp
-    gimp
-    gnucash
-
-    # Gaming
-    wine
-    bottles
-    lutris
-    protonup-qt
-
-    # Media
-    gimp
-    mpv
-    blender
-    obs-studio
-    ffmpeg
-    trackma-gtk
-
-    # Messaging
-    beeper
-    discord
-    signal-desktop
-    zoom-us
-
-    # Productivity
-    anytype
-    logseq
-
-    # Music / Podcasts
-    pocket-casts
-    spotify
-    spicetify-cli
   ]);
-
-  services.syncthing.enable = true;
 
   xdg.enable = true;
   xdg.userDirs = {

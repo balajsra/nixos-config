@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./x11.nix
+    ./default.nix
   ];
 
   services.xserver.displayManager.gdm.enable = true;

@@ -6,18 +6,19 @@
 
 {
   imports = [
-    (../../hardware + "/${systemSettings.hardwareConfiguration}.nix")
-    ../../system/hardware/kernel.nix
-    ../../system/hardware/bluetooth.nix
-    ../../system/hardware/opengl.nix
-    ../../system/hardware/openrgb.nix
-    ../../system/hardware/printing.nix
-    ../../system/hardware/automount.nix
-    ../../system/security/firewall.nix
-    ../../system/app/gaming/steam.nix
-    ../../system/app/gaming/gamemode.nix
-    ../../system/hardware/audio.nix
-    (../../system/gui + "/${systemSettings.desktopEnvironment}.nix")
+    (../../hosts + "/${systemSettings.hardwareConfiguration}.nix")
+    (../../system/gui + "/${userSettings.desktop}.nix")
+    ../../system/hardware/default.nix
+    (../../system/programs/browser + "/${userSettings.browser}.nix")
+    ../../system/programs/development/default.nix
+    ../../system/programs/gaming/default.nix
+    ../../system/programs/launcher/default.nix
+    ../../system/programs/media/default.nix
+    ../../system/programs/productivity/default.nix
+    (../../system/programs/terminal + "/${userSettings.term}.nix")
+    ../../system/programs/utilities/default.nix
+    ../../system/security/default.nix
+    ../../system/util/default.nix
   ];
 
   nix = {
