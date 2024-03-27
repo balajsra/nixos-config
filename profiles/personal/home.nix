@@ -10,10 +10,8 @@
   home.stateVersion = "23.11";
 
   home.packages = (with pkgs; [
-    # Shell / Terminal
-    zsh
+    # Terminal
     kitty
-    vim
 
     # Browser
     vivaldi
@@ -23,13 +21,19 @@
     rofi
 
     # Development
-    git
+    vscode
 
     # Utilities
     syncthing
+    bitwarden
+    ventoy
+    via
+    prusa-slicer
 
     # Office
     xournalpp
+    gimp
+    gnucash
 
     # Gaming
     wine
@@ -43,6 +47,22 @@
     blender
     obs-studio
     ffmpeg
+    trackma-gtk
+
+    # Messaging
+    beeper
+    discord
+    signal-desktop
+    zoom-us
+
+    # Productivity
+    anytype
+    logseq
+
+    # Music / Podcasts
+    pocket-casts
+    spotify
+    spicetify-cli
   ]);
 
   services.syncthing.enable = true;
