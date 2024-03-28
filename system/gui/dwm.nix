@@ -7,29 +7,21 @@
     ./x11.nix
   ];
 
-  nixpkgs = {
-    overlays = [
-      (self: super: {
-        dwm = super.dwm.overrideAttrs (oldattrs: {
-          src = /home/sravan/.config/dwm-flexipatch;
-          buildInputs = with pkgs; [
-            xorg.libX11
-            xorg.libXinerama
-            xorg.libXft
-            xorg.libxcb
-            xorg.xcbutil
-            yajl
-            jsoncpp
-          ];
-        });
-      })
-    ];
+  services.xserver.windowManager.dwm = {
+    enable = true;
+    package = pkgs.dwm.overrideAttrs {
+      src = /home/sravan/.config/dwm-flexipatch;
+      buildInputs = with pkgs; [
+        xorg.libX11.dev
+        xorg.libXinerama
+        xorg.libXft
+        xorg.libxcb
+        xorg.xcbutil
+        yajl
+        jsoncpp
+      ];
+    };
   };
 
-  environment.systemPackages = with pkgs; [
-    polybar
-  ];
-
-  services.xserver.windowManager.dwm.enable = true;
   services.xserver.displayManager.defaultSession = "none+dwm";
 }
