@@ -9,13 +9,10 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix.url = "github:danth/stylix";
-
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, home-manager, stylix, disko, ... }:
     let
       # --- SYSTEM SETTINGS --- #
       systemSettings = {
@@ -25,7 +22,9 @@
         timezone = "America/New_York";         # Time Zone
         locale = "en_US.UTF-8";                # Locale
         diskoConfig = "luks-btrfs-subvolumes"; # Select the disko config that was used to partition drive
-        hardwareConfiguration = "system76-oryx-pro-7";     # Select the hardware config from hardware directory
+        hwConfig = "oryp7";                    # Select the hardware config from hardware directory
+        desktop = "dwm";                       # Selected window manager or desktop environment
+        desktopType = "x11";                   # x11 or wayland
       };
 
       # --- USER SETTINGS --- #
@@ -35,8 +34,6 @@
         email = "balajsra@umich.edu"; # Email (used for certain configurations)
         dotfilesDir = "~/.dotfiles";  # Absolute path of the local repo
         theme = "dracula";            # Selected theme from themes directory
-        desktop = "dwm";              # Selected window manager or desktop environment
-        desktopType = "x11";          # x11 or wayland
         browser = "vivaldi";          # Default browser
         term = "kitty";               # Default terminal command
         editor = "vim";               # Default editor
@@ -80,7 +77,6 @@
             inherit pkgs-stable;
             inherit systemSettings;
             inherit userSettings;
-            inherit (inputs) stylix;
           };
         };
       };
@@ -97,7 +93,6 @@
             inherit pkgs-stable;
             inherit systemSettings;
             inherit userSettings;
-            inherit (inputs) stylix;
           };
         };
       };

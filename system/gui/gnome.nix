@@ -1,14 +1,14 @@
-{ config, lib, pkgs, userSettings, ... }:
+{ config, lib, pkgs, systemSettings, ... }:
 
 {
   imports = [
     ./default.nix
-    (if userSettings.desktopType == "x11" then ./x11.nix else "")
+    (if systemSettings.desktopType == "x11" then ./x11.nix else "")
   ];
 
   services.xserver.displayManager.gdm = {
     enable = true;
-    wayland = (if userSettings.desktopType == "x11" then false else true);
+    wayland = (if systemSettings.desktopType == "x11" then false else true);
   };
   services.xserver.desktopManager.gnome.enable = true;
 }

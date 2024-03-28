@@ -6,8 +6,8 @@
 
 {
   imports = [
-    (../../hosts + "/${systemSettings.hardwareConfiguration}.nix")
-    (../../system/gui + "/${userSettings.desktop}.nix")
+    (../../hosts + "/${systemSettings.hwConfig}.nix")
+    (../../system/gui + "/${systemSettings.desktop}.nix")
     ../../system/hardware/default.nix
     ../../system/security/default.nix
     ../../system/utilities/default.nix
