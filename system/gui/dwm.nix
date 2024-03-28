@@ -11,20 +11,24 @@
     overlays = [
       (self: super: {
         dwm = super.dwm.overrideAttrs (oldattrs: {
-          src = fetchGit {
-            url = "https://gitea.sravanbalaji.com/sravan/dwm-flexipatch.git";
-            rev = "23b55eaf9cd9c08d4c14f7957675ae056e358e32";
-          };
+          src = /home/sravan/.config/dwm-flexipatch;
           buildInputs = with pkgs; [
             xorg.libX11
             xorg.libXinerama
             xorg.libXft
+            xorg.libxcb
+            xorg.xcbutil
             yajl
+            jsoncpp
           ];
         });
       })
     ];
   };
+
+  environment.systemPackages = with pkgs; [
+    polybar
+  ];
 
   services.xserver.windowManager.dwm.enable = true;
   services.xserver.displayManager.defaultSession = "none+dwm";

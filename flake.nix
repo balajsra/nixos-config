@@ -35,7 +35,7 @@
         email = "balajsra@umich.edu"; # Email (used for certain configurations)
         dotfilesDir = "~/.dotfiles";  # Absolute path of the local repo
         theme = "dracula";            # Selected theme from themes directory
-        desktop = "kde";              # Selected window manager or desktop environment
+        desktop = "gnome";            # Selected window manager or desktop environment
         desktopType = "x11";          # x11 or wayland
         browser = "vivaldi";          # Default browser
         term = "kitty";               # Default terminal command
