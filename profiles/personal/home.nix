@@ -12,6 +12,7 @@
   imports = [
     (../../user/browser + "/${userSettings.browser}.nix")
     ../../user/development/default.nix
+    (if userSettings.editor == "emacsclient" then ../../user/development/doom-emacs.nix else (../../user/development + "/${userSettings.editor}.nix"))
     ../../user/gaming/default.nix
     ../../user/launcher/default.nix
     ../../user/media/default.nix

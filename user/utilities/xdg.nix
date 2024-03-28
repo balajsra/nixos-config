@@ -15,6 +15,8 @@
     publicShare = null;
     extraConfig = {
       XDG_GAME_DIR = "${config.home.homeDirectory}/Games";
+      XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
+      XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
     };
   };
   xdg.mime.enable = true;

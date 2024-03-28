@@ -10,5 +10,7 @@
     rsync
     cryptsetup
     home-manager
+    tree
+    btop
   ];
 }

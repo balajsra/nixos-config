@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, userSettings, ... }:
 
 {
   imports = [
@@ -10,7 +10,7 @@
   services.xserver.windowManager.dwm = {
     enable = true;
     package = pkgs.dwm.overrideAttrs {
-      src = ~/.config/dwm-flexipatch;
+      src = (/home + "/${userSettings.username}" + /.config/dwm-flexipatch);
       buildInputs = with pkgs; [
         xorg.libX11.dev
         xorg.libXinerama

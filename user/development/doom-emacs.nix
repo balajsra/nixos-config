@@ -1,8 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, userSettings, ... }:
 
 {
   programs.doom-emacs = {
     enable = true;
-    doomPrivateDir = ~/.config/doom-emacs-config;
+    doomPrivateDir = (/home + "/${userSettings.username}" + /.config/doom-emacs-config);
   };
 }

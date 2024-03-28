@@ -1,8 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, userSettings, ... }:
 
 {
   imports = [
     ./vscode.nix
-    ./doom-emacs.nix
+    ./cli.nix
   ];
 }
