@@ -11,8 +11,11 @@
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
   };
 
+  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, home-manager, disko, nix-doom-emacs, ... }:
     let
       # --- SYSTEM SETTINGS --- #
       systemSettings = {
@@ -36,7 +39,7 @@
         theme = "dracula";            # Selected theme from themes directory
         browser = "vivaldi";          # Default browser
         term = "kitty";               # Default terminal command
-        editor = "vim";               # Default editor
+        editor = "emacsclient";       # Default editor
         spawnEditor =
           if (editor == "emacsclient") then
             "emacsclient -c -a 'emacs'"
@@ -72,6 +75,7 @@
           inherit pkgs;
           modules = [
             (./. + "/profiles" + ("/" + systemSettings.profile) + "/home.nix")
+            nix-doom-emacs.hmModule
           ];
           extraSpecialArgs = {
             inherit pkgs-stable;

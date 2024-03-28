@@ -10,7 +10,7 @@
   services.xserver.windowManager.dwm = {
     enable = true;
     package = pkgs.dwm.overrideAttrs {
-      src = /home/sravan/.config/dwm-flexipatch;
+      src = ~/.config/dwm-flexipatch;
       buildInputs = with pkgs; [
         xorg.libX11.dev
         xorg.libXinerama

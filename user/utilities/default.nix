@@ -7,5 +7,6 @@
     ./file-syncing.nix
     ./keyboard-configuration.nix
     ./passwords.nix
+    ./xdg.nix
   ];
 }

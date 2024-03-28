@@ -3,5 +3,6 @@
 {
   imports = [
     ./vscode.nix
+    ./doom-emacs.nix
   ];
 }
