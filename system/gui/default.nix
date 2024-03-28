@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./x11.nix
     ./fonts.nix
   ];
 }

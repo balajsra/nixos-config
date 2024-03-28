@@ -4,6 +4,7 @@
   imports = [
     ./default.nix
     ./lightdm.nix
+    ./x11.nix
   ];
 
   services.xserver.windowManager.dwm.enable = true;
