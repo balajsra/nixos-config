@@ -4,5 +4,6 @@
   imports = [
     ./firewall.nix
     ./gpg.nix
+    ./polkit.nix
   ];
 }

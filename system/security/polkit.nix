@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  security.polkit.enable = true;
   environment.systemPackages = with pkgs; [
-    arandr
-    autorandr
+    polkit_gnome
   ];
 }

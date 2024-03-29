@@ -6,5 +6,10 @@
     powerline
     font-awesome
     ubuntu_font_family
+    (nerdfonts.override {
+      fonts = [
+        "FiraCode"
+      ];
+    })
   ];
 }

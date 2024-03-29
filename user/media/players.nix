@@ -8,5 +8,7 @@
     pocket-casts
     spotify
     spicetify-cli
+    ani-cli
+    calibre
   ]);
 }

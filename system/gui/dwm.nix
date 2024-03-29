@@ -3,25 +3,46 @@
 {
   imports = [
     ./default.nix
-    ./lightdm.nix
-    ./x11.nix
   ];
 
-  services.xserver.windowManager.dwm = {
+  services.xserver = {
     enable = true;
-    package = pkgs.dwm.overrideAttrs {
-      src = (/home + "/${userSettings.username}" + /.config/dwm-flexipatch);
-      buildInputs = with pkgs; [
-        xorg.libX11.dev
-        xorg.libXinerama
-        xorg.libXft
-        xorg.libxcb
-        xorg.xcbutil
-        yajl
-        jsoncpp
-      ];
+
+    xkb = {
+      layout = "us";
+      variant = "";
+      options = "";
+    };
+
+    windowManager.dwm = {
+      enable = true;
+
+      package = pkgs.dwm.overrideAttrs {
+        src = (/home + "/${userSettings.username}" + /.config/dwm-flexipatch);
+
+        buildInputs = with pkgs; [
+          xorg.libX11.dev
+          xorg.libXinerama
+          xorg.libXft
+          xorg.libxcb
+          xorg.xcbutil
+          yajl
+          jsoncpp
+        ];
+      };
+    };
+
+    displayManager = {
+      defaultSession = "none+dwm";
+      lightdm.enable = true;
     };
   };
 
-  services.xserver.displayManager.defaultSession = "none+dwm";
+  services.picom.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    arandr
+    autorandr
+    unclutter-xfixes
+  ];
 }

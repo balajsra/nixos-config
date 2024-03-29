@@ -8,5 +8,6 @@
     ./keyboard-configuration.nix
     ./passwords.nix
     ./xdg.nix
+    ./screenshot.nix
   ];
 }
