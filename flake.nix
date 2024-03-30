@@ -26,7 +26,7 @@
         locale = "en_US.UTF-8";                # Locale
         diskoConfig = "luks-btrfs-subvolumes"; # Select the disko config that was used to partition drive
         hwConfig = "oryp7";                    # Select the hardware config from hardware directory
-        desktop = "dwm";                       # Selected window manager or desktop environment
+        desktop = "awesome";                   # Selected window manager or desktop environment
         desktopType = "x11";                   # x11 or wayland
       };
 
