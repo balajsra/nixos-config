@@ -1,7 +1,7 @@
 let
   installDisk = "sda";
   bootPartitionSize = "512M";
-  swapfileSize = "34G";
+  swapfileSize = "10G";
 in {
   disko.devices = {
     disk = {
@@ -37,25 +37,33 @@ in {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
                   subvolumes = {
-                    "@" = {
+                    "@root" = {
                       mountpoint = "/";
-                      mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
+                      mountOptions = [ "compress=zstd" "noatime" ];
                     };
                     "@home" = {
                       mountpoint = "/home";
-                      mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
+                      mountOptions = [ "compress=zstd" "noatime" ];
                     };
-                    "@.snapshots" = {
-                      mountpoint = "/.snapshots";
-                      mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
+                    "@games" = {
+                      mountpoint = "/games";
+                      mountOptions = [ "compress=zstd" "noatime" ];
                     };
                     "@nix" = {
                       mountpoint = "/nix";
-                      mountOptions = [ "compress=zstd" "noatime" "discard=async" "space_cache=v2" "ssd" ];
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "@log" = {
+                      mountpoint = "/var/log";
+                      mountOptions = [ "compress=zstd" "noatime" ];
                     };
                     "@swap" = {
                       mountpoint = "/swap";
                       swap.swapfile.size = swapfileSize;
+                    };
+                    "@.snapshots" = {
+                      mountpoint = "/.snapshots";
+                      mountOptions = [ "compress=zstd" "noatime" ];
                     };
                   };
                 };
