@@ -58,7 +58,10 @@
 
       buildInputs = previousAttrs.buildInputs ++ [
         jsoncpp
+        git
       ];
+
+      patches = [];
     }))
   ];
 }
