@@ -44,5 +44,21 @@
     arandr
     autorandr
     unclutter-xfixes
+    (polybar.overrideAttrs (finalAttrs: previousAttrs: {
+      pname = previousAttrs.pname + "-dwm-module";
+      version = "3.5.2";
+
+      src = fetchFromGitHub {
+        owner = "mihirlad55";
+        repo = "polybar-dwm-module";
+        rev = "0c3e139ac54e081c06ef60548927e679d80d4297";
+        hash = "sha256-ZL7yDGGiZFGgVXZXS+d3xUDhOOd5lp2mo2ipFN92mIY=";
+        fetchSubmodules = true;
+      };
+
+      buildInputs = previousAttrs.buildInputs ++ [
+        jsoncpp
+      ];
+    }))
   ];
 }
