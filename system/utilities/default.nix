@@ -6,5 +6,6 @@
     ./gnome-keyring.nix
     ./miscellaneous.nix
     ./gaming.nix
+    ./backups.nix
   ];
 }
