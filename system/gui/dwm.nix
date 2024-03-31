@@ -17,19 +17,18 @@
     windowManager.dwm = {
       enable = true;
 
-      package = pkgs.dwm.overrideAttrs {
+      package = (pkgs.dwm.overrideAttrs (finalAttrs: previousAttrs: {
+        pname = previousAttrs.pname + "-flexipatch";
+        version = "6.5";
         src = (/home + "/${userSettings.username}" + /.config/dwm-flexipatch);
 
-        buildInputs = with pkgs; [
-          xorg.libX11.dev
-          xorg.libXinerama
-          xorg.libXft
+        buildInputs = previousAttrs.buildInputs ++ (with pkgs; [
           xorg.libxcb
           xorg.xcbutil
           yajl
           jsoncpp
-        ];
-      };
+        ]);
+      }));
     };
 
     displayManager = {
@@ -44,6 +43,8 @@
     arandr
     autorandr
     unclutter-xfixes
+    playerctl
+    zscroll
     (polybar.overrideAttrs (finalAttrs: previousAttrs: {
       pname = previousAttrs.pname + "-dwm-module";
       version = "3.5.2";
@@ -59,6 +60,7 @@
       buildInputs = previousAttrs.buildInputs ++ [
         jsoncpp
         git
+        libpulseaudio
       ];
 
       patches = [];
