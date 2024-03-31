@@ -3,13 +3,13 @@
 {
   fonts.packages = with pkgs; [
     corefonts
-    powerline
-    font-awesome
     ubuntu_font_family
-    (nerdfonts.override {
-      fonts = [
-        "FiraCode"
-      ];
-    })
+    font-awesome
+    nerdfonts
+    noto-fonts-color-emoji
+    powerline
+    ipafont
+    baekmuk-ttf
+    nerdfonts
   ];
 }

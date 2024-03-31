@@ -18,6 +18,7 @@
     ../../user/media/default.nix
     ../../user/productivity/default.nix
     (../../user/terminal + "/${userSettings.term}.nix")
+    ../../user/terminal/prompt.nix
     ../../user/utilities/default.nix
   ];
 
