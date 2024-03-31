@@ -66,6 +66,9 @@
     # Notification Daemon
     deadd-notification-center
 
+    # Automounter
+    udiskie
+
     # Polybar with DWM Module
     (polybar.overrideAttrs (finalAttrs: previousAttrs: {
       pname = previousAttrs.pname + "-dwm-module";

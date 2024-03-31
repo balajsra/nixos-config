@@ -7,5 +7,6 @@
     ./miscellaneous.nix
     ./gaming.nix
     ./backups.nix
+    ./user-shell.nix
   ];
 }

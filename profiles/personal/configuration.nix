@@ -64,15 +64,6 @@
     uid = 1000;
   };
 
-  # environment.systemPackages = with pkgs; [
-  # ];
-
-  environment.shells = with pkgs; [ zsh ];
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
-
-  fonts.fontDir.enable = true;
-
   # xdg.portal = {
   #   enable = true;
   #   extraPortals = [

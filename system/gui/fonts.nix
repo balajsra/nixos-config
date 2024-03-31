@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  fonts.fontDir.enable = true;
+
   fonts.packages = with pkgs; [
     corefonts
     ubuntu_font_family
