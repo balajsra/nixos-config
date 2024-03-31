@@ -92,6 +92,9 @@
     # Automounter
     udiskie
 
+    # Power Management
+    xfce.xfce4-power-manager
+
     # Polybar with DWM Module
     (polybar.overrideAttrs (finalAttrs: previousAttrs: {
       pname = previousAttrs.pname + "-dwm-module";
