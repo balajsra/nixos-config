@@ -8,5 +8,6 @@
     ./gaming.nix
     ./backups.nix
     ./user-shell.nix
+    ./samba.nix
   ];
 }

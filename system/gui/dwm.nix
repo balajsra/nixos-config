@@ -42,6 +42,13 @@
   # Picom Compositor
   services.picom.enable = true;
 
+  # Night Light
+  services.redshift = {
+    enable = true;
+    package = pkgs.redshift;
+    executable = "/bin/redshift-gtk";
+  };
+
   environment.systemPackages = with pkgs; [
     # X11 Utilities
     arandr

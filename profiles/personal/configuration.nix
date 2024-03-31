@@ -56,10 +56,15 @@
     LC_TIME = systemSettings.locale;
   };
 
+  users.groups.${userSettings.username} = {
+    name = userSettings.username;
+    gid = 1000;
+  };
+
   users.users.${userSettings.username} = {
     isNormalUser = true;
     description = userSettings.name;
-    extraGroups = [ "networkmanager" "wheel" "input" "dialout" ];
+    extraGroups = [ "${userSettings.username}" "networkmanager" "wheel" "input" "dialout" ];
     packages = [];
     uid = 1000;
   };

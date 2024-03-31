@@ -12,5 +12,7 @@
     home-manager
     tree
     btop
+    openssh
+    gh
   ];
 }
