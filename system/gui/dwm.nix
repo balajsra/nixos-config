@@ -17,11 +17,13 @@
     windowManager.dwm = {
       enable = true;
 
+      # Override dwm package with personal dwm-flexipatch config
       package = (pkgs.dwm.overrideAttrs (finalAttrs: previousAttrs: {
         pname = previousAttrs.pname + "-flexipatch";
         version = "6.5";
         src = (/home + "/${userSettings.username}" + /.config/dwm-flexipatch);
 
+        # Add dependencies for dwmipc / polybar communication patches
         buildInputs = previousAttrs.buildInputs ++ (with pkgs; [
           xorg.libxcb
           xorg.xcbutil
@@ -37,14 +39,34 @@
     };
   };
 
+  # Picom Compositor
   services.picom.enable = true;
 
   environment.systemPackages = with pkgs; [
+    # X11 Utilities
     arandr
     autorandr
     unclutter-xfixes
+
+    # Terminal
+    kitty
+
+    # System Monitor
+    btop
+    qdirstat
+    gnome.gnome-disk-utility
+
+    # Media / Volume Controls
     playerctl
+    pavucontrol
+
+    # Polybar Media Module Dependency
     zscroll
+
+    # Notification Daemon
+    deadd-notification-center
+
+    # Polybar with DWM Module
     (polybar.overrideAttrs (finalAttrs: previousAttrs: {
       pname = previousAttrs.pname + "-dwm-module";
       version = "3.5.2";
@@ -57,12 +79,14 @@
         fetchSubmodules = true;
       };
 
+      # Extra dependencies for dwm module
       buildInputs = previousAttrs.buildInputs ++ [
         jsoncpp
         git
         libpulseaudio
       ];
 
+      # Remove patches applied by default polybar package
       patches = [];
     }))
   ];
