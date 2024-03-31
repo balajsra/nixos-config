@@ -9,5 +9,6 @@
     ./backups.nix
     ./user-shell.nix
     ./samba.nix
+    ./cloud.nix
   ];
 }

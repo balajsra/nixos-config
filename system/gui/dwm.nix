@@ -25,8 +25,11 @@
 
         # Add dependencies for dwmipc / polybar communication patches
         buildInputs = previousAttrs.buildInputs ++ (with pkgs; [
+          # Dependencies for swallow patch
           xorg.libxcb
           xorg.xcbutil
+
+          # Dependencies for dwm-ipc patch
           yajl
           jsoncpp
         ]);
@@ -49,11 +52,24 @@
     executable = "/bin/redshift-gtk";
   };
 
+  # File Manager
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-volman
+      thunar-archive-plugin
+      thunar-media-tags-plugin
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
     # X11 Utilities
     arandr
     autorandr
     unclutter-xfixes
+
+    # Wallpaper
+    nitrogen
 
     # Terminal
     kitty

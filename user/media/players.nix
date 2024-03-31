@@ -9,6 +9,7 @@
     spotify
     spicetify-cli
     ani-cli
+    mangal
     calibre
   ]);
 }

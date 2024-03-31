@@ -5,5 +5,6 @@
     blender
     obs-studio
     freecad
+    sweethome3d.application
   ]);
 }
