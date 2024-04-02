@@ -9,16 +9,14 @@
   fileSystems."/mnt/fileserver" = {
     device = "//192.168.12.5/fileserver";
     fsType = "cifs";
-    options = let
+    options =
+    let
       # this line prevents hanging on network split
       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-
-    in [
-      "${automount_opts},
-      credentials=/etc/nixos/smb-secrets,
-      ${config.users.users.${userSettings.username}.uid},
-      gid=${config.users.groups.${userSettings.username}.gid}"
-    ];
+      username = userSettings.username;
+      uid = config.users.users.${username}.uid;
+      gid = config.users.groups.${username}.gid;
+    in [ "${automount_opts},credentials=/etc/nixos/smb-secrets,uid=${toString uid},gid=${toString gid}" ];
     # Make sure to create `/etc/nixos/smb-secrets` with following content
     # where domain can be optional
     # username=<USERNAME>
