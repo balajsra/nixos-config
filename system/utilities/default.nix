@@ -10,5 +10,6 @@
     ./user-shell.nix
     ./samba.nix
     ./cloud.nix
+    ./phone.nix
   ];
 }

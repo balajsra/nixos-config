@@ -9,7 +9,6 @@
     ./passwords.nix
     ./xdg.nix
     ./screenshot.nix
-    ./phone.nix
     ./downloads.nix
   ];
 }
