@@ -51,6 +51,10 @@
     package = pkgs.redshift;
     executable = "/bin/redshift-gtk";
   };
+  services.geoclue2 = {
+    enable = true;
+  };
+  location.provider = "geoclue2";
 
   # File Manager
   programs.thunar = {
