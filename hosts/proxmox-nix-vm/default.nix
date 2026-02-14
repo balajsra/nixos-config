@@ -1,4 +1,4 @@
-{ config, lib, pkgs, vars, hostName, osDisks, swapSize, ... }:
+{ config, lib, pkgs, vars, hostName, architecture, timeZone, osDisks, swapSize, ... }:
 
 {
   imports =
