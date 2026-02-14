@@ -1,8 +1,8 @@
 { lib, ... }:
 let
     # --- Configuration Variables ---
-    myDisks = [ "/dev/sda" ];
-    swapSize = "16G";
+    myDisks = [ "/dev/sdb" "/dev/sda" ];
+    swapSize = "2G";
     # -------------------------------
 
     # Helper to determine if a disk is the "primary" boot disk
