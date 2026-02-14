@@ -2,7 +2,8 @@
     description = "Flake of Sravan's NixOS";
 
     inputs = {
-        nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+        nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+        nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
         home-manager = {
             url = "github:nix-community/home-manager/release-25.11";
@@ -10,14 +11,20 @@
         };
 
         disko = {
-            url = "github:nix-community/disko";
+            url = "github:nix-community/disko/master";
             inputs.nixpkgs.follows = "nixpkgs";
         };
     };
 
-    outputs = { self, nixpkgs, home-manager, disko, ... }@inputs: {
-        nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
+    outputs = { self, nixpkgs, home-manager, disko, ... }@inputs:
+    let
+        hostname = "nixos";
+        architecture = "x86_64-linux";
+        username = "sravan";
+    in
+    {
+        nixosConfigurations."${hostname}" = nixpkgs.lib.nixosSystem {
+            system = "${architecture}";
             specialArgs = { inherit inputs; };
             modules = [
                 disko.nixosModules.disko
@@ -27,7 +34,7 @@
                     home-manager = {
                         useGlobalPkgs = true;
                         useUserPackages = true;
-                        users.sravan = import ./home.nix;
+                        users."${username}" = import ./home.nix;
                         backupFileExtension = "backup";
                     };
                 }
