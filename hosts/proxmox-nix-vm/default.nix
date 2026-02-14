@@ -100,4 +100,16 @@
   # Do not change, this is a safety anchor to prevent
   # system from breaking or losing data during an upgrade
   system.stateVersion = "25.11";
+
+  home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      extraSpecialArgs = { inherit vars; };
+      users.${vars.username} = {
+          imports = [
+              ../../modules/home/base.nix
+              ../../modules/home/shell.nix
+          ];
+      };
+  };
 }
