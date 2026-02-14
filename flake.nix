@@ -14,6 +14,8 @@
             url = "github:nix-community/disko/master";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+
+        self.submodules = true;
     };
 
     outputs = { self, nixpkgs, home-manager, disko, ... }@inputs:
