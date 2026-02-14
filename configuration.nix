@@ -29,7 +29,7 @@
     luks.devices."decrypted_root" = {
       # Disko usually handles this mapping, but specifying it here
       # ensures the initrd knows exactly what to look for.
-      device = "/dev/mapper/vgroot-lv_crypt_store";
+      # device = "/dev/mapper/vgroot-lv_crypt_store";
       preLVM = false; # The LUKS is INSIDE the LVM, so LVM must start first
       allowDiscards = true; # Performance for SSDs
     };
