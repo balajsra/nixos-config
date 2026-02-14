@@ -18,23 +18,31 @@
 
     outputs = { self, nixpkgs, home-manager, disko, ... }@inputs:
     let
-        hostname = "nixos";
-        architecture = "x86_64-linux";
-        username = "sravan";
+        vars = {
+            osDisks = [ "/dev/sdb" "/dev/sda" ];
+            swapSize = "2G";
+            name = "Sravan Balaji";
+            email = "sr98vn@gmail.com";
+            username = "sravan";
+            hostName = "nixos";
+            architecture = "x86_64-linux";
+            timeZone = "America/New_York";
+        };
     in
     {
-        nixosConfigurations."${hostname}" = nixpkgs.lib.nixosSystem {
-            system = "${architecture}";
-            specialArgs = { inherit inputs; };
+        nixosConfigurations."${vars.hostName}" = nixpkgs.lib.nixosSystem {
+            system = "${vars.architecture}";
+            specialArgs = { inherit inputs vars; };
             modules = [
                 disko.nixosModules.disko
                 ./configuration.nix
                 home-manager.nixosModules.home-manager
                 {
                     home-manager = {
+                        extraSpecialArgs = { inherit inputs vars; };
                         useGlobalPkgs = true;
                         useUserPackages = true;
-                        users."${username}" = import ./home.nix;
+                        users."${vars.username}" = import ./home.nix;
                         backupFileExtension = "backup";
                     };
                 }

@@ -1,16 +1,11 @@
-{ lib, ... }:
+{ lib, vars, ... }:
 let
-    # --- Configuration Variables ---
-    myDisks = [ "/dev/sdb" "/dev/sda" ];
-    swapSize = "2G";
-    # -------------------------------
-
     # Helper to determine if a disk is the "primary" boot disk
-    isFirstDisk = dev: dev == (builtins.head myDisks);
+    isFirstDisk = dev: dev == (builtins.head vars.osDisks);
 in
 {
     disko.devices = {
-        disk = lib.genAttrs myDisks (dev: {
+        disk = lib.genAttrs vars.osDisks (dev: {
             device = dev;
             type = "disk";
             content = {
@@ -42,42 +37,40 @@ in
 
         lvm_vg.vgroot = {
             type = "lvm_vg";
-            lvs = {
-                lv_crypt_store = {
-                    size = "100%FREE";
+            lvs.lv_crypt_store = {
+                size = "100%FREE";
+                content = {
+                    type = "luks";
+                    name = "decrypted_root";
+                    extraFormatArgs = [
+                        "--type luks2"
+                        "--cipher aes-xts-plain64"
+                        "--key-size 512"
+                        "--hash sha512"
+                        "--pbkdf argon2id"
+                        "--iter-time 5000" # 5 seconds of hashing derivation
+                        "--use-random"
+                    ];
+                    settings = {
+                        allowDiscards = true; # Recommended for SSDs/NVMe
+                    };
                     content = {
-                        type = "luks";
-                        name = "decrypted_root";
-                        extraFormatArgs = [
-                            "--type luks2"
-                            "--cipher aes-xts-plain64"
-                            "--key-size 512"
-                            "--hash sha512"
-                            "--pbkdf argon2id"
-                            "--iter-time 5000" # 5 seconds of hashing derivation
-                            "--use-random"
-                        ];
-                        settings = {
-                            allowDiscards = true; # Recommended for SSDs/NVMe
-                        };
-                        content = {
-                            type = "btrfs";
-                            extraArgs = [ "-f" ];
-                            subvolumes = {
-                                "@" = { mountpoint = "/"; mountOptions = [ "compress=zstd" ]; };
-                                "@home" = { mountpoint = "/home"; mountOptions = [ "compress=zstd" ]; };
-                                "@nix" = { mountpoint = "/nix"; mountOptions = [ "compress=zstd" "noatime" ]; };
-                                "@data" = { mountpoint = "/data"; mountOptions = [ "compress=zstd" ]; };
-                                "@tmp" = { mountpoint = "/tmp"; };
-                                "@var" = { mountpoint = "/var"; mountOptions = [ "compress=zstd" ]; };
-                                "@snapshots" = { mountpoint = "/.snapshots"; mountOptions = [ "compress=zstd" ]; };
-                                "@home_snapshots" = { mountpoint = "/home/.snapshots"; mountOptions = [ "compress=zstd" ]; };
-                                "@swap" = {
-                                    mountpoint = "/swap";
-                                    # Swap on Btrfs should not be compressed
-                                    mountOptions = [ "noatime" ];
-                                    swap.swapfile.size = swapSize;
-                                };
+                        type = "btrfs";
+                        extraArgs = [ "-f" ];
+                        subvolumes = {
+                            "@" = { mountpoint = "/"; mountOptions = [ "compress=zstd" ]; };
+                            "@home" = { mountpoint = "/home"; mountOptions = [ "compress=zstd" ]; };
+                            "@nix" = { mountpoint = "/nix"; mountOptions = [ "compress=zstd" "noatime" ]; };
+                            "@data" = { mountpoint = "/data"; mountOptions = [ "compress=zstd" ]; };
+                            "@tmp" = { mountpoint = "/tmp"; };
+                            "@var" = { mountpoint = "/var"; mountOptions = [ "compress=zstd" ]; };
+                            "@snapshots" = { mountpoint = "/.snapshots"; mountOptions = [ "compress=zstd" ]; };
+                            "@home_snapshots" = { mountpoint = "/home/.snapshots"; mountOptions = [ "compress=zstd" ]; };
+                            "@swap" = {
+                                mountpoint = "/swap";
+                                # Swap on Btrfs should not be compressed
+                                mountOptions = [ "noatime" ];
+                                swap.swapfile.size = vars.swapSize;
                             };
                         };
                     };
@@ -86,4 +79,3 @@ in
         };
     };
 }
-		

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, vars, ... }:
 
 {
   imports =
@@ -23,28 +23,18 @@
   boot.initrd = {
     supportedFilesystems = [ "btrfs" ];
     availableKernelModules = [ "aesni_intel" "cryptd" "dm_mod" "dm_crypt" ];
-
-    # This forces the kernel to prompt for the password using a
-    # user-friendly prompt (standard on NixOS).
-    luks.devices."decrypted_root" = {
-      # Disko usually handles this mapping, but specifying it here
-      # ensures the initrd knows exactly what to look for.
-      # device = "/dev/mapper/vgroot-lv_crypt_store";
-      preLVM = false; # The LUKS is INSIDE the LVM, so LVM must start first
-      allowDiscards = true; # Performance for SSDs
-    };
   };
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "${vars.hostName}"; # Define your hostname.
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = "${vars.timeZone}";
 
   # Enable the X11 windowing system.
   services.xserver = {
@@ -72,7 +62,7 @@
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.sravan = {
+  users.users."${vars.username}" = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
@@ -107,5 +97,7 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  system.stateVersion = "25.11"; # Did you read the comment?
+  # Do not change, this is a safety anchor to prevent
+  # system from breaking or losing data during an upgrade
+  system.stateVersion = "25.11";
 }
