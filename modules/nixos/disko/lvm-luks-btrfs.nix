@@ -1,11 +1,11 @@
-{ lib, vars, ... }:
+{ lib, osDisks, swapSize, ... }:
 let
     # Helper to determine if a disk is the "primary" boot disk
-    isFirstDisk = dev: dev == (builtins.head vars.osDisks);
+    isFirstDisk = dev: dev == (builtins.head osDisks);
 in
 {
     disko.devices = {
-        disk = lib.genAttrs vars.osDisks (dev: {
+        disk = lib.genAttrs osDisks (dev: {
             device = dev;
             type = "disk";
             content = {
@@ -70,7 +70,7 @@ in
                                 mountpoint = "/swap";
                                 # Swap on Btrfs should not be compressed
                                 mountOptions = [ "noatime" ];
-                                swap.swapfile.size = vars.swapSize;
+                                swap.swapfile.size = swapSize;
                             };
                         };
                     };

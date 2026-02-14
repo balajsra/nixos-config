@@ -1,10 +1,10 @@
-{ config, lib, pkgs, vars, ... }:
+{ config, lib, pkgs, vars, hostName, osDisks, swapSize, ... }:
 
 {
   imports =
     [
-      ./hardware-configuration.nix
-      ./disko/lvm-luks-btrfs.nix
+      ./hardware.nix
+      ../../modules/nixos/disko/lvm-luks-btrfs.nix
     ];
 
   boot.loader = {
@@ -28,13 +28,13 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "${vars.hostName}"; # Define your hostname.
+  networking.hostName = "${hostName}"; # Define your hostname.
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "${vars.timeZone}";
+  time.timeZone = "${timeZone}";
 
   # Enable the X11 windowing system.
   services.xserver = {
