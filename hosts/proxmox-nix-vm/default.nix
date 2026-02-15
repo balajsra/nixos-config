@@ -4,12 +4,14 @@
   imports =
     [
       ./hardware.nix
-      ../../modules/nixos/disko/lvm-luks-btrfs.nix
       ../../modules/nixos/base.nix
       ../../modules/nixos/boot/grub-luks.nix
       ../../modules/nixos/desktop/gnome.nix
+      ../../modules/nixos/dev/nix.nix
+      ../../modules/nixos/disko/lvm-luks-btrfs.nix
       ../../modules/nixos/services/openssh-server.nix
       ../../modules/nixos/services/pipewire.nix
+      ../../modules/nixos/services/storage-optimization.nix
     ];
 
   networking.hostName = "${hostName}"; # Define your hostname.
