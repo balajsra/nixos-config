@@ -1,8 +1,8 @@
 { pkgs, ... }:
 
 {
-    environment.systemPackages = with pkgs; [
-        nixd
-        nixfmt
-    ];
+  environment.systemPackages = with pkgs; [
+    nixd
+    nixfmt
+  ];
 }

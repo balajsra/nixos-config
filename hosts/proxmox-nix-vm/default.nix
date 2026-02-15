@@ -1,18 +1,22 @@
-{ vars, hostName, timeZone, ... }:
+{
+  vars,
+  hostName,
+  timeZone,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware.nix
-      ../../modules/nixos/base.nix
-      ../../modules/nixos/boot/grub-luks.nix
-      ../../modules/nixos/desktop/gnome.nix
-      ../../modules/nixos/dev/nix.nix
-      ../../modules/nixos/disko/lvm-luks-btrfs.nix
-      ../../modules/nixos/services/openssh-server.nix
-      ../../modules/nixos/services/pipewire.nix
-      ../../modules/nixos/services/storage-optimization.nix
-    ];
+  imports = [
+    ./hardware.nix
+    ../../modules/nixos/base.nix
+    ../../modules/nixos/boot/grub-luks.nix
+    ../../modules/nixos/desktop/gnome.nix
+    ../../modules/nixos/dev/nix.nix
+    ../../modules/nixos/disko/lvm-luks-btrfs.nix
+    ../../modules/nixos/services/openssh-server.nix
+    ../../modules/nixos/services/pipewire.nix
+    ../../modules/nixos/services/storage-optimization.nix
+  ];
 
   networking.hostName = "${hostName}"; # Define your hostname.
 
@@ -39,14 +43,14 @@
   # networking.firewall.enable = false;
 
   home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
-      extraSpecialArgs = { inherit vars; };
-      users.${vars.username} = {
-          imports = [
-              ../../modules/home/base.nix
-              ../../modules/home/shell.nix
-          ];
-      };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit vars; };
+    users.${vars.username} = {
+      imports = [
+        ../../modules/home/base.nix
+        ../../modules/home/shell.nix
+      ];
+    };
   };
 }
