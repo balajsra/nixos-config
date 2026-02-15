@@ -14,6 +14,7 @@
         wget
         git
         tree
+        nixd
     ];
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
