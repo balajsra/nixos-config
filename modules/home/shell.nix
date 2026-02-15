@@ -7,8 +7,8 @@ in
         enable = true;
         shellAliases = {
             git-graph = "git log --all --decorate --oneline --graph";
-            nix-switch = "sudo nixos-rebuild switch --flake ${nixosConfigPath}#$(hostname) --show-trace";
-            nix-update = "pushd ${nixosConfigPath} && sudo nix flake update && popd";
+            nix-switch = "nixos-rebuild switch --flake ${nixosConfigPath}#$(hostname) --show-trace --sudo";
+            nix-update = "pushd ${nixosConfigPath} && nix flake update && popd";
         };
     };
 }
