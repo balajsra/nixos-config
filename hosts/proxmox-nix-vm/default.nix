@@ -11,7 +11,6 @@
     ../../modules/nixos/base.nix
     ../../modules/nixos/boot/grub-luks.nix
     ../../modules/nixos/desktop/gnome.nix
-    ../../modules/nixos/dev/nix.nix
     ../../modules/nixos/disko/lvm-luks-btrfs.nix
     ../../modules/nixos/services/openssh-server.nix
     ../../modules/nixos/services/pipewire.nix
@@ -49,7 +48,8 @@
     users.${vars.username} = {
       imports = [
         ../../modules/home/base.nix
-        ../../modules/home/shell.nix
+        ../../modules/home/cli/shell.nix
+        ../../modules/home/dev/nix-development.nix
       ];
     };
   };
