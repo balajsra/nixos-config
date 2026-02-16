@@ -50,6 +50,7 @@
         ../../modules/home/base.nix
         ../../modules/home/cli/shell.nix
         ../../modules/home/dev/nix-development.nix
+        ../../modules/home/dev/vscode.nix
       ];
     };
   };

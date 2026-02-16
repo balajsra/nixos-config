@@ -21,6 +21,9 @@
     "flakes"
   ];
 
+  # Unfre Software: https://nixos.wiki/wiki/Unfree_Software
+  nixpkgs.config.allowUnfree = true;
+
   # Do not change, this is a safety anchor to prevent
   # system from breaking or losing data during an upgrade
   system.stateVersion = "25.11";
