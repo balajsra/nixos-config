@@ -24,6 +24,9 @@
   # Unfre Software: https://nixos.wiki/wiki/Unfree_Software
   nixpkgs.config.allowUnfree = true;
 
+  # Run unpatched dynamic binaries on NixOS
+  programs.nix-ld.enable = true;
+
   # Do not change, this is a safety anchor to prevent
   # system from breaking or losing data during an upgrade
   system.stateVersion = "25.11";
