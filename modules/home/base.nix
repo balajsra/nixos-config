@@ -1,4 +1,5 @@
 { vars, ... }:
+
 {
   home.username = vars.username;
   home.homeDirectory = "/home/${vars.username}";
