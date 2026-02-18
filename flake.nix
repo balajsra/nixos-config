@@ -67,7 +67,6 @@
           architecture = "x86_64-linux";
           timeZone = "America/New_York";
           osDisks = [
-            "/dev/sdb"
             "/dev/sda"
           ];
           swapSize = "2G";
