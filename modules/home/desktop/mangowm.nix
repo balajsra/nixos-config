@@ -10,6 +10,7 @@ in
 {
   imports = [
     inputs.mangowm.hmModules.mango
+    ./rofi.nix
   ];
 
   wayland.windowManager.mango = {
