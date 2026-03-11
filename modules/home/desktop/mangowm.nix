@@ -14,7 +14,8 @@ in
 
   wayland.windowManager.mango = {
     enable = true;
-    systemd.enable = true;
+    # Disable systemd integration since it conflicts with UWSM
+    systemd.enable = false;
   };
 
   xdg.configFile."mango".source =
