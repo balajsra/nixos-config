@@ -15,6 +15,7 @@
     ../../modules/nixos/desktop/gnome.nix
     ../../modules/nixos/dev/vim.nix
     ../../modules/nixos/disko/lvm-luks-btrfs.nix
+    ../../modules/nixos/filesystem/data.nix
     ../../modules/nixos/networking/firewall.nix
     ../../modules/nixos/networking/network-manager.nix
     ../../modules/nixos/networking/openssh-server.nix
@@ -38,6 +39,7 @@
       imports = [
         ../../modules/home/base.nix
         ../../modules/home/cli/bash.nix
+        ../../modules/home/data/user-data.nix
         ../../modules/home/dev/nix-development.nix
       ];
     };
