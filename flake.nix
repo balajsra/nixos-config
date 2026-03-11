@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    mangowm = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     self.submodules = true;
   };
 
@@ -23,6 +28,7 @@
       nixpkgs,
       home-manager,
       disko,
+      mangowm,
       ...
     }@inputs:
     let
@@ -55,6 +61,7 @@
           modules = [
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
+            mangowm.nixosModules.mango
             ./hosts/${hostName}
           ];
         };
