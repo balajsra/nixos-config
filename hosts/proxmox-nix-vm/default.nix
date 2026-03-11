@@ -7,15 +7,19 @@
 
 {
   imports = [
-    ./hardware.nix
     ../../modules/nixos/base.nix
     ../../modules/nixos/boot/grub-luks.nix
+    ../../modules/nixos/boot/kernel.nix
+    ../../modules/nixos/boot/plymouth.nix
+    ../../modules/nixos/cli/utils.nix
     ../../modules/nixos/desktop/gnome.nix
+    ../../modules/nixos/dev/vim.nix
     ../../modules/nixos/disko/lvm-luks-btrfs.nix
     ../../modules/nixos/networking/firewall.nix
     ../../modules/nixos/networking/network-manager.nix
     ../../modules/nixos/networking/openssh-server.nix
     ../../modules/nixos/services/storage-optimization.nix
+    ./hardware.nix
   ];
 
   networking.hostName = "${hostName}"; # Define your hostname.
@@ -33,7 +37,7 @@
     users.${vars.username} = {
       imports = [
         ../../modules/home/base.nix
-        ../../modules/home/cli/shell.nix
+        ../../modules/home/cli/bash.nix
         ../../modules/home/dev/nix-development.nix
       ];
     };

@@ -1,4 +1,4 @@
-{ vars, ... }:
+{ pkgs, vars, ... }:
 let
   nixosConfigPath = "/home/${vars.username}/.config/nixos";
 in
@@ -11,4 +11,8 @@ in
       nix-update = "nix flake update --flake ${nixosConfigPath}";
     };
   };
+
+  home.packages = with pkgs; [
+    bash-completion
+  ];
 }
