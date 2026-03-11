@@ -14,6 +14,7 @@
     ../../modules/nixos/boot/plymouth.nix
     ../../modules/nixos/cli/utils.nix
     ../../modules/nixos/desktop/gnome.nix
+    ../../modules/nixos/desktop/ly.nix
     ../../modules/nixos/desktop/mangowm.nix
     ../../modules/nixos/dev/vim.nix
     ../../modules/nixos/disko/lvm-luks-btrfs.nix

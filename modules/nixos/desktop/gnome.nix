@@ -9,7 +9,6 @@
   };
 
   # Enable the GNOME Desktop Environment.
-  services.displayManager.ly.enable = true;
   services.desktopManager.gnome.enable = true;
 
   programs.firefox.enable = true;
