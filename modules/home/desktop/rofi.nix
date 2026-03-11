@@ -10,11 +10,9 @@ in
 {
   # https://wiki.nixos.org/wiki/Rofi
   programs.rofi = {
-    enable = false;
+    enable = true;
   };
-  home.packages = with pkgs; [
-    rofi
-  ];
+  xdg.configFile."rofi/config.rasi".enable = false;
 
   xdg.configFile."rofi".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/rofi/.config/rofi";

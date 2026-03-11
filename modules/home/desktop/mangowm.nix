@@ -11,6 +11,7 @@ in
   imports = [
     inputs.mangowm.hmModules.mango
     ./rofi.nix
+    ./dunst.nix
   ];
 
   wayland.windowManager.mango = {
