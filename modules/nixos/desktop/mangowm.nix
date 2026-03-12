@@ -27,5 +27,7 @@
     kdePackages.qtstyleplugin-kvantum
     breeze-hacked-cursor-theme
     papirus-icon-theme
+    waypaper
+    swww
   ];
 }
