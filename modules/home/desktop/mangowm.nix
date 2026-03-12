@@ -9,9 +9,10 @@ let
 in
 {
   imports = [
-    inputs.mangowm.hmModules.mango
-    ./rofi.nix
     ./dunst.nix
+    ./rofi.nix
+    ./swaylock.nix
+    inputs.mangowm.hmModules.mango
   ];
 
   wayland.windowManager.mango = {
