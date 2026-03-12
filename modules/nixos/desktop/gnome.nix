@@ -12,8 +12,4 @@
   services.desktopManager.gnome.enable = true;
 
   programs.firefox.enable = true;
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-  ];
 }
