@@ -13,7 +13,10 @@ in
     enable = true;
   };
   xdg.configFile."rofi/config.rasi".enable = false;
-
   xdg.configFile."rofi".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/rofi/.config/rofi";
+
+  home.packages = with pkgs; [
+    cliphist
+  ];
 }
