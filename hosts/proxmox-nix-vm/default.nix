@@ -55,6 +55,7 @@
         ../../modules/home/media/ani-cli.nix
         ../../modules/home/media/celluloid.nix
         ../../modules/home/media/feishin.nix
+        ../../modules/home/media/fladder.nix
         ../../modules/home/media/gimp.nix
         ../../modules/home/media/picard.nix
         ../../modules/home/media/yt-dlp.nix
