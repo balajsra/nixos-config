@@ -52,6 +52,7 @@
         ../../modules/home/data/user-data.nix
         ../../modules/home/desktop/mangowm.nix
         ../../modules/home/dev/nix-development.nix
+        ../../modules/home/office/thunderbird.nix
         ../../modules/home/web/zen-browser.nix
       ];
     };
