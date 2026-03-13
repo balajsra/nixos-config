@@ -25,4 +25,10 @@ in
 
   xdg.configFile."mango".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mangowc/.config/mango";
+
+  # https://wiki.nixos.org/wiki/Waybar
+  programs.waybar.enable = true;
+
+  xdg.configFile."waybar".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mango/.config/mango/waybar";
 }
