@@ -48,6 +48,7 @@
         ../../modules/home/cli/foot.nix
         ../../modules/home/cli/tmux.nix
         ../../modules/home/comms/beeper.nix
+        ../../modules/home/comms/signal.nix
         ../../modules/home/data/nextcloud.nix
         ../../modules/home/data/syncthing.nix
         ../../modules/home/data/user-data.nix
