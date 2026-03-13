@@ -8,7 +8,8 @@
     thunar-media-tags-plugin
     thunar-vcs-plugin
     thunar-volman
-    xarchiver
     p7zip
+    tumbler
+    xarchiver
   ];
 }

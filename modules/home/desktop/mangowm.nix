@@ -11,6 +11,7 @@ in
   imports = [
     ./dunst.nix
     ./gammastep.nix
+    ./ristretto.nix
     ./rofi.nix
     ./swappy.nix
     ./swaylock.nix
