@@ -54,6 +54,7 @@
         ../../modules/home/dev/nix-development.nix
         ../../modules/home/office/gnucash.nix
         ../../modules/home/office/obsidian.nix
+        ../../modules/home/office/qalculate.nix
         ../../modules/home/office/thunderbird.nix
         ../../modules/home/office/zathura.nix
         ../../modules/home/web/zen-browser.nix
