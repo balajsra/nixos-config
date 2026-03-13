@@ -10,6 +10,7 @@ in
 {
   imports = [
     ./dunst.nix
+    ./gammastep.nix
     ./rofi.nix
     ./swaylock.nix
     inputs.mangowm.hmModules.mango

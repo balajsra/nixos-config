@@ -2,6 +2,11 @@
 
 {
   # "https://wiki.nixos.org/wiki/UWSM"
+
+  imports = [
+    ./geoclue.nix
+  ];
+
   programs.uwsm = {
     enable = true;
     waylandCompositors = {
