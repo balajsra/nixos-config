@@ -3,6 +3,7 @@
 {
   imports = [
     ./geoclue.nix
+    ./kde-connect.nix
   ];
 
   # "https://wiki.nixos.org/wiki/UWSM"
