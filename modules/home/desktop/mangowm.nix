@@ -32,4 +32,8 @@ in
 
   xdg.configFile."waybar".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mango/.config/mango/waybar";
+
+  home.packages = with pkgs; [
+    playerctl
+  ];
 }
