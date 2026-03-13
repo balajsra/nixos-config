@@ -5,7 +5,6 @@
     git
     mlocate
     sudo
-    tmux
     tree
     wget
   ];
