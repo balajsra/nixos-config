@@ -32,6 +32,10 @@
     };
   };
 
+  # https://wiki.nixos.org/wiki/Polkit
+  security.polkit.enable = true;
+  security.soteria.enable = true;
+
   environment.systemPackages = with pkgs; [
     wlr-randr
     wdisplays
