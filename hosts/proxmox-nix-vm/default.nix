@@ -22,6 +22,7 @@
     ../../modules/nixos/networking/firewall.nix
     ../../modules/nixos/networking/network-manager.nix
     ../../modules/nixos/networking/openssh-server.nix
+    ../../modules/nixos/networking/wireguard.nix
     ../../modules/nixos/services/storage-optimization.nix
     ./hardware.nix
   ];
