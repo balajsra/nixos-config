@@ -53,6 +53,7 @@
         ../../modules/home/desktop/mangowm.nix
         ../../modules/home/dev/nix-development.nix
         ../../modules/home/media/feishin.nix
+        ../../modules/home/media/picard.nix
         ../../modules/home/office/gnucash.nix
         ../../modules/home/office/obsidian.nix
         ../../modules/home/office/qalculate.nix
