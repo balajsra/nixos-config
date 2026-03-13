@@ -54,6 +54,7 @@
         ../../modules/home/dev/nix-development.nix
         ../../modules/home/media/ani-cli.nix
         ../../modules/home/media/feishin.nix
+        ../../modules/home/media/gimp.nix
         ../../modules/home/media/picard.nix
         ../../modules/home/office/gnucash.nix
         ../../modules/home/office/obsidian.nix
