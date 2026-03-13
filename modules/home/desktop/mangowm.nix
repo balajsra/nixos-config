@@ -12,6 +12,7 @@ in
     ./dunst.nix
     ./gammastep.nix
     ./rofi.nix
+    ./swappy.nix
     ./swaylock.nix
     inputs.mangowm.hmModules.mango
   ];
