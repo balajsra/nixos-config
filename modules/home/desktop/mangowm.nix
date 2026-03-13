@@ -14,6 +14,7 @@ in
     ./rofi.nix
     ./swappy.nix
     ./swaylock.nix
+    ./thunar.nix
     inputs.mangowm.hmModules.mango
   ];
 
