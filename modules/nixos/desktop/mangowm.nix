@@ -47,5 +47,6 @@
     papirus-icon-theme
     waypaper
     swww
+    blueman
   ];
 }
