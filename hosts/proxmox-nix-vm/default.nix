@@ -53,6 +53,7 @@
         ../../modules/home/desktop/mangowm.nix
         ../../modules/home/dev/nix-development.nix
         ../../modules/home/media/ani-cli.nix
+        ../../modules/home/media/celluloid.nix
         ../../modules/home/media/feishin.nix
         ../../modules/home/media/gimp.nix
         ../../modules/home/media/picard.nix
