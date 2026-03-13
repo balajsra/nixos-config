@@ -1,12 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  # "https://wiki.nixos.org/wiki/UWSM"
-
   imports = [
     ./geoclue.nix
   ];
 
+  # "https://wiki.nixos.org/wiki/UWSM"
   programs.uwsm = {
     enable = true;
     waylandCompositors = {
@@ -20,10 +19,20 @@
 
   programs.mango.enable = true;
 
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
+    config.common = {
+      default = [ "gtk" ];
+      "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+      "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+    };
+  };
+
   environment.systemPackages = with pkgs; [
-    xdg-desktop-portal
-    xdg-desktop-portal-wlr
-    xdg-desktop-portal-gtk
     wlr-randr
     wdisplays
     shikane
