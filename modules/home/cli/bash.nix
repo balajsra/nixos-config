@@ -16,5 +16,6 @@ in
 
   home.packages = with pkgs; [
     bash-completion
+    krabby
   ];
 }

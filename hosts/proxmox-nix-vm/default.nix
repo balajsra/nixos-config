@@ -43,6 +43,7 @@
       imports = [
         ../../modules/home/base.nix
         ../../modules/home/cli/bash.nix
+        ../../modules/home/cli/fish.nix
         ../../modules/home/cli/foot.nix
         ../../modules/home/cli/tmux.nix
         ../../modules/home/data/user-data.nix
