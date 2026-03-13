@@ -57,6 +57,7 @@
         ../../modules/home/media/feishin.nix
         ../../modules/home/media/gimp.nix
         ../../modules/home/media/picard.nix
+        ../../modules/home/media/yt-dlp.nix
         ../../modules/home/office/gnucash.nix
         ../../modules/home/office/obsidian.nix
         ../../modules/home/office/qalculate.nix
