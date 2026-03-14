@@ -67,6 +67,7 @@
         ../../modules/home/office/qalculate.nix
         ../../modules/home/office/thunderbird.nix
         ../../modules/home/office/zathura.nix
+        ../../modules/home/security/bitwarden.nix
         ../../modules/home/web/zen-browser.nix
       ];
     };
