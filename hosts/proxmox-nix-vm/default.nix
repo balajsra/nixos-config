@@ -46,6 +46,7 @@
         ../../modules/home/cli/bash.nix
         ../../modules/home/cli/fish.nix
         ../../modules/home/cli/foot.nix
+        ../../modules/home/cli/isd.nix
         ../../modules/home/cli/tmux.nix
         ../../modules/home/comms/beeper.nix
         ../../modules/home/comms/signal.nix
