@@ -35,6 +35,7 @@ in
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mango/.config/mango/waybar";
 
   home.packages = with pkgs; [
+    brightnessctl
     playerctl
   ];
 }
