@@ -61,6 +61,7 @@
         ../../modules/home/desktop/mangowm.nix
         ../../modules/home/dev/android.nix
         ../../modules/home/dev/nix-development.nix
+        ../../modules/home/gaming/mangohud.nix
         ../../modules/home/media/ani-cli.nix
         ../../modules/home/media/celluloid.nix
         ../../modules/home/media/feishin.nix
