@@ -1,0 +1,24 @@
+{ pkgs, config, ... }:
+let
+  dotfilesPath = "${config.home.homeDirectory}/.config/nixos/dotfiles";
+in
+{
+  # https://nixos.wiki/wiki/Gammastep
+
+  services.gammastep = {
+    enable = true;
+    tray = true;
+    provider = "geoclue2";
+    temperature.day = 6500;
+    temperature.night = 3500;
+    settings = {
+      general = {
+        fade = 1;
+        adjustment-method = "wayland";
+      };
+    };
+  };
+
+  home.file.".scripts/gammastep.sh".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/gammastep/.scripts/gammastep.sh";
+}
