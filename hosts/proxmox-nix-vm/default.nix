@@ -21,6 +21,7 @@
     ../../modules/nixos/filesystem/data.nix
     ../../modules/nixos/filesystem/udiskie.nix
     ../../modules/nixos/gaming/gamemode.nix
+    ../../modules/nixos/gaming/gamescope.nix
     ../../modules/nixos/gaming/steam.nix
     ../../modules/nixos/gaming/wine.nix
     ../../modules/nixos/networking/firewall.nix
