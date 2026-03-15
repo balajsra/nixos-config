@@ -21,6 +21,7 @@
     ../../modules/nixos/filesystem/data.nix
     ../../modules/nixos/filesystem/udiskie.nix
     ../../modules/nixos/gaming/gamemode.nix
+    ../../modules/nixos/gaming/steam.nix
     ../../modules/nixos/networking/firewall.nix
     ../../modules/nixos/networking/network-manager.nix
     ../../modules/nixos/networking/openssh-server.nix
