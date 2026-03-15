@@ -23,6 +23,7 @@
     ../../modules/nixos/gaming/gamemode.nix
     ../../modules/nixos/gaming/gamescope.nix
     ../../modules/nixos/gaming/steam.nix
+    ../../modules/nixos/gaming/vkbasalt.nix
     ../../modules/nixos/gaming/wine.nix
     ../../modules/nixos/networking/firewall.nix
     ../../modules/nixos/networking/network-manager.nix
