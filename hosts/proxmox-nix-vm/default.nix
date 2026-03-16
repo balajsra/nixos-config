@@ -30,13 +30,7 @@
     ../../modules/nixos/networking/openssh-server.nix
     ../../modules/nixos/networking/wireguard.nix
     ../../modules/nixos/services/storage-optimization.nix
-    ./hardware.nix
   ];
-
-  networking.hostName = "${hostName}"; # Define your hostname.
-
-  # Set your time zone.
-  time.timeZone = "${timeZone}";
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
