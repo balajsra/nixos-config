@@ -6,6 +6,8 @@
       self.nixosModules."host-proxmox-nix-vm"
       self.nixosModules."hardware-proxmox-nix-vm"
       self.nixosModules.disko-lvm-luks-btrfs
+      self.nixosModules.boot-grub-luks-btrfs
+
       (
         { ... }:
         {
@@ -15,6 +17,10 @@
               "/dev/sda"
             ];
             swapSize = "2G";
+          };
+
+          featureOptions = {
+            boot.grub-luks-btrfs.enable = true;
           };
         }
       )
