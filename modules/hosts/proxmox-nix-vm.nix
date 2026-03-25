@@ -1,11 +1,37 @@
-{ ... }:
+{ self, inputs, ... }:
 let
   hostname = "proxmox-nix-vm";
   timezone = "America/New_York";
   architecture = "x86_64-linux";
 in
 {
-  flake.nixosModules."host-${hostname}" =
+  flake.nixosConfigurations."${hostname}" = inputs.nixpkgs.lib.nixosSystem {
+    modules = [
+      self.nixosModules."${hostname}-configuration"
+      self.nixosModules."${hostname}-hardware"
+      self.nixosModules.disko-lvm-luks-btrfs
+      self.nixosModules.boot-grub-luks-btrfs
+
+      (
+        { ... }:
+        {
+          storageOptions = {
+            enable = true;
+            osDisks = [
+              "/dev/sda"
+            ];
+            swapSize = "2G";
+          };
+
+          featureOptions = {
+            boot.grub-luks-btrfs.enable = true;
+          };
+        }
+      )
+    ];
+  };
+
+  flake.nixosModules."${hostname}-configuration" =
     { pkgs, ... }:
     {
       networking.hostName = "${hostname}";
@@ -17,7 +43,7 @@ in
       system.stateVersion = "25.11";
     };
 
-  flake.nixosModules."hardware-${hostname}" =
+  flake.nixosModules."${hostname}-hardware" =
     { modulesPath, lib, ... }:
     {
       imports = [
