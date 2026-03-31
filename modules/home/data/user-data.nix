@@ -7,6 +7,7 @@ in
 
   xdg.userDirs = {
     enable = true;
+    setSessionVariables = true;
     createDirectories = true;
     documents = "/data/${user}/Documents";
     music = "/data/${user}/Music";
