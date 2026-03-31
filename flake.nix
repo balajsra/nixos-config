@@ -84,6 +84,18 @@
           ];
           swapSize = "2G";
         };
+
+        # System76 Oryx Pro 7
+        oryp7 = mkHost {
+          hostName = "oryp7";
+          architecture = "x86_64-linux";
+          timeZone = "America/New_York";
+          osDisks = [
+            "/dev/nvme0n1"
+            "/dev/sda"
+          ];
+          swapSize = "2G";
+        };
       };
     };
 }
