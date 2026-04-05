@@ -46,6 +46,7 @@ in
     {
       imports = [
         self.nixosModules."${user}"
+        self.nixosModules.kernel
       ];
 
       networking.hostName = "${hostname}";
