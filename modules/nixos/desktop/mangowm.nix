@@ -47,7 +47,7 @@
     breeze-hacked-cursor-theme
     papirus-icon-theme
     waypaper
-    swww
+    awww
     blueman
   ];
 }
