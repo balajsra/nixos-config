@@ -17,6 +17,7 @@ in
       self.nixosModules."${hostname}-hardware"
       self.nixosModules.partitions
       self.nixosModules.boot-loader
+      self.nixosModules.boot-animation
       inputs.home-manager.nixosModules.home-manager
       (
         { config, lib, ... }:
@@ -33,7 +34,10 @@ in
           };
 
           featureOptions = {
-            boot.grub-luks-btrfs.enable = true;
+            boot = {
+              grub-luks-btrfs.enable = true;
+              plymouth.enable = true;
+            };
           };
         }
       )
