@@ -8,6 +8,7 @@ let
   hostname = "oryp7";
   timezone = "America/New_York";
   architecture = "x86_64-linux";
+  user = "sravan";
 in
 {
   flake.nixosConfigurations."${hostname}" = inputs.nixpkgs.lib.nixosSystem {
@@ -16,6 +17,7 @@ in
       self.nixosModules."${hostname}-hardware"
       self.nixosModules.disko-lvm-luks-btrfs
       self.nixosModules.boot-grub-luks-btrfs
+      inputs.home-manager.nixosModules.home-manager
       (
         { config, lib, ... }:
         {
@@ -39,19 +41,13 @@ in
     ];
   };
 
-  flake.homeConfigurations."sravan@${hostname}" = withSystem architecture (
-    { pkgs, ... }:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [
-        self.homeModules.sravan
-      ];
-    }
-  );
-
   flake.nixosModules."${hostname}-configuration" =
     { pkgs, ... }:
     {
+      imports = [
+        self.nixosModules."${user}"
+      ];
+
       networking.hostName = "${hostname}";
       time.timeZone = "${timezone}";
 
@@ -89,4 +85,14 @@ in
 
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
+
+  flake.homeConfigurations."${user}" = withSystem architecture (
+    { pkgs, ... }:
+    inputs.home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [
+        self.homeModules."${user}"
+      ];
+    }
+  );
 }
