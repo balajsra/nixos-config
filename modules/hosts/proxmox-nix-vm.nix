@@ -15,8 +15,8 @@ in
     modules = [
       self.nixosModules."${hostname}-configuration"
       self.nixosModules."${hostname}-hardware"
-      self.nixosModules.disko-lvm-luks-btrfs
-      self.nixosModules.boot-grub-luks-btrfs
+      self.nixosModules.partitions
+      self.nixosModules.boot-loader
       inputs.home-manager.nixosModules.home-manager
       (
         { config, lib, ... }:

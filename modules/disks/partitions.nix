@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.disko-lvm-luks-btrfs =
+  flake.nixosModules.partitions =
     { config, lib, ... }:
     let
       cfg = config.storageOptions;

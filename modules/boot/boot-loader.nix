@@ -1,7 +1,7 @@
 { self, ... }:
 
 {
-  flake.nixosModules.boot-grub-luks-btrfs =
+  flake.nixosModules.boot-loader =
     {
       config,
       lib,
