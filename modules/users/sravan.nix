@@ -25,11 +25,9 @@ in
 
   flake.homeModules."${username}-git" = {
     programs.git = {
-      enable = true;
       settings = {
         user.name = "${name}";
         user.email = "${email}";
-        init.defaultBranch = "main";
       };
     };
   };

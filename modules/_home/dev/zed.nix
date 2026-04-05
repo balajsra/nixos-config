@@ -6,7 +6,6 @@
       "nix"
       "toml"
       "html"
-      "git-firefly"
       "xml"
       "latex"
       "csv"

@@ -51,6 +51,7 @@ in
       imports = [
         self.nixosModules."${user}"
         self.nixosModules.kernel
+        self.nixosModules.git
       ];
 
       networking.hostName = "${hostname}";
@@ -102,6 +103,7 @@ in
       inherit pkgs;
       modules = [
         self.homeModules."${user}"
+        self.homeModules.git
       ];
     }
   );
