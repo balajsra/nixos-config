@@ -55,6 +55,11 @@ in
       networking.hostName = "${hostname}";
       time.timeZone = "${timezone}";
 
+      nix.settings.experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+
       # Run unpatched dynamic binaries on NixOS
       programs.nix-ld.enable = true;
 
