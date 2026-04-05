@@ -1,9 +1,4 @@
-{
-  inputs,
-  lib,
-  withSystem,
-  ...
-}:
+{ self, lib, ... }:
 let
   name = "Sravan Balaji";
   email = "sr98vn@gmail.com";
@@ -19,8 +14,23 @@ in
   };
 
   flake.homeModules."${username}" = {
+    imports = [
+      self.homeModules."${username}-git"
+    ];
+
     home.username = lib.mkDefault username;
     home.homeDirectory = lib.mkDefault "/home/${username}";
     home.stateVersion = "25.11";
+  };
+
+  flake.homeModules."${username}-git" = {
+    programs.git = {
+      enable = true;
+      settings = {
+        user.name = "${name}";
+        user.email = "${email}";
+        init.defaultBranch = "main";
+      };
+    };
   };
 }
