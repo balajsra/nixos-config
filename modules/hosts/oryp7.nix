@@ -1,4 +1,9 @@
-{ self, inputs, ... }:
+{
+  self,
+  inputs,
+  withSystem,
+  ...
+}:
 let
   hostname = "oryp7";
   timezone = "America/New_York";
@@ -11,10 +16,12 @@ in
       self.nixosModules."${hostname}-hardware"
       self.nixosModules.disko-lvm-luks-btrfs
       self.nixosModules.boot-grub-luks-btrfs
-
       (
-        { ... }:
+        { config, lib, ... }:
         {
+          nixpkgs.pkgs = withSystem architecture ({ pkgs, ... }: pkgs);
+          nixpkgs.hostPlatform = lib.mkDefault "${architecture}";
+
           storageOptions = {
             enable = true;
             osDisks = [
@@ -32,12 +39,24 @@ in
     ];
   };
 
+  flake.homeConfigurations."sravan@${hostname}" = withSystem architecture (
+    { pkgs, ... }:
+    inputs.home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [
+        self.homeModules.sravan
+      ];
+    }
+  );
+
   flake.nixosModules."${hostname}-configuration" =
     { pkgs, ... }:
     {
       networking.hostName = "${hostname}";
-
       time.timeZone = "${timezone}";
+
+      # Run unpatched dynamic binaries on NixOS
+      programs.nix-ld.enable = true;
 
       # Do not change, this is a safety anchor to prevent
       # system from breaking or losing data during an upgrade
@@ -68,7 +87,6 @@ in
       boot.kernelModules = [ "kvm-intel" ];
       boot.extraModulePackages = [ ];
 
-      nixpkgs.hostPlatform = lib.mkDefault "${architecture}";
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
 }
