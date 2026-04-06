@@ -50,8 +50,9 @@ in
     {
       imports = [
         self.nixosModules."${user}"
-        self.nixosModules.kernel
         self.nixosModules.git
+        self.nixosModules.kernel
+        self.nixosModules.utils
       ];
 
       networking.hostName = "${hostname}";
@@ -104,6 +105,7 @@ in
       modules = [
         self.homeModules."${user}"
         self.homeModules.git
+        self.homeModules.terminal
       ];
     }
   );
