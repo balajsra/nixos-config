@@ -104,6 +104,7 @@ in
       inherit pkgs;
       modules = [
         self.homeModules."${user}"
+        self.homeModules.comms
         self.homeModules.git
         self.homeModules.terminal
       ];
