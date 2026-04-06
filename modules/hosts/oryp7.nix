@@ -50,6 +50,7 @@ in
     {
       imports = [
         self.nixosModules."${user}"
+        self.nixosModules.editor
         self.nixosModules.git
         self.nixosModules.kernel
         self.nixosModules.utils
@@ -121,6 +122,7 @@ in
       modules = [
         self.homeModules."${user}"
         self.homeModules.comms
+        self.homeModules.editor
         self.homeModules.git
         self.homeModules.terminal
       ];
