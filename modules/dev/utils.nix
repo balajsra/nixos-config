@@ -8,6 +8,7 @@
         sudo
         tree
         wget
+        isd
       ];
     };
 }
