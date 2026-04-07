@@ -137,6 +137,7 @@ in
         self.homeModules.data-dirs
         self.homeModules.desktop-environment
         self.homeModules.editor
+        self.homeModules.file-sharing
         self.homeModules.gaming
         self.homeModules.git
         self.homeModules.media
