@@ -49,6 +49,7 @@ in
     {
       imports = [
         self.nixosModules."${user}"
+        self.nixosModules.desktop-environment
         self.nixosModules.display-manager
         self.nixosModules.editor
         self.nixosModules.fonts
@@ -116,6 +117,7 @@ in
       inherit pkgs;
       imports = [
         self.homeModules."${user}"
+        self.homeModules.desktop-environment
         self.homeModules.editor
         self.homeModules.git
         self.homeModules.terminal

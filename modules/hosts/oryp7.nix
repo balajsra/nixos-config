@@ -52,6 +52,7 @@ in
         self.nixosModules."${user}"
         self.nixosModules.bluetooth
         self.nixosModules.data-dirs
+        self.nixosModules.desktop-environment
         self.nixosModules.display-manager
         self.nixosModules.editor
         self.nixosModules.fonts
@@ -134,6 +135,7 @@ in
         self.homeModules."${user}"
         self.homeModules.comms
         self.homeModules.data-dirs
+        self.homeModules.desktop-environment
         self.homeModules.editor
         self.homeModules.gaming
         self.homeModules.git
