@@ -56,6 +56,7 @@ in
         self.nixosModules.gaming
         self.nixosModules.git
         self.nixosModules.kernel
+        self.nixosModules.printing
         self.nixosModules.removable-media
         self.nixosModules.utils
       ];
