@@ -58,6 +58,7 @@ in
         self.nixosModules.kernel
         self.nixosModules.printing
         self.nixosModules.removable-media
+        self.nixosModules.sound
         self.nixosModules.utils
       ];
 
