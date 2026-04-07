@@ -53,6 +53,7 @@ in
         self.nixosModules.editor
         self.nixosModules.git
         self.nixosModules.kernel
+        self.nixosModules.removable-media
         self.nixosModules.utils
       ];
 
