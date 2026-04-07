@@ -51,6 +51,7 @@ in
       imports = [
         self.nixosModules."${user}"
         self.nixosModules.editor
+        self.nixosModules.gaming
         self.nixosModules.git
         self.nixosModules.kernel
         self.nixosModules.utils
@@ -123,6 +124,7 @@ in
         self.homeModules."${user}"
         self.homeModules.comms
         self.homeModules.editor
+        self.homeModules.gaming
         self.homeModules.git
         self.homeModules.terminal
       ];
