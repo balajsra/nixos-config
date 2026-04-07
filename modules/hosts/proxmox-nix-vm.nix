@@ -118,6 +118,7 @@ in
         self.homeModules.editor
         self.homeModules.git
         self.homeModules.terminal
+        self.homeModules.web-browser
       ];
     }
   );

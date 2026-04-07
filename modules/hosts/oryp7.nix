@@ -135,6 +135,7 @@ in
         self.homeModules.media
         self.homeModules.office
         self.homeModules.terminal
+        self.homeModules.web-browser
       ];
     }
   );
