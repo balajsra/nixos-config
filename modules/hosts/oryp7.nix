@@ -132,6 +132,7 @@ in
         self.homeModules.editor
         self.homeModules.gaming
         self.homeModules.git
+        self.homeModules.media
         self.homeModules.office
         self.homeModules.terminal
       ];
