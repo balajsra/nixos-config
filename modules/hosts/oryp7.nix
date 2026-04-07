@@ -58,6 +58,7 @@ in
         self.nixosModules.gaming
         self.nixosModules.git
         self.nixosModules.kernel
+        self.nixosModules.location
         self.nixosModules.night-light
         self.nixosModules.printing
         self.nixosModules.removable-media
