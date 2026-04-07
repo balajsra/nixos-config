@@ -60,6 +60,7 @@ in
         self.nixosModules.kernel
         self.nixosModules.location
         self.nixosModules.night-light
+        self.nixosModules.phone
         self.nixosModules.printing
         self.nixosModules.removable-media
         self.nixosModules.sound
@@ -139,6 +140,7 @@ in
         self.homeModules.media
         self.homeModules.night-light
         self.homeModules.office
+        self.homeModules.phone
         self.homeModules.terminal
         self.homeModules.web-browser
       ];
