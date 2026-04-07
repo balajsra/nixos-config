@@ -51,6 +51,7 @@ in
         self.nixosModules."${user}"
         self.nixosModules.display-manager
         self.nixosModules.editor
+        self.nixosModules.fonts
         self.nixosModules.git
         self.nixosModules.kernel
         self.nixosModules.removable-media

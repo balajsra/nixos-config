@@ -53,6 +53,7 @@ in
         self.nixosModules.data-dirs
         self.nixosModules.display-manager
         self.nixosModules.editor
+        self.nixosModules.fonts
         self.nixosModules.gaming
         self.nixosModules.git
         self.nixosModules.kernel
