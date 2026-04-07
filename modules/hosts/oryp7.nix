@@ -51,6 +51,7 @@ in
       imports = [
         self.nixosModules."${user}"
         self.nixosModules.data-dirs
+        self.nixosModules.display-manager
         self.nixosModules.editor
         self.nixosModules.gaming
         self.nixosModules.git

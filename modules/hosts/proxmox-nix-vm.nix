@@ -49,6 +49,7 @@ in
     {
       imports = [
         self.nixosModules."${user}"
+        self.nixosModules.display-manager
         self.nixosModules.editor
         self.nixosModules.git
         self.nixosModules.kernel
