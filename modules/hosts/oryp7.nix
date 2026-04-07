@@ -50,6 +50,7 @@ in
     {
       imports = [
         self.nixosModules."${user}"
+        self.nixosModules.data-dirs
         self.nixosModules.editor
         self.nixosModules.gaming
         self.nixosModules.git
@@ -123,6 +124,7 @@ in
       modules = [
         self.homeModules."${user}"
         self.homeModules.comms
+        self.homeModules.data-dirs
         self.homeModules.editor
         self.homeModules.gaming
         self.homeModules.git
