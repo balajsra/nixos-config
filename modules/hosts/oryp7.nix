@@ -130,6 +130,7 @@ in
         self.homeModules.editor
         self.homeModules.gaming
         self.homeModules.git
+        self.homeModules.office
         self.homeModules.terminal
       ];
     }
