@@ -58,6 +58,7 @@ in
         self.nixosModules.gaming
         self.nixosModules.git
         self.nixosModules.kernel
+        self.nixosModules.night-light
         self.nixosModules.printing
         self.nixosModules.removable-media
         self.nixosModules.sound
@@ -135,6 +136,7 @@ in
         self.homeModules.gaming
         self.homeModules.git
         self.homeModules.media
+        self.homeModules.night-light
         self.homeModules.office
         self.homeModules.terminal
         self.homeModules.web-browser
