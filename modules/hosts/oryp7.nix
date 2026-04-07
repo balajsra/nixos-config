@@ -50,6 +50,7 @@ in
     {
       imports = [
         self.nixosModules."${user}"
+        self.nixosModules.bluetooth
         self.nixosModules.data-dirs
         self.nixosModules.display-manager
         self.nixosModules.editor
