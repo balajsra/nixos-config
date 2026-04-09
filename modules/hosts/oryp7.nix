@@ -8,16 +8,13 @@ let
   hostname = "oryp7";
   timezone = "America/New_York";
   architecture = "x86_64-linux";
-  user = "sravan";
 in
 {
   flake.nixosConfigurations."${hostname}" = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules."${hostname}-configuration"
       self.nixosModules."${hostname}-hardware"
-      self.nixosModules.partitions
-      self.nixosModules.boot-loader
-      self.nixosModules.boot-animation
+      self.nixosModules.variables
       inputs.home-manager.nixosModules.home-manager
       (
         { config, lib, ... }:
@@ -25,7 +22,7 @@ in
           nixpkgs.pkgs = withSystem architecture ({ pkgs, ... }: pkgs);
           nixpkgs.hostPlatform = lib.mkDefault "${architecture}";
 
-          storageOptions = {
+          storage = {
             enable = true;
             osDisks = [
               "/dev/nvme0n1"
@@ -34,11 +31,17 @@ in
             swapSize = "2G";
           };
 
-          featureOptions = {
+          features = {
             boot = {
               grub-luks-btrfs.enable = true;
               plymouth.enable = true;
             };
+          };
+
+          primaryUser = {
+            name = "Sravan Balaji";
+            email = "sr98vn@gmail.com";
+            username = "sravan";
           };
         }
       )
@@ -49,8 +52,10 @@ in
     { pkgs, ... }:
     {
       imports = [
-        self.nixosModules."${user}"
+        self.nixosModules.admin
         self.nixosModules.bluetooth
+        self.nixosModules.boot-animation
+        self.nixosModules.boot-loader
         self.nixosModules.data-dirs
         self.nixosModules.desktop-environment
         self.nixosModules.display-manager
@@ -61,6 +66,7 @@ in
         self.nixosModules.kernel
         self.nixosModules.location
         self.nixosModules.night-light
+        self.nixosModules.partitions
         self.nixosModules.phone
         self.nixosModules.printing
         self.nixosModules.removable-media
@@ -127,12 +133,12 @@ in
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
 
-  flake.homeConfigurations."${user}" = withSystem architecture (
+  flake.homeConfigurations.admin = withSystem architecture (
     { pkgs, ... }:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
-        self.homeModules."${user}"
+        self.homeModules.admin
         self.homeModules.comms
         self.homeModules.data-dirs
         self.homeModules.desktop-environment

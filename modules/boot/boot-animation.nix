@@ -8,14 +8,9 @@
       pkgs,
       ...
     }:
-    let
-      cfg = config.featureOptions.boot.plymouth;
-    in
     {
       # https://wiki.nixos.org/wiki/Plymouth
-      options.featureOptions.boot.plymouth.enable = lib.mkEnableOption "Plymouth Boot Animation";
-
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf config.features.boot.plymouth.enable {
         boot = {
           plymouth = {
             enable = true;

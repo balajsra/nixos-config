@@ -1,7 +1,5 @@
 { self, config, ... }:
-let
-  dotfilesPath = "${config.home.homeDirectory}/.config/nixos/dotfiles";
-in
+
 {
   flake.nixosModules.night-light = {
     services.geoclue2 = {
@@ -36,6 +34,6 @@ in
       };
 
       home.file.".scripts/gammastep.sh".source =
-        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/gammastep/.scripts/gammastep.sh";
+        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/gammastep/.scripts/gammastep.sh";
     };
 }

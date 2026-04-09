@@ -3,30 +3,15 @@
   flake.nixosModules.partitions =
     { config, lib, ... }:
     let
-      cfg = config.storageOptions;
       # Helper to determine if a disk is the "primary" boot disk
-      isFirstDisk = dev: dev == (builtins.head cfg.osDisks);
+      isFirstDisk = dev: dev == (builtins.head config.storage.osDisks);
     in
     {
       imports = [ inputs.disko.nixosModules.disko ];
 
-      options.storageOptions = {
-        enable = lib.mkEnableOption "LVM on LUKS on BTRFS Layout";
-        osDisks = lib.mkOption {
-          type = lib.types.listOf lib.types.str;
-          default = [ "/dev/sda" ];
-          description = "List of disks to partition";
-        };
-        swapSize = lib.mkOption {
-          type = lib.types.str;
-          default = "8G";
-          description = "Size of the swap file";
-        };
-      };
-
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf config.storage.enable {
         disko.devices = {
-          disk = lib.genAttrs cfg.osDisks (dev: {
+          disk = lib.genAttrs config.storage.osDisks (dev: {
             device = dev;
             type = "disk";
             content = {
@@ -117,7 +102,7 @@
                       mountpoint = "/swap";
                       # Swap on BTRFS should not be compressed
                       mountOptions = [ "noatime" ];
-                      swap.swapfile.size = cfg.swapSize;
+                      swap.swapfile.size = config.storage.swapSize;
                     };
                   };
                 };

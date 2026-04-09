@@ -18,28 +18,30 @@
     ];
   };
 
-  flake.nixosModules.gamemode = {
-    # https://wiki.nixos.org/wiki/GameMode
-    users.users."${config.home.username}".extraGroups = [ "gamemode" ];
-    programs.gamemode = {
-      enable = true;
-      enableRenice = true;
-      settings = {
-        general = {
-          reaper_freq = 5;
-          desiredgov = "performance";
-          defaultgov = "powersave";
-          igpu_desiredgov = "powersave";
-          igpu_power_threshold = 0.3;
-          softrealtime = "off";
-          renice = 10;
-          ioprio = 0;
-          inhibit_screensaver = 1;
-          disable_splitlock = 1;
+  flake.nixosModules.gamemode =
+    { config, ... }:
+    {
+      # https://wiki.nixos.org/wiki/GameMode
+      users.users."${config.primaryUser.username}".extraGroups = [ "gamemode" ];
+      programs.gamemode = {
+        enable = true;
+        enableRenice = true;
+        settings = {
+          general = {
+            reaper_freq = 5;
+            desiredgov = "performance";
+            defaultgov = "powersave";
+            igpu_desiredgov = "powersave";
+            igpu_power_threshold = 0.3;
+            softrealtime = "off";
+            renice = 10;
+            ioprio = 0;
+            inhibit_screensaver = 1;
+            disable_splitlock = 1;
+          };
         };
       };
     };
-  };
 
   flake.nixosModules.gamescope = {
     programs.gamescope.enable = true;

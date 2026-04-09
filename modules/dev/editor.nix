@@ -1,7 +1,5 @@
 { self, config, ... }:
-let
-  dotfilesPath = "${config.home.homeDirectory}/.config/nixos/dotfiles";
-in
+
 {
   flake.nixosModules.editor = {
     imports = [
@@ -24,18 +22,22 @@ in
       ];
     };
 
-  flake.homeModules.vim = {
-    programs.vim = {
-      enable = true;
+  flake.homeModules.vim =
+    { config, ... }:
+    {
+      programs.vim = {
+        enable = true;
+      };
+
+      home.file.".vimrc".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/vim/.vimrc";
+
+      home.file.".vim".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/vim/.vim";
     };
 
-    home.file.".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vim/.vimrc";
-
-    home.file.".vim".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vim/.vim";
-  };
-
   flake.homeModules.vscode =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       programs.vscode = {
         enable = true;
@@ -49,9 +51,9 @@ in
       };
 
       xdg.configFile."Code/User/keybindings.json".source =
-        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vscode/.config/Code/User/keybindings.json";
+        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/vscode/.config/Code/User/keybindings.json";
       xdg.configFile."Code/User/settings.json".source =
-        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vscode/.config/Code/User/settings.json";
+        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/vscode/.config/Code/User/settings.json";
     };
 
   flake.homeModules.zed = {

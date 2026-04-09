@@ -1,10 +1,8 @@
 { self, config, ... }:
-let
-  dotfilesPath = "${config.home.homeDirectory}/.config/nixos/dotfiles";
-in
+
 {
   flake.homeModules.comms =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       home.packages = with pkgs; [
         beeper
@@ -13,6 +11,6 @@ in
       ];
 
       home.file.".themes/dracula-beeper".source =
-        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/beeper/.themes/dracula-beeper";
+        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/beeper/.themes/dracula-beeper";
     };
 }

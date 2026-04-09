@@ -8,14 +8,8 @@
       pkgs,
       ...
     }:
-    let
-      cfg = config.featureOptions.boot.grub-luks-btrfs;
-    in
     {
-      options.featureOptions.boot.grub-luks-btrfs.enable =
-        lib.mkEnableOption "GRUB with LUKS and BTRFS support";
-
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf config.features.boot.grub-luks-btrfs.enable {
         boot.loader = {
           efi = {
             canTouchEfiVariables = true;

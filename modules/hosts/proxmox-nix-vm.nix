@@ -8,16 +8,13 @@ let
   hostname = "proxmox-nix-vm";
   timezone = "America/New_York";
   architecture = "x86_64-linux";
-  user = "sravan";
 in
 {
   flake.nixosConfigurations."${hostname}" = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules."${hostname}-configuration"
       self.nixosModules."${hostname}-hardware"
-      self.nixosModules.partitions
-      self.nixosModules.boot-loader
-      self.nixosModules.boot-animation
+      self.nixosModules.variables
       inputs.home-manager.nixosModules.home-manager
       (
         { config, lib, ... }:
@@ -25,7 +22,7 @@ in
           nixpkgs.pkgs = withSystem architecture ({ pkgs, ... }: pkgs);
           nixpkgs.hostPlatform = lib.mkDefault "${architecture}";
 
-          storageOptions = {
+          storage = {
             enable = true;
             osDisks = [
               "/dev/sda"
@@ -33,11 +30,17 @@ in
             swapSize = "2G";
           };
 
-          featureOptions = {
+          features = {
             boot = {
               grub-luks-btrfs.enable = true;
               plymouth.enable = true;
             };
+          };
+
+          primaryUser = {
+            name = "Sravan Balaji";
+            email = "sr98vn@gmail.com";
+            username = "sravan";
           };
         }
       )
@@ -48,13 +51,16 @@ in
     { pkgs, ... }:
     {
       imports = [
-        self.nixosModules."${user}"
+        self.nixosModules.admin
+        self.nixosModules.boot-animation
+        self.nixosModules.boot-loader
         self.nixosModules.desktop-environment
         self.nixosModules.display-manager
         self.nixosModules.editor
         self.nixosModules.fonts
         self.nixosModules.git
         self.nixosModules.kernel
+        self.nixosModules.partitions
         self.nixosModules.removable-media
         self.nixosModules.utils
       ];
@@ -111,12 +117,12 @@ in
       boot.extraModulePackages = [ ];
     };
 
-  flake.homeConfigurations."${user}" = withSystem architecture (
+  flake.homeConfigurations.admin = withSystem architecture (
     { pkgs, ... }:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       imports = [
-        self.homeModules."${user}"
+        self.homeModules.admin
         self.homeModules.desktop-environment
         self.homeModules.editor
         self.homeModules.git
