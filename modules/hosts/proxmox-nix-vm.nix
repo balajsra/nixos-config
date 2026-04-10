@@ -15,7 +15,7 @@ in
       self.nixosModules."${hostname}-configuration"
       self.nixosModules."${hostname}-hardware"
       self.nixosModules.variables
-      inputs.home-manager.nixosModules.home-manager
+      self.nixosModules.home-manager
       (
         { config, lib, ... }:
         {
@@ -121,7 +121,7 @@ in
     { pkgs, ... }:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      imports = [
+      modules = [
         self.homeModules.admin
         self.homeModules.desktop-environment
         self.homeModules.editor

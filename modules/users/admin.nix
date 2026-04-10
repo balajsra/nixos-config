@@ -14,6 +14,8 @@
         isNormalUser = true;
         extraGroups = [ "wheel" ];
       };
+
+      home-manager.users."${config.primaryUser.username}" = self.homeModules.admin;
     };
 
   flake.homeModules.admin =

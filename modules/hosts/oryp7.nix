@@ -15,7 +15,7 @@ in
       self.nixosModules."${hostname}-configuration"
       self.nixosModules."${hostname}-hardware"
       self.nixosModules.variables
-      inputs.home-manager.nixosModules.home-manager
+      self.nixosModules.home-manager
       (
         { config, lib, ... }:
         {

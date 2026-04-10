@@ -1,9 +1,17 @@
-{ inputs, ... }:
+{ self, inputs, ... }:
 
 {
-  flake.nixosModules.home-manager = {
-    imports = [
-      inputs.home-manager.flakeModules.home-manager
-    ];
-  };
+  flake.nixosModules.home-manager =
+    { pkgs, ... }:
+    {
+      imports = [
+        # import official home-manager NixOS module
+        inputs.home-manager.nixosModules.default
+      ];
+
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+      };
+    };
 }
