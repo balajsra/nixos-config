@@ -21,7 +21,7 @@
   flake.nixosModules.mangowm =
     { pkgs, ... }:
     {
-      # programs.mango.enable = true;
+      programs.mangowc.enable = true;
 
       # "https://wiki.nixos.org/wiki/UWSM"
       programs.uwsm = {

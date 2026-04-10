@@ -65,6 +65,7 @@ in
         self.nixosModules.git
         self.nixosModules.kernel
         self.nixosModules.location
+        self.nixosModules.networking
         self.nixosModules.night-light
         self.nixosModules.partitions
         self.nixosModules.phone

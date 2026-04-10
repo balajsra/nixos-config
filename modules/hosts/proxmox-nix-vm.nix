@@ -60,6 +60,7 @@ in
         self.nixosModules.fonts
         self.nixosModules.git
         self.nixosModules.kernel
+        self.nixosModules.networking
         self.nixosModules.partitions
         self.nixosModules.removable-media
         self.nixosModules.utils
