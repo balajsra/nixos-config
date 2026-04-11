@@ -16,7 +16,15 @@
   };
 
   flake.homeModules.night-light =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      osConfig,
+      ...
+    }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
     {
       # https://nixos.wiki/wiki/Gammastep
       services.gammastep = {
@@ -34,6 +42,6 @@
       };
 
       home.file.".scripts/gammastep.sh".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/gammastep/.scripts/gammastep.sh";
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/gammastep/.scripts/gammastep.sh";
     };
 }

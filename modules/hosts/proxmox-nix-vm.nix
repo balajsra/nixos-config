@@ -42,6 +42,18 @@ in
             email = "sr98vn@gmail.com";
             username = "sravan";
           };
+
+          imports = [ self.nixosModules.admin ];
+          home-manager.users."${config.primaryUser.username}" = {
+            imports = [
+              self.homeModules.admin
+              self.homeModules.desktop-environment
+              self.homeModules.editor
+              self.homeModules.git
+              self.homeModules.terminal
+              self.homeModules.web-browser
+            ];
+          };
         }
       )
     ];
@@ -51,7 +63,6 @@ in
     { pkgs, ... }:
     {
       imports = [
-        self.nixosModules.admin
         self.nixosModules.boot-animation
         self.nixosModules.boot-loader
         self.nixosModules.desktop-environment
@@ -117,19 +128,4 @@ in
       boot.kernelModules = [ ];
       boot.extraModulePackages = [ ];
     };
-
-  flake.homeConfigurations.admin = withSystem architecture (
-    { pkgs, ... }:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [
-        self.homeModules.admin
-        self.homeModules.desktop-environment
-        self.homeModules.editor
-        self.homeModules.git
-        self.homeModules.terminal
-        self.homeModules.web-browser
-      ];
-    }
-  );
 }

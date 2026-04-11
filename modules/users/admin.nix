@@ -14,29 +14,27 @@
         isNormalUser = true;
         extraGroups = [ "wheel" ];
       };
-
-      home-manager.users."${config.primaryUser.username}" = self.homeModules.admin;
     };
 
   flake.homeModules.admin =
-    { config, ... }:
+    { config, osConfig, ... }:
     {
       imports = [
         self.homeModules.admin-git
       ];
 
-      home.username = lib.mkDefault config.primaryUser.username;
-      home.homeDirectory = lib.mkDefault "/home/${config.primaryUser.username}";
+      home.username = lib.mkDefault osConfig.primaryUser.username;
+      home.homeDirectory = lib.mkDefault "/home/${osConfig.primaryUser.username}";
       home.stateVersion = "25.11";
     };
 
   flake.homeModules.admin-git =
-    { config, ... }:
+    { config, osConfig, ... }:
     {
       programs.git = {
         settings = {
-          user.name = "${config.primaryUser.name}";
-          user.email = "${config.primaryUser.email}";
+          user.name = "${osConfig.primaryUser.name}";
+          user.email = "${osConfig.primaryUser.email}";
         };
       };
     };

@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, inputs, ... }:
 
 {
   flake.homeModules.web-browser =

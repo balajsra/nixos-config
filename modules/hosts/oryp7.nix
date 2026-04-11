@@ -43,6 +43,26 @@ in
             email = "sr98vn@gmail.com";
             username = "sravan";
           };
+
+          imports = [ self.nixosModules.admin ];
+          home-manager.users."${config.primaryUser.username}" = {
+            imports = [
+              self.homeModules.admin
+              self.homeModules.comms
+              self.homeModules.data-dirs
+              self.homeModules.desktop-environment
+              self.homeModules.editor
+              self.homeModules.file-sharing
+              self.homeModules.gaming
+              self.homeModules.git
+              self.homeModules.media
+              self.homeModules.night-light
+              self.homeModules.office
+              self.homeModules.phone
+              self.homeModules.terminal
+              self.homeModules.web-browser
+            ];
+          };
         }
       )
     ];
@@ -52,7 +72,6 @@ in
     { pkgs, ... }:
     {
       imports = [
-        self.nixosModules.admin
         self.nixosModules.bluetooth
         self.nixosModules.boot-animation
         self.nixosModules.boot-loader
@@ -133,27 +152,4 @@ in
 
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
-
-  flake.homeConfigurations.admin = withSystem architecture (
-    { pkgs, ... }:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [
-        self.homeModules.admin
-        self.homeModules.comms
-        self.homeModules.data-dirs
-        self.homeModules.desktop-environment
-        self.homeModules.editor
-        self.homeModules.file-sharing
-        self.homeModules.gaming
-        self.homeModules.git
-        self.homeModules.media
-        self.homeModules.night-light
-        self.homeModules.office
-        self.homeModules.phone
-        self.homeModules.terminal
-        self.homeModules.web-browser
-      ];
-    }
-  );
 }

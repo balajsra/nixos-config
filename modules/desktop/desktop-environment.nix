@@ -67,7 +67,15 @@
     };
 
   flake.homeModules.mangowm =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      osConfig,
+      ...
+    }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
     {
       imports = [
         inputs.mangowm.hmModules.mango
@@ -82,12 +90,12 @@
         systemd.enable = false;
       };
       xdg.configFile."mango".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/mangowc/.config/mango";
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mangowc/.config/mango";
 
       # https://wiki.nixos.org/wiki/Waybar
       programs.waybar.enable = true;
       xdg.configFile."waybar".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/mango/.config/mango/waybar";
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mango/.config/mango/waybar";
 
       home.packages = with pkgs; [
         brightnessctl
@@ -97,19 +105,30 @@
     };
 
   flake.homeModules.notifications =
-    { config, ... }:
+    { config, osConfig, ... }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
     {
       services.dunst.enable = true;
 
       xdg.configFile."dunst/dunstrc".enable = false;
       xdg.configFile."dunst".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/dunst/.config/dunst";
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/dunst/.config/dunst";
       home.file.".scripts/dunst.sh".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/dunst/.scripts/dunst.sh";
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/dunst/.scripts/dunst.sh";
     };
 
   flake.homeModules.launcher =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      osConfig,
+      ...
+    }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
     {
       # https://wiki.nixos.org/wiki/Rofi
       programs.rofi = {
@@ -117,7 +136,7 @@
       };
       xdg.configFile."rofi/config.rasi".enable = false;
       xdg.configFile."rofi".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/rofi/.config/rofi";
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/rofi/.config/rofi";
 
       home.packages = with pkgs; [
         cliphist
@@ -125,7 +144,7 @@
     };
 
   flake.homeModules.screenshot =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       home.packages = with pkgs; [
         grim
@@ -151,7 +170,15 @@
     };
 
   flake.homeModules.screen-lock =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      osConfig,
+      ...
+    }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
     {
       home.packages = with pkgs; [
         swaylock-effects
@@ -159,9 +186,9 @@
       ];
 
       xdg.configFile."swaylock".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/swaylock/.config/swaylock";
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swaylock/.config/swaylock";
       xdg.configFile."swayidle".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/swayidle/.config/swayidle";
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swayidle/.config/swayidle";
     };
 
   flake.homeModules.file-explorer =

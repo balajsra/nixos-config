@@ -28,9 +28,9 @@
     };
 
   flake.homeModules.data-dirs =
-    { config, ... }:
+    { config, osConfig, ... }:
     let
-      user = config.primaryUser.username;
+      user = osConfig.primaryUser.username;
     in
     {
       home.file."Data".source = config.lib.file.mkOutOfStoreSymlink "/data/${user}";

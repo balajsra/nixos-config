@@ -23,21 +23,30 @@
     };
 
   flake.homeModules.vim =
-    { config, ... }:
+    { config, osConfig, ... }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
     {
       programs.vim = {
         enable = true;
       };
 
-      home.file.".vimrc".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/vim/.vimrc";
+      home.file.".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vim/.vimrc";
 
-      home.file.".vim".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/vim/.vim";
+      home.file.".vim".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vim/.vim";
     };
 
   flake.homeModules.vscode =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      osConfig,
+      ...
+    }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
     {
       programs.vscode = {
         enable = true;
@@ -51,9 +60,9 @@
       };
 
       xdg.configFile."Code/User/keybindings.json".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/vscode/.config/Code/User/keybindings.json";
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vscode/.config/Code/User/keybindings.json";
       xdg.configFile."Code/User/settings.json".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.primaryUser.dotfilesPath}/vscode/.config/Code/User/settings.json";
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vscode/.config/Code/User/settings.json";
     };
 
   flake.homeModules.zed = {
