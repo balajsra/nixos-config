@@ -50,6 +50,7 @@ in
             imports = [
               self.homeModules.admin
               self.homeModules.desktop-environment
+              self.homeModules.development
               self.homeModules.editor
               self.homeModules.git
               self.homeModules.terminal

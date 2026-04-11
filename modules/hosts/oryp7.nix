@@ -53,6 +53,7 @@ in
               self.homeModules.comms
               self.homeModules.data-dirs
               self.homeModules.desktop-environment
+              self.homeModules.development
               self.homeModules.editor
               self.homeModules.file-sharing
               self.homeModules.gaming
