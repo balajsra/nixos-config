@@ -53,9 +53,6 @@
       security.soteria.enable = true;
 
       environment.systemPackages = with pkgs; [
-        wlr-randr
-        wdisplays
-        shikane
         nwg-look
         kdePackages.qt6ct
         kdePackages.qtstyleplugin-kvantum
@@ -83,6 +80,9 @@
         self.homeModules.notifications
         self.homeModules.launcher
         self.homeModules.screenshot
+        self.homeModules.screen-lock
+        self.homeModules.file-explorer
+        self.homeModules.display-configuration
       ];
 
       wayland.windowManager.mango = {
@@ -209,5 +209,29 @@
         tumbler
         xarchiver
       ];
+    };
+
+  flake.homeModules.display-configuration =
+    {
+      pkgs,
+      config,
+      osConfig,
+      ...
+    }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
+    {
+      # TODO: Use shikane home manager module
+      home.packages = with pkgs; [
+        wlr-randr
+        wdisplays
+        shikane
+      ];
+
+      xdg.configFile."shikane".source =
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/shikane/.config/shikane";
+      home.file.".scripts/shikane-postswitch.sh".source =
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/shikane/.scripts/shikane-postswitch.sh";
     };
 }
