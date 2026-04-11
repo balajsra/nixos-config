@@ -89,7 +89,7 @@
         enable = true;
         # Give Home Manager an empty package since we are using NixOS to install
         # the Mango package
-        package = lib.mkForce (pkgs.runCommand "mango-stub" {} "mkdir -p $out");
+        package = lib.mkForce (pkgs.runCommand "mango-stub" { } "mkdir -p $out");
         # UWSM handles the service, so home manager shouldn't
         systemd.enable = false;
       };
