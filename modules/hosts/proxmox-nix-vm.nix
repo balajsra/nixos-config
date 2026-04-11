@@ -19,8 +19,9 @@ in
       (
         { config, lib, ... }:
         {
-          nixpkgs.pkgs = withSystem architecture ({ pkgs, ... }: pkgs);
           nixpkgs.hostPlatform = lib.mkDefault "${architecture}";
+          # Unfree Software: https://nixos.wiki/wiki/Unfree_Software
+          nixpkgs.config.allowUnfree = true;
 
           storage = {
             enable = true;
