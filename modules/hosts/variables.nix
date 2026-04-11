@@ -24,6 +24,16 @@
           plymouth.enable = lib.mkEnableOption "Plymouth Boot Animation";
           grub-luks-btrfs.enable = lib.mkEnableOption "GRUB with LUKS and BTRFS support";
         };
+
+        desktop-environment = lib.mkOption {
+          type = lib.types.enum [
+            "gnome"
+            "mango"
+            "none"
+          ];
+          default = "none";
+          description = "Which desktop environment to enable for this host.";
+        };
       };
 
       primaryUser = {

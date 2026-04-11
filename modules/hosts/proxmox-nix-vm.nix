@@ -36,6 +36,7 @@ in
               grub-luks-btrfs.enable = true;
               plymouth.enable = true;
             };
+            desktop-environment = "gnome";
           };
 
           primaryUser = {
