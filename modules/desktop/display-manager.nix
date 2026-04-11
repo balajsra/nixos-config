@@ -2,16 +2,9 @@
 
 {
   flake.nixosModules.display-manager = {
-    services.displayManager.ly = {
+    services.displayManager.gdm = {
       enable = true;
-      settings = {
-        animation = "matrix";
-        asterisk = "*";
-        bigclock = "en";
-        clear_password = true;
-        clock = "%c";
-        save = true;
-      };
+      wayland = true;
     };
   };
 }
