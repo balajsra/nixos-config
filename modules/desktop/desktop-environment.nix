@@ -30,7 +30,7 @@
           mangowm = {
             prettyName = "Mango";
             comment = "Mango Wayland Compositor managed by UWSM";
-            binPath = "${pkgs.mangowc}/bin/mango";
+            binPath = "/run/current-system/sw/bin/mango";
           };
         };
       };
