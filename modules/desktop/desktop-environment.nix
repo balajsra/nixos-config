@@ -30,7 +30,7 @@
           mangowm = {
             prettyName = "Mango";
             comment = "Mango Wayland Compositor managed by UWSM";
-            binPath = "/run/current-system/sw/bin/mango";
+            binPath = "${pkgs.mangowc}/bin/mango";
           };
         };
       };
@@ -86,7 +86,9 @@
 
       wayland.windowManager.mango = {
         enable = true;
-        # Disable systemd integration since it conflicts with UWSM
+        # Tell home manager not to install the package since NixOS is already doing it
+        package = null;
+        # UWSM handles the service, so home manager shouldn't
         systemd.enable = false;
       };
       xdg.configFile."mango".source =
