@@ -71,6 +71,7 @@
       pkgs,
       config,
       osConfig,
+      lib,
       ...
     }:
     let
@@ -86,8 +87,9 @@
 
       wayland.windowManager.mango = {
         enable = true;
-        # Tell home manager not to install the package since NixOS is already doing it
-        package = null;
+        # Give Home Manager an empty package since we are using NixOS to install
+        # the Mango package
+        package = lib.mkForce (pkgs.runCommand "mango-stub" {} "mkdir -p $out");
         # UWSM handles the service, so home manager shouldn't
         systemd.enable = false;
       };
