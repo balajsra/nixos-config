@@ -34,6 +34,10 @@
           default = "none";
           description = "Which desktop environment to enable for this host.";
         };
+
+        networking = {
+          ssh-server.enable = lib.mkEnableOption "Enable SSH server";
+        };
       };
 
       primaryUser = {
