@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    import-tree.url = "github:vic/import-tree";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,75 +31,5 @@
     self.submodules = true;
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      disko,
-      mangowm,
-      zen-browser,
-      ...
-    }@inputs:
-    let
-      vars = {
-        name = "Sravan Balaji";
-        email = "sr98vn@gmail.com";
-        username = "sravan";
-      };
-      mkHost =
-        {
-          hostName,
-          architecture,
-          timeZone,
-          osDisks,
-          swapSize,
-        }:
-        nixpkgs.lib.nixosSystem {
-          system = "${architecture}";
-          specialArgs = {
-            inherit
-              inputs
-              vars
-              hostName
-              architecture
-              timeZone
-              osDisks
-              swapSize
-              ;
-          };
-          modules = [
-            disko.nixosModules.disko
-            home-manager.nixosModules.home-manager
-            mangowm.nixosModules.mango
-            ./hosts/${hostName}
-          ];
-        };
-    in
-    {
-      nixosConfigurations = {
-        # NixOS VM on Proxmox
-        proxmox-nix-vm = mkHost {
-          hostName = "proxmox-nix-vm";
-          architecture = "x86_64-linux";
-          timeZone = "America/New_York";
-          osDisks = [
-            "/dev/sda"
-          ];
-          swapSize = "2G";
-        };
-
-        # System76 Oryx Pro 7
-        oryp7 = mkHost {
-          hostName = "oryp7";
-          architecture = "x86_64-linux";
-          timeZone = "America/New_York";
-          osDisks = [
-            "/dev/nvme0n1"
-            "/dev/sda"
-          ];
-          swapSize = "2G";
-        };
-      };
-    };
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }
