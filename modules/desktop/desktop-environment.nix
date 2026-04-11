@@ -117,6 +117,7 @@
 
   flake.homeModules.notifications =
     {
+      pkgs,
       config,
       osConfig,
       lib,
@@ -127,6 +128,10 @@
     in
     {
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+        home.packages = with pkgs; [
+          libnotify # provides notify-send
+        ];
+
         services.dunst.enable = true;
 
         xdg.configFile."dunst/dunstrc".enable = false;
@@ -259,15 +264,85 @@
     in
     {
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
-        # TODO: Use shikane home manager module
         home.packages = with pkgs; [
           wlr-randr
           wdisplays
-          shikane
         ];
 
-        xdg.configFile."shikane".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/shikane/.config/shikane";
+        services.shikane = {
+          enable = true;
+          settings = {
+            profile = [
+              {
+                name = "docked";
+                exec = [
+                  "notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""
+                  "$HOME/.scripts/shikane-postswitch.sh"
+                ];
+                output = [
+                  {
+                    enable = true;
+                    search = [
+                      "m=49S405"
+                      "s="
+                      "v=Technical Concepts Ltd"
+                    ];
+                    mode = "3840x2160@60Hz";
+                    position = {
+                      x = 1920;
+                      y = 0;
+                    };
+                    scale = 1.0;
+                    transform = "normal";
+                    adaptive_sync = false;
+                  }
+                  {
+                    enable = true;
+                    search = [
+                      "m=0x0625"
+                      "s="
+                      "v=LG Display"
+                    ];
+                    mode = "1920x1080@143.998Hz";
+                    position = {
+                      x = 0;
+                      y = 0;
+                    };
+                    scale = 1.0;
+                    transform = "normal";
+                    adaptive_sync = false;
+                  }
+                ];
+              }
+              {
+                name = "mobile";
+                exec = [
+                  "notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""
+                  "$HOME/.scripts/shikane-postswitch.sh"
+                ];
+                output = [
+                  {
+                    enable = true;
+                    search = [
+                      "m=0x0625"
+                      "s="
+                      "v=LG Display"
+                    ];
+                    mode = "1920x1080@143.998Hz";
+                    position = {
+                      x = 0;
+                      y = 0;
+                    };
+                    scale = 1.0;
+                    transform = "normal";
+                    adaptive_sync = false;
+                  }
+                ];
+              }
+            ];
+          };
+        };
+
         home.file.".scripts/shikane-postswitch.sh".source =
           config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/shikane/.scripts/shikane-postswitch.sh";
       };
