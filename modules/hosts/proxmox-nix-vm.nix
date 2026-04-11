@@ -60,6 +60,7 @@ in
               self.homeModules.development
               self.homeModules.editor
               self.homeModules.git
+              self.homeModules.security
               self.homeModules.terminal
               self.homeModules.web-browser
             ];

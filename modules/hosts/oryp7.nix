@@ -69,6 +69,7 @@ in
               self.homeModules.night-light
               self.homeModules.office
               self.homeModules.phone
+              self.homeModules.security
               self.homeModules.terminal
               self.homeModules.web-browser
             ];
