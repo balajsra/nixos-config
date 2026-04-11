@@ -38,6 +38,10 @@
         networking = {
           ssh-server.enable = lib.mkEnableOption "Enable SSH server";
         };
+
+        hardware = {
+          system76.enable = lib.mkEnableOption "Enable System76 hardware support";
+        };
       };
 
       primaryUser = {

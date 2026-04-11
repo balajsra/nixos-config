@@ -42,6 +42,10 @@ in
             networking = {
               ssh-server.enable = true;
             };
+
+            hardware = {
+              system76.enable = false;
+            };
           };
 
           primaryUser = {
@@ -85,6 +89,7 @@ in
         self.nixosModules.networking
         self.nixosModules.partitions
         self.nixosModules.removable-media
+        self.nixosModules.system76
         self.nixosModules.utils
       ];
 
