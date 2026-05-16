@@ -23,6 +23,18 @@ in
           # Unfree Software: https://nixos.wiki/wiki/Unfree_Software
           nixpkgs.config.allowUnfree = true;
 
+          # Modify pkgs to include a `stable` keyword to reference stable package repo
+          # Unstable packages installed as `pkgs.<package-name>`
+          # Stable packages installed as `pkgs.stable.<package-name>`
+          nixpkgs.overlays = [
+            (final: prev: {
+              stable = import inputs.nixpkgs-stable {
+                system = final.system;
+                config = config.nixpkgs.config;
+              };
+            })
+          ];
+
           storage = {
             enable = true;
             osDisks = [

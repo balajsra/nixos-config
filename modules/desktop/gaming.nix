@@ -77,12 +77,17 @@
       ];
     };
 
-  flake.homeModules.lutris = {
-    # TODO: Add Lutris settings
-    programs.lutris = {
-      enable = true;
+  flake.homeModules.lutris =
+    { pkgs, ... }:
+    {
+      # TODO: Add Lutris settings
+      programs.lutris = {
+        enable = true;
+
+        # Unstable version of Lutris depends on openldap that has failing tests
+        package = pkgs.stable.lutris;
+      };
     };
-  };
 
   flake.homeModules.mangohud = {
     programs.mangohud.enable = true;
