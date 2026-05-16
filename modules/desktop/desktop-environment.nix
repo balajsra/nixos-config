@@ -93,9 +93,8 @@
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
         wayland.windowManager.mango = {
           enable = true;
-          # Give Home Manager an empty package since we are using NixOS to install
-          # the Mango package
-          package = lib.mkForce (pkgs.runCommand "mango-stub" { } "mkdir -p $out");
+          # Point Home Manager to system installed package
+          package = pkgs.mangowc;
           # UWSM handles the service, so home manager shouldn't
           systemd.enable = false;
 
@@ -398,8 +397,8 @@
             mousebind = [
               "SUPER,btn_left,moveresize,curmove"
               "SUPER,btn_right,moveresize,curresize"
-              "NONE,btn_left,toggleoverview"
-              "NONE,btn_right,killclient"
+              # "NONE,btn_left,toggleoverview"
+              # "NONE,btn_right,killclient"
             ];
 
             axisbind = [
