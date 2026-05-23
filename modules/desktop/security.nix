@@ -16,6 +16,8 @@
   flake.homeModules.security = {
     imports = [
       self.homeModules.bitwarden
+      self.homeModules.sops
+      inputs.sops-nix.homeManagerModules.sops
     ];
   };
 
@@ -68,6 +70,12 @@
 
         defaultSopsFile = "${secretsPath}/secrets.yaml";
         validateSopsFiles = false;
+
+        secrets = {
+          "private_keys/${osConfig.primaryUser.username}" = {
+            path = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
+          };
+        };
       };
     };
 }
