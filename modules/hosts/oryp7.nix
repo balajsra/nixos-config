@@ -54,6 +54,7 @@ in
 
             networking = {
               ssh-server.enable = false;
+              ssh-client.enable = true;
             };
 
             hardware = {
@@ -82,6 +83,7 @@ in
               self.homeModules.gaming
               self.homeModules.git
               self.homeModules.media
+              self.homeModules.networking
               self.homeModules.night-light
               self.homeModules.office
               self.homeModules.phone

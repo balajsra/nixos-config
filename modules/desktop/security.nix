@@ -70,12 +70,6 @@
 
         defaultSopsFile = "${secretsPath}/secrets.yaml";
         validateSopsFiles = false;
-
-        secrets = {
-          "private_keys/${osConfig.primaryUser.username}" = {
-            path = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
-          };
-        };
       };
     };
 }

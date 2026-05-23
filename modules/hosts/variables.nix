@@ -37,6 +37,7 @@
 
         networking = {
           ssh-server.enable = lib.mkEnableOption "Enable SSH server";
+          ssh-client.enable = lib.mkEnableOption "Enable SSH client";
         };
 
         hardware = {

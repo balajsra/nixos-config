@@ -53,6 +53,7 @@ in
 
             networking = {
               ssh-server.enable = true;
+              ssh-client.enable = true;
             };
 
             hardware = {
@@ -76,6 +77,7 @@ in
               self.homeModules.development
               self.homeModules.editor
               self.homeModules.git
+              self.homeModules.networking
               self.homeModules.security
               self.homeModules.terminal
               self.homeModules.web-browser

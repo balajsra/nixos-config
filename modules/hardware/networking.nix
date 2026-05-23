@@ -12,6 +12,49 @@
       ];
     };
 
+  flake.homeModules.networking = {
+    imports = [
+      self.homeModules.ssh-client
+    ];
+  };
+
+  flake.homeModules.ssh-client =
+    { lib, osConfig, ... }:
+    {
+      config = lib.mkIf (osConfig.features.networking.ssh-client.enable) {
+        sops.secrets = {
+          "private_keys/${osConfig.primaryUser.username}" = {
+            path = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
+          };
+        };
+
+        programs.ssh = {
+          enable = true;
+          enableDefaultConfig = false;
+          matchBlocks = {
+            "forgejo" = {
+              hostname = "forgejo.sravanbalaji.com";
+              user = "git";
+              identityFile = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
+              port = 2222;
+            };
+            "*" = {
+              forwardAgent = false;
+              addKeysToAgent = "no";
+              compression = false;
+              serverAliveInterval = 0;
+              serverAliveCountMax = 3;
+              hashKnownHosts = false;
+              userKnownHostsFile = "/home/${osConfig.primaryUser.username}/.ssh/known_hosts";
+              controlMaster = "no";
+              controlPath = "/home/${osConfig.primaryUser.username}/.ssh/master-%r@%n:%p";
+              controlPersist = "no";
+            };
+          };
+        };
+      };
+    };
+
   flake.nixosModules.networkmanager =
     { config, ... }:
     {
