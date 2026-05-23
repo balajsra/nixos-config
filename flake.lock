@@ -113,6 +113,24 @@
         "type": "github"
       }
     },
+    "nix-secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779568266,
+        "narHash": "sha256-UzWaKGJgQiIiVSx97vDD16Fdp/cXdMXKUohHNIibVT4=",
+        "ref": "main",
+        "rev": "60d14eeced049ef67bd69b699b58c8ebdddd43ad",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@forgejo.sravanbalaji.com:2222/sravan/nix-secrets.git"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@forgejo.sravanbalaji.com:2222/sravan/nix-secrets.git"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1778869304,
@@ -182,6 +200,7 @@
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "mangowm": "mangowm",
+        "nix-secrets": "nix-secrets",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "sops-nix": "sops-nix",
