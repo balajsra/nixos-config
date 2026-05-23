@@ -31,24 +31,24 @@
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
-          matchBlocks = {
+          settings = {
             "forgejo" = {
-              hostname = "forgejo.sravanbalaji.com";
-              user = "git";
-              identityFile = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
-              port = 2222;
+              HostName = "forgejo.sravanbalaji.com";
+              User = "git";
+              IdentityFile = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
+              Port = 2222;
             };
             "*" = {
-              forwardAgent = false;
-              addKeysToAgent = "no";
-              compression = false;
-              serverAliveInterval = 0;
-              serverAliveCountMax = 3;
-              hashKnownHosts = false;
-              userKnownHostsFile = "/home/${osConfig.primaryUser.username}/.ssh/known_hosts";
-              controlMaster = "no";
-              controlPath = "/home/${osConfig.primaryUser.username}/.ssh/master-%r@%n:%p";
-              controlPersist = "no";
+              ForwardAgent = false;
+              AddKeysToAgent = "no";
+              Compression = false;
+              ServerAliveInterval = 0;
+              ServerAliveCountMax = 3;
+              HashKnownHosts = false;
+              UserKnownHostsFile = "/home/${osConfig.primaryUser.username}/.ssh/known_hosts";
+              ControlMaster = "no";
+              ControlPath = "/home/${osConfig.primaryUser.username}/.ssh/master-%r@%n:%p";
+              ControlPersist = "no";
             };
           };
         };
