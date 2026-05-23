@@ -117,6 +117,7 @@ in
         self.nixosModules.phone
         self.nixosModules.printing
         self.nixosModules.removable-media
+        self.nixosModules.security
         self.nixosModules.sound
         self.nixosModules.system76
         self.nixosModules.utils

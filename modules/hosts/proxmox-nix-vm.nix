@@ -101,6 +101,7 @@ in
         self.nixosModules.networking
         self.nixosModules.partitions
         self.nixosModules.removable-media
+        self.nixosModules.security
         self.nixosModules.system76
         self.nixosModules.utils
       ];
