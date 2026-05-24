@@ -10,14 +10,16 @@
     { config, ... }:
     {
       # Decrypt <username>-password to /run/secrets-for-users/ so it can be used to create the user
-      sops.secrets."${config.primaryUser.username}-password".neededForUsers = true;
+      sops.secrets."passwords/${config.networking.hostName}/${config.primaryUser.username}".neededForUsers =
+        true;
       # Required for password to be set via sops during system activation
       users.mutableUsers = false;
 
       # Define a user account. Don't forget to set a password with ‘passwd’.
       users.users."${config.primaryUser.username}" = {
         isNormalUser = true;
-        hashedPasswordFile = config.sops.secrets."${config.primaryUser.username}-password".path;
+        hashedPasswordFile =
+          config.sops.secrets."passwords/${config.networking.hostName}/${config.primaryUser.username}".path;
         extraGroups = [ "wheel" ];
       };
     };

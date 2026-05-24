@@ -23,7 +23,7 @@
     {
       config = lib.mkIf (osConfig.features.networking.ssh-client.enable) {
         sops.secrets = {
-          "private_keys/${osConfig.primaryUser.username}" = {
+          "private_keys/${osConfig.networking.hostName}/${osConfig.primaryUser.username}" = {
             path = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
           };
         };
