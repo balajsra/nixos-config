@@ -55,6 +55,11 @@ in
             networking = {
               ssh-server.enable = false;
               ssh-client.enable = true;
+              vpn = {
+                enable = true;
+                home = true;
+                proton = true;
+              };
             };
 
             hardware = {

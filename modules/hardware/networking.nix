@@ -8,7 +8,7 @@
         self.nixosModules.networkmanager
         self.nixosModules.firewall
         self.nixosModules.ssh-server
-        self.nixosModules.wireguard
+        self.nixosModules.vpn
       ];
     };
 
@@ -99,12 +99,62 @@
       };
     };
 
-  flake.nixosModules.wireguard =
-    { pkgs, ... }:
+  flake.nixosModules.vpn =
     {
-      # https://wiki.nixos.org/wiki/WireGuard
-      environment.systemPackages = with pkgs; [
-        wireguard-tools
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+      imports = [
+        self.nixosModules.home-vpn
+        self.nixosModules.proton-vpn
       ];
+
+      config = lib.mkIf (config.features.networking.vpn.enable) {
+        # https://wiki.nixos.org/wiki/WireGuard
+        environment.systemPackages = with pkgs; [
+          wireguard-tools
+        ];
+      };
+    };
+
+  flake.nixosModules.home-vpn =
+    { config, lib, ... }:
+    {
+      config = lib.mkIf (config.features.networking.vpn.home) {
+        sops.secrets = {
+          "home_vpn_wireguard/${config.networking.hostName}/full_tunnel" = { };
+          "home_vpn_wireguard/${config.networking.hostName}/split_tunnel" = { };
+        };
+
+        networking.wg-quick.interfaces = {
+          home-full-tunnel = {
+            configFile =
+              config.sops.secrets."home_vpn_wireguard/${config.networking.hostName}/full_tunnel".path;
+          };
+          home-split-tunnel = {
+            configFile =
+              config.sops.secrets."home_vpn_wireguard/${config.networking.hostName}/split_tunnel".path;
+          };
+        };
+      };
+    };
+
+  flake.nixosModules.proton-vpn =
+    { config, lib, ... }:
+    {
+      config = lib.mkIf (config.features.networking.vpn.proton) {
+        sops.secrets = {
+          "proton_vpn_wireguard/jp-free-20" = { };
+        };
+
+        networking.wg-quick.interfaces = {
+          proton-jp-free-20 = {
+            configFile = config.sops.secrets."proton_vpn_wireguard/jp-free-20".path;
+          };
+        };
+      };
     };
 }

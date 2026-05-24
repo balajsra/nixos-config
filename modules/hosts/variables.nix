@@ -38,6 +38,11 @@
         networking = {
           ssh-server.enable = lib.mkEnableOption "Enable SSH server";
           ssh-client.enable = lib.mkEnableOption "Enable SSH client";
+          vpn = {
+            enable = lib.mkEnableOption "Enable VPN support";
+            home = lib.mkEnableOption "Enable home VPN configurations";
+            proton = lib.mkEnableOption "Enable Proton VPN configurations";
+          };
         };
 
         hardware = {
