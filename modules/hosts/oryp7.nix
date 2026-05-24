@@ -36,12 +36,14 @@ in
           ];
 
           storage = {
-            enable = true;
-            osDisks = [
-              "/dev/nvme0n1"
-              "/dev/sda"
-            ];
-            swapSize = "2G";
+            lvm-luks-btrfs = {
+              enable = true;
+              osDisks = [
+                "/dev/nvme0n1"
+                "/dev/sda"
+              ];
+              swapSize = "2G";
+            };
           };
 
           features = {

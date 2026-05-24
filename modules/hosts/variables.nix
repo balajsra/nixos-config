@@ -4,18 +4,20 @@
   flake.nixosModules.variables = {
     options = {
       storage = {
-        enable = lib.mkEnableOption "LVM on LUKS on BTRFS Layout";
+        lvm-luks-btrfs = {
+          enable = lib.mkEnableOption "LVM on LUKS on BTRFS Layout";
 
-        osDisks = lib.mkOption {
-          type = lib.types.listOf lib.types.str;
-          default = [ "/dev/sda" ];
-          description = "List of disks to partition";
-        };
+          osDisks = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [ "/dev/sda" ];
+            description = "List of disks to partition";
+          };
 
-        swapSize = lib.mkOption {
-          type = lib.types.str;
-          default = "8G";
-          description = "Size of the swap file";
+          swapSize = lib.mkOption {
+            type = lib.types.str;
+            default = "8G";
+            description = "Size of the swap file";
+          };
         };
       };
 

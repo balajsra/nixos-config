@@ -1,17 +1,22 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.partitions =
+  flake.nixosModules.partitions = {
+    imports = [
+      inputs.disko.nixosModules.disko
+      self.nixosModules.lvm-luks-btrfs
+    ];
+  };
+
+  flake.nixosModules.lvm-luks-btrfs =
     { config, lib, ... }:
     let
       # Helper to determine if a disk is the "primary" boot disk
-      isFirstDisk = dev: dev == (builtins.head config.storage.osDisks);
+      isFirstDisk = dev: dev == (builtins.head config.storage.lvm-luks-btrfs.osDisks);
     in
     {
-      imports = [ inputs.disko.nixosModules.disko ];
-
-      config = lib.mkIf config.storage.enable {
+      config = lib.mkIf config.storage.lvm-luks-btrfs.enable {
         disko.devices = {
-          disk = lib.genAttrs config.storage.osDisks (dev: {
+          disk = lib.genAttrs config.storage.lvm-luks-btrfs.osDisks (dev: {
             device = dev;
             type = "disk";
             content = {
@@ -102,7 +107,7 @@
                       mountpoint = "/swap";
                       # Swap on BTRFS should not be compressed
                       mountOptions = [ "noatime" ];
-                      swap.swapfile.size = config.storage.swapSize;
+                      swap.swapfile.size = config.storage.lvm-luks-btrfs.swapSize;
                     };
                   };
                 };
