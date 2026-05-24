@@ -23,6 +23,18 @@
         boot = {
           plymouth.enable = lib.mkEnableOption "Plymouth Boot Animation";
           grub-luks-btrfs.enable = lib.mkEnableOption "GRUB with LUKS and BTRFS support";
+          kernel = lib.mkOption {
+            type = lib.types.enum [
+              "vanilla-stable"
+              "vanilla-latest"
+              "liqorix-latest"
+              "xanmod-stable"
+              "xanmod-latest"
+              "zen-latest"
+            ];
+            default = "vanilla-stable";
+            description = "Which kernel package to use";
+          };
         };
 
         desktop-environment = lib.mkOption {

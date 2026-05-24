@@ -47,6 +47,7 @@ in
             boot = {
               grub-luks-btrfs.enable = true;
               plymouth.enable = true;
+              kernel = "vanilla-stable";
             };
 
             desktop-environment = "gnome";

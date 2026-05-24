@@ -48,6 +48,7 @@ in
             boot = {
               grub-luks-btrfs.enable = true;
               plymouth.enable = true;
+              kernel = "vanilla-latest";
             };
 
             desktop-environment = "mango";
