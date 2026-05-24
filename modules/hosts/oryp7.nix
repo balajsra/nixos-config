@@ -63,6 +63,11 @@ in
               };
             };
 
+            file-sharing = {
+              nextcloud.enable = true;
+              syncthing.enable = true;
+            };
+
             hardware = {
               system76.enable = true;
             };

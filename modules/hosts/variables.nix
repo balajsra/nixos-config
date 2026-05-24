@@ -57,6 +57,11 @@
           };
         };
 
+        file-sharing = {
+          nextcloud.enable = lib.mkEnableOption "NextCloud Client";
+          syncthing.enable = lib.mkEnableOption "Syncthing file sync";
+        };
+
         hardware = {
           system76.enable = lib.mkEnableOption "Enable System76 hardware support";
         };
