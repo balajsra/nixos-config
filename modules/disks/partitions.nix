@@ -14,7 +14,7 @@
       isFirstDisk = dev: dev == (builtins.head config.storage.lvm-luks-btrfs.osDisks);
     in
     {
-      config = lib.mkIf config.storage.lvm-luks-btrfs.enable {
+      config = lib.mkIf (config.storage.lvm-luks-btrfs.enable) {
         disko.devices = {
           disk = lib.genAttrs config.storage.lvm-luks-btrfs.osDisks (dev: {
             device = dev;
