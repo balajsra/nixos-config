@@ -49,6 +49,13 @@
           description = "Which desktop environment to enable for this host.";
         };
 
+        terminal = {
+          bash.enable = lib.mkEnableOption "Enable bash shell";
+          fish.enable = lib.mkEnableOption "Enable fish shell";
+          foot.enable = lib.mkEnableOption "Enable Foot terminal";
+          ghostty.enable = lib.mkEnableOption "Enable Ghostty terminal";
+        };
+
         networking = {
           ssh-server.enable = lib.mkEnableOption "Enable SSH server";
           ssh-client.enable = lib.mkEnableOption "Enable SSH client";

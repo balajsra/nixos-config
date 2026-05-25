@@ -55,6 +55,13 @@ in
 
             desktop-environment = "mango";
 
+            terminal = {
+              bash.enable = true;
+              fish.enable = true;
+              foot.enable = false;
+              ghostty.enable = true;
+            };
+
             networking = {
               ssh-server.enable = false;
               ssh-client.enable = true;
