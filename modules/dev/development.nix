@@ -14,6 +14,7 @@
         nixd
         nixfmt
         devenv
+        just
       ];
     };
 }

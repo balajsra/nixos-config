@@ -53,6 +53,7 @@
         profiles.default.extensions = with pkgs.vscode-extensions; [
           vscodevim.vim
           jnoortheen.nix-ide
+          nefrob.vscode-just-syntax
           ms-vscode-remote.remote-ssh
           ms-vscode-remote.remote-ssh-edit
           ms-vscode.remote-explorer
