@@ -15,6 +15,7 @@
         nixfmt
         devenv
         just
+        just-lsp
       ];
     };
 }
