@@ -277,8 +277,6 @@
               "uwsm app -- kdeconnect-indicator &"
               "uwsm app -- udiskie -a -n -s &"
               "uwsm app -- nextcloud &"
-              "uwsm app -- syncthing serve --no-browser --logfile=default &"
-              "uwsm app -- syncthing-gtk &"
               "uwsm app -- openrgb &"
             ];
             exec = [
