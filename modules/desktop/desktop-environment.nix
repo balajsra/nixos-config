@@ -286,7 +286,7 @@
             bind = [
               "SUPER,r,reload_config"
 
-              "SUPER+SHIFT,Return,spawn_shell,uwsm app -- foot"
+              "SUPER+SHIFT,Return,spawn_shell,uwsm app -- ${osConfig.features.terminal.emulator}"
               "SUPER,e,spawn_shell,uwsm app -- emacs"
               "SUPER,p,spawn_shell,uwsm app -- rofi -show combi -run-command \"uwsm app -- {cmd}\""
               "SUPER,b,spawn_shell,$HOME/.config/mango/waybar/scripts/toggleBarService.sh"

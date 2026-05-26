@@ -174,7 +174,7 @@
       dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
-      config = lib.mkIf (osConfig.features.terminal.foot.enable) {
+      config = lib.mkIf (osConfig.features.terminal.emulator == "foot") {
         programs.foot = {
           enable = true;
           server.enable = true;
@@ -195,7 +195,7 @@
       dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
-      config = lib.mkIf (osConfig.features.terminal.ghostty.enable) {
+      config = lib.mkIf (osConfig.features.terminal.emulator == "ghostty") {
         # https://wiki.nixos.org/wiki/Ghostty
         programs.ghostty.enable = true;
         programs.ghostty.enableBashIntegration = osConfig.features.terminal.bash.enable;

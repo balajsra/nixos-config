@@ -45,24 +45,29 @@
             "greetd"
           ];
           default = "gdm";
-          description = "Which display manager to enable for this host.";
+          description = "Which display manager to enable for this host";
         };
 
         desktop-environment = lib.mkOption {
           type = lib.types.enum [
             "gnome"
             "mango"
-            "none"
           ];
-          default = "none";
-          description = "Which desktop environment to enable for this host.";
+          default = "gnome";
+          description = "Which desktop environment to enable for this host";
         };
 
         terminal = {
           bash.enable = lib.mkEnableOption "Enable bash shell";
           fish.enable = lib.mkEnableOption "Enable fish shell";
-          foot.enable = lib.mkEnableOption "Enable Foot terminal";
-          ghostty.enable = lib.mkEnableOption "Enable Ghostty terminal";
+          emulator = lib.mkOption {
+            type = lib.types.enum [
+              "foot"
+              "ghostty"
+            ];
+            default = "ghostty";
+            description = "Which terminal emulator to enable for this host";
+          };
         };
 
         networking = {

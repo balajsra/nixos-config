@@ -59,8 +59,7 @@ in
             terminal = {
               bash.enable = true;
               fish.enable = true;
-              foot.enable = false;
-              ghostty.enable = true;
+              emulator = "ghostty";
             };
 
             networking = {
