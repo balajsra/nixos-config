@@ -53,6 +53,7 @@ in
               kernel = "vanilla-latest";
             };
 
+            display-manager = "greetd";
             desktop-environment = "mango";
 
             terminal = {

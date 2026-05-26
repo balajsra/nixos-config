@@ -52,6 +52,7 @@ in
               kernel = "vanilla-stable";
             };
 
+            display-manager = "gdm";
             desktop-environment = "gnome";
 
             terminal = {

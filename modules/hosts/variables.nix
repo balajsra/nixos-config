@@ -39,6 +39,15 @@
           };
         };
 
+        display-manager = lib.mkOption {
+          type = lib.types.enum [
+            "gdm"
+            "greetd"
+          ];
+          default = "gdm";
+          description = "Which display manager to enable for this host.";
+        };
+
         desktop-environment = lib.mkOption {
           type = lib.types.enum [
             "gnome"
