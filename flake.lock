@@ -63,11 +63,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779678629,
-        "narHash": "sha256-gHcIFg0mm+KFsg7iZQt67kni3+qR5U3PhEC9P7vKlZ4=",
+        "lastModified": 1779726696,
+        "narHash": "sha256-/p37CB5n6Wpw250b0Lq0CYwNq2D8uGKzDoBulyLcQqA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "612bbe3b405ad5f71d7bf9edecc04b678a061652",
+        "rev": "1a95e2efb477959b70b4a14c51035975c0481df6",
         "type": "github"
       },
       "original": {
@@ -100,11 +100,11 @@
         "scenefx": "scenefx"
       },
       "locked": {
-        "lastModified": 1779721676,
-        "narHash": "sha256-IkG+M6LTpAH4FKzeZTziuKB99Yf9kAJ7XItCUf6W3VU=",
+        "lastModified": 1779722995,
+        "narHash": "sha256-0WXt+LQazYJmJs/0aB7jvoLeOQ7LKqDJQ3wdehGBmOw=",
         "owner": "mangowm",
         "repo": "mango",
-        "rev": "c3bd6dda643a9fd7f6010969a19ecf89e84d39fe",
+        "rev": "c67e4d5038e5861749c63a68716351153b36174d",
         "type": "github"
       },
       "original": {
@@ -116,10 +116,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1779746726,
-        "narHash": "sha256-JJbldVxfrgAbgJtF8YVN87xeR+uEZy5gzyNqHdMgcMU=",
+        "lastModified": 1779755884,
+        "narHash": "sha256-I1nj5NNb92rHxRXWXxs1zrmgQ4Xl9WwkaOC1/YSlI0A=",
         "ref": "main",
-        "rev": "153af6afa6cd2aaa45ee033cc6d5c0f560ff2fa2",
+        "rev": "efe1d75b906077934f32826fdde04b252a809ae8",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@forgejo.sravanbalaji.com:2222/sravan/nix-secrets.git"
