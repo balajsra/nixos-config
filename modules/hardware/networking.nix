@@ -121,39 +121,83 @@
     };
 
   flake.nixosModules.home-vpn =
-    { config, lib, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       config = lib.mkIf (config.features.networking.vpn.home) {
         sops.secrets = {
-          "home_vpn_wireguard/${config.networking.hostName}/full_tunnel" = { };
-          "home_vpn_wireguard/${config.networking.hostName}/split_tunnel" = { };
+          "home_vpn_wireguard/${config.networking.hostName}/full_tunnel" = {
+            path = "/run/secrets/home-full-tunnel.conf";
+          };
+          "home_vpn_wireguard/${config.networking.hostName}/split_tunnel" = {
+            path = "/run/secrets/home-split-tunnel.conf";
+          };
         };
 
-        networking.wg-quick.interfaces = {
-          home-full-tunnel = {
-            configFile =
-              config.sops.secrets."home_vpn_wireguard/${config.networking.hostName}/full_tunnel".path;
+        # Dynamically load the files cleanly into NetworkManager at startup/switch
+        systemd.services.import-nm-home-vpns = {
+          description = "Import Home WireGuard Profiles to NetworkManager";
+          wantedBy = [ "multi-user.target" ];
+          after = [
+            "sops-nix.service"
+            "NetworkManager.service"
+          ];
+          path = [ pkgs.networkmanager ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
           };
-          home-split-tunnel = {
-            configFile =
-              config.sops.secrets."home_vpn_wireguard/${config.networking.hostName}/split_tunnel".path;
-          };
+          script = ''
+            # Delete any stale previous copies to prevent duplicates
+            nmcli connection delete "home-full-tunnel" 2>/dev/null || true
+            nmcli connection delete "home-split-tunnel" 2>/dev/null || true
+
+            # Use NetworkManager's native translation engine to import the files safely
+            nmcli connection import type wireguard file /run/secrets/home-full-tunnel.conf
+            nmcli connection import type wireguard file /run/secrets/home-split-tunnel.conf
+
+            # Make sure they default to not starting automatically at boot
+            nmcli connection modify "home-full-tunnel" connection.autoconnect no
+            nmcli connection modify "home-split-tunnel" connection.autoconnect no
+          '';
         };
       };
     };
 
   flake.nixosModules.proton-vpn =
-    { config, lib, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       config = lib.mkIf (config.features.networking.vpn.proton) {
-        sops.secrets = {
-          "proton_vpn_wireguard/jp-free-20" = { };
+        sops.secrets."proton_vpn_wireguard/jp-free-20" = {
+          path = "/run/secrets/proton-jp-free-20.conf";
         };
 
-        networking.wg-quick.interfaces = {
-          proton-jp-free-20 = {
-            configFile = config.sops.secrets."proton_vpn_wireguard/jp-free-20".path;
+        systemd.services.import-nm-proton-vpn = {
+          description = "Import Proton WireGuard Profile to NetworkManager";
+          wantedBy = [ "multi-user.target" ];
+          after = [
+            "sops-nix.service"
+            "NetworkManager.service"
+          ];
+          path = [ pkgs.networkmanager ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
           };
+          script = ''
+            nmcli connection delete "proton-jp-free-20" 2>/dev/null || true
+            nmcli connection import type wireguard file /run/secrets/proton-jp-free-20.conf
+            nmcli connection modify "proton-jp-free-20" connection.autoconnect no
+          '';
         };
       };
     };
