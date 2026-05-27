@@ -138,7 +138,7 @@
           };
         };
 
-        # Dynamically load the files cleanly into NetworkManager at startup/switch
+        # Dynamically load the wireguard config file(s) into NetworkManager at startup/switch
         systemd.services.import-nm-home-vpns = {
           description = "Import Home WireGuard Profiles to NetworkManager";
           wantedBy = [ "multi-user.target" ];
@@ -153,27 +153,26 @@
           };
           script = ''
             # Clean up old connection blocks completely
-            nmcli connection delete "homefull" 2>/dev/null || true
-            nmcli connection delete "homesplit" 2>/dev/null || true
             nmcli connection delete "Home Full Tunnel" 2>/dev/null || true
             nmcli connection delete "Home Split Tunnel" 2>/dev/null || true
 
-            # Import the alphanumeric configuration files
+            # Import the wireguard configuration file(s)
             nmcli connection import type wireguard file /run/secrets/homefull.conf
             nmcli connection import type wireguard file /run/secrets/homesplit.conf
 
-            # 1. CHANGE DISPLAY NAMES: Map the internal identifiers to pristine UI labels
+            # Change display names
             nmcli connection modify "homefull" connection.id "Home Full Tunnel"
             nmcli connection modify "homesplit" connection.id "Home Split Tunnel"
 
-            # 2. Permissions & Autoconnect (Using the new UI labels since NM updates their references immediately)
+            # Make connections available to all users
             nmcli connection modify "Home Full Tunnel" connection.permissions ""
             nmcli connection modify "Home Split Tunnel" connection.permissions ""
 
+            # Disable auto-connecting
             nmcli connection modify "Home Full Tunnel" connection.autoconnect no
             nmcli connection modify "Home Split Tunnel" connection.autoconnect no
 
-            # Failsafe down triggers
+            # Force disconnect from VPN
             nmcli connection down "Home Full Tunnel" 2>/dev/null || true
             nmcli connection down "Home Split Tunnel" 2>/dev/null || true
           '';
@@ -194,6 +193,7 @@
           path = "/run/secrets/protonjp.conf";
         };
 
+        # Dynamically load the wireguard config file(s) into NetworkManager at startup/switch
         systemd.services.import-nm-proton-vpn = {
           description = "Import Proton WireGuard Profile to NetworkManager";
           wantedBy = [ "multi-user.target" ];
@@ -207,16 +207,22 @@
             RemainAfterExit = true;
           };
           script = ''
-            nmcli connection delete "protonjp" 2>/dev/null || true
+            # Clean up old connection blocks completely
             nmcli connection delete "Proton JP Free 20" 2>/dev/null || true
 
+            # Import the wireguard configuration file(s)
             nmcli connection import type wireguard file /run/secrets/protonjp.conf
 
-            # Change display label, strip locks, and block autoconnect
+            # Change display names
             nmcli connection modify "protonjp" connection.id "Proton JP Free 20"
+
+            # Make connections available to all users
             nmcli connection modify "Proton JP Free 20" connection.permissions ""
+
+            # Disable auto-connecting
             nmcli connection modify "Proton JP Free 20" connection.autoconnect no
 
+            # Force disconnect from VPN
             nmcli connection down "Proton JP Free 20" 2>/dev/null || true
           '';
         };
