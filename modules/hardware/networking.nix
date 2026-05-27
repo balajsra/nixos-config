@@ -121,39 +121,110 @@
     };
 
   flake.nixosModules.home-vpn =
-    { config, lib, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       config = lib.mkIf (config.features.networking.vpn.home) {
         sops.secrets = {
-          "home_vpn_wireguard/${config.networking.hostName}/full_tunnel" = { };
-          "home_vpn_wireguard/${config.networking.hostName}/split_tunnel" = { };
+          "home_vpn_wireguard/${config.networking.hostName}/full_tunnel" = {
+            path = "/run/secrets/homefull.conf";
+          };
+          "home_vpn_wireguard/${config.networking.hostName}/split_tunnel" = {
+            path = "/run/secrets/homesplit.conf";
+          };
         };
 
-        networking.wg-quick.interfaces = {
-          home-full-tunnel = {
-            configFile =
-              config.sops.secrets."home_vpn_wireguard/${config.networking.hostName}/full_tunnel".path;
+        # Dynamically load the wireguard config file(s) into NetworkManager at startup/switch
+        systemd.services.import-nm-home-vpns = {
+          description = "Import Home WireGuard Profiles to NetworkManager";
+          wantedBy = [ "multi-user.target" ];
+          after = [
+            "sops-nix.service"
+            "NetworkManager.service"
+          ];
+          path = [ pkgs.networkmanager ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
           };
-          home-split-tunnel = {
-            configFile =
-              config.sops.secrets."home_vpn_wireguard/${config.networking.hostName}/split_tunnel".path;
-          };
+          script = ''
+            # Clean up old connection blocks completely
+            nmcli connection delete "Home Full Tunnel" 2>/dev/null || true
+            nmcli connection delete "Home Split Tunnel" 2>/dev/null || true
+
+            # Import the wireguard configuration file(s)
+            nmcli connection import type wireguard file /run/secrets/homefull.conf
+            nmcli connection import type wireguard file /run/secrets/homesplit.conf
+
+            # Change display names
+            nmcli connection modify "homefull" connection.id "Home Full Tunnel"
+            nmcli connection modify "homesplit" connection.id "Home Split Tunnel"
+
+            # Make connections available to all users
+            nmcli connection modify "Home Full Tunnel" connection.permissions ""
+            nmcli connection modify "Home Split Tunnel" connection.permissions ""
+
+            # Disable auto-connecting
+            nmcli connection modify "Home Full Tunnel" connection.autoconnect no
+            nmcli connection modify "Home Split Tunnel" connection.autoconnect no
+
+            # Force disconnect from VPN
+            nmcli connection down "Home Full Tunnel" 2>/dev/null || true
+            nmcli connection down "Home Split Tunnel" 2>/dev/null || true
+          '';
         };
       };
     };
 
   flake.nixosModules.proton-vpn =
-    { config, lib, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       config = lib.mkIf (config.features.networking.vpn.proton) {
-        sops.secrets = {
-          "proton_vpn_wireguard/jp-free-20" = { };
+        sops.secrets."proton_vpn_wireguard/jp-free-20" = {
+          path = "/run/secrets/protonjp.conf";
         };
 
-        networking.wg-quick.interfaces = {
-          proton-jp-free-20 = {
-            configFile = config.sops.secrets."proton_vpn_wireguard/jp-free-20".path;
+        # Dynamically load the wireguard config file(s) into NetworkManager at startup/switch
+        systemd.services.import-nm-proton-vpn = {
+          description = "Import Proton WireGuard Profile to NetworkManager";
+          wantedBy = [ "multi-user.target" ];
+          after = [
+            "sops-nix.service"
+            "NetworkManager.service"
+          ];
+          path = [ pkgs.networkmanager ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
           };
+          script = ''
+            # Clean up old connection blocks completely
+            nmcli connection delete "Proton JP Free 20" 2>/dev/null || true
+
+            # Import the wireguard configuration file(s)
+            nmcli connection import type wireguard file /run/secrets/protonjp.conf
+
+            # Change display names
+            nmcli connection modify "protonjp" connection.id "Proton JP Free 20"
+
+            # Make connections available to all users
+            nmcli connection modify "Proton JP Free 20" connection.permissions ""
+
+            # Disable auto-connecting
+            nmcli connection modify "Proton JP Free 20" connection.autoconnect no
+
+            # Force disconnect from VPN
+            nmcli connection down "Proton JP Free 20" 2>/dev/null || true
+          '';
         };
       };
     };
