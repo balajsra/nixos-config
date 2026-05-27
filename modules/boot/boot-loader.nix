@@ -20,6 +20,7 @@
             device = "nodev"; # "nodev" is required for UEFI/EFI installs
             efiSupport = true;
             enableCryptodisk = true; # Allows GRUB to "see" encrypted partitions
+            configurationLimit = 10;
           };
         };
 

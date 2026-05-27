@@ -182,6 +182,7 @@ in
       modulesPath,
       lib,
       config,
+      pkgs,
       ...
     }:
     {
@@ -202,5 +203,52 @@ in
       boot.extraModulePackages = [ ];
 
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+      # =========================================================================
+      # GRAPHICS INFRASTRUCTURE CONFIGURATION
+      # =========================================================================
+
+      # 1. Enable OpenGL/Graphics system layers
+      hardware.graphics = {
+        enable = true;
+        enable32Bit = true;
+      };
+
+      # 2. Tell Xserver/Wayland to utilize the NVIDIA driver kernel hooks
+      services.xserver.videoDrivers = [ "nvidia" ];
+
+      hardware.nvidia = {
+        modesetting.enable = true;
+        powerManagement.enable = true; # Necessary for proper suspend states on modern laptops
+        open = true; # Set to false if you experience black-screen bugs with open modules
+        nvidiaSettings = true;
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
+      };
+
+      # 3. Base Option: Default to Intel Integrated Mode to save battery
+      hardware.nvidia.prime = {
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
+        };
+        sync.enable = false;
+      };
+
+      # 4. Boot Specialisation: Create the alternative High-Performance entry for GRUB
+      specialisation = {
+        nvidia-discrete.configuration = {
+          system.nixos.tags = [ "nvidia-discrete" ];
+
+          # Re-bind properties to completely kill the Intel offload and force Sync mode
+          hardware.nvidia.prime = {
+            offload.enable = lib.mkForce false;
+            offload.enableOffloadCmd = lib.mkForce false;
+            sync.enable = lib.mkForce true;
+          };
+        };
+      };
     };
 }
