@@ -131,10 +131,10 @@
       config = lib.mkIf (config.features.networking.vpn.home) {
         sops.secrets = {
           "home_vpn_wireguard/${config.networking.hostName}/full_tunnel" = {
-            path = "/run/secrets/home-full-tunnel.conf";
+            path = "/run/secrets/homefull.conf";
           };
           "home_vpn_wireguard/${config.networking.hostName}/split_tunnel" = {
-            path = "/run/secrets/home-split-tunnel.conf";
+            path = "/run/secrets/homesplit.conf";
           };
         };
 
@@ -152,17 +152,17 @@
             RemainAfterExit = true;
           };
           script = ''
-            # Delete any stale previous copies to prevent duplicates
-            nmcli connection delete "home-full-tunnel" 2>/dev/null || true
-            nmcli connection delete "home-split-tunnel" 2>/dev/null || true
+            # Clean up old connection names using the clean profile strings
+            nmcli connection delete "homefull" 2>/dev/null || true
+            nmcli connection delete "homesplit" 2>/dev/null || true
 
-            # Use NetworkManager's native translation engine to import the files safely
-            nmcli connection import type wireguard file /run/secrets/home-full-tunnel.conf
-            nmcli connection import type wireguard file /run/secrets/home-split-tunnel.conf
+            # Import the valid alphanumeric configuration assets
+            nmcli connection import type wireguard file /run/secrets/homefull.conf
+            nmcli connection import type wireguard file /run/secrets/homesplit.conf
 
-            # Make sure they default to not starting automatically at boot
-            nmcli connection modify "home-full-tunnel" connection.autoconnect no
-            nmcli connection modify "home-split-tunnel" connection.autoconnect no
+            # Strip root-only user locks so it displays under your normal user account tray
+            nmcli connection modify "homefull" connection.permissions "" connection.autoconnect no 2>/dev/null || true
+            nmcli connection modify "homesplit" connection.permissions "" connection.autoconnect no 2>/dev/null || true
           '';
         };
       };
@@ -178,7 +178,7 @@
     {
       config = lib.mkIf (config.features.networking.vpn.proton) {
         sops.secrets."proton_vpn_wireguard/jp-free-20" = {
-          path = "/run/secrets/proton-jp-free-20.conf";
+          path = "/run/secrets/protonjp.conf";
         };
 
         systemd.services.import-nm-proton-vpn = {
@@ -194,9 +194,11 @@
             RemainAfterExit = true;
           };
           script = ''
-            nmcli connection delete "proton-jp-free-20" 2>/dev/null || true
-            nmcli connection import type wireguard file /run/secrets/proton-jp-free-20.conf
-            nmcli connection modify "proton-jp-free-20" connection.autoconnect no
+            nmcli connection delete "protonjp" 2>/dev/null || true
+
+            nmcli connection import type wireguard file /run/secrets/protonjp.conf
+
+            nmcli connection modify "protonjp" connection.permissions "" connection.autoconnect no 2>/dev/null || true
           '';
         };
       };
