@@ -160,9 +160,17 @@
             nmcli connection import type wireguard file /run/secrets/homefull.conf
             nmcli connection import type wireguard file /run/secrets/homesplit.conf
 
-            # Strip root-only user locks so it displays under your normal user account tray
-            nmcli connection modify "homefull" connection.permissions "" connection.autoconnect no 2>/dev/null || true
-            nmcli connection modify "homesplit" connection.permissions "" connection.autoconnect no 2>/dev/null || true
+            # Strip root-only user locks
+            nmcli connection modify "homefull" connection.permissions ""
+            nmcli connection modify "homesplit" connection.permissions ""
+
+            # FORCE them to stay disabled until manually clicked
+            nmcli connection modify "homefull" connection.autoconnect no
+            nmcli connection modify "homesplit" connection.autoconnect no
+
+            # Instantly take them offline right now so they stop fighting
+            nmcli connection down "homefull" 2>/dev/null || true
+            nmcli connection down "homesplit" 2>/dev/null || true
           '';
         };
       };
@@ -198,7 +206,12 @@
 
             nmcli connection import type wireguard file /run/secrets/protonjp.conf
 
-            nmcli connection modify "protonjp" connection.permissions "" connection.autoconnect no 2>/dev/null || true
+            # Strip restrictions and block autoconnect with explicit separate execution calls
+            nmcli connection modify "protonjp" connection.permissions ""
+            nmcli connection modify "protonjp" connection.autoconnect no
+
+            # Take it offline immediately after import
+            nmcli connection down "protonjp" 2>/dev/null || true
           '';
         };
       };
