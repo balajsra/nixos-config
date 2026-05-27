@@ -152,25 +152,30 @@
             RemainAfterExit = true;
           };
           script = ''
-            # Clean up old connection names using the clean profile strings
+            # Clean up old connection blocks completely
             nmcli connection delete "homefull" 2>/dev/null || true
             nmcli connection delete "homesplit" 2>/dev/null || true
+            nmcli connection delete "Home Full Tunnel" 2>/dev/null || true
+            nmcli connection delete "Home Split Tunnel" 2>/dev/null || true
 
-            # Import the valid alphanumeric configuration assets
+            # Import the alphanumeric configuration files
             nmcli connection import type wireguard file /run/secrets/homefull.conf
             nmcli connection import type wireguard file /run/secrets/homesplit.conf
 
-            # Strip root-only user locks
-            nmcli connection modify "homefull" connection.permissions ""
-            nmcli connection modify "homesplit" connection.permissions ""
+            # 1. CHANGE DISPLAY NAMES: Map the internal identifiers to pristine UI labels
+            nmcli connection modify "homefull" connection.id "Home Full Tunnel"
+            nmcli connection modify "homesplit" connection.id "Home Split Tunnel"
 
-            # FORCE them to stay disabled until manually clicked
-            nmcli connection modify "homefull" connection.autoconnect no
-            nmcli connection modify "homesplit" connection.autoconnect no
+            # 2. Permissions & Autoconnect (Using the new UI labels since NM updates their references immediately)
+            nmcli connection modify "Home Full Tunnel" connection.permissions ""
+            nmcli connection modify "Home Split Tunnel" connection.permissions ""
 
-            # Instantly take them offline right now so they stop fighting
-            nmcli connection down "homefull" 2>/dev/null || true
-            nmcli connection down "homesplit" 2>/dev/null || true
+            nmcli connection modify "Home Full Tunnel" connection.autoconnect no
+            nmcli connection modify "Home Split Tunnel" connection.autoconnect no
+
+            # Failsafe down triggers
+            nmcli connection down "Home Full Tunnel" 2>/dev/null || true
+            nmcli connection down "Home Split Tunnel" 2>/dev/null || true
           '';
         };
       };
@@ -203,15 +208,16 @@
           };
           script = ''
             nmcli connection delete "protonjp" 2>/dev/null || true
+            nmcli connection delete "Proton JP Free 20" 2>/dev/null || true
 
             nmcli connection import type wireguard file /run/secrets/protonjp.conf
 
-            # Strip restrictions and block autoconnect with explicit separate execution calls
-            nmcli connection modify "protonjp" connection.permissions ""
-            nmcli connection modify "protonjp" connection.autoconnect no
+            # Change display label, strip locks, and block autoconnect
+            nmcli connection modify "protonjp" connection.id "Proton JP Free 20"
+            nmcli connection modify "Proton JP Free 20" connection.permissions ""
+            nmcli connection modify "Proton JP Free 20" connection.autoconnect no
 
-            # Take it offline immediately after import
-            nmcli connection down "protonjp" 2>/dev/null || true
+            nmcli connection down "Proton JP Free 20" 2>/dev/null || true
           '';
         };
       };
