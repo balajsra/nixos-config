@@ -116,10 +116,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1779838583,
-        "narHash": "sha256-6O/9I//T6SHGqnycxXkhxCysp1ijuGsjBxXVI5fmgiU=",
+        "lastModified": 1779841222,
+        "narHash": "sha256-r4TpbA7D/rNRbGxinwgmVy5tEnytysK2BlkJUMyCsMw=",
         "ref": "main",
-        "rev": "20e0d7b204d173ba0ac6f2552022821d27abc850",
+        "rev": "67451bd6780364c69640475594868dea21c812a9",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@forgejo.sravanbalaji.com:2222/sravan/nix-secrets.git"

@@ -34,7 +34,7 @@
     {
       config = lib.mkIf (osConfig.features.file-sharing.syncthing.enable) {
         sops.secrets = {
-          "passwords/${osConfig.networking.hostName}/${osConfig.primaryUser.username}" = { };
+          "syncthing/gui_password" = { };
 
           "syncthing/devices/fileserver" = { };
           "syncthing/devices/pixel-tablet" = { };
@@ -57,8 +57,7 @@
           ];
           guiCredentials = {
             username = osConfig.primaryUser.username;
-            passwordFile =
-              config.sops.secrets."passwords/${osConfig.networking.hostName}/${osConfig.primaryUser.username}".path;
+            passwordFile = config.sops.secrets."syncthing/gui_password".path;
           };
           overrideDevices = true;
           overrideFolders = true;
