@@ -9,8 +9,9 @@
         hardware.system76.enableAll = true;
 
         # Ensure system76-power defers graphics profiles to native NixOS management
-        hardware.system76.power-management.enable = true;
+        hardware.system76.power-daemon.enable = false;
 
+        # Disable power-profiles-daemon
         services.power-profiles-daemon.enable = false;
       };
     };
