@@ -190,23 +190,6 @@ in
         (modulesPath + "/installer/scan/not-detected.nix")
       ];
 
-      # ... keep your existing boot.initrd and microcode settings identical ...
-
-      # =========================================================================
-      # CLEAN NATIVE GRUB CONFIGURATION
-      # =========================================================================
-      boot.loader.grub = {
-        enable = true;
-        configurationLimit = 10; # Keep standard generations clean
-
-        # This injects custom naming rules directly into GRUB's automated generation builder
-        extraPerEntryConfig = ''
-          if [ "$title" = "NixOS - Default" ]; then
-            title="NixOS - Integrated Graphics (Intel Only)"
-          fi
-        '';
-      };
-
       # =========================================================================
       # BASE PROFILE: INTEGRATED GRAPHICS (Intel Managed Sleep)
       # =========================================================================
