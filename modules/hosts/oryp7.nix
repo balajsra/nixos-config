@@ -200,19 +200,21 @@ in
         enable32Bit = true;
       };
 
-      # 1. Enable the native System76 Power Daemon Management tool
-      services.system76-power = {
-        enable = true;
-        # Force the hardware controller straight into integrated mode on boot
-        defaultMode = "integrated";
-      };
-
-      # 2. Tell the display stack to use standard modesetting
+      # Tell the display manager stack to track standard open modesetting
       services.xserver.videoDrivers = [ "modesetting" ];
 
-      # Clean up: Strip out the old broken boot.blacklistedKernelModules,
-      # boot.kernelParams, and services.udev.extraRules blocks entirely.
-      # system76-power handles all blocks internally now.
+      # ONE-SHOT BOOTHOOK: Force the running daemon into integrated mode on boot
+      systemd.services.system76-power-graphics-switch = {
+        description = "Set System76 Power Graphics Profile Mode";
+        after = [ "system76-power.service" ];
+        wants = [ "system76-power.service" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "${pkgs.system76-power}/bin/system76-power graphics integrated";
+        };
+      };
 
       # =========================================================================
       # SPECIALISATION PROFILE: DISCRETE GPU (NVIDIA Sync Workstation Mode)
@@ -221,11 +223,12 @@ in
         discrete-gpu.configuration = {
           system.nixos.tags = [ "discrete-gpu" ];
 
-          # Override system76-power to flip the hardware switches to nvidia mode
-          services.system76-power.defaultMode = lib.mkForce "nvidia";
-
-          # Load the proprietary drivers for the dedicated session
+          # Overwrite the display server stack to load the real NVIDIA drivers
           services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
+
+          # OVERRIDE BOOTHOOK: Override the one-shot to punch the hardware into dedicated sync mode
+          systemd.services.system76-power-graphics-switch.serviceConfig.ExecStart =
+            lib.mkForce "${pkgs.system76-power}/bin/system76-power graphics nvidia";
 
           hardware.nvidia = {
             modesetting.enable = true;
