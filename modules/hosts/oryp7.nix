@@ -200,10 +200,19 @@ in
 
       # 1. Force the system to ignore NVIDIA entirely in the base profile
       services.xserver.videoDrivers = [ "modesetting" ];
+
       boot.blacklistedKernelModules = [
         "nvidia"
         "nouveau"
+        "nvidiafb" # Added to prevent framebuffer from keeping the card awake
       ];
+
+      # 2. UDEV RULE: Force Runtime Power Management
+      # This tells the kernel to aggressively cut power to the PCI device
+      # when the system is idle, regardless of whether a driver is loaded.
+      services.udev.extraRules = ''
+        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", ATTR{power/control}="auto", ATTR{power/runtime_enabled}="enabled"
+      '';
 
       # =========================================================================
       # SPECIALISATION PROFILE: DISCRETE GPU
