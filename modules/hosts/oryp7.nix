@@ -191,18 +191,18 @@ in
       ];
 
       boot.loader.grub = {
-        # 1. Hide the standard auto-generated top-level entries
+        # 1. Hide the standard auto-generated top-level entries to eliminate duplicates
         configurationLimit = 0;
 
-        # 2. Hardcode the main menu selections with custom labels
+        # 2. Hardcode the main menu selections with accurate dynamic path pointers
         extraEntries = ''
           menuentry "NixOS - Integrated Graphics (Intel Only)" --class nixos {
-            # This points GRUB directly to your latest standard generation link
-            configfile /boot/grub/profiles/integrated-graphics
+            # Points directly to the primary, default boot choice file
+            configfile /grub/kernels.cfg
           }
           menuentry "NixOS - Dedicated Graphics (NVIDIA Sync)" --class nixos {
-            # This points GRUB directly to your nested specialisation profile link
-            configfile /boot/grub/profiles/discrete-gpu
+            # Specialisations are compiled natively as a sub-profile under the current system closure
+            configfile /grub/specialisations/discrete-gpu.cfg
           }
         '';
       };
@@ -213,7 +213,6 @@ in
       # BASE BOOT PROFILE: INTEGRATED GRAPHICS (Intel Only)
       # =========================================================================
 
-      # 1. Provide a visible tag in the main GRUB line so you know it's Integrated
       system.nixos.tags = [ "integrated-graphics" ];
 
       hardware.graphics = {
@@ -221,35 +220,48 @@ in
         enable32Bit = true;
       };
 
-      # Only load the Intel driver by default
       services.xserver.videoDrivers = [ "modesetting" ];
 
-      # Kernel blocks to forcefully isolate and spin down the NVIDIA card
+      # 1. Blacklist drivers so they don't claim the hardware
       boot.blacklistedKernelModules = [
         "nvidia"
         "nvidia_modeset"
         "nvidia_uvm"
         "nvidia_drm"
+        "nouveau"
       ];
 
-      # Cut the PCIe link management to let the card sleep completely unhindered
+      # 2. Kernel parameters to enable aggressive PCIe runtime power management
       boot.kernelParams = [
-        "rcutree.use_softirq=0"
-        "nouveau.modeset=0"
+        "pcie_port_pm=off"
+        "nvidia-drm.modeset=1"
       ];
+
+      # 3. Force the kernel to write "auto" to the NVIDIA card's power control
+      # This forces the PCIe bus to transition the unmanaged card from D0 to D3cold
+      services.udev.extraRules = ''
+        # Remove NVIDIA USB Type-C/Audio controllers if present on the card to allow sleep
+        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0303", ATTR{remove}="1"
+        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{remove}="1"
+
+        # Cut power to the main 3D VGA controller (RTX 3070)
+        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{device}=="0x249d", ATTR{power/control}="auto"
+      '';
 
       # =========================================================================
       # SPECIALISATION PROFILE: DISCRETE GPU (NVIDIA Sync Mode)
       # =========================================================================
       specialisation = {
         discrete-gpu.configuration = {
-          # Override the menu tag string
           system.nixos.tags = [ "discrete-gpu" ];
 
-          # Re-enable the NVIDIA drivers for this boot mode
+          # Re-enable everything cleanly
           services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
           boot.blacklistedKernelModules = lib.mkForce [ ];
           boot.kernelParams = lib.mkForce [ ];
+
+          # Wipe out the power-down udev rules for this generation block
+          services.udev.extraRules = lib.mkForce "";
 
           hardware.nvidia = {
             modesetting.enable = true;
@@ -262,8 +274,6 @@ in
           hardware.nvidia.prime = {
             intelBusId = "PCI:0:2:0";
             nvidiaBusId = "PCI:1:0:0";
-
-            # Force the dedicated card to own the display pipeline directly
             sync.enable = lib.mkForce true;
             offload.enable = lib.mkForce false;
             offload.enableOffloadCmd = lib.mkForce false;
