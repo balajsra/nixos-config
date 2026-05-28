@@ -191,7 +191,7 @@ in
       ];
 
       # =========================================================================
-      # BASE PROFILE: INTEGRATED GRAPHICS (Intel Managed Sleep)
+      # BASE PROFILE: INTEGRATED GRAPHICS (Complete Module Block)
       # =========================================================================
       system.nixos.tags = [ "integrated-graphics" ];
 
@@ -200,30 +200,30 @@ in
         enable32Bit = true;
       };
 
-      # FIX: Force the default desktop environment to use Intel modesetting.
-      # This stops mangowm from binding to and waking up the NVIDIA card.
+      # Force the entire window manager stack to run on Intel modesetting
       services.xserver.videoDrivers = [ "modesetting" ];
 
-      hardware.nvidia = {
-        modesetting.enable = true;
-        powerManagement.enable = true;
-        powerManagement.finegrained = true; # Cuts power rails completely when unutilized
-        open = true;
-        nvidiaSettings = false;
-        package = config.boot.kernelPackages.nvidiaPackages.stable;
-      };
+      # 1. Hard blacklist all NVIDIA driver modules so they cannot be touched or loaded
+      boot.blacklistedKernelModules = [
+        "nvidia"
+        "nvidia_modeset"
+        "nvidia_uvm"
+        "nvidia_drm"
+        "nouveau"
+      ];
 
-      hardware.nvidia.prime = {
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
+      # 2. Tell the kernel to enable automated PCIe Runtime Power Management
+      # for unmanaged devices on the bus
+      boot.kernelParams = [
+        "pcie_port_pm=on"
+      ];
 
-        # Keep offload active but completely unused by the compositor.
-        offload = {
-          enable = true;
-          enableOffloadCmd = false;
-        };
-        sync.enable = false;
-      };
+      # 3. Force the kernel to write "auto" to the raw hardware address.
+      # Because no drivers are loaded to hold it open, this forces the PCIe bus link
+      # to immediately drop the RTX 3070 power rail into a deep sleep state.
+      services.udev.extraRules = ''
+        ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:01:00.0", ATTR{power/control}="auto"
+      '';
 
       # =========================================================================
       # SPECIALISATION PROFILE: DISCRETE GPU (NVIDIA Sync Workstation Mode)
@@ -232,14 +232,28 @@ in
         discrete-gpu.configuration = {
           system.nixos.tags = [ "discrete-gpu" ];
 
-          # FIX: Force the dedicated profile to load the real NVIDIA drivers instead of modesetting
+          # Overwrite the video drivers to pull the proprietary stack back in
           services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
 
-          hardware.nvidia.powerManagement.finegrained = lib.mkForce false;
+          # Clear the module blacklists and kernel parameters for this boot path
+          boot.blacklistedKernelModules = lib.mkForce [ ];
+          boot.kernelParams = lib.mkForce [ ];
+          services.udev.extraRules = lib.mkForce "";
+
+          hardware.nvidia = {
+            modesetting.enable = true;
+            powerManagement.enable = true;
+            open = true;
+            nvidiaSettings = true;
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
+          };
 
           hardware.nvidia.prime = {
-            offload.enable = lib.mkForce false;
+            intelBusId = "PCI:0:2:0";
+            nvidiaBusId = "PCI:1:0:0";
             sync.enable = lib.mkForce true;
+            offload.enable = lib.mkForce false;
+            offload.enableOffloadCmd = lib.mkForce false;
           };
         };
       };
