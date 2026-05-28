@@ -200,25 +200,24 @@ in
         enable32Bit = true;
       };
 
-      # DO NOT blacklist the driver. Let it load so it can handle the hardware power down sequence.
-      services.xserver.videoDrivers = [ "nvidia" ];
+      # FIX: Force the default desktop environment to use Intel modesetting.
+      # This stops mangowm from binding to and waking up the NVIDIA card.
+      services.xserver.videoDrivers = [ "modesetting" ];
 
       hardware.nvidia = {
         modesetting.enable = true;
-        powerManagement.enable = true; # Critical for D3 power cuts
-        powerManagement.finegrained = true; # Tells the driver to completely cut power rails when idle
+        powerManagement.enable = true;
+        powerManagement.finegrained = true; # Cuts power rails completely when unutilized
         open = true;
         nvidiaSettings = false;
         package = config.boot.kernelPackages.nvidiaPackages.stable;
       };
 
-      # Configure PRIME for absolute maximum battery saving power offload
       hardware.nvidia.prime = {
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
 
-        # Keep offload active but completely unused. Combined with finegrained power management above,
-        # the driver will verify no display frames are bound to it and cleanly cut power to D3cold.
+        # Keep offload active but completely unused by the compositor.
         offload = {
           enable = true;
           enableOffloadCmd = false;
@@ -233,7 +232,9 @@ in
         discrete-gpu.configuration = {
           system.nixos.tags = [ "discrete-gpu" ];
 
-          # Reconfigure PRIME parameters to lock onto the discrete card entirely
+          # FIX: Force the dedicated profile to load the real NVIDIA drivers instead of modesetting
+          services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
+
           hardware.nvidia.powerManagement.finegrained = lib.mkForce false;
 
           hardware.nvidia.prime = {
