@@ -190,6 +190,23 @@ in
         (modulesPath + "/installer/scan/not-detected.nix")
       ];
 
+      boot.loader.grub = {
+        # 1. Hide the standard auto-generated top-level entries
+        configurationLimit = 0;
+
+        # 2. Hardcode the main menu selections with custom labels
+        extraEntries = ''
+          menuentry "NixOS - Integrated Graphics (Intel Only)" --class nixos {
+            # This points GRUB directly to your latest standard generation link
+            configfile /boot/grub/profiles/integrated-graphics
+          }
+          menuentry "NixOS - Dedicated Graphics (NVIDIA Sync)" --class nixos {
+            # This points GRUB directly to your nested specialisation profile link
+            configfile /boot/grub/profiles/discrete-gpu
+          }
+        '';
+      };
+
       # ... keeping your existing boot.initrd and microcode settings identical ...
 
       # =========================================================================
