@@ -191,7 +191,7 @@ in
       ];
 
       # =========================================================================
-      # BASE PROFILE: INTEGRATED GRAPHICS (Complete Module Block)
+      # BASE PROFILE: INTEGRATED GRAPHICS (System76 Firmware Control)
       # =========================================================================
       system.nixos.tags = [ "integrated-graphics" ];
 
@@ -200,30 +200,19 @@ in
         enable32Bit = true;
       };
 
-      # Force the entire window manager stack to run on Intel modesetting
+      # 1. Enable the native System76 Power Daemon Management tool
+      services.system76-power = {
+        enable = true;
+        # Force the hardware controller straight into integrated mode on boot
+        defaultMode = "integrated";
+      };
+
+      # 2. Tell the display stack to use standard modesetting
       services.xserver.videoDrivers = [ "modesetting" ];
 
-      # 1. Hard blacklist all NVIDIA driver modules so they cannot be touched or loaded
-      boot.blacklistedKernelModules = [
-        "nvidia"
-        "nvidia_modeset"
-        "nvidia_uvm"
-        "nvidia_drm"
-        "nouveau"
-      ];
-
-      # 2. Tell the kernel to enable automated PCIe Runtime Power Management
-      # for unmanaged devices on the bus
-      boot.kernelParams = [
-        "pcie_port_pm=on"
-      ];
-
-      # 3. Force the kernel to write "auto" to the raw hardware address.
-      # Because no drivers are loaded to hold it open, this forces the PCIe bus link
-      # to immediately drop the RTX 3070 power rail into a deep sleep state.
-      services.udev.extraRules = ''
-        ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:01:00.0", ATTR{power/control}="auto"
-      '';
+      # Clean up: Strip out the old broken boot.blacklistedKernelModules,
+      # boot.kernelParams, and services.udev.extraRules blocks entirely.
+      # system76-power handles all blocks internally now.
 
       # =========================================================================
       # SPECIALISATION PROFILE: DISCRETE GPU (NVIDIA Sync Workstation Mode)
@@ -232,13 +221,11 @@ in
         discrete-gpu.configuration = {
           system.nixos.tags = [ "discrete-gpu" ];
 
-          # Overwrite the video drivers to pull the proprietary stack back in
-          services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
+          # Override system76-power to flip the hardware switches to nvidia mode
+          services.system76-power.defaultMode = lib.mkForce "nvidia";
 
-          # Clear the module blacklists and kernel parameters for this boot path
-          boot.blacklistedKernelModules = lib.mkForce [ ];
-          boot.kernelParams = lib.mkForce [ ];
-          services.udev.extraRules = lib.mkForce "";
+          # Load the proprietary drivers for the dedicated session
+          services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
 
           hardware.nvidia = {
             modesetting.enable = true;

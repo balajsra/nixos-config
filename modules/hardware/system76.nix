@@ -8,10 +8,12 @@
         # https://support.system76.com/articles/system76-software/#nixos
         hardware.system76.enableAll = true;
 
-        # Ensure system76-power defers graphics profiles to native NixOS management
-        hardware.system76.power-daemon.enable = false;
+        # FIX: Allow the system76 power daemon to run so it can communicate
+        # directly with your laptop's firmware/Embedded Controller (EC)
+        hardware.system76.power-daemon.enable = true;
 
-        # Disable power-profiles-daemon
+        # Keep this disabled. system76-power completely replaces power-profiles-daemon,
+        # and running both simultaneously causes systemd service conflicts.
         services.power-profiles-daemon.enable = false;
       };
     };
