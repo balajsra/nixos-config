@@ -190,25 +190,23 @@ in
         (modulesPath + "/installer/scan/not-detected.nix")
       ];
 
-      # ... keep your existing boot.initrd and microcode settings identical ...
-
       # =========================================================================
-      # CLEAN NATIVE GRUB CONFIGURATION
+      # NATIVE GRUB TEXT OVERRIDE
       # =========================================================================
       boot.loader.grub = {
         enable = true;
-        configurationLimit = 10; # Keep standard generations clean
-
-        # This injects custom naming rules directly into GRUB's automated generation builder
+        configurationLimit = 10;
         extraPerEntryConfig = ''
-          if [ "$title" = "NixOS - Default" ]; then
-            title="NixOS - Integrated Graphics (Intel Only)"
-          fi
+          case "$title" in
+            *"Default"*|*"Generation"*)
+              title="NixOS - Integrated Graphics (Intel Only)"
+              ;;
+          esac
         '';
       };
 
       # =========================================================================
-      # BASE PROFILE: INTEGRATED GRAPHICS (Intel Managed Sleep)
+      # BASE PROFILE: INTEGRATED GRAPHICS (Absolute Driver & Hardware Block)
       # =========================================================================
       system.nixos.tags = [ "integrated-graphics" ];
 
@@ -217,31 +215,36 @@ in
         enable32Bit = true;
       };
 
-      # DO NOT blacklist the driver. Let it load so it can handle the hardware power down sequence.
-      services.xserver.videoDrivers = [ "nvidia" ];
+      # Force the display system to ONLY see modesetting (Intel)
+      services.xserver.videoDrivers = [ "modesetting" ];
 
-      hardware.nvidia = {
-        modesetting.enable = true;
-        powerManagement.enable = true; # Critical for D3 power cuts
-        powerManagement.finegrained = true; # Tells the driver to completely cut power rails when idle
-        open = true;
-        nvidiaSettings = false;
-        package = config.boot.kernelPackages.nvidiaPackages.stable;
-      };
+      # 1. Hard block all variants of the NVIDIA and Nouveau drivers from loading
+      boot.blacklistedKernelModules = [
+        "nvidia"
+        "nvidia_modeset"
+        "nvidia_uvm"
+        "nvidia_drm"
+        "nouveau"
+      ];
 
-      # Configure PRIME for absolute maximum battery saving power offload
-      hardware.nvidia.prime = {
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
+      # 2. Shut down PCIe link management & disable the driver modeset globally
+      boot.kernelParams = [
+        "pcie_port_pm=off"
+        "nvidia-drm.modeset=0"
+      ];
 
-        # Keep offload active but completely unused. Combined with finegrained power management above,
-        # the driver will verify no display frames are bound to it and cleanly cut power to D3cold.
-        offload = {
-          enable = true;
-          enableOffloadCmd = false;
-        };
-        sync.enable = false;
-      };
+      # 3. Use udev to completely unbind and remove the entire device from the
+      # kernel's PCI bus infrastructure the split second it's detected on boot.
+      # This tricks mangowm into believing the RTX 3070 doesn't physically exist,
+      # preventing the probe and allowing the laptop firmware to drop it to D3cold.
+      services.udev.extraRules = ''
+        # Remove NVIDIA Audio and USB controllers if present
+        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0303", ATTR{remove}="1"
+        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{remove}="1"
+
+        # Force clear the main 3D VGA controller (RTX 3070) from the active bus list
+        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{device}=="0x249d", ATTR{remove}="1"
+      '';
 
       # =========================================================================
       # SPECIALISATION PROFILE: DISCRETE GPU (NVIDIA Sync Workstation Mode)
@@ -250,12 +253,26 @@ in
         discrete-gpu.configuration = {
           system.nixos.tags = [ "discrete-gpu" ];
 
-          # Reconfigure PRIME parameters to lock onto the discrete card entirely
-          hardware.nvidia.powerManagement.finegrained = lib.mkForce false;
+          # Restore the video drivers and wipe out the isolation parameters
+          services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
+          boot.blacklistedKernelModules = lib.mkForce [ ];
+          boot.kernelParams = lib.mkForce [ ];
+          services.udev.extraRules = lib.mkForce "";
+
+          hardware.nvidia = {
+            modesetting.enable = true;
+            powerManagement.enable = true;
+            open = true;
+            nvidiaSettings = true;
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
+          };
 
           hardware.nvidia.prime = {
-            offload.enable = lib.mkForce false;
+            intelBusId = "PCI:0:2:0";
+            nvidiaBusId = "PCI:1:0:0";
             sync.enable = lib.mkForce true;
+            offload.enable = lib.mkForce false;
+            offload.enableOffloadCmd = lib.mkForce false;
           };
         };
       };
