@@ -186,12 +186,10 @@ in
       ...
     }:
     {
-      imports = [
-        (modulesPath + "/installer/scan/not-detected.nix")
-      ];
+      imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
       # =========================================================================
-      # BASE PROFILE: INTEGRATED GRAPHICS (System76 Firmware Control)
+      # BASE PROFILE: INTEGRATED GRAPHICS (The default)
       # =========================================================================
       system.nixos.tags = [ "integrated-graphics" ];
 
@@ -200,39 +198,32 @@ in
         enable32Bit = true;
       };
 
-      # Tell the display manager stack to track standard open modesetting
+      # 1. Force the system to ignore NVIDIA entirely in the base profile
       services.xserver.videoDrivers = [ "modesetting" ];
-
-      # ONE-SHOT BOOTHOOK: Force the running daemon into integrated mode on boot
-      systemd.services.system76-power-graphics-switch = {
-        description = "Set System76 Power Graphics Profile Mode";
-        after = [ "system76-power.service" ];
-        wants = [ "system76-power.service" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          ExecStart = "${pkgs.system76-power}/bin/system76-power graphics integrated";
-        };
-      };
+      boot.blacklistedKernelModules = [
+        "nvidia"
+        "nouveau"
+      ];
 
       # =========================================================================
-      # SPECIALISATION PROFILE: DISCRETE GPU (NVIDIA Sync Workstation Mode)
+      # SPECIALISATION PROFILE: DISCRETE GPU
       # =========================================================================
       specialisation = {
         discrete-gpu.configuration = {
           system.nixos.tags = [ "discrete-gpu" ];
 
-          # Overwrite the display server stack to load the real NVIDIA drivers
-          services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
+          # 1. Un-blacklist the proprietary driver
+          boot.blacklistedKernelModules = lib.mkForce [ ];
 
-          # OVERRIDE BOOTHOOK: Override the one-shot to punch the hardware into dedicated sync mode
-          systemd.services.system76-power-graphics-switch.serviceConfig.ExecStart =
-            lib.mkForce "${pkgs.system76-power}/bin/system76-power graphics nvidia";
+          # 2. Switch the display stack to the proprietary NVIDIA driver
+          services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
 
           hardware.nvidia = {
             modesetting.enable = true;
+            # THIS IS THE KEY: Powers down the chip when not in use
             powerManagement.enable = true;
+            powerManagement.finegrained = true;
+
             open = true;
             nvidiaSettings = true;
             package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -241,9 +232,7 @@ in
           hardware.nvidia.prime = {
             intelBusId = "PCI:0:2:0";
             nvidiaBusId = "PCI:1:0:0";
-            sync.enable = lib.mkForce true;
-            offload.enable = lib.mkForce false;
-            offload.enableOffloadCmd = lib.mkForce false;
+            offload.enable = true;
           };
         };
       };
