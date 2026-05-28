@@ -190,29 +190,26 @@ in
         (modulesPath + "/installer/scan/not-detected.nix")
       ];
 
-      boot.loader.grub = {
-        # 1. Hide the standard auto-generated top-level entries to eliminate duplicates
-        configurationLimit = 0;
+      # ... keep your existing boot.initrd and microcode settings identical ...
 
-        # 2. Hardcode the main menu selections with accurate dynamic path pointers
-        extraEntries = ''
-          menuentry "NixOS - Integrated Graphics (Intel Only)" --class nixos {
-            # Points directly to the primary, default boot choice file
-            configfile /grub/kernels.cfg
-          }
-          menuentry "NixOS - Dedicated Graphics (NVIDIA Sync)" --class nixos {
-            # Specialisations are compiled natively as a sub-profile under the current system closure
-            configfile /grub/specialisations/discrete-gpu.cfg
-          }
+      # =========================================================================
+      # CLEAN NATIVE GRUB CONFIGURATION
+      # =========================================================================
+      boot.loader.grub = {
+        enable = true;
+        configurationLimit = 10; # Keep standard generations clean
+
+        # This injects custom naming rules directly into GRUB's automated generation builder
+        extraPerEntryConfig = ''
+          if [ "$title" = "NixOS - Default" ]; then
+            title="NixOS - Integrated Graphics (Intel Only)"
+          fi
         '';
       };
 
-      # ... keeping your existing boot.initrd and microcode settings identical ...
-
       # =========================================================================
-      # BASE BOOT PROFILE: INTEGRATED GRAPHICS (Intel Only)
+      # BASE PROFILE: INTEGRATED GRAPHICS (Intel Managed Sleep)
       # =========================================================================
-
       system.nixos.tags = [ "integrated-graphics" ];
 
       hardware.graphics = {
@@ -220,63 +217,44 @@ in
         enable32Bit = true;
       };
 
-      services.xserver.videoDrivers = [ "modesetting" ];
+      # DO NOT blacklist the driver. Let it load so it can handle the hardware power down sequence.
+      services.xserver.videoDrivers = [ "nvidia" ];
 
-      # 1. Blacklist drivers so they don't claim the hardware
-      boot.blacklistedKernelModules = [
-        "nvidia"
-        "nvidia_modeset"
-        "nvidia_uvm"
-        "nvidia_drm"
-        "nouveau"
-      ];
+      hardware.nvidia = {
+        modesetting.enable = true;
+        powerManagement.enable = true; # Critical for D3 power cuts
+        powerManagement.finegrained = true; # Tells the driver to completely cut power rails when idle
+        open = true;
+        nvidiaSettings = false;
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
+      };
 
-      # 2. Kernel parameters to enable aggressive PCIe runtime power management
-      boot.kernelParams = [
-        "pcie_port_pm=off"
-        "nvidia-drm.modeset=1"
-      ];
+      # Configure PRIME for absolute maximum battery saving power offload
+      hardware.nvidia.prime = {
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
 
-      # 3. Force the kernel to write "auto" to the NVIDIA card's power control
-      # This forces the PCIe bus to transition the unmanaged card from D0 to D3cold
-      services.udev.extraRules = ''
-        # Remove NVIDIA USB Type-C/Audio controllers if present on the card to allow sleep
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0303", ATTR{remove}="1"
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{remove}="1"
-
-        # Cut power to the main 3D VGA controller (RTX 3070)
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{device}=="0x249d", ATTR{power/control}="auto"
-      '';
+        # Keep offload active but completely unused. Combined with finegrained power management above,
+        # the driver will verify no display frames are bound to it and cleanly cut power to D3cold.
+        offload = {
+          enable = true;
+          enableOffloadCmd = false;
+        };
+        sync.enable = false;
+      };
 
       # =========================================================================
-      # SPECIALISATION PROFILE: DISCRETE GPU (NVIDIA Sync Mode)
+      # SPECIALISATION PROFILE: DISCRETE GPU (NVIDIA Sync Workstation Mode)
       # =========================================================================
       specialisation = {
         discrete-gpu.configuration = {
           system.nixos.tags = [ "discrete-gpu" ];
 
-          # Re-enable everything cleanly
-          services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
-          boot.blacklistedKernelModules = lib.mkForce [ ];
-          boot.kernelParams = lib.mkForce [ ];
-
-          # Wipe out the power-down udev rules for this generation block
-          services.udev.extraRules = lib.mkForce "";
-
-          hardware.nvidia = {
-            modesetting.enable = true;
-            powerManagement.enable = true;
-            open = true;
-            nvidiaSettings = true;
-            package = config.boot.kernelPackages.nvidiaPackages.stable;
-          };
-
+          # Reconfigure PRIME parameters to lock onto the discrete card entirely
           hardware.nvidia.prime = {
-            intelBusId = "PCI:0:2:0";
-            nvidiaBusId = "PCI:1:0:0";
-            sync.enable = lib.mkForce true;
             offload.enable = lib.mkForce false;
-            offload.enableOffloadCmd = lib.mkForce false;
+            finegrained = lib.mkForce false;
+            sync.enable = lib.mkForce true;
           };
         };
       };
