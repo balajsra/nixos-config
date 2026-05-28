@@ -251,9 +251,10 @@ in
           system.nixos.tags = [ "discrete-gpu" ];
 
           # Reconfigure PRIME parameters to lock onto the discrete card entirely
+          hardware.nvidia.powerManagement.finegrained = lib.mkForce false;
+
           hardware.nvidia.prime = {
             offload.enable = lib.mkForce false;
-            finegrained = lib.mkForce false;
             sync.enable = lib.mkForce true;
           };
         };
