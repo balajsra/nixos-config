@@ -200,32 +200,30 @@ in
         enable32Bit = true;
       };
 
+      # DO NOT blacklist the driver. Let it load so it can handle the hardware power down sequence.
       services.xserver.videoDrivers = [ "nvidia" ];
 
       hardware.nvidia = {
         modesetting.enable = true;
-        powerManagement.enable = true;
-        powerManagement.finegrained = true;
+        powerManagement.enable = true; # Critical for D3 power cuts
+        powerManagement.finegrained = true; # Tells the driver to completely cut power rails when idle
         open = true;
         nvidiaSettings = false;
         package = config.boot.kernelPackages.nvidiaPackages.stable;
       };
 
+      # Configure PRIME for absolute maximum battery saving power offload
       hardware.nvidia.prime = {
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
+
+        # Keep offload active but completely unused. Combined with finegrained power management above,
+        # the driver will verify no display frames are bound to it and cleanly cut power to D3cold.
         offload = {
           enable = true;
           enableOffloadCmd = false;
         };
         sync.enable = false;
-      };
-
-      # FORCE WAYLAND ENVIRONMENT TO IGNORE THE NVIDIA CHIP
-      # This forces mangowm to only use the Intel rendering nodes, leaving the NVIDIA driver completely idle.
-      environment.sessionVariables = {
-        WLR_DRM_DEVICES = "/dev/dri/by-path/pci-0000:00:02.0-card"; # Forces Wayland to use the Intel card node only
-        __EGL_VENDOR_LIBRARY_FILENAMES = "${pkgs.mesa}/share/glvnd/egl_vendor.d/50_mesa.json";
       };
 
       # =========================================================================
@@ -235,12 +233,7 @@ in
         discrete-gpu.configuration = {
           system.nixos.tags = [ "discrete-gpu" ];
 
-          # Re-enable the NVIDIA chip fully for the compositor session
-          environment.sessionVariables = {
-            WLR_DRM_DEVICES = lib.mkForce "/dev/dri/by-path/pci-0000:01:00.0-card";
-            __EGL_VENDOR_LIBRARY_FILENAMES = lib.mkForce null;
-          };
-
+          # Reconfigure PRIME parameters to lock onto the discrete card entirely
           hardware.nvidia.powerManagement.finegrained = lib.mkForce false;
 
           hardware.nvidia.prime = {
