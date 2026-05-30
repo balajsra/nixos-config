@@ -182,25 +182,68 @@ in
       modulesPath,
       lib,
       config,
+      pkgs,
       ...
     }:
     {
-      imports = [
-        (modulesPath + "/installer/scan/not-detected.nix")
+      imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+
+      # =========================================================================
+      # BASE PROFILE: INTEGRATED GRAPHICS (The default)
+      # =========================================================================
+      system.nixos.tags = [ "integrated-graphics" ];
+
+      hardware.graphics = {
+        enable = true;
+        enable32Bit = true;
+      };
+
+      # 1. Force the system to ignore NVIDIA entirely in the base profile
+      services.xserver.videoDrivers = [ "modesetting" ];
+
+      boot.blacklistedKernelModules = [
+        "nvidia"
+        "nouveau"
+        "nvidiafb" # Added to prevent framebuffer from keeping the card awake
       ];
 
-      boot.initrd.availableKernelModules = [
-        "xhci_pci"
-        "ahci"
-        "nvme"
-        "usb_storage"
-        "sd_mod"
-        "rtsx_pci_sdmmc"
-      ];
-      boot.initrd.kernelModules = [ "dm-snapshot" ];
-      boot.kernelModules = [ "kvm-intel" ];
-      boot.extraModulePackages = [ ];
+      # 2. UDEV RULE: Force Runtime Power Management
+      # This tells the kernel to aggressively cut power to the PCI device
+      # when the system is idle, regardless of whether a driver is loaded.
+      services.udev.extraRules = ''
+        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", ATTR{power/control}="auto", ATTR{power/runtime_enabled}="enabled"
+      '';
 
-      hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+      # =========================================================================
+      # SPECIALISATION PROFILE: DISCRETE GPU
+      # =========================================================================
+      specialisation = {
+        discrete-gpu.configuration = {
+          system.nixos.tags = [ "discrete-gpu" ];
+
+          # 1. Un-blacklist the proprietary driver
+          boot.blacklistedKernelModules = lib.mkForce [ ];
+
+          # 2. Switch the display stack to the proprietary NVIDIA driver
+          services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
+
+          hardware.nvidia = {
+            modesetting.enable = true;
+            # THIS IS THE KEY: Powers down the chip when not in use
+            powerManagement.enable = true;
+            powerManagement.finegrained = true;
+
+            open = true;
+            nvidiaSettings = true;
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
+          };
+
+          hardware.nvidia.prime = {
+            intelBusId = "PCI:0:2:0";
+            nvidiaBusId = "PCI:1:0:0";
+            offload.enable = true;
+          };
+        };
+      };
     };
 }
