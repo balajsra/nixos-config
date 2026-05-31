@@ -20,7 +20,10 @@
         isNormalUser = true;
         hashedPasswordFile =
           config.sops.secrets."passwords/${config.networking.hostName}/${config.primaryUser.username}".path;
-        extraGroups = [ "wheel" ];
+        extraGroups = [
+          "wheel"
+          "users"
+        ];
         uid = 1000;
         group = "${config.primaryUser.username}";
       };
