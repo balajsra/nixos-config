@@ -21,6 +21,12 @@
         hashedPasswordFile =
           config.sops.secrets."passwords/${config.networking.hostName}/${config.primaryUser.username}".path;
         extraGroups = [ "wheel" ];
+        uid = 1000;
+        group = "${config.primaryUser.username}";
+      };
+
+      users.groups."${config.primaryUser.username}" = {
+        gid = 1000;
       };
     };
 
