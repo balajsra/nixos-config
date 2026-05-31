@@ -133,6 +133,7 @@ in
         self.nixosModules.desktop-environment
         self.nixosModules.display-manager
         self.nixosModules.editor
+        self.nixosModules.file-sharing
         self.nixosModules.fonts
         self.nixosModules.gaming
         self.nixosModules.git

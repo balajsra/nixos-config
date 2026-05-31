@@ -122,6 +122,7 @@ in
         self.nixosModules.desktop-environment
         self.nixosModules.display-manager
         self.nixosModules.editor
+        self.nixosModules.file-sharing
         self.nixosModules.fonts
         self.nixosModules.git
         self.nixosModules.kernel

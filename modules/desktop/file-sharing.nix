@@ -1,6 +1,80 @@
 { self, ... }:
 
 {
+  flake.nixosModules.file-sharing = {
+    imports = [
+      self.nixosModules.samba-client
+    ];
+  };
+
+  flake.nixosModules.samba-client =
+    {
+      lib,
+      config,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (config.features.file-sharing.samba-client.enable) {
+        environment.systemPackages = [ pkgs.cifs-utils ];
+      };
+
+      imports = [
+        self.nixosModules.samba-client-fileserver
+        self.nixosModules.samba-client-mediaserver
+      ];
+    };
+
+  flake.nixosModules.samba-client-fileserver =
+    { lib, config, ... }:
+    {
+      config = lib.mkIf (config.features.file-sharing.samba-client.fileserver.enable) {
+        sops.secrets = {
+          "samba-client/fileserver/address" = { };
+          "samba-client/fileserver/credentials" = { };
+        };
+
+        fileSystems."/mnt/fileserver" = {
+          device = "//${config.sops.secrets."samba-client/fileserver/address".path}/fileserver";
+          fsType = "cifs";
+          options =
+            let
+              uid = toString config.users.users.${config.primaryUser.username}.uid;
+              gid = toString config.users.groups."${config.primaryUser.username}".gid;
+              credentials = config.sops.secrets."samba-client/fileserver/credentials".path;
+            in
+            [
+              "_netdev,credentials=${credentials},iocharset=utf8,uid=${uid},gid=${gid},rw,nofail"
+            ];
+        };
+      };
+    };
+
+  flake.nixosModules.samba-client-mediaserver =
+    { lib, config, ... }:
+    {
+      config = lib.mkIf (config.features.file-sharing.samba-client.mediaserver.enable) {
+        sops.secrets = {
+          "samba-client/mediaserver/address" = { };
+          "samba-client/mediaserver/credentials" = { };
+        };
+
+        fileSystems."/mnt/mediaserver" = {
+          device = "//${config.sops.secrets."samba-client/mediaserver/address".path}/media";
+          fsType = "cifs";
+          options =
+            let
+              uid = toString config.users.users.${config.primaryUser.username}.uid;
+              gid = toString config.users.groups."${config.primaryUser.username}".gid;
+              credentials = config.sops.secrets."samba-client/fileserver/credentials".path;
+            in
+            [
+              "_netdev,credentials=${credentials},iocharset=utf8,uid=${uid},gid=${gid},rw,nofail"
+            ];
+        };
+      };
+    };
+
   flake.homeModules.file-sharing = {
     imports = [
       self.homeModules.nextcloud
