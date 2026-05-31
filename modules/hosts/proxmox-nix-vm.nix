@@ -74,6 +74,11 @@ in
             file-sharing = {
               nextcloud.enable = false;
               syncthing.enable = false;
+              samba-client = {
+                enable = false;
+                fileserver.enable = false;
+                mediaserver.enable = false;
+              };
             };
 
             hardware = {
