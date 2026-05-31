@@ -1,14 +1,18 @@
 default:
     @just --list
 
-secrets-update:
-    nix flake update --flake . nix-secrets
-
 git-intent-to-add:
     git add -N .
 
-flake-update:
-    nix flake update --flake .
+flake-update input="":
+    #!/usr/bin/env bash
+    if [ -z "{{ input }}" ]; then
+        echo "Updating all flake inputs..."
+        nix flake update --flake .
+    else
+        echo "Updating flake input: {{ input }}..."
+        nix flake update --flake . "{{ input }}"
+    fi
 
 rebuild-test target='$(hostname)': git-intent-to-add
     @echo "Testing {{ target }}"
