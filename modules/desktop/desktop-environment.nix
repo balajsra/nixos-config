@@ -91,6 +91,7 @@
     in
     {
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+        # https://mangowm.github.io/docs/nix-options/
         wayland.windowManager.mango = {
           enable = true;
           # Point Home Manager to system installed package
