@@ -30,18 +30,17 @@
     {
       config = lib.mkIf (config.features.file-sharing.samba-client.fileserver.enable) {
         sops.secrets = {
-          "samba-client/fileserver/address" = { };
-          "samba-client/fileserver/credentials" = { };
+          "samba-client/fileserver" = { };
         };
 
         fileSystems."/mnt/fileserver" = {
-          device = "//${config.sops.secrets."samba-client/fileserver/address".path}/fileserver";
+          device = "//192.168.12.5/fileserver";
           fsType = "cifs";
           options =
             let
               uid = toString config.users.users.${config.primaryUser.username}.uid;
               gid = toString config.users.groups."${config.primaryUser.username}".gid;
-              credentials = config.sops.secrets."samba-client/fileserver/credentials".path;
+              credentials = config.sops.secrets."samba-client/fileserver".path;
             in
             [
               "_netdev,credentials=${credentials},iocharset=utf8,uid=${uid},gid=${gid},rw,nofail"
@@ -55,18 +54,17 @@
     {
       config = lib.mkIf (config.features.file-sharing.samba-client.mediaserver.enable) {
         sops.secrets = {
-          "samba-client/mediaserver/address" = { };
-          "samba-client/mediaserver/credentials" = { };
+          "samba-client/mediaserver" = { };
         };
 
         fileSystems."/mnt/mediaserver" = {
-          device = "//${config.sops.secrets."samba-client/mediaserver/address".path}/media";
+          device = "//192.168.12.12/media";
           fsType = "cifs";
           options =
             let
               uid = toString config.users.users.${config.primaryUser.username}.uid;
               gid = toString config.users.groups."${config.primaryUser.username}".gid;
-              credentials = config.sops.secrets."samba-client/fileserver/credentials".path;
+              credentials = config.sops.secrets."samba-client/mediaserver".path;
             in
             [
               "_netdev,credentials=${credentials},iocharset=utf8,uid=${uid},gid=${gid},rw,nofail"
