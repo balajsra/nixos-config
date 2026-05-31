@@ -1,6 +1,78 @@
 { self, ... }:
 
 {
+  flake.nixosModules.file-sharing = {
+    imports = [
+      self.nixosModules.samba-client
+    ];
+  };
+
+  flake.nixosModules.samba-client =
+    {
+      lib,
+      config,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (config.features.file-sharing.samba-client.enable) {
+        environment.systemPackages = [ pkgs.cifs-utils ];
+      };
+
+      imports = [
+        self.nixosModules.samba-client-fileserver
+        self.nixosModules.samba-client-mediaserver
+      ];
+    };
+
+  flake.nixosModules.samba-client-fileserver =
+    { lib, config, ... }:
+    {
+      config = lib.mkIf (config.features.file-sharing.samba-client.fileserver.enable) {
+        sops.secrets = {
+          "samba-client/fileserver" = { };
+        };
+
+        fileSystems."/mnt/fileserver" = {
+          device = "//192.168.12.5/fileserver";
+          fsType = "cifs";
+          options =
+            let
+              uid = toString config.users.users.${config.primaryUser.username}.uid;
+              gid = toString config.users.groups."${config.primaryUser.username}".gid;
+              credentials = config.sops.secrets."samba-client/fileserver".path;
+            in
+            [
+              "_netdev,credentials=${credentials},iocharset=utf8,uid=${uid},gid=${gid},rw,nofail"
+            ];
+        };
+      };
+    };
+
+  flake.nixosModules.samba-client-mediaserver =
+    { lib, config, ... }:
+    {
+      config = lib.mkIf (config.features.file-sharing.samba-client.mediaserver.enable) {
+        sops.secrets = {
+          "samba-client/mediaserver" = { };
+        };
+
+        fileSystems."/mnt/mediaserver" = {
+          device = "//192.168.12.12/media";
+          fsType = "cifs";
+          options =
+            let
+              uid = toString config.users.users.${config.primaryUser.username}.uid;
+              gid = toString config.users.groups."${config.primaryUser.username}".gid;
+              credentials = config.sops.secrets."samba-client/mediaserver".path;
+            in
+            [
+              "_netdev,credentials=${credentials},iocharset=utf8,uid=${uid},gid=${gid},rw,nofail"
+            ];
+        };
+      };
+    };
+
   flake.homeModules.file-sharing = {
     imports = [
       self.homeModules.nextcloud

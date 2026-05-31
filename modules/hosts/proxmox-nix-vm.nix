@@ -74,6 +74,11 @@ in
             file-sharing = {
               nextcloud.enable = false;
               syncthing.enable = false;
+              samba-client = {
+                enable = false;
+                fileserver.enable = false;
+                mediaserver.enable = false;
+              };
             };
 
             hardware = {
@@ -117,6 +122,7 @@ in
         self.nixosModules.desktop-environment
         self.nixosModules.display-manager
         self.nixosModules.editor
+        self.nixosModules.file-sharing
         self.nixosModules.fonts
         self.nixosModules.git
         self.nixosModules.kernel

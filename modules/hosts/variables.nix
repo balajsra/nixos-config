@@ -83,6 +83,11 @@
         file-sharing = {
           nextcloud.enable = lib.mkEnableOption "NextCloud Client";
           syncthing.enable = lib.mkEnableOption "Syncthing file sync";
+          samba-client = {
+            enable = lib.mkEnableOption "Enable Samba Client";
+            fileserver.enable = lib.mkEnableOption "Enable Fileserver Samba Client Connection";
+            mediaserver.enable = lib.mkEnableOption "Enable Mediaserver Samba Client Connection";
+          };
         };
 
         hardware = {
