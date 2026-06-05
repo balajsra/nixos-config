@@ -41,6 +41,11 @@
       flake = false;
     };
 
+    dracula-signal-desktop = {
+      url = "github:dracula/signal-desktop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     self.submodules = true;
   };
 

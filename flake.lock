@@ -20,6 +20,26 @@
         "type": "github"
       }
     },
+    "dracula-signal-desktop": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779738675,
+        "narHash": "sha256-eGUQqqHeXZ6HHRlLjwk87hwXrteswlSY9ckmFyumV+A=",
+        "owner": "dracula",
+        "repo": "signal-desktop",
+        "rev": "b3c81002c4ea31ddf8523e3fd47f2502fae6b19f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula",
+        "repo": "signal-desktop",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -196,6 +216,7 @@
     "root": {
       "inputs": {
         "disko": "disko",
+        "dracula-signal-desktop": "dracula-signal-desktop",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",

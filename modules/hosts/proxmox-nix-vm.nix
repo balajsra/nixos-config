@@ -33,6 +33,7 @@ in
                 config = config.nixpkgs.config;
               };
             })
+            inputs.dracula-signal-desktop.overlays
           ];
 
           storage = {
