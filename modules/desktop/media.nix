@@ -35,8 +35,14 @@
       };
 
       home.packages = with pkgs; [
+        mpv
         celluloid
+        yt-dlp
+        handbrake
+        mkvtoolnix
+        ffmpeg
         fladder
+        aegisub
       ];
     };
 
