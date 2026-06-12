@@ -54,33 +54,6 @@
     in
     {
       config = lib.mkIf (osConfig.features.terminal.fish.enable) {
-        home.packages = with pkgs; [
-          krabby
-          eza
-          bat
-        ];
-
-        # https://wiki.nixos.org/wiki/Starship
-        programs.starship = {
-          enable = true;
-          enableFishIntegration = true;
-        };
-        xdg.configFile."starship.toml".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship/.config/starship.toml";
-
-        # https://wiki.nixos.org/wiki/Tmux
-        programs.tmux.enable = true;
-        home.file.".tmux".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/tmux/.tmux";
-        home.file.".tmux.conf".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/tmux/.tmux.conf";
-
-        home.sessionVariables = {
-          # Dracula theme for Docker BuildKit - https://draculatheme.com/docker
-          BUILDKIT_COLORS = "run=189,147,249:cancel=241,250,140:error=255,85,85:warning=241,250,140";
-          # Dracula theme for GNU grep - https://draculatheme.com/grep
-          GREP_COLORS = "mt=1;38;2;255;85;85:fn=38;2;255;121;198:ln=38;2;80;250;123:bn=38;2;80;250;123:se=38;2;139;233;253";
-        };
-
         # https://nixos.wiki/wiki/Fish
         programs.fish = {
           enable = true;
@@ -153,6 +126,93 @@
         };
         xdg.configFile."fish/themes/Dracula_Official.theme".source =
           config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/fish/.config/fish/themes/Dracula_Official.theme";
+
+        home.sessionVariables = {
+          # Dracula theme for Docker BuildKit - https://draculatheme.com/docker
+          BUILDKIT_COLORS = "run=189,147,249:cancel=241,250,140:error=255,85,85:warning=241,250,140";
+          # Dracula theme for GNU grep - https://draculatheme.com/grep
+          GREP_COLORS = "mt=1;38;2;255;85;85:fn=38;2;255;121;198:ln=38;2;80;250;123:bn=38;2;80;250;123:se=38;2;139;233;253";
+        };
+
+        home.packages = with pkgs; [
+          krabby
+          eza
+          bat
+        ];
+
+        # https://wiki.nixos.org/wiki/Starship
+        programs.starship = {
+          enable = true;
+          enableFishIntegration = true;
+        };
+        xdg.configFile."starship.toml".source =
+          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship/.config/starship.toml";
+
+        # https://wiki.nixos.org/wiki/Tmux
+        programs.tmux = {
+          enable = true;
+          shortcut = "a"; # Changes prefix from C-b to C-a
+          secureSocket = true;
+          shell = "/etc/profiles/per-user/${osConfig.primaryUser.username}/bin/fish";
+          mouse = true;
+          sensibleOnTop = true;
+
+          plugins = with pkgs.tmuxPlugins; [
+            {
+              plugin = dracula;
+              extraConfig = ''
+                set -g @dracula-show-powerline true
+                set -g @dracula-show-flags true
+                set -g @dracula-refresh-rate 5
+                set -g @dracula-show-left-icon session
+                set -g @dracula-show-empty-plugins false
+                set -g @dracula-plugins "git cpu-usage ram-usage battery time"
+
+                set -g @dracula-colors "
+                  white=\"#f8f8f2\"
+                  gray=\"#44475a\"
+                  dark_gray=\"#282a36\"
+                  light_purple=\"#bd93f9\"
+                  dark_purple=\"#6272a4\"
+                  cyan=\"#8be9fd\"
+                  green=\"#50fa7b\"
+                  orange=\"#ffb86c\"
+                  red=\"#ff5555\"
+                  pink=\"#ff79c6\"
+                  yellow=\"#f1fa8c\"
+                "
+              '';
+            }
+          ];
+
+          extraConfig = ''
+            # Window splitting overrides
+            bind | split-window -h
+            bind - split-window -v
+            unbind '"'
+            unbind %
+
+            # Quick reload shortcut (Points to the Home Manager generated config path)
+            bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded..."
+
+            # Pane navigation (Alt + Arrow / Alt + Vim keys)
+            bind -n M-Left select-pane -L
+            bind -n M-h select-pane -L
+
+            bind -n M-Right select-pane -R
+            bind -n M-l select-pane -R
+
+            bind -n M-Up select-pane -U
+            bind -n M-k select-pane -U
+
+            bind -n M-Down select-pane -D
+            bind -n M-j select-pane -D
+
+            # Misc preferences
+            set-option -g allow-rename off
+            set -g pane-border-status top
+          '';
+        };
       };
     };
 
