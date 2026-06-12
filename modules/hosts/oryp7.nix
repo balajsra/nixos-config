@@ -142,6 +142,7 @@ in
         self.nixosModules.location
         self.nixosModules.networking
         self.nixosModules.night-light
+        self.nixosModules.office
         self.nixosModules.partitions
         self.nixosModules.phone
         self.nixosModules.printing

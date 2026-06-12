@@ -1,6 +1,12 @@
 { self, ... }:
 
 {
+  flake.nixosModules.office = {
+    imports = [
+      self.nixosModules.gnucash
+    ];
+  };
+
   flake.homeModules.office = {
     imports = [
       self.homeModules.obsidian
@@ -20,6 +26,13 @@
 
     # TODO: Configure obsidian with Nix
   };
+
+  flake.nixosModules.gnucash =
+    { ... }:
+    {
+      # Enable editing of settings from GUI
+      programs.dconf.enable = true;
+    };
 
   flake.homeModules.gnucash =
     { pkgs, ... }:
