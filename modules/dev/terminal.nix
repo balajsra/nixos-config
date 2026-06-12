@@ -249,6 +249,7 @@
       config,
       osConfig,
       lib,
+      pkgs,
       ...
     }:
     let
@@ -257,11 +258,47 @@
     {
       config = lib.mkIf (osConfig.features.terminal.emulator == "ghostty") {
         # https://wiki.nixos.org/wiki/Ghostty
-        programs.ghostty.enable = true;
-        programs.ghostty.enableBashIntegration = osConfig.features.terminal.bash.enable;
-        programs.ghostty.enableFishIntegration = osConfig.features.terminal.fish.enable;
-        xdg.configFile."ghostty".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/ghostty/.config/ghostty";
+        programs.ghostty = {
+          enable = true;
+          enableBashIntegration = osConfig.features.terminal.bash.enable;
+          enableFishIntegration = osConfig.features.terminal.fish.enable;
+          systemd.enable = true;
+          settings = {
+            command =
+              if osConfig.features.terminal.fish.enable then
+                "${pkgs.fish}/bin/fish"
+              else if osConfig.features.terminal.bash.enable then
+                "${pkgs.bashInteractive}/bin/bash"
+              else
+                "/run/current-system/sw/bin/bash";
+
+            font-family = "MonaspiceNe NFM";
+            font-family-bold = "MonaspiceNe NFM Bold";
+            font-family-italic = "MonaspiceNe NFM Italic";
+            font-family-bold-italic = "MonaspiceNe NFM Bold Italic";
+            font-size = 12.0;
+
+            cursor-color = "#CCCCCC";
+            cursor-opacity = 1;
+            cursor-style = "bar";
+            cursor-style-blink = true;
+
+            mouse-scroll-multiplier = 0.5;
+
+            theme = "Dracula";
+            background-opacity = 0.8;
+
+            window-decoration = false;
+            window-padding-x = "5,5";
+            window-padding-y = "5,0";
+
+            copy-on-select = true;
+
+            title = "Ghostty";
+            auto-update = "off";
+            desktop-notifications = true;
+          };
+        };
       };
     };
 }
