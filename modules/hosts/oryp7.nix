@@ -88,6 +88,14 @@ in
             };
 
             comms.enable = true;
+
+            fonts = {
+              enable = true;
+              nerd.enable = true;
+              emojis.enable = true;
+              japanese.enable = true;
+              korean.enable = true;
+            };
           };
 
           primaryUser = {

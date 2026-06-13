@@ -95,6 +95,14 @@
         };
 
         comms.enable = lib.mkEnableOption "Enable Communication Apps";
+
+        fonts = {
+          enable = lib.mkEnableOption "Enable font packages";
+          nerd.enable = lib.mkEnableOption "Enable nerd fonts";
+          emojis.enable = lib.mkEnableOption "Enable emoji fonts";
+          japanese.enable = lib.mkEnableOption "Enable Japanese fonts";
+          korean.enable = lib.mkEnableOption "Enable Korean fonts";
+        };
       };
 
       primaryUser = {
