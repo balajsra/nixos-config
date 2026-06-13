@@ -85,6 +85,8 @@ in
             hardware = {
               system76.enable = false;
             };
+
+            comms.enable = true;
           };
 
           primaryUser = {
@@ -99,6 +101,7 @@ in
           home-manager.users."${config.primaryUser.username}" = {
             imports = [
               self.homeModules.admin
+              self.homeModules.comms
               self.homeModules.desktop-environment
               self.homeModules.development
               self.homeModules.editor

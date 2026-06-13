@@ -93,6 +93,8 @@
         hardware = {
           system76.enable = lib.mkEnableOption "Enable System76 hardware support";
         };
+
+        comms.enable = lib.mkEnableOption "Enable Communication Apps";
       };
 
       primaryUser = {

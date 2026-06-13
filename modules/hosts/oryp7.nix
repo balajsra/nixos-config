@@ -86,6 +86,8 @@ in
             hardware = {
               system76.enable = true;
             };
+
+            comms.enable = true;
           };
 
           primaryUser = {
