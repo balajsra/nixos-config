@@ -32,7 +32,7 @@
           enable = true;
           enableDefaultConfig = false;
           settings = {
-            "forgejo" = {
+            "forgejo.sravanbalaji.com" = {
               HostName = "forgejo.sravanbalaji.com";
               User = "git";
               IdentityFile = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
