@@ -9,6 +9,7 @@
   flake.nixosModules.security = {
     imports = [
       self.nixosModules.sops
+      self.nixosModules.secret-service
       inputs.sops-nix.nixosModules.sops
     ];
   };
@@ -71,5 +72,15 @@
         defaultSopsFile = "${secretsPath}/secrets.yaml";
         validateSopsFiles = false;
       };
+    };
+
+  flake.nixosModules.secret-service =
+    { pkgs, config, ... }:
+    {
+      # https://wiki.nixos.org/wiki/Secret_Service
+      services.gnome.gnome-keyring.enable = true;
+      environment.systemPackages = with pkgs; [
+        seahorse
+      ];
     };
 }
