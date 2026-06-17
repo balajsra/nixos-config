@@ -75,6 +75,24 @@
           waypaper
           awww
         ];
+
+        # https://danklinux.com/docs/dankmaterialshell/nixos
+        programs.dms-shell = {
+          enable = true;
+
+          systemd = {
+            enable = true; # Systemd service for auto-start
+            restartIfChanged = true; # Auto-restart dms.service when dms-shell changes
+          };
+
+          # Core features
+          enableSystemMonitoring = true; # System monitoring widgets (dgop)
+          enableVPN = true; # VPN management widget
+          enableDynamicTheming = true; # Wallpaper-based theming (matugen)
+          enableAudioWavelength = true; # Audio visualizer (cava)
+          enableCalendarEvents = true; # Calendar integration (khal)
+          enableClipboardPaste = true; # Pasting from the clipboard history (wtype)
+        };
       };
     };
 
@@ -407,10 +425,10 @@
           };
         };
 
-        # https://wiki.nixos.org/wiki/Waybar
-        programs.waybar.enable = true;
-        xdg.configFile."waybar".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mango/.config/mango/waybar";
+        # # https://wiki.nixos.org/wiki/Waybar
+        # programs.waybar.enable = true;
+        # xdg.configFile."waybar".source =
+        #   config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mango/.config/mango/waybar";
 
         home.packages = with pkgs; [
           brightnessctl
