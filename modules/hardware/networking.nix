@@ -72,7 +72,7 @@
         };
       };
 
-      programs.nm-applet.enable = true;
+      programs.nm-applet.enable = false;
 
       users.users."${config.primaryUser.username}".extraGroups = [ "networkmanager" ];
     };
