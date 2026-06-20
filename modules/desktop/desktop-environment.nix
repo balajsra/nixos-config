@@ -290,7 +290,6 @@
               "uwsm app -- gammastep -x &"
               "uwsm app -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 25% &"
 
-              "uwsm app -- blueman-applet &"
               "uwsm app -- nm-applet &"
               "uwsm app -- kdeconnect-indicator &"
               "uwsm app -- udiskie -a -n -s &"
