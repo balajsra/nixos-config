@@ -71,8 +71,6 @@
           kdePackages.qtstyleplugin-kvantum
           breeze-hacked-cursor-theme
           papirus-icon-theme
-          waypaper
-          awww
         ];
 
         # https://danklinux.com/docs/dankmaterialshell/nixos
@@ -284,7 +282,6 @@
               "uwsm app -- wl-paste --type image --watch cliphist store &"
 
               "uwsm app -- shikane &"
-              "uwsm app -- waypaper --restore &"
               "uwsm app -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 25% &"
 
               "uwsm app -- nm-applet &"
