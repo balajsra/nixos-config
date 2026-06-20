@@ -280,7 +280,6 @@
               "uwsm finalize &"
 
               "uwsm app -- fumon &"
-              "uwsm app -- swayidle &"
               "uwsm app -- kdeconnectd --replace &"
               "uwsm app -- wl-paste --type text --watch cliphist store &"
               "uwsm app -- wl-paste --type image --watch cliphist store &"
@@ -511,13 +510,10 @@
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
         home.packages = with pkgs; [
           swaylock-effects
-          swayidle
         ];
 
         xdg.configFile."swaylock".source =
           config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swaylock/.config/swaylock";
-        xdg.configFile."swayidle".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swayidle/.config/swayidle";
       };
     };
 
