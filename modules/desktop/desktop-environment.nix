@@ -280,7 +280,6 @@
               "SUPER+SHIFT,Return,spawn_shell,uwsm app -- ${osConfig.features.terminal.emulator}"
               "SUPER,e,spawn_shell,uwsm app -- emacs"
 
-              "SUPER+SHIFT,q,spawn_shell,$HOME/.scripts/session.sh --logout"
               "SUPER+SHIFT,c,killclient"
 
               "SUPER,j,focusstack,next"
@@ -357,10 +356,6 @@
 
               "SUPER+SHIFT+CTRL,equal,incgaps,1"
               "SUPER+SHIFT+CTRL,minus,incgaps,-1"
-
-              "NONE,XF86AudioRaiseVolume,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --raise"
-              "NONE,XF86AudioLowerVolume,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --lower"
-              "NONE,XF86AudioMute,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --mute"
             ];
 
             mousebind = [
