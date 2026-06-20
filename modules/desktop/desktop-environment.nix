@@ -20,7 +20,6 @@
       self.homeModules.notifications
       self.homeModules.launcher
       self.homeModules.screenshot
-      self.homeModules.screen-lock
       self.homeModules.file-explorer
       self.homeModules.display-configuration
     ];
@@ -487,28 +486,6 @@
             };
           };
         };
-      };
-    };
-
-  flake.homeModules.screen-lock =
-    {
-      pkgs,
-      config,
-      osConfig,
-      lib,
-      ...
-    }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
-    {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
-        home.packages = with pkgs; [
-          swaylock-effects
-        ];
-
-        xdg.configFile."swaylock".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swaylock/.config/swaylock";
       };
     };
 
