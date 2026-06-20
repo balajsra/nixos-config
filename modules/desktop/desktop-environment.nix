@@ -9,6 +9,7 @@
   flake.nixosModules.desktop-environment = {
     imports = [
       self.nixosModules.mangowm
+      self.nixosModules.dms-shell
       self.nixosModules.gnome
     ];
   };
@@ -17,6 +18,7 @@
     imports = [
       self.homeModules.mangowm
       inputs.mangowm.hmModules.mango
+      self.homeModules.dms-shell
       self.homeModules.screenshot
       self.homeModules.file-explorer
     ];
@@ -66,7 +68,13 @@
           breeze-hacked-cursor-theme
           papirus-icon-theme
         ];
+      };
+    };
 
+  flake.nixosModules.dms-shell =
+    { lib, config, ... }:
+    {
+      config = lib.mkIf (config.features.desktop-environment == "mango") {
         # https://danklinux.com/docs/dankmaterialshell/nixos
         programs.dms-shell = {
           enable = true;
@@ -204,7 +212,7 @@
             enable_floating_snap = 1;
             snap_distance = 30;
             cursor_size = 24;
-            cursor_theme = "breeze-hacked-cursor-theme";
+            cursor_theme = "Breeze_Hacked";
             no_border_when_single = 0;
             cursor_hide_timeout = 5;
             drag_tile_to_tile = 1;
@@ -375,6 +383,50 @@
         home.packages = with pkgs; [
           ristretto
         ];
+      };
+    };
+
+  flake.homeModules.dms-shell =
+    {
+      osConfig,
+      config,
+      lib,
+      ...
+    }:
+    let
+      mangoConfigPath = toString /home/${osConfig.primaryUser.username}/.config/mango;
+    in
+    {
+      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+        # https://danklinux.com/docs/dankmaterialshell/compositors#mangowc-configuration
+        wayland.windowManager.mango = {
+          settings.bind = [
+            # Application Launchers
+            "SUPER,p,spawn,dms ipc call spotlight toggle"
+            "SUPER,c,spawn,dms ipc call clipboard toggle"
+            "SUPER,m,spawn,dms ipc call processlist focusOrToggle"
+            "SUPER,comma,spawn,dms ipc call settings focusOrToggle"
+            "SUPER,n,spawn,dms ipc call notifications toggle"
+            "SUPER,w,spawn,dms ipc call dankdash wallpaper"
+
+            # Security
+            "SUPER+SHIFT+CTRL,l,spawn,dms ipc call lock lock"
+
+            # Audio Controls
+            "NONE,XF86AudioRaiseVolume,spawn,dms ipc call audio increment 5"
+            "NONE,XF86AudioLowerVolume,spawn,dms ipc call audio decrement 5"
+            "NONE,XF86AudioMute,spawn,dms ipc call audio mute"
+
+            # Brightness Controls
+            "NONE,XF86MonBrightnessUp,spawn,dms ipc call brightness increment 5"
+            "NONE,XF86MonBrightnessDown,spawn,dms ipc call brightness decrement 5"
+          ];
+
+          extraConfig = ''
+            # Disable animation on DMS layers
+            layerrule=noanim:1,layer_name:^dms
+          '';
+        };
       };
     };
 
