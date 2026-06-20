@@ -309,7 +309,6 @@
 
               "SUPER+CTRL,p,spawn_shell,uwsm app -- $HOME/.scripts/control-center.sh --rofi"
               "SUPER+CTRL,c,spawn_shell,uwsm app -- cliphist list | rofi -dmenu | cliphist decode | wl-copy"
-              "SUPER+CTRL,d,spawn_shell,uwsm app -- $HOME/.scripts/brightness.sh --rofi"
               "SUPER+CTRL,v,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --rofi"
               "SUPER+CTRL,m,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --rofi"
               "SUPER+CTRL,q,spawn_shell,uwsm app -- $HOME/.scripts/session.sh --rofi"
@@ -398,9 +397,6 @@
               "NONE,XF86AudioLowerVolume,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --lower"
               "NONE,XF86AudioMute,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --mute"
 
-              "NONE,XF86MonBrightnessUp,spawn_shell,uwsm app -- $HOME/.scripts/brightness.sh --raise"
-              "NONE,XF86MonBrightnessDown,spawn_shell,uwsm app -- $HOME/.scripts/brightness.sh --lower"
-
               "NONE,XF86AudioNext,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --next"
               "NONE,XF86AudioPause,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --play-pause"
               "NONE,XF86AudioPlay,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --play-pause"
@@ -427,7 +423,6 @@
         #   config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mango/.config/mango/waybar";
 
         home.packages = with pkgs; [
-          brightnessctl
           playerctl
           ristretto
         ];
