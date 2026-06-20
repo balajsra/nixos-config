@@ -65,9 +65,6 @@
         security.soteria.enable = true;
 
         environment.systemPackages = with pkgs; [
-          nwg-look
-          kdePackages.qt6ct
-          kdePackages.qtstyleplugin-kvantum
           breeze-hacked-cursor-theme
           papirus-icon-theme
         ];
