@@ -285,7 +285,6 @@
 
               "uwsm app -- shikane &"
               "uwsm app -- waypaper --restore &"
-              "uwsm app -- gammastep -x &"
               "uwsm app -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 25% &"
 
               "uwsm app -- nm-applet &"

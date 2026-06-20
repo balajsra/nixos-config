@@ -119,7 +119,6 @@ in
               self.homeModules.git
               self.homeModules.media
               self.homeModules.networking
-              self.homeModules.night-light
               self.homeModules.office
               self.homeModules.phone
               self.homeModules.security
@@ -150,7 +149,6 @@ in
         self.nixosModules.kernel
         self.nixosModules.location
         self.nixosModules.networking
-        self.nixosModules.night-light
         self.nixosModules.office
         self.nixosModules.partitions
         self.nixosModules.phone
@@ -204,12 +202,20 @@ in
     }:
     {
       imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-      
-      boot.initrd.availableKernelModules = [ "nvme" "ahci" "xhci_pci" "usb_storage" "usbhid" "uas" "sd_mod" ];
+
+      boot.initrd.availableKernelModules = [
+        "nvme"
+        "ahci"
+        "xhci_pci"
+        "usb_storage"
+        "usbhid"
+        "uas"
+        "sd_mod"
+      ];
       boot.initrd.kernelModules = [ "dm-snapshot" ];
       boot.kernelModules = [ "kvm-amd" ];
       boot.extraModulePackages = [ ];
-      
+
       nixpkgs.hostPlatform = lib.mkDefault "${architecture}";
       hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
