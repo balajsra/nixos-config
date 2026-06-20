@@ -291,7 +291,6 @@
 
               "SUPER+SHIFT,Return,spawn_shell,uwsm app -- ${osConfig.features.terminal.emulator}"
               "SUPER,e,spawn_shell,uwsm app -- emacs"
-              "SUPER,b,spawn_shell,$HOME/.config/mango/waybar/scripts/toggleBarService.sh"
 
               "SUPER+SHIFT,q,spawn_shell,$HOME/.scripts/session.sh --logout"
               "SUPER+SHIFT,c,killclient"
@@ -391,11 +390,6 @@
             ];
           };
         };
-
-        # # https://wiki.nixos.org/wiki/Waybar
-        # programs.waybar.enable = true;
-        # xdg.configFile."waybar".source =
-        #   config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mango/.config/mango/waybar";
 
         home.packages = with pkgs; [
           ristretto
