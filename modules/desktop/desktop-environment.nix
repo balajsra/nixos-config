@@ -278,8 +278,6 @@
 
               "uwsm app -- fumon &"
               "uwsm app -- kdeconnectd --replace &"
-              "uwsm app -- wl-paste --type text --watch cliphist store &"
-              "uwsm app -- wl-paste --type image --watch cliphist store &"
 
               "uwsm app -- shikane &"
               "uwsm app -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 25% &"
@@ -303,7 +301,6 @@
               "SUPER,b,spawn_shell,$HOME/.config/mango/waybar/scripts/toggleBarService.sh"
 
               "SUPER+CTRL,p,spawn_shell,uwsm app -- $HOME/.scripts/control-center.sh --rofi"
-              "SUPER+CTRL,c,spawn_shell,uwsm app -- cliphist list | rofi -dmenu | cliphist decode | wl-copy"
               "SUPER+CTRL,v,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --rofi"
               "SUPER+CTRL,m,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --rofi"
               "SUPER+CTRL,q,spawn_shell,uwsm app -- $HOME/.scripts/session.sh --rofi"
@@ -444,10 +441,6 @@
         xdg.configFile."rofi/config.rasi".enable = false;
         xdg.configFile."rofi".source =
           config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/rofi/.config/rofi";
-
-        home.packages = with pkgs; [
-          cliphist
-        ];
       };
     };
 
