@@ -302,7 +302,6 @@
 
               "SUPER+CTRL,p,spawn_shell,uwsm app -- $HOME/.scripts/control-center.sh --rofi"
               "SUPER+CTRL,v,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --rofi"
-              "SUPER+CTRL,m,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --rofi"
               "SUPER+CTRL,q,spawn_shell,uwsm app -- $HOME/.scripts/session.sh --rofi"
 
               "SUPER+SHIFT,q,spawn_shell,$HOME/.scripts/session.sh --logout"
@@ -388,11 +387,6 @@
               "NONE,XF86AudioRaiseVolume,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --raise"
               "NONE,XF86AudioLowerVolume,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --lower"
               "NONE,XF86AudioMute,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --mute"
-
-              "NONE,XF86AudioNext,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --next"
-              "NONE,XF86AudioPause,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --play-pause"
-              "NONE,XF86AudioPlay,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --play-pause"
-              "NONE,XF86AudioPrev,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --prev"
             ];
 
             mousebind = [
@@ -415,7 +409,6 @@
         #   config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mango/.config/mango/waybar";
 
         home.packages = with pkgs; [
-          playerctl
           ristretto
         ];
       };
