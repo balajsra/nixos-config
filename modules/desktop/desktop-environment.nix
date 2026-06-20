@@ -18,7 +18,6 @@
       self.homeModules.mangowm
       inputs.mangowm.hmModules.mango
       self.homeModules.notifications
-      self.homeModules.launcher
       self.homeModules.screenshot
       self.homeModules.file-explorer
       self.homeModules.display-configuration
@@ -268,11 +267,6 @@
               "id:9,layout_name:tile"
             ];
 
-            layerrule = [
-              "animation_type_open:zoom,layer_name:rofi,noblur:0,noanim:0,noshadow:0"
-              "animation_type_close:zoom,layer_name:rofi,noblur:0,noanim:0,noshadow:0"
-            ];
-
             exec-once = [
               "uwsm finalize &"
 
@@ -297,12 +291,7 @@
 
               "SUPER+SHIFT,Return,spawn_shell,uwsm app -- ${osConfig.features.terminal.emulator}"
               "SUPER,e,spawn_shell,uwsm app -- emacs"
-              "SUPER,p,spawn_shell,uwsm app -- rofi -show combi -run-command \"uwsm app -- {cmd}\""
               "SUPER,b,spawn_shell,$HOME/.config/mango/waybar/scripts/toggleBarService.sh"
-
-              "SUPER+CTRL,p,spawn_shell,uwsm app -- $HOME/.scripts/control-center.sh --rofi"
-              "SUPER+CTRL,v,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --rofi"
-              "SUPER+CTRL,q,spawn_shell,uwsm app -- $HOME/.scripts/session.sh --rofi"
 
               "SUPER+SHIFT,q,spawn_shell,$HOME/.scripts/session.sh --logout"
               "SUPER+SHIFT,c,killclient"
@@ -411,29 +400,6 @@
         home.packages = with pkgs; [
           ristretto
         ];
-      };
-    };
-
-  flake.homeModules.launcher =
-    {
-      pkgs,
-      config,
-      osConfig,
-      lib,
-      ...
-    }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
-    {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
-        # https://wiki.nixos.org/wiki/Rofi
-        programs.rofi = {
-          enable = true;
-        };
-        xdg.configFile."rofi/config.rasi".enable = false;
-        xdg.configFile."rofi".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/rofi/.config/rofi";
       };
     };
 
