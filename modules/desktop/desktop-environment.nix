@@ -284,7 +284,6 @@
               "uwsm app -- kdeconnectd --replace &"
               "uwsm app -- wl-paste --type text --watch cliphist store &"
               "uwsm app -- wl-paste --type image --watch cliphist store &"
-              "uwsm app -- $HOME/.scripts/dunst.sh --on &"
 
               "uwsm app -- shikane &"
               "uwsm app -- waypaper --restore &"
@@ -315,7 +314,6 @@
               "SUPER+CTRL,d,spawn_shell,uwsm app -- $HOME/.scripts/brightness.sh --rofi"
               "SUPER+CTRL,v,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --rofi"
               "SUPER+CTRL,m,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --rofi"
-              "SUPER+CTRL,n,spawn_shell,uwsm app -- $HOME/.scripts/dunst.sh --rofi"
               "SUPER+CTRL,q,spawn_shell,uwsm app -- $HOME/.scripts/session.sh --rofi"
 
               "SUPER+SHIFT,q,spawn_shell,$HOME/.scripts/session.sh --logout"
@@ -435,33 +433,6 @@
           playerctl
           ristretto
         ];
-      };
-    };
-
-  flake.homeModules.notifications =
-    {
-      pkgs,
-      config,
-      osConfig,
-      lib,
-      ...
-    }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
-    {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
-        home.packages = with pkgs; [
-          libnotify # provides notify-send
-        ];
-
-        services.dunst.enable = true;
-
-        xdg.configFile."dunst/dunstrc".enable = false;
-        xdg.configFile."dunst".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/dunst/.config/dunst";
-        home.file.".scripts/dunst.sh".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/dunst/.scripts/dunst.sh";
       };
     };
 
