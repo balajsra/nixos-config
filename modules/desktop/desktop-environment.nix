@@ -17,7 +17,6 @@
     imports = [
       self.homeModules.mangowm
       inputs.mangowm.hmModules.mango
-      self.homeModules.notifications
       self.homeModules.screenshot
       self.homeModules.file-explorer
       self.homeModules.display-configuration
@@ -366,8 +365,6 @@
 
               "SUPER+SHIFT+CTRL,equal,incgaps,1"
               "SUPER+SHIFT+CTRL,minus,incgaps,-1"
-
-              "NONE,print,spawn_shell,uwsm app -- grim -g \"$(slurp)\" - | swappy -f -"
 
               "NONE,XF86AudioRaiseVolume,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --raise"
               "NONE,XF86AudioLowerVolume,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --lower"
