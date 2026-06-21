@@ -400,15 +400,16 @@
           settings.bind = [
             # Application Launchers
             "SUPER,p,spawn,dms ipc call spotlight toggle"
-            "SUPER,c,spawn,dms ipc call clipboard toggle"
-            "SUPER,m,spawn,dms ipc call processlist focusOrToggle"
-            "SUPER,n,spawn,dms ipc call notifications toggle"
+            "SUPER,b,spawn,dms ipc call bar toggle index 0"
             "SUPER,w,spawn,dms ipc call dankdash wallpaper"
 
-            # Security
-            "SUPER+SHIFT+CTRL,l,spawn,dms ipc call lock lock"
+            # Menus
+            "SUPER+CTRL,p,spawn,dms ipc call control-center toggle"
+            "SUPER+CTRL,c,spawn,dms ipc call clipboard toggle"
+            "SUPER+CTRL,n,spawn,dms ipc call notifications toggle"
+            "SUPER+CTRL,q,spawn,dms ipc call powermenu toggle"
 
-            # Audio Controls
+            # Volume Controls
             "NONE,XF86AudioRaiseVolume,spawn,dms ipc call audio increment 5"
             "NONE,XF86AudioLowerVolume,spawn,dms ipc call audio decrement 5"
             "NONE,XF86AudioMute,spawn,dms ipc call audio mute"
@@ -416,6 +417,12 @@
             # Brightness Controls
             "NONE,XF86MonBrightnessUp,spawn,dms ipc call brightness increment 5"
             "NONE,XF86MonBrightnessDown,spawn,dms ipc call brightness decrement 5"
+
+            # Media Controls
+            "NONE,XF86AudioNext,spawn,dms ipc call mpris next"
+            "NONE,XF86AudioPause,spawn,dms ipc call mpris playPause"
+            "NONE,XF86AudioPlay,spawn,dms ipc call mpris playPause"
+            "NONE,XF86AudioPrev,spawn,dms ipc call mpris previous"
           ];
 
           extraConfig = ''
