@@ -54,7 +54,7 @@ in
             };
 
             display-manager = "greetd";
-            desktop-environment = "mango";
+            desktop-environment = "mangowc";
 
             terminal = {
               bash.enable = true;

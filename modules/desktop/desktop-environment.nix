@@ -8,7 +8,7 @@
 {
   flake.nixosModules.desktop-environment = {
     imports = [
-      self.nixosModules.mangowm
+      self.nixosModules.mangowc
       self.nixosModules.dms-shell
       self.nixosModules.gnome
     ];
@@ -16,15 +16,15 @@
 
   flake.homeModules.desktop-environment = {
     imports = [
-      self.homeModules.mangowm
-      inputs.mangowm.hmModules.mango
+      self.homeModules.mangowc
+      inputs.mangowc.hmModules.mango
       self.homeModules.dms-shell
       self.homeModules.screenshot
       self.homeModules.file-explorer
     ];
   };
 
-  flake.nixosModules.mangowm =
+  flake.nixosModules.mangowc =
     {
       pkgs,
       config,
@@ -32,15 +32,15 @@
       ...
     }:
     {
-      config = lib.mkIf (config.features.desktop-environment == "mango") {
+      config = lib.mkIf (config.features.desktop-environment == "mangowc") {
         programs.mangowc.enable = true;
 
         # "https://wiki.nixos.org/wiki/UWSM"
         programs.uwsm = {
           enable = true;
           waylandCompositors = {
-            mangowm = {
-              prettyName = "Mango";
+            mangowc = {
+              prettyName = "MangoWC";
               comment = "Mango Wayland Compositor managed by UWSM";
               binPath = "/run/current-system/sw/bin/mango";
             };
@@ -95,7 +95,7 @@
       };
     };
 
-  flake.homeModules.mangowm =
+  flake.homeModules.mangowc =
     {
       pkgs,
       config,
@@ -107,7 +107,7 @@
       dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+      config = lib.mkIf (osConfig.features.desktop-environment == "mangowc") {
         # https://mangowm.github.io/docs/nix-options/
         wayland.windowManager.mango = {
           enable = true;
@@ -394,7 +394,7 @@
       mangoConfigPath = toString /home/${osConfig.primaryUser.username}/.config/mango;
     in
     {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+      config = lib.mkIf (osConfig.features.desktop-environment == "mangowc") {
         # https://danklinux.com/docs/dankmaterialshell/compositors#mangowc-configuration
         wayland.windowManager.mango = {
           settings.bind = [
@@ -442,7 +442,7 @@
       ...
     }:
     {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+      config = lib.mkIf (osConfig.features.desktop-environment == "mangowc") {
         home.packages = with pkgs; [
           grim
           slurp
@@ -475,7 +475,7 @@
       ...
     }:
     {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+      config = lib.mkIf (osConfig.features.desktop-environment == "mangowc") {
         # https://nixos.wiki/wiki/Thunar
         home.packages = with pkgs; [
           thunar
