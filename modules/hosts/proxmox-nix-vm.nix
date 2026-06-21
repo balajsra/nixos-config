@@ -62,6 +62,15 @@ in
               emulator = "ghostty";
             };
 
+            editor = {
+              vscode.enable = true;
+              zed.enable = false;
+              vim.enable = true;
+              nano.enable = false;
+              gui = "code";
+              terminal = "vim";
+            };
+
             networking = {
               ssh-server.enable = true;
               ssh-client.enable = true;

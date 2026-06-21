@@ -70,6 +70,31 @@
           };
         };
 
+        editor = {
+          vscode.enable = lib.mkEnableOption "Enable Visual Studio Code";
+          zed.enable = lib.mkEnableOption "Enable Zed";
+          vim.enable = lib.mkEnableOption "Enable Vim";
+          nano.enable = lib.mkEnableOption "Enable Nano";
+
+          gui = lib.mkOption {
+            type = lib.types.enum [
+              "code" # Visual Studio Code
+              "zed"
+            ];
+            default = "code";
+            description = "Default GUI editor";
+          };
+
+          terminal = lib.mkOption {
+            type = lib.types.enum [
+              "vim"
+              "nano"
+            ];
+            default = "vim";
+            description = "Default terminal editor";
+          };
+        };
+
         networking = {
           ssh-server.enable = lib.mkEnableOption "Enable SSH server";
           ssh-client.enable = lib.mkEnableOption "Enable SSH client";

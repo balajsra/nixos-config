@@ -283,7 +283,7 @@
               "SUPER,r,reload_config"
 
               "SUPER+SHIFT,Return,spawn_shell,uwsm app -- ${osConfig.features.terminal.emulator}"
-              "SUPER,e,spawn_shell,uwsm app -- emacs"
+              "SUPER,e,spawn_shell,uwsm app -- ${osConfig.features.editor.gui}"
 
               "SUPER+SHIFT,c,killclient"
 
