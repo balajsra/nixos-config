@@ -70,6 +70,7 @@ in
                 home = false;
                 proton = true;
               };
+              location.enable = true;
             };
 
             file-sharing = {

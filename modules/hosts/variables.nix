@@ -78,6 +78,7 @@
             home = lib.mkEnableOption "Enable home VPN configurations";
             proton = lib.mkEnableOption "Enable Proton VPN configurations";
           };
+          location.enable = lib.mkEnableOption "Enable location service";
         };
 
         file-sharing = {

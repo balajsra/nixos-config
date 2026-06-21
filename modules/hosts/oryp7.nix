@@ -71,6 +71,7 @@ in
                 home = true;
                 proton = true;
               };
+              location.enable = true;
             };
 
             file-sharing = {

@@ -70,6 +70,7 @@ in
                 home = false;
                 proton = false;
               };
+              location.enable = false;
             };
 
             file-sharing = {
@@ -138,6 +139,7 @@ in
         self.nixosModules.fonts
         self.nixosModules.git
         self.nixosModules.kernel
+        self.nixosModules.location
         self.nixosModules.networking
         self.nixosModules.partitions
         self.nixosModules.removable-media
