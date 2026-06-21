@@ -54,7 +54,7 @@ in
               kernel = "vanilla-latest";
             };
 
-            display-manager = "greetd";
+            display-manager = "dms-greeter";
             desktop-environment = "mangowc";
 
             terminal = {

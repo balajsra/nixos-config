@@ -43,6 +43,7 @@
           type = lib.types.enum [
             "gdm"
             "greetd"
+            "dms-greeter"
           ];
           default = "gdm";
           description = "Which display manager to enable for this host";
