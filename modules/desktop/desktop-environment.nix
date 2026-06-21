@@ -402,7 +402,6 @@
             "SUPER,p,spawn,dms ipc call spotlight toggle"
             "SUPER,c,spawn,dms ipc call clipboard toggle"
             "SUPER,m,spawn,dms ipc call processlist focusOrToggle"
-            "SUPER,comma,spawn,dms ipc call settings focusOrToggle"
             "SUPER,n,spawn,dms ipc call notifications toggle"
             "SUPER,w,spawn,dms ipc call dankdash wallpaper"
 
