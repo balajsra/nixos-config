@@ -272,14 +272,11 @@
 
             exec-once = [
               "uwsm finalize &"
-
               "uwsm app -- fumon &"
               "uwsm app -- kdeconnectd --replace &"
-
               "uwsm app -- kdeconnect-indicator &"
               "uwsm app -- udiskie -a -n -s &"
               "uwsm app -- nextcloud &"
-              "uwsm app -- openrgb &"
             ];
 
             bind = [
