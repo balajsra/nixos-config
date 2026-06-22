@@ -32,7 +32,7 @@
       ...
     }:
     {
-      config = lib.mkIf (config.features.desktop-environment == "mangowc") {
+      config = lib.mkIf (config.features.desktop-environment == "mango") {
         programs.mangowc.enable = true;
 
         # "https://wiki.nixos.org/wiki/UWSM"
@@ -107,7 +107,7 @@
       dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mangowc") {
+      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
         # https://mangowm.github.io/docs/nix-options/
         wayland.windowManager.mango = {
           enable = true;
@@ -394,7 +394,7 @@
       mangoConfigPath = toString /home/${osConfig.primaryUser.username}/.config/mango;
     in
     {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mangowc") {
+      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
         # https://danklinux.com/docs/dankmaterialshell/compositors#mangowc-configuration
         wayland.windowManager.mango = {
           settings.bind = [
@@ -442,7 +442,7 @@
       ...
     }:
     {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mangowc") {
+      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
         home.packages = with pkgs; [
           grim
           slurp
@@ -475,7 +475,7 @@
       ...
     }:
     {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mangowc") {
+      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
         # https://nixos.wiki/wiki/Thunar
         home.packages = with pkgs; [
           thunar

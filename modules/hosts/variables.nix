@@ -52,7 +52,7 @@
         desktop-environment = lib.mkOption {
           type = lib.types.enum [
             "gnome"
-            "mangowc"
+            "mango"
           ];
           default = "gnome";
           description = "Which desktop environment to enable for this host";
