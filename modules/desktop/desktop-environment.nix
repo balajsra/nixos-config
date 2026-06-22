@@ -369,6 +369,7 @@
     }:
     let
       mangoConfigPath = toString /home/${osConfig.primaryUser.username}/.config/mango;
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
@@ -390,7 +391,9 @@
           enableClipboardPaste = true; # Pasting items from the clipboard (wtype)
 
           settings = {
-            theme = "dark";
+            currentThemeName = "custom";
+            currentThemeCategory = "custom";
+            customThemeFile = "/home/${osConfig.primaryUser.username}/.config/DankMaterialShell/themes/dracula.json";
             dynamicTheming = false;
           };
 
@@ -398,6 +401,9 @@
             isLightMode = false;
           };
         };
+
+        xdg.configFile."DankMaterialShell/themes/dracula.json".source =
+          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/dank-material-shell/.themes/dracula-dank-material-shell/themes/dracula/theme.json";
 
         # https://danklinux.com/docs/dankmaterialshell/compositors#mangowc-configuration
         wayland.windowManager.mango = {
