@@ -53,7 +53,26 @@
       compositor = config.features.desktop-environment;
     in
     {
+      options.programs =
+        if (config.features.desktop-environment == "mango") then
+          {
+            mango = {
+              enable = lib.mkOption {
+                type = lib.types.bool;
+                default = false;
+              };
+              package = lib.mkOption {
+                type = lib.types.package;
+                default = pkgs.mangowc;
+              };
+            };
+          }
+        else
+          { };
+
       config = lib.mkIf (config.features.display-manager == "dms-greeter") {
+        programs.mango.enable = (config.features.desktop-environment == "mango");
+
         # https://danklinux.com/docs/dankgreeter/nixos-flake#configuration-options
         programs.dank-material-shell.greeter = {
           enable = true;
