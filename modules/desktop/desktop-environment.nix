@@ -9,7 +9,6 @@
   flake.nixosModules.desktop-environment = {
     imports = [
       self.nixosModules.mangowc
-      self.nixosModules.dms-shell
       self.nixosModules.gnome
     ];
   };
@@ -18,7 +17,8 @@
     imports = [
       self.homeModules.mangowc
       inputs.mangowc.hmModules.mango
-      self.homeModules.dms-shell
+      self.homeModules.dank-material-shell
+      inputs.dank-material-shell.homeModules.dank-material-shell
       self.homeModules.screenshot
       self.homeModules.file-explorer
     ];
@@ -68,30 +68,6 @@
           breeze-hacked-cursor-theme
           papirus-icon-theme
         ];
-      };
-    };
-
-  flake.nixosModules.dms-shell =
-    { lib, config, ... }:
-    {
-      config = lib.mkIf (config.features.desktop-environment == "mango") {
-        # https://danklinux.com/docs/dankmaterialshell/nixos
-        programs.dms-shell = {
-          enable = true;
-
-          systemd = {
-            enable = true; # Systemd service for auto-start
-            restartIfChanged = true; # Auto-restart dms.service when dms-shell changes
-          };
-
-          # Core features
-          enableSystemMonitoring = true; # System monitoring widgets (dgop)
-          enableVPN = true; # VPN management widget
-          enableDynamicTheming = true; # Wallpaper-based theming (matugen)
-          enableAudioWavelength = true; # Audio visualizer (cava)
-          enableCalendarEvents = true; # Calendar integration (khal)
-          enableClipboardPaste = true; # Pasting from the clipboard history (wtype)
-        };
       };
     };
 
@@ -383,7 +359,7 @@
       };
     };
 
-  flake.homeModules.dms-shell =
+  flake.homeModules.dank-material-shell =
     {
       osConfig,
       config,
@@ -395,6 +371,33 @@
     in
     {
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+        # https://danklinux.com/docs/dankmaterialshell/nixos-flake#configuration-options
+        programs.dank-material-shell = {
+          enable = true;
+
+          systemd = {
+            enable = true; # Systemd service for auto-start
+            restartIfChanged = true; # Auto-restart dms.service when dank-material-shell changes
+          };
+
+          # Core features
+          enableSystemMonitoring = true; # System monitoring widgets (dgop)
+          enableVPN = osConfig.features.networking.vpn.enable; # VPN management widget
+          enableDynamicTheming = false; # Wallpaper-based theming (matugen)
+          enableAudioWavelength = true; # Audio visualizer (cava)
+          enableCalendarEvents = true; # Calendar integration (khal)
+          enableClipboardPaste = true; # Pasting items from the clipboard (wtype)
+
+          settings = {
+            theme = "dark";
+            dynamicTheming = false;
+          };
+
+          session = {
+            isLightMode = false;
+          };
+        };
+
         # https://danklinux.com/docs/dankmaterialshell/compositors#mangowc-configuration
         wayland.windowManager.mango = {
           settings.bind = [
