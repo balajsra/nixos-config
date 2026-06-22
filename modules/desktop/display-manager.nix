@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, inputs, ... }:
 
 {
   flake.nixosModules.display-manager = {
@@ -6,6 +6,7 @@
       self.nixosModules.gdm
       self.nixosModules.greetd
       self.nixosModules.dms-greeter
+      inputs.dank-material-shell.nixosModules.greeter
     ];
   };
 
@@ -52,20 +53,9 @@
       compositor = config.features.desktop-environment;
     in
     {
-      # Default module only supports niri, hyprland, and sway. This overrides the enum values to include
-      # whatever compositor was selected
-      options.services.displayManager.dms-greeter.compositor.name = lib.mkOption {
-        type = lib.types.enum [
-          "niri"
-          "hyprland"
-          "sway"
-          compositor
-        ];
-      };
-
       config = lib.mkIf (config.features.display-manager == "dms-greeter") {
-        # https://danklinux.com/docs/dankgreeter/nixos
-        services.displayManager.dms-greeter = {
+        # https://danklinux.com/docs/dankgreeter/nixos-flake#configuration-options
+        programs.dank-material-shell.greeter = {
           enable = true;
           compositor.name = config.features.desktop-environment;
           configHome = "/home/${config.primaryUser.username}";
@@ -73,7 +63,6 @@
             save = true;
             path = "/tmp/dms-greeter.log";
           };
-          quickshell.package = pkgs.quickshell;
         };
       };
     };
