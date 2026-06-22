@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "dank-material-shell": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782028628,
+        "narHash": "sha256-kNGFx+8UMfbuF+2BWznu1oxBEUc4Yx8bk9q5XRHkJ3E=",
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell",
+        "rev": "4cbe766cbd016fc6dade29d014772232744f9bb6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -37,6 +58,22 @@
       "original": {
         "owner": "dracula",
         "repo": "signal-desktop",
+        "type": "github"
+      }
+    },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "NixOS",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "flake-compat",
         "type": "github"
       }
     },
@@ -215,6 +252,7 @@
     },
     "root": {
       "inputs": {
+        "dank-material-shell": "dank-material-shell",
         "disko": "disko",
         "dracula-signal-desktop": "dracula-signal-desktop",
         "flake-parts": "flake-parts",
