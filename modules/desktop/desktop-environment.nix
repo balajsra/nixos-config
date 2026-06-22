@@ -260,6 +260,7 @@
 
               "SUPER+SHIFT,Return,spawn_shell,uwsm app -- ${osConfig.features.terminal.emulator}"
               "SUPER,e,spawn_shell,uwsm app -- ${osConfig.features.editor.gui}"
+              "SUPER,u,spawn_shell,uwsm app -- ${osConfig.features.browser.default}"
 
               "SUPER+SHIFT,c,killclient"
 

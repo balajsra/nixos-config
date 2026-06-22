@@ -96,6 +96,17 @@
           };
         };
 
+        browser = {
+          zen.enable = lib.mkEnableOption "Enable Zen Browser";
+          default = lib.mkOption {
+            type = lib.types.enum [
+              "zen"
+            ];
+            default = "zen";
+            description = "Default Web Browser";
+          };
+        };
+
         networking = {
           ssh-server.enable = lib.mkEnableOption "Enable SSH server";
           ssh-client.enable = lib.mkEnableOption "Enable SSH client";

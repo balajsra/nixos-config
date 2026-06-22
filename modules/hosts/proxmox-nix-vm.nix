@@ -71,6 +71,11 @@ in
               terminal = "vim";
             };
 
+            browser = {
+              zen.enable = true;
+              default = "zen";
+            };
+
             networking = {
               ssh-server.enable = true;
               ssh-client.enable = true;
