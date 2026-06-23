@@ -403,6 +403,8 @@
             calendarBackend = "auto";
             use24HourClock = false;
             useFahrenheit = true;
+            useAutoLocation = true;
+            weatherEnabled = true;
           };
 
           session = {
