@@ -121,5 +121,13 @@
         recolor = true;
       };
     };
+
+    # https://wiki.nixos.org/wiki/Default_applications
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = "org.pwmt.zathura.desktop";
+      };
+    };
   };
 }
