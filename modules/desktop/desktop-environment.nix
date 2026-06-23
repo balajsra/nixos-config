@@ -19,6 +19,8 @@
       inputs.mangowc.hmModules.mango
       self.homeModules.dank-material-shell
       inputs.dank-material-shell.homeModules.dank-material-shell
+      self.homeModules.danksearch
+      inputs.danksearch.homeModules.dsearch
       self.homeModules.screenshot
       self.homeModules.file-explorer
     ];
@@ -497,6 +499,74 @@
           tumbler
           xarchiver
         ];
+      };
+    };
+
+  flake.homeModules.danksearch =
+    {
+      osConfig,
+      config,
+      lib,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+        # https://danklinux.com/docs/danksearch/nixos-flake
+        programs.dsearch = {
+          enable = true;
+
+          # Custom configuration (TOML format)
+          # See https://danklinux.com/docs/danksearch/configuration for full list of options
+          config = {
+            # Server configuration
+            listen_addr = ":43654";
+
+            # Index settings
+            index_path = "~/.cache/danksearch/index";
+            max_file_bytes = 2097152; # 2MB
+            worker_count = 4;
+            index_all_files = true;
+
+            # Auto-reindex settings
+            auto_reindex = false;
+            reindex_interval_hours = 24;
+
+            # Text file extensions
+            text_extensions = [
+              ".txt"
+              ".md"
+              ".go"
+              ".py"
+              ".js"
+              ".ts"
+              ".jsx"
+              ".tsx"
+              ".json"
+              ".yaml"
+              ".yml"
+              ".toml"
+              ".html"
+              ".css"
+              ".rs"
+            ];
+
+            # Index paths configuration
+            index_paths = [
+              {
+                path = "~";
+                max_depth = 0; # No limit
+                exclude_hidden = true;
+                exclude_dirs = [
+                  "node_modules"
+                  ".git"
+                  "target"
+                  "dist"
+                  "build"
+                ];
+              }
+            ];
+          };
+        };
       };
     };
 
