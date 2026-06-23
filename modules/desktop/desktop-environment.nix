@@ -405,6 +405,10 @@
             useFahrenheit = true;
             useAutoLocation = true;
             weatherEnabled = true;
+            iconThemeDark = "Papirus-Dark";
+            iconThemeLight = "System Default";
+            iconThemePerMode = false;
+            lastAppliedIconTheme = "Papirus-Dark";
           };
 
           session = {
