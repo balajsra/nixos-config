@@ -397,6 +397,12 @@
             currentThemeCategory = "custom";
             customThemeFile = "/home/${osConfig.primaryUser.username}/.config/DankMaterialShell/themes/dracula.json";
             dynamicTheming = false;
+            widgetColorMode = "colorful";
+            cornerRadius = 10;
+            showWeekNumber = true;
+            calendarBackend = "auto";
+            use24HourClock = false;
+            useFahrenheit = true;
           };
 
           session = {
