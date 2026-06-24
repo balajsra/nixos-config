@@ -15,6 +15,7 @@
     imports = [
       self.homeModules.lutris
       self.homeModules.mangohud
+      self.homeModules.gaming-misc
     ];
   };
 
@@ -93,4 +94,12 @@
     programs.mangohud.enable = true;
     # TODO: Add mangohud settings
   };
+
+  flake.homeModules.gaming-misc =
+    { pkgs, ... }:
+    {
+      home.packages = with pkgs; [
+        chiaki-ng
+      ];
+    };
 }
