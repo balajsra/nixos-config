@@ -108,6 +108,10 @@ in
 
             hardware = {
               system76.enable = false;
+              racing-wheel = {
+                enable = true;
+                logitech.enable = true;
+              };
             };
 
             comms.enable = true;
@@ -177,6 +181,7 @@ in
         self.nixosModules.partitions
         self.nixosModules.phone
         self.nixosModules.printing
+        self.nixosModules.racing-wheel
         self.nixosModules.removable-media
         self.nixosModules.security
         self.nixosModules.sound

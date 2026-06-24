@@ -139,6 +139,10 @@
 
         hardware = {
           system76.enable = lib.mkEnableOption "Enable System76 hardware support";
+          racing-wheel = {
+            enable = lib.mkEnableOption "Enable racing wheel software";
+            logitech.enable = lib.mkEnableOption "Enable Logitech racing wheel drivers";
+          };
         };
 
         comms.enable = lib.mkEnableOption "Enable Communication Apps";
