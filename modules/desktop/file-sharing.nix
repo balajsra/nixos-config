@@ -4,6 +4,7 @@
   flake.nixosModules.file-sharing = {
     imports = [
       self.nixosModules.samba-client
+      self.nixosModules.localsend
     ];
   };
 
@@ -200,6 +201,22 @@
               urAccepted = -1;
             };
           };
+        };
+      };
+    };
+
+  flake.nixosModules.localsend =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (config.features.file-sharing.localsend.enable) {
+        programs.localsend = {
+          enable = true;
+          openFirewall = true;
         };
       };
     };

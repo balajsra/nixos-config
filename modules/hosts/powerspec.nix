@@ -90,6 +90,7 @@ in
             file-sharing = {
               nextcloud.enable = true;
               syncthing.enable = true;
+              localsend.enable = true;
               samba-client = {
                 enable = true;
                 fileserver.enable = true;

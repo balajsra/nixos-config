@@ -121,6 +121,7 @@
         file-sharing = {
           nextcloud.enable = lib.mkEnableOption "NextCloud Client";
           syncthing.enable = lib.mkEnableOption "Syncthing file sync";
+          localsend.enable = lib.mkEnableOption "Localsend file transfer";
           samba-client = {
             enable = lib.mkEnableOption "Enable Samba Client";
             fileserver.enable = lib.mkEnableOption "Enable Fileserver Samba Client Connection";
