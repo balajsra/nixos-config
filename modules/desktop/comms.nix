@@ -20,8 +20,8 @@
           zoom-us
         ];
 
-        home.file.".themes/dracula-beeper".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/beeper/.themes/dracula-beeper";
+        xdg.configFile."BeeperTexts/custom.css".source =
+          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/beeper/.themes/dracula-beeper/custom.css";
       };
     };
 }
