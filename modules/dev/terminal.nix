@@ -2,12 +2,14 @@
 
 {
   flake.homeModules.terminal =
-    { pkgs, ... }:
+    { pkgs, osConfig, ... }:
     {
       imports = [
         self.homeModules.shell
         self.homeModules.terminal-emulator
       ];
+
+      home.sessionVariables.TERMINAL = osConfig.features.terminal.emulator;
     };
 
   flake.homeModules.shell = {

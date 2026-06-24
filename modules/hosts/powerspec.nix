@@ -53,13 +53,27 @@ in
               kernel = "vanilla-latest";
             };
 
-            display-manager = "greetd";
+            display-manager = "dms-greeter";
             desktop-environment = "mango";
 
             terminal = {
               bash.enable = true;
               fish.enable = true;
               emulator = "ghostty";
+            };
+
+            editor = {
+              vscode.enable = true;
+              zed.enable = false;
+              vim.enable = true;
+              nano.enable = false;
+              gui = "code";
+              terminal = "vim";
+            };
+
+            browser = {
+              zen.enable = true;
+              default = "zen";
             };
 
             networking = {
@@ -70,6 +84,7 @@ in
                 home = false;
                 proton = true;
               };
+              location.enable = true;
             };
 
             file-sharing = {
@@ -80,6 +95,14 @@ in
                 fileserver.enable = true;
                 mediaserver.enable = true;
               };
+            };
+
+            media = {
+              scraper.enable = true;
+              video.enable = true;
+              audio.enable = true;
+              image.enable = true;
+              management.enable = true;
             };
 
             hardware = {
@@ -119,7 +142,6 @@ in
               self.homeModules.git
               self.homeModules.media
               self.homeModules.networking
-              self.homeModules.night-light
               self.homeModules.office
               self.homeModules.phone
               self.homeModules.security
@@ -150,7 +172,6 @@ in
         self.nixosModules.kernel
         self.nixosModules.location
         self.nixosModules.networking
-        self.nixosModules.night-light
         self.nixosModules.office
         self.nixosModules.partitions
         self.nixosModules.phone
@@ -204,12 +225,20 @@ in
     }:
     {
       imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-      
-      boot.initrd.availableKernelModules = [ "nvme" "ahci" "xhci_pci" "usb_storage" "usbhid" "uas" "sd_mod" ];
+
+      boot.initrd.availableKernelModules = [
+        "nvme"
+        "ahci"
+        "xhci_pci"
+        "usb_storage"
+        "usbhid"
+        "uas"
+        "sd_mod"
+      ];
       boot.initrd.kernelModules = [ "dm-snapshot" ];
       boot.kernelModules = [ "kvm-amd" ];
       boot.extraModulePackages = [ ];
-      
+
       nixpkgs.hostPlatform = lib.mkDefault "${architecture}";
       hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };

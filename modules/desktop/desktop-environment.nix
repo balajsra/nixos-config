@@ -8,25 +8,25 @@
 {
   flake.nixosModules.desktop-environment = {
     imports = [
-      self.nixosModules.mangowm
+      self.nixosModules.mangowc
       self.nixosModules.gnome
     ];
   };
 
   flake.homeModules.desktop-environment = {
     imports = [
-      self.homeModules.mangowm
-      inputs.mangowm.hmModules.mango
-      self.homeModules.notifications
-      self.homeModules.launcher
+      self.homeModules.mangowc
+      inputs.mangowc.hmModules.mango
+      self.homeModules.dank-material-shell
+      inputs.dank-material-shell.homeModules.dank-material-shell
+      self.homeModules.danksearch
+      inputs.danksearch.homeModules.dsearch
       self.homeModules.screenshot
-      self.homeModules.screen-lock
       self.homeModules.file-explorer
-      self.homeModules.display-configuration
     ];
   };
 
-  flake.nixosModules.mangowm =
+  flake.nixosModules.mangowc =
     {
       pkgs,
       config,
@@ -41,8 +41,8 @@
         programs.uwsm = {
           enable = true;
           waylandCompositors = {
-            mangowm = {
-              prettyName = "Mango";
+            mangowc = {
+              prettyName = "MangoWC";
               comment = "Mango Wayland Compositor managed by UWSM";
               binPath = "/run/current-system/sw/bin/mango";
             };
@@ -67,18 +67,13 @@
         security.soteria.enable = true;
 
         environment.systemPackages = with pkgs; [
-          nwg-look
-          kdePackages.qt6ct
-          kdePackages.qtstyleplugin-kvantum
           breeze-hacked-cursor-theme
           papirus-icon-theme
-          waypaper
-          awww
         ];
       };
     };
 
-  flake.homeModules.mangowm =
+  flake.homeModules.mangowc =
     {
       pkgs,
       config,
@@ -195,7 +190,7 @@
             enable_floating_snap = 1;
             snap_distance = 30;
             cursor_size = 24;
-            cursor_theme = "breeze-hacked-cursor-theme";
+            cursor_theme = "Breeze_Hacked";
             no_border_when_single = 0;
             cursor_hide_timeout = 5;
             drag_tile_to_tile = 1;
@@ -253,54 +248,22 @@
               "id:9,layout_name:tile"
             ];
 
-            layerrule = [
-              "animation_type_open:zoom,layer_name:rofi,noblur:0,noanim:0,noshadow:0"
-              "animation_type_close:zoom,layer_name:rofi,noblur:0,noanim:0,noshadow:0"
-            ];
-
             exec-once = [
               "uwsm finalize &"
-
               "uwsm app -- fumon &"
-              "uwsm app -- swayidle &"
               "uwsm app -- kdeconnectd --replace &"
-              "uwsm app -- wl-paste --type text --watch cliphist store &"
-              "uwsm app -- wl-paste --type image --watch cliphist store &"
-              "uwsm app -- $HOME/.scripts/dunst.sh --on &"
-
-              "uwsm app -- shikane &"
-              "uwsm app -- waypaper --restore &"
-              "uwsm app -- gammastep -x &"
-              "uwsm app -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 25% &"
-
-              "uwsm app -- blueman-applet &"
-              "uwsm app -- nm-applet &"
               "uwsm app -- kdeconnect-indicator &"
               "uwsm app -- udiskie -a -n -s &"
               "uwsm app -- nextcloud &"
-              "uwsm app -- openrgb &"
-            ];
-            exec = [
-              "uwsm app -- shikanectl reload &"
             ];
 
             bind = [
               "SUPER,r,reload_config"
 
               "SUPER+SHIFT,Return,spawn_shell,uwsm app -- ${osConfig.features.terminal.emulator}"
-              "SUPER,e,spawn_shell,uwsm app -- emacs"
-              "SUPER,p,spawn_shell,uwsm app -- rofi -show combi -run-command \"uwsm app -- {cmd}\""
-              "SUPER,b,spawn_shell,$HOME/.config/mango/waybar/scripts/toggleBarService.sh"
+              "SUPER,e,spawn_shell,uwsm app -- ${osConfig.features.editor.gui}"
+              "SUPER,u,spawn_shell,uwsm app -- ${osConfig.features.browser.default}"
 
-              "SUPER+CTRL,p,spawn_shell,uwsm app -- $HOME/.scripts/control-center.sh --rofi"
-              "SUPER+CTRL,c,spawn_shell,uwsm app -- cliphist list | rofi -dmenu | cliphist decode | wl-copy"
-              "SUPER+CTRL,d,spawn_shell,uwsm app -- $HOME/.scripts/brightness.sh --rofi"
-              "SUPER+CTRL,v,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --rofi"
-              "SUPER+CTRL,m,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --rofi"
-              "SUPER+CTRL,n,spawn_shell,uwsm app -- $HOME/.scripts/dunst.sh --rofi"
-              "SUPER+CTRL,q,spawn_shell,uwsm app -- $HOME/.scripts/session.sh --rofi"
-
-              "SUPER+SHIFT,q,spawn_shell,$HOME/.scripts/session.sh --logout"
               "SUPER+SHIFT,c,killclient"
 
               "SUPER,j,focusstack,next"
@@ -377,20 +340,6 @@
 
               "SUPER+SHIFT+CTRL,equal,incgaps,1"
               "SUPER+SHIFT+CTRL,minus,incgaps,-1"
-
-              "NONE,print,spawn_shell,uwsm app -- grim -g \"$(slurp)\" - | swappy -f -"
-
-              "NONE,XF86AudioRaiseVolume,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --raise"
-              "NONE,XF86AudioLowerVolume,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --lower"
-              "NONE,XF86AudioMute,spawn_shell,uwsm app -- $HOME/.scripts/pactl.sh --mute"
-
-              "NONE,XF86MonBrightnessUp,spawn_shell,uwsm app -- $HOME/.scripts/brightness.sh --raise"
-              "NONE,XF86MonBrightnessDown,spawn_shell,uwsm app -- $HOME/.scripts/brightness.sh --lower"
-
-              "NONE,XF86AudioNext,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --next"
-              "NONE,XF86AudioPause,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --play-pause"
-              "NONE,XF86AudioPlay,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --play-pause"
-              "NONE,XF86AudioPrev,spawn_shell,uwsm app -- $HOME/.scripts/playerctl.sh --prev"
             ];
 
             mousebind = [
@@ -406,71 +355,101 @@
             ];
           };
         };
-
-        # https://wiki.nixos.org/wiki/Waybar
-        programs.waybar.enable = true;
-        xdg.configFile."waybar".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/mango/.config/mango/waybar";
-
-        home.packages = with pkgs; [
-          brightnessctl
-          playerctl
-          ristretto
-        ];
       };
     };
 
-  flake.homeModules.notifications =
+  flake.homeModules.dank-material-shell =
     {
-      pkgs,
-      config,
       osConfig,
+      config,
       lib,
       ...
     }:
     let
+      mangoConfigPath = toString /home/${osConfig.primaryUser.username}/.config/mango;
       dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
-        home.packages = with pkgs; [
-          libnotify # provides notify-send
-        ];
-
-        services.dunst.enable = true;
-
-        xdg.configFile."dunst/dunstrc".enable = false;
-        xdg.configFile."dunst".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/dunst/.config/dunst";
-        home.file.".scripts/dunst.sh".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/dunst/.scripts/dunst.sh";
-      };
-    };
-
-  flake.homeModules.launcher =
-    {
-      pkgs,
-      config,
-      osConfig,
-      lib,
-      ...
-    }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
-    {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
-        # https://wiki.nixos.org/wiki/Rofi
-        programs.rofi = {
+        # https://danklinux.com/docs/dankmaterialshell/nixos-flake#configuration-options
+        programs.dank-material-shell = {
           enable = true;
-        };
-        xdg.configFile."rofi/config.rasi".enable = false;
-        xdg.configFile."rofi".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/rofi/.config/rofi";
 
-        home.packages = with pkgs; [
-          cliphist
-        ];
+          systemd = {
+            enable = true; # Systemd service for auto-start
+            restartIfChanged = true; # Auto-restart dms.service when dank-material-shell changes
+          };
+
+          # Core features
+          enableSystemMonitoring = true; # System monitoring widgets (dgop)
+          enableVPN = osConfig.features.networking.vpn.enable; # VPN management widget
+          enableDynamicTheming = false; # Wallpaper-based theming (matugen)
+          enableAudioWavelength = true; # Audio visualizer (cava)
+          enableCalendarEvents = true; # Calendar integration (khal)
+          enableClipboardPaste = true; # Pasting items from the clipboard (wtype)
+
+          settings = {
+            currentThemeName = "custom";
+            currentThemeCategory = "custom";
+            customThemeFile = "/home/${osConfig.primaryUser.username}/.config/DankMaterialShell/themes/dracula.json";
+            dynamicTheming = false;
+            widgetColorMode = "colorful";
+            cornerRadius = 10;
+            showWeekNumber = true;
+            calendarBackend = "auto";
+            use24HourClock = false;
+            useFahrenheit = true;
+            useAutoLocation = true;
+            weatherEnabled = true;
+            iconThemeDark = "Papirus-Dark";
+            iconThemeLight = "System Default";
+            iconThemePerMode = false;
+            lastAppliedIconTheme = "Papirus-Dark";
+          };
+
+          session = {
+            isLightMode = false;
+          };
+        };
+
+        xdg.configFile."DankMaterialShell/themes/dracula.json".source =
+          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/dank-material-shell/.themes/dracula-dank-material-shell/themes/dracula/theme.json";
+
+        # https://danklinux.com/docs/dankmaterialshell/compositors#mangowc-configuration
+        wayland.windowManager.mango = {
+          settings.bind = [
+            # Application Launchers
+            "SUPER,p,spawn,dms ipc call spotlight toggle"
+            "SUPER,b,spawn,dms ipc call bar toggle index 0"
+            "SUPER,w,spawn,dms ipc call dankdash wallpaper"
+
+            # Menus
+            "SUPER+CTRL,p,spawn,dms ipc call control-center toggle"
+            "SUPER+CTRL,c,spawn,dms ipc call clipboard toggle"
+            "SUPER+CTRL,n,spawn,dms ipc call notifications toggle"
+            "SUPER+CTRL,q,spawn,dms ipc call powermenu toggle"
+
+            # Volume Controls
+            "NONE,XF86AudioRaiseVolume,spawn,dms ipc call audio increment 5"
+            "NONE,XF86AudioLowerVolume,spawn,dms ipc call audio decrement 5"
+            "NONE,XF86AudioMute,spawn,dms ipc call audio mute"
+
+            # Brightness Controls
+            "NONE,XF86MonBrightnessUp,spawn,dms ipc call brightness increment 5"
+            "NONE,XF86MonBrightnessDown,spawn,dms ipc call brightness decrement 5"
+
+            # Media Controls
+            "NONE,XF86AudioNext,spawn,dms ipc call mpris next"
+            "NONE,XF86AudioPause,spawn,dms ipc call mpris playPause"
+            "NONE,XF86AudioPlay,spawn,dms ipc call mpris playPause"
+            "NONE,XF86AudioPrev,spawn,dms ipc call mpris previous"
+          ];
+
+          extraConfig = ''
+            # Disable animation on DMS layers
+            layerrule=noanim:1,layer_name:^dms
+          '';
+        };
       };
     };
 
@@ -508,31 +487,6 @@
       };
     };
 
-  flake.homeModules.screen-lock =
-    {
-      pkgs,
-      config,
-      osConfig,
-      lib,
-      ...
-    }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
-    {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
-        home.packages = with pkgs; [
-          swaylock-effects
-          swayidle
-        ];
-
-        xdg.configFile."swaylock".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swaylock/.config/swaylock";
-        xdg.configFile."swayidle".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swayidle/.config/swayidle";
-      };
-    };
-
   flake.homeModules.file-explorer =
     {
       pkgs,
@@ -556,100 +510,71 @@
       };
     };
 
-  flake.homeModules.display-configuration =
+  flake.homeModules.danksearch =
     {
-      pkgs,
-      config,
       osConfig,
+      config,
       lib,
       ...
     }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
     {
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
-        home.packages = with pkgs; [
-          wlr-randr
-          wdisplays
-        ];
-
-        services.shikane = {
+        # https://danklinux.com/docs/danksearch/nixos-flake
+        programs.dsearch = {
           enable = true;
-          settings = {
-            profile = [
+
+          # Custom configuration (TOML format)
+          # See https://danklinux.com/docs/danksearch/configuration for full list of options
+          config = {
+            # Server configuration
+            listen_addr = ":43654";
+
+            # Index settings
+            index_path = "~/.cache/danksearch/index";
+            max_file_bytes = 2097152; # 2MB
+            worker_count = 4;
+            index_all_files = true;
+
+            # Auto-reindex settings
+            auto_reindex = false;
+            reindex_interval_hours = 24;
+
+            # Text file extensions
+            text_extensions = [
+              ".txt"
+              ".md"
+              ".go"
+              ".py"
+              ".js"
+              ".ts"
+              ".jsx"
+              ".tsx"
+              ".json"
+              ".yaml"
+              ".yml"
+              ".toml"
+              ".html"
+              ".css"
+              ".rs"
+            ];
+
+            # Index paths configuration
+            index_paths = [
               {
-                name = "docked";
-                exec = [
-                  "notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""
-                  "$HOME/.scripts/shikane-postswitch.sh"
-                ];
-                output = [
-                  {
-                    enable = true;
-                    search = [
-                      "m=49S405"
-                      "s="
-                      "v=Technical Concepts Ltd"
-                    ];
-                    mode = "3840x2160@60Hz";
-                    position = {
-                      x = 1920;
-                      y = 0;
-                    };
-                    scale = 1.0;
-                    transform = "normal";
-                    adaptive_sync = false;
-                  }
-                  {
-                    enable = true;
-                    search = [
-                      "m=0x0625"
-                      "s="
-                      "v=LG Display"
-                    ];
-                    mode = "1920x1080@143.998Hz";
-                    position = {
-                      x = 0;
-                      y = 0;
-                    };
-                    scale = 1.0;
-                    transform = "normal";
-                    adaptive_sync = false;
-                  }
-                ];
-              }
-              {
-                name = "mobile";
-                exec = [
-                  "notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""
-                  "$HOME/.scripts/shikane-postswitch.sh"
-                ];
-                output = [
-                  {
-                    enable = true;
-                    search = [
-                      "m=0x0625"
-                      "s="
-                      "v=LG Display"
-                    ];
-                    mode = "1920x1080@143.998Hz";
-                    position = {
-                      x = 0;
-                      y = 0;
-                    };
-                    scale = 1.0;
-                    transform = "normal";
-                    adaptive_sync = false;
-                  }
+                path = "~";
+                max_depth = 0; # No limit
+                exclude_hidden = true;
+                exclude_dirs = [
+                  "node_modules"
+                  ".git"
+                  "target"
+                  "dist"
+                  "build"
                 ];
               }
             ];
           };
         };
-
-        home.file.".scripts/shikane-postswitch.sh".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/shikane/.scripts/shikane-postswitch.sh";
       };
     };
 

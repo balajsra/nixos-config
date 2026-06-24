@@ -19,7 +19,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mangowm = {
+    mangowc = {
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -43,6 +43,16 @@
 
     dracula-signal-desktop = {
       url = "github:dracula/signal-desktop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dank-material-shell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    danksearch = {
+      url = "github:AvengeMedia/danksearch";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

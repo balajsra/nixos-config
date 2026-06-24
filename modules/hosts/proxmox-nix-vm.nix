@@ -62,6 +62,20 @@ in
               emulator = "ghostty";
             };
 
+            editor = {
+              vscode.enable = true;
+              zed.enable = false;
+              vim.enable = true;
+              nano.enable = false;
+              gui = "code";
+              terminal = "vim";
+            };
+
+            browser = {
+              zen.enable = true;
+              default = "zen";
+            };
+
             networking = {
               ssh-server.enable = true;
               ssh-client.enable = true;
@@ -70,6 +84,7 @@ in
                 home = false;
                 proton = false;
               };
+              location.enable = false;
             };
 
             file-sharing = {
@@ -80,6 +95,14 @@ in
                 fileserver.enable = false;
                 mediaserver.enable = false;
               };
+            };
+
+            media = {
+              scraper.enable = false;
+              video.enable = false;
+              audio.enable = false;
+              image.enable = false;
+              management.enable = false;
             };
 
             hardware = {
@@ -114,6 +137,7 @@ in
               self.homeModules.development
               self.homeModules.editor
               self.homeModules.git
+              self.homeModules.media
               self.homeModules.networking
               self.homeModules.security
               self.homeModules.terminal
@@ -138,6 +162,7 @@ in
         self.nixosModules.fonts
         self.nixosModules.git
         self.nixosModules.kernel
+        self.nixosModules.location
         self.nixosModules.networking
         self.nixosModules.partitions
         self.nixosModules.removable-media

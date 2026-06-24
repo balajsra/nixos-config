@@ -43,6 +43,7 @@
           type = lib.types.enum [
             "gdm"
             "greetd"
+            "dms-greeter"
           ];
           default = "gdm";
           description = "Which display manager to enable for this host";
@@ -70,6 +71,42 @@
           };
         };
 
+        editor = {
+          vscode.enable = lib.mkEnableOption "Enable Visual Studio Code";
+          zed.enable = lib.mkEnableOption "Enable Zed";
+          vim.enable = lib.mkEnableOption "Enable Vim";
+          nano.enable = lib.mkEnableOption "Enable Nano";
+
+          gui = lib.mkOption {
+            type = lib.types.enum [
+              "code" # Visual Studio Code
+              "zed"
+            ];
+            default = "code";
+            description = "Default GUI editor";
+          };
+
+          terminal = lib.mkOption {
+            type = lib.types.enum [
+              "vim"
+              "nano"
+            ];
+            default = "vim";
+            description = "Default terminal editor";
+          };
+        };
+
+        browser = {
+          zen.enable = lib.mkEnableOption "Enable Zen Browser";
+          default = lib.mkOption {
+            type = lib.types.enum [
+              "zen"
+            ];
+            default = "zen";
+            description = "Default Web Browser";
+          };
+        };
+
         networking = {
           ssh-server.enable = lib.mkEnableOption "Enable SSH server";
           ssh-client.enable = lib.mkEnableOption "Enable SSH client";
@@ -78,6 +115,7 @@
             home = lib.mkEnableOption "Enable home VPN configurations";
             proton = lib.mkEnableOption "Enable Proton VPN configurations";
           };
+          location.enable = lib.mkEnableOption "Enable location service";
         };
 
         file-sharing = {
@@ -88,6 +126,14 @@
             fileserver.enable = lib.mkEnableOption "Enable Fileserver Samba Client Connection";
             mediaserver.enable = lib.mkEnableOption "Enable Mediaserver Samba Client Connection";
           };
+        };
+
+        media = {
+          scraper.enable = lib.mkEnableOption "Enable Media scrapers";
+          video.enable = lib.mkEnableOption "Enable Video applications";
+          audio.enable = lib.mkEnableOption "Enable Audio applications";
+          image.enable = lib.mkEnableOption "Enable Image applications";
+          management.enable = lib.mkEnableOption "Enable media management applications";
         };
 
         hardware = {
