@@ -355,10 +355,6 @@
             ];
           };
         };
-
-        home.packages = with pkgs; [
-          ristretto
-        ];
       };
     };
 

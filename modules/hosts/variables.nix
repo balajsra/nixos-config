@@ -128,6 +128,14 @@
           };
         };
 
+        media = {
+          scraper.enable = lib.mkEnableOption "Enable Media scrapers";
+          video.enable = lib.mkEnableOption "Enable Video applications";
+          audio.enable = lib.mkEnableOption "Enable Audio applications";
+          image.enable = lib.mkEnableOption "Enable Image applications";
+          management.enable = lib.mkEnableOption "Enable media management applications";
+        };
+
         hardware = {
           system76.enable = lib.mkEnableOption "Enable System76 hardware support";
         };

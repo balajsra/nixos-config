@@ -98,6 +98,14 @@ in
               };
             };
 
+            media = {
+              scraper.enable = true;
+              video.enable = true;
+              audio.enable = true;
+              image.enable = true;
+              management.enable = true;
+            };
+
             hardware = {
               system76.enable = true;
             };

@@ -97,6 +97,14 @@ in
               };
             };
 
+            media = {
+              scraper.enable = false;
+              video.enable = false;
+              audio.enable = false;
+              image.enable = false;
+              management.enable = false;
+            };
+
             hardware = {
               system76.enable = false;
             };
@@ -129,6 +137,7 @@ in
               self.homeModules.development
               self.homeModules.editor
               self.homeModules.git
+              self.homeModules.media
               self.homeModules.networking
               self.homeModules.security
               self.homeModules.terminal
