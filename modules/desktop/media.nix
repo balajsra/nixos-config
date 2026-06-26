@@ -56,6 +56,17 @@
           fladder
           aegisub
         ];
+
+        # https://wiki.nixos.org/wiki/Default_applications
+        xdg.mimeApps = {
+          enable = true;
+          defaultApplications = {
+            "video/x-matroska" = "io.github.celluloid_player.Celluloid.desktop";
+            "video/mp4" = "io.github.celluloid_player.Celluloid.desktop";
+            "audio/mpeg" = "io.github.celluloid_player.Celluloid.desktop";
+            "audio/flac" = "io.github.celluloid_player.Celluloid.desktop";
+          };
+        };
       };
     };
 
