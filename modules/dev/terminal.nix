@@ -56,7 +56,7 @@
     in
     {
       config = lib.mkIf (osConfig.features.terminal.fish.enable) {
-        # https://nixos.wiki/wiki/Fish
+        # https://wiki.nixos.org/wiki/Fish
         programs.fish = {
           enable = true;
           generateCompletions = true;

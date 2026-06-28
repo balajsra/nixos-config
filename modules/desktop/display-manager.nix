@@ -27,7 +27,7 @@
     }:
     {
       config = lib.mkIf (config.features.display-manager == "greetd") {
-        # https://nixos.wiki/wiki/Greetd
+        # https://wiki.nixos.org/wiki/Greetd
         # https://ryjelsum.me/homelab/greetd-session-choose/
         services.greetd = {
           enable = true;

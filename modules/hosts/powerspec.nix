@@ -20,7 +20,7 @@ in
         { config, lib, ... }:
         {
           nixpkgs.hostPlatform = lib.mkDefault "${architecture}";
-          # Unfree Software: https://nixos.wiki/wiki/Unfree_Software
+          # Unfree Software: https://wiki.nixos.org/wiki/Unfree_Software
           nixpkgs.config.allowUnfree = true;
 
           # Modify pkgs to include a `stable` keyword to reference stable package repo
@@ -201,7 +201,7 @@ in
           "flakes"
         ];
 
-        # Storage Optimization: https://nixos.wiki/wiki/Storage_optimization
+        # Storage Optimization: https://wiki.nixos.org/wiki/Storage_optimization
         # Optimising the store
         optimise = {
           automatic = true;

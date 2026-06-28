@@ -16,7 +16,7 @@
     in
     {
       config = {
-        # https://nixos.wiki/wiki/Linux_kernel
+        # https://wiki.nixos.org/wiki/Linux_kernel
         boot.kernelPackages = kernelMap.${kernel};
       };
     };

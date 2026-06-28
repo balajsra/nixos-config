@@ -17,7 +17,7 @@
     { pkgs, config, ... }:
     {
       config = lib.mkIf config.features.fonts.enable {
-        # https://nixos.wiki/wiki/Fonts
+        # https://wiki.nixos.org/wiki/Fonts
         fonts.fontconfig.useEmbeddedBitmaps = true;
 
         fonts.packages = with pkgs; [

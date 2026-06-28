@@ -548,7 +548,7 @@
     }:
     {
       config = lib.mkIf (config.features.desktop-environment == "mango") {
-        # https://nixos.wiki/wiki/Thunar
+        # https://wiki.nixos.org/wiki/Thunar
         programs.thunar = {
           enable = true;
           plugins = with pkgs; [
