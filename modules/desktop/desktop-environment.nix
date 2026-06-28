@@ -10,6 +10,7 @@
     imports = [
       self.nixosModules.mangowc
       self.nixosModules.gnome
+      self.nixosModules.file-explorer
     ];
   };
 
@@ -22,7 +23,6 @@
       self.homeModules.danksearch
       inputs.danksearch.homeModules.dsearch
       self.homeModules.screenshot
-      self.homeModules.file-explorer
     ];
   };
 
@@ -487,26 +487,28 @@
       };
     };
 
-  flake.homeModules.file-explorer =
+  flake.nixosModules.file-explorer =
     {
       pkgs,
       lib,
-      osConfig,
+      config,
       ...
     }:
     {
-      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+      config = lib.mkIf (config.features.desktop-environment == "mango") {
         # https://nixos.wiki/wiki/Thunar
-        home.packages = with pkgs; [
-          thunar
-          thunar-archive-plugin
-          thunar-media-tags-plugin
-          thunar-vcs-plugin
-          thunar-volman
-          p7zip
-          tumbler
-          xarchiver
-        ];
+        programs.thunar = {
+          enable = true;
+          plugins = with pkgs; [
+            thunar-archive-plugin
+            thunar-media-tags-plugin
+            thunar-vcs-plugin
+            thunar-volman
+          ];
+        };
+        programs.xfconf.enable = true;
+        services.gvfs.enable = true; # Mount, trash, and other functionalities
+        services.tumbler.enable = true; # Thumbnail support for images
       };
     };
 
