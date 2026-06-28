@@ -389,22 +389,74 @@
           enableClipboardPaste = true; # Pasting items from the clipboard (wtype)
 
           settings = {
+            # Theme
             currentThemeName = "custom";
             currentThemeCategory = "custom";
             customThemeFile = "/home/${osConfig.primaryUser.username}/.config/DankMaterialShell/themes/dracula.json";
             dynamicTheming = false;
+
+            # Widget Styling
             widgetColorMode = "colorful";
             cornerRadius = 10;
-            showWeekNumber = true;
-            calendarBackend = "auto";
-            use24HourClock = false;
-            useFahrenheit = true;
-            useAutoLocation = true;
-            weatherEnabled = true;
+
+            # Icon Theme
             iconThemeDark = "Papirus-Dark";
             iconThemeLight = "System Default";
             iconThemePerMode = false;
             lastAppliedIconTheme = "Papirus-Dark";
+
+            # Time Format
+            use24HourClock = false;
+            showSeconds = false;
+            padHours12Hour = false;
+
+            # Date Format
+            showWeekNumber = true;
+            firstDayOfWeek = -1;
+            calendarBackend = "auto";
+
+            # Weather
+            weatherEnabled = true;
+            useFahrenheit = true;
+            useAutoLocation = true;
+
+            # System Sounds
+            soundsEnabled = true;
+            useSystemSoundTheme = false;
+            soundLogin = false;
+            soundNewNotification = true;
+            soundVolumeChanged = true;
+            soundPluggedIn = true;
+            muteSoundsWhenMediaPlaying = true;
+
+            # Workspace Settings
+            showWorkspaceIndex = false;
+            showWorkspaceName = true;
+            showWorkspacePadding = false;
+
+            # On-screen Displays
+            osdAlwaysShowValue = true;
+            osdPosition = 5;
+            osdVolumeEnabled = true;
+            osdMediaVolumeEnabled = true;
+            osdMediaPlaybackEnabled = false;
+            osdBrightnessEnabled = true;
+            osdIdleInhibitorEnabled = true;
+            osdMicMuteEnabled = true;
+            osdCapsLockEnabled = true;
+            osdPowerProfileEnabled = false;
+            osdAudioOutputEnabled = true;
+
+            # Lock Screen Behavior
+            lockBeforeSuspend = true;
+            loginctlLockIntegration = true;
+
+            # Battery Protection & Charging
+            batteryLowThreshold = 20;
+            batteryNotifyLow = false;
+            batteryNotificationType = 0;
+            batteryCriticalThreshold = 10;
+            batteryNotifyCritical = true;
           };
 
           session = {
