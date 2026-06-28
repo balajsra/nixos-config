@@ -86,12 +86,22 @@
         sops.secrets = {
           "syncthing/gui_password" = { };
 
-          "syncthing/devices/fileserver" = { };
-          "syncthing/devices/pixel-tablet" = { };
-          "syncthing/devices/s26ultra" = { };
-          "syncthing/devices/steam-deck" = { };
-          "syncthing/devices/oryp7" = { };
-          "syncthing/devices/powerspec" = { };
+          "syncthing/devices/fileserver/id" = { };
+          "syncthing/devices/pixel-tablet/id" = { };
+          "syncthing/devices/s26ultra/id" = { };
+          "syncthing/devices/steam-deck/id" = { };
+
+          "syncthing/devices/oryp7/id" = { };
+          "syncthing/devices/oryp7/cert" = { };
+          "syncthing/devices/oryp7/key" = { };
+
+          "syncthing/devices/powerspec/id" = { };
+          "syncthing/devices/powerspec/cert" = {
+            path = "/run/secrets/syncthing/cert.pem";
+          };
+          "syncthing/devices/powerspec/key" = {
+            path = "/run/secrets/syncthing/key.pem";
+          };
 
           "syncthing/folders/calibre-library" = { };
           "syncthing/folders/second-brain" = { };
@@ -104,41 +114,45 @@
           extraFlags = [
             "--no-default-folder" # Don't create default ~/Sync folder
           ];
+          cert = config.sops.secrets."syncthing/devices/${config.networking.hostName}/cert".path;
+          key = config.sops.secrets."syncthing/devices/${config.networking.hostName}/key".path;
           guiPasswordFile = config.sops.secrets."syncthing/gui_password".path;
           overrideDevices = true;
           overrideFolders = true;
           settings = {
             gui.user = config.primaryUser.username;
-            devices = {
+
+            # Dynamically filter out the device if its key matches the current hostname
+            devices = lib.filterAttrs (n: _: n != config.networking.hostName) {
               fileserver = {
                 name = "Fileserver";
-                id = config.sops.secrets."syncthing/devices/fileserver".path;
+                id = config.sops.secrets."syncthing/devices/fileserver/id".path;
               };
               pixel-tablet = {
                 name = "Pixel Tablet";
-                id = config.sops.secrets."syncthing/devices/pixel-tablet".path;
+                id = config.sops.secrets."syncthing/devices/pixel-tablet/id".path;
               };
               s26ultra = {
                 name = "Samsung Galaxy S26 Ultra";
-                id = config.sops.secrets."syncthing/devices/s26ultra".path;
+                id = config.sops.secrets."syncthing/devices/s26ultra/id".path;
               };
               steam-deck = {
                 name = "Steam Deck";
-                id = config.sops.secrets."syncthing/devices/steam-deck".path;
+                id = config.sops.secrets."syncthing/devices/steam-deck/id".path;
               };
               oryp7 = {
                 name = "System76 Oryx Pro 7";
-                id = config.sops.secrets."syncthing/devices/oryp7".path;
+                id = config.sops.secrets."syncthing/devices/oryp7/id".path;
               };
               powerspec = {
                 name = "PowerSpec G753";
-                id = config.sops.secrets."syncthing/devices/powerspec".path;
+                id = config.sops.secrets."syncthing/devices/powerspec/id".path;
               };
             };
             folders = {
               "Calibre Library" = {
                 enable = true;
-                devices = [
+                devices = lib.filter (d: d != config.networking.hostName) [
                   "fileserver"
                   "oryp7"
                   "powerspec"
@@ -151,7 +165,7 @@
               };
               "Second Brain" = {
                 enable = true;
-                devices = [
+                devices = lib.filter (d: d != config.networking.hostName) [
                   "fileserver"
                   "pixel-tablet"
                   "s26ultra"
