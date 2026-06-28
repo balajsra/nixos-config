@@ -5,6 +5,7 @@
     imports = [
       self.nixosModules.samba-client
       self.nixosModules.localsend
+      self.nixosModules.syncthing
     ];
   };
 
@@ -74,44 +75,20 @@
       };
     };
 
-  flake.homeModules.file-sharing = {
-    imports = [
-      self.homeModules.nextcloud
-      self.homeModules.syncthing
-    ];
-  };
-
-  flake.homeModules.nextcloud =
+  flake.nixosModules.syncthing =
     {
-      osConfig,
-      lib,
-      pkgs,
-      ...
-    }:
-    {
-      config = lib.mkIf (osConfig.features.file-sharing.nextcloud.enable) {
-        # https://nixos.wiki/wiki/Nextcloud
-        home.packages = with pkgs; [
-          nextcloud-client
-        ];
-      };
-    };
-
-  flake.homeModules.syncthing =
-    {
-      osConfig,
       config,
       lib,
       ...
     }:
     {
-      config = lib.mkIf (osConfig.features.file-sharing.syncthing.enable) {
+      config = lib.mkIf (config.features.file-sharing.syncthing.enable) {
         sops.secrets = {
           "syncthing/gui_password" = { };
 
           "syncthing/devices/fileserver" = { };
           "syncthing/devices/pixel-tablet" = { };
-          "syncthing/devices/zfold4" = { };
+          "syncthing/devices/s26ultra" = { };
           "syncthing/devices/steam-deck" = { };
           "syncthing/devices/oryp7" = { };
           "syncthing/devices/powerspec" = { };
@@ -123,18 +100,15 @@
         # https://wiki.nixos.org/wiki/Syncthing
         services.syncthing = {
           enable = true;
-          tray.enable = true;
-          extraOptions = [
-            "--no-browser"
-            "--logfile=default"
+          openDefaultPorts = true;
+          extraFlags = [
+            "--no-default-folder" # Don't create default ~/Sync folder
           ];
-          guiCredentials = {
-            username = osConfig.primaryUser.username;
-            passwordFile = config.sops.secrets."syncthing/gui_password".path;
-          };
+          guiPasswordFile = config.sops.secrets."syncthing/gui_password".path;
           overrideDevices = true;
           overrideFolders = true;
           settings = {
+            gui.user = config.primaryUser.username;
             devices = {
               fileserver = {
                 name = "Fileserver";
@@ -144,9 +118,9 @@
                 name = "Pixel Tablet";
                 id = config.sops.secrets."syncthing/devices/pixel-tablet".path;
               };
-              zfold4 = {
-                name = "Samsung Galaxy Z Fold 4";
-                id = config.sops.secrets."syncthing/devices/zfold4".path;
+              s26ultra = {
+                name = "Samsung Galaxy S26 Ultra";
+                id = config.sops.secrets."syncthing/devices/s26ultra".path;
               };
               steam-deck = {
                 name = "Steam Deck";
@@ -162,7 +136,7 @@
               };
             };
             folders = {
-              calibre-library = {
+              "Calibre Library" = {
                 enable = true;
                 devices = [
                   "fileserver"
@@ -171,37 +145,51 @@
                 ];
                 id = config.sops.secrets."syncthing/folders/calibre-library".path;
                 label = "Calibre Library";
-                path = "/home/${osConfig.primaryUser.username}/Data/Calibre Library";
-                type = "sendreceive";
+                path = "/home/${config.primaryUser.username}/Data/Calibre Library";
+                type = "receiveonly";
                 versioning = null;
               };
-              second-brain = {
+              "Second Brain" = {
                 enable = true;
                 devices = [
                   "fileserver"
                   "pixel-tablet"
-                  "zfold4"
+                  "s26ultra"
                   "steam-deck"
                   "oryp7"
                   "powerspec"
                 ];
                 id = config.sops.secrets."syncthing/folders/second-brain".path;
                 label = "Second Brain";
-                path = "/home/${osConfig.primaryUser.username}/Data/Second Brain";
-                type = "sendreceive";
+                path = "/home/${config.primaryUser.username}/Data/Second Brain";
+                type = "receiveonly";
                 versioning = null;
               };
             };
-            gui = {
-              theme = "black";
-            };
-            options = {
-              localAnnounceEnabled = true;
-              relaysEnabled = true;
-              urAccepted = -1;
-            };
           };
         };
+      };
+    };
+
+  flake.homeModules.file-sharing = {
+    imports = [
+      self.homeModules.nextcloud
+    ];
+  };
+
+  flake.homeModules.nextcloud =
+    {
+      osConfig,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.file-sharing.nextcloud.enable) {
+        # https://wiki.nixos.org/wiki/Nextcloud
+        home.packages = with pkgs; [
+          nextcloud-client
+        ];
       };
     };
 
