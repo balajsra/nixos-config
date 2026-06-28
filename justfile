@@ -20,6 +20,8 @@ rebuild-test target='$(hostname)': git-intent-to-add
 
 rebuild-test-all:
     #!/usr/bin/env bash
+    set -euxo pipefail
+
     # Get host names from files in modules/hosts
     hosts=$(ls modules/hosts/*.nix 2>/dev/null | xargs -n 1 basename -s .nix | grep -v "variables")
 
