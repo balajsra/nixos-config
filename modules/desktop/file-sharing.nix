@@ -86,13 +86,6 @@
         sops.secrets = {
           "syncthing/gui_password" = { };
 
-          "syncthing/devices/fileserver/id" = { };
-          "syncthing/devices/pixel-tablet/id" = { };
-          "syncthing/devices/s26ultra/id" = { };
-          "syncthing/devices/steam-deck/id" = { };
-          "syncthing/devices/oryp7/id" = { };
-          "syncthing/devices/powerspec/id" = { };
-
           "syncthing/devices/${osConfig.networking.hostName}/cert" = {
             path = "/home/${osConfig.primaryUser.username}/.local/state/syncthing/cert.pem";
             mode = "0600";
@@ -101,9 +94,6 @@
             path = "/home/${osConfig.primaryUser.username}/.local/state/syncthing/key.pem";
             mode = "0600";
           };
-
-          "syncthing/folders/calibre-library" = { };
-          "syncthing/folders/second-brain" = { };
         };
 
         # https://wiki.nixos.org/wiki/Syncthing
@@ -124,27 +114,27 @@
             devices = lib.filterAttrs (n: _: n != osConfig.networking.hostName) {
               fileserver = {
                 name = "Fileserver";
-                id = config.sops.secrets."syncthing/devices/fileserver/id".path;
+                id = "XGZYGZL-XUFUKMO-NBHYWUZ-ZCX4CZE-MOVDTBK-ISHMOBF-6EUQYEF-DCRL4AR";
               };
               pixel-tablet = {
                 name = "Pixel Tablet";
-                id = config.sops.secrets."syncthing/devices/pixel-tablet/id".path;
+                id = "ERDLLKD-NQZGSGQ-6IUWZKJ-DLBWKIW-7FNRDEK-QJVXDKW-3AREAWA-CJQ37AX";
               };
               s26ultra = {
                 name = "Samsung Galaxy S26 Ultra";
-                id = config.sops.secrets."syncthing/devices/s26ultra/id".path;
+                id = "EL35KI3-JW4WLR5-RNMTRHR-TS6XNGF-NZ6ODFN-4G5N6CG-WAQXEUK-MEUFNQA";
               };
               steam-deck = {
                 name = "Steam Deck";
-                id = config.sops.secrets."syncthing/devices/steam-deck/id".path;
+                id = "AZGUOMW-U73CS2C-3OA37LN-KXBVB7N-66XMBJS-STAW4HD-WSKJDFS-VOHNWQZ";
               };
               oryp7 = {
                 name = "System76 Oryx Pro 7";
-                id = config.sops.secrets."syncthing/devices/oryp7/id".path;
+                id = "IUAZEJ5-JUJ74ZA-MEE2E5S-PPTOZ5Q-XWCZFI6-J4KPKFK-N4QBYBR-EVT7GAO";
               };
               powerspec = {
                 name = "PowerSpec G753";
-                id = config.sops.secrets."syncthing/devices/powerspec/id".path;
+                id = "GLXKG3Y-X3QYRPP-LCZGNYI-WHCDGRO-HVHOTQ5-ALVYUYL-FMW2UQ2-PIL65AU";
               };
             };
             folders = {
@@ -155,7 +145,7 @@
                   "oryp7"
                   "powerspec"
                 ];
-                id = config.sops.secrets."syncthing/folders/calibre-library".path;
+                id = "kilky-avqjj";
                 label = "Calibre Library";
                 path = "/home/${osConfig.primaryUser.username}/Data/Calibre Library";
                 type = "receiveonly";
@@ -171,7 +161,7 @@
                   "oryp7"
                   "powerspec"
                 ];
-                id = config.sops.secrets."syncthing/folders/second-brain".path;
+                id = "rrwzp-lps3f";
                 label = "Second Brain";
                 path = "/home/${osConfig.primaryUser.username}/Data/Second Brain";
                 type = "receiveonly";
@@ -185,6 +175,15 @@
         systemd.user.services.syncthing = {
           Unit = {
             After = [ "sops-nix.service" ];
+            Wants = [ "sops-nix.service" ];
+          };
+        };
+        systemd.user.services.syncthing-init = {
+          Unit = {
+            After = [
+              "syncthing.service"
+              "sops-nix.service"
+            ];
             Wants = [ "sops-nix.service" ];
           };
         };
