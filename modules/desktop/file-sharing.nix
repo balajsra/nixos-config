@@ -74,6 +74,109 @@
       };
     };
 
+  flake.homeModules.syncthing =
+    {
+      config,
+      osConfig,
+      lib,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.file-sharing.syncthing.enable) {
+        sops.secrets = {
+          "syncthing/gui_password" = { };
+
+          "syncthing/devices/${osConfig.networking.hostName}/cert" = {
+            path = "/home/${osConfig.primaryUser.username}/.local/state/syncthing/cert.pem";
+            mode = "0600";
+          };
+          "syncthing/devices/${osConfig.networking.hostName}/key" = {
+            path = "/home/${osConfig.primaryUser.username}/.local/state/syncthing/key.pem";
+            mode = "0600";
+          };
+        };
+
+        # https://wiki.nixos.org/wiki/Syncthing
+        services.syncthing = {
+          enable = true;
+          tray.enable = true;
+
+          guiCredentials = {
+            username = osConfig.primaryUser.username;
+            passwordFile = config.sops.secrets."syncthing/gui_password".path;
+          };
+
+          overrideDevices = true;
+          overrideFolders = true;
+
+          settings = {
+            # Dynamically filter out the device if its key matches the current hostname
+            devices = lib.filterAttrs (n: _: n != osConfig.networking.hostName) {
+              fileserver = {
+                name = "Fileserver";
+                id = "XGZYGZL-XUFUKMO-NBHYWUZ-ZCX4CZE-MOVDTBK-ISHMOBF-6EUQYEF-DCRL4AR";
+              };
+              pixel-tablet = {
+                name = "Pixel Tablet";
+                id = "ERDLLKD-NQZGSGQ-6IUWZKJ-DLBWKIW-7FNRDEK-QJVXDKW-3AREAWA-CJQ37AX";
+              };
+              s26ultra = {
+                name = "Samsung Galaxy S26 Ultra";
+                id = "EL35KI3-JW4WLR5-RNMTRHR-TS6XNGF-NZ6ODFN-4G5N6CG-WAQXEUK-MEUFNQA";
+              };
+              steam-deck = {
+                name = "Steam Deck";
+                id = "AZGUOMW-U73CS2C-3OA37LN-KXBVB7N-66XMBJS-STAW4HD-WSKJDFS-VOHNWQZ";
+              };
+              oryp7 = {
+                name = "System76 Oryx Pro 7";
+                id = "IUAZEJ5-JUJ74ZA-MEE2E5S-PPTOZ5Q-XWCZFI6-J4KPKFK-N4QBYBR-EVT7GAO";
+              };
+              powerspec = {
+                name = "PowerSpec G753";
+                id = "GLXKG3Y-X3QYRPP-LCZGNYI-WHCDGRO-HVHOTQ5-ALVYUYL-FMW2UQ2-PIL65AU";
+              };
+            };
+            folders = {
+              "Second Brain" = {
+                enable = true;
+                devices = lib.filter (d: d != osConfig.networking.hostName) [
+                  "fileserver"
+                  "pixel-tablet"
+                  "s26ultra"
+                  "steam-deck"
+                  "oryp7"
+                  "powerspec"
+                ];
+                id = "rrwzp-lps3f";
+                label = "Second Brain";
+                path = "/home/${osConfig.primaryUser.username}/Data/Second-Brain";
+                type = "sendreceive"; # "sendreceive", "sendonly", "receiveonly", or "receiveencrypted"
+                versioning = null;
+              };
+            };
+          };
+        };
+
+        # Explicitly delay Syncthing until sops-nix has populated the symlink targets
+        systemd.user.services.syncthing = {
+          Unit = {
+            After = [ "sops-nix.service" ];
+            Wants = [ "sops-nix.service" ];
+          };
+        };
+        systemd.user.services.syncthing-init = {
+          Unit = {
+            After = [
+              "syncthing.service"
+              "sops-nix.service"
+            ];
+            Wants = [ "sops-nix.service" ];
+          };
+        };
+      };
+    };
+
   flake.homeModules.file-sharing = {
     imports = [
       self.homeModules.nextcloud
@@ -90,118 +193,10 @@
     }:
     {
       config = lib.mkIf (osConfig.features.file-sharing.nextcloud.enable) {
-        # https://nixos.wiki/wiki/Nextcloud
+        # https://wiki.nixos.org/wiki/Nextcloud
         home.packages = with pkgs; [
           nextcloud-client
         ];
-      };
-    };
-
-  flake.homeModules.syncthing =
-    {
-      osConfig,
-      config,
-      lib,
-      ...
-    }:
-    {
-      config = lib.mkIf (osConfig.features.file-sharing.syncthing.enable) {
-        sops.secrets = {
-          "syncthing/gui_password" = { };
-
-          "syncthing/devices/fileserver" = { };
-          "syncthing/devices/pixel-tablet" = { };
-          "syncthing/devices/zfold4" = { };
-          "syncthing/devices/steam-deck" = { };
-          "syncthing/devices/oryp7" = { };
-          "syncthing/devices/powerspec" = { };
-
-          "syncthing/folders/calibre-library" = { };
-          "syncthing/folders/second-brain" = { };
-        };
-
-        # https://wiki.nixos.org/wiki/Syncthing
-        services.syncthing = {
-          enable = true;
-          tray.enable = true;
-          extraOptions = [
-            "--no-browser"
-            "--logfile=default"
-          ];
-          guiCredentials = {
-            username = osConfig.primaryUser.username;
-            passwordFile = config.sops.secrets."syncthing/gui_password".path;
-          };
-          overrideDevices = true;
-          overrideFolders = true;
-          settings = {
-            devices = {
-              fileserver = {
-                name = "Fileserver";
-                id = config.sops.secrets."syncthing/devices/fileserver".path;
-              };
-              pixel-tablet = {
-                name = "Pixel Tablet";
-                id = config.sops.secrets."syncthing/devices/pixel-tablet".path;
-              };
-              zfold4 = {
-                name = "Samsung Galaxy Z Fold 4";
-                id = config.sops.secrets."syncthing/devices/zfold4".path;
-              };
-              steam-deck = {
-                name = "Steam Deck";
-                id = config.sops.secrets."syncthing/devices/steam-deck".path;
-              };
-              oryp7 = {
-                name = "System76 Oryx Pro 7";
-                id = config.sops.secrets."syncthing/devices/oryp7".path;
-              };
-              powerspec = {
-                name = "PowerSpec G753";
-                id = config.sops.secrets."syncthing/devices/powerspec".path;
-              };
-            };
-            folders = {
-              calibre-library = {
-                enable = true;
-                devices = [
-                  "fileserver"
-                  "oryp7"
-                  "powerspec"
-                ];
-                id = config.sops.secrets."syncthing/folders/calibre-library".path;
-                label = "Calibre Library";
-                path = "/home/${osConfig.primaryUser.username}/Data/Calibre Library";
-                type = "sendreceive";
-                versioning = null;
-              };
-              second-brain = {
-                enable = true;
-                devices = [
-                  "fileserver"
-                  "pixel-tablet"
-                  "zfold4"
-                  "steam-deck"
-                  "oryp7"
-                  "powerspec"
-                ];
-                id = config.sops.secrets."syncthing/folders/second-brain".path;
-                label = "Second Brain";
-                path = "/home/${osConfig.primaryUser.username}/Data/Second Brain";
-                type = "sendreceive";
-                versioning = null;
-              };
-            };
-            gui = {
-              theme = "black";
-            };
-            options = {
-              localAnnounceEnabled = true;
-              relaysEnabled = true;
-              urAccepted = -1;
-            };
-          };
-        };
       };
     };
 
