@@ -5,7 +5,6 @@
     imports = [
       self.nixosModules.samba-client
       self.nixosModules.localsend
-      self.nixosModules.syncthing
     ];
   };
 
@@ -75,14 +74,15 @@
       };
     };
 
-  flake.nixosModules.syncthing =
+  flake.homeModules.syncthing =
     {
       config,
+      osConfig,
       lib,
       ...
     }:
     {
-      config = lib.mkIf (config.features.file-sharing.syncthing.enable) {
+      config = lib.mkIf (osConfig.features.file-sharing.syncthing.enable) {
         sops.secrets = {
           "syncthing/gui_password" = { };
 
@@ -90,17 +90,16 @@
           "syncthing/devices/pixel-tablet/id" = { };
           "syncthing/devices/s26ultra/id" = { };
           "syncthing/devices/steam-deck/id" = { };
-
           "syncthing/devices/oryp7/id" = { };
-          "syncthing/devices/oryp7/cert" = { };
-          "syncthing/devices/oryp7/key" = { };
-
           "syncthing/devices/powerspec/id" = { };
-          "syncthing/devices/powerspec/cert" = {
-            path = "/run/secrets/syncthing/cert.pem";
+
+          "syncthing/devices/${osConfig.networking.hostName}/cert" = {
+            path = "/home/${osConfig.primaryUser.username}/.local/state/syncthing/cert.pem";
+            mode = "0600";
           };
-          "syncthing/devices/powerspec/key" = {
-            path = "/run/secrets/syncthing/key.pem";
+          "syncthing/devices/${osConfig.networking.hostName}/key" = {
+            path = "/home/${osConfig.primaryUser.username}/.local/state/syncthing/key.pem";
+            mode = "0600";
           };
 
           "syncthing/folders/calibre-library" = { };
@@ -110,20 +109,19 @@
         # https://wiki.nixos.org/wiki/Syncthing
         services.syncthing = {
           enable = true;
-          openDefaultPorts = true;
-          extraFlags = [
-            "--no-default-folder" # Don't create default ~/Sync folder
-          ];
-          cert = config.sops.secrets."syncthing/devices/${config.networking.hostName}/cert".path;
-          key = config.sops.secrets."syncthing/devices/${config.networking.hostName}/key".path;
-          guiPasswordFile = config.sops.secrets."syncthing/gui_password".path;
+          tray.enable = true;
+
+          guiCredentials = {
+            username = osConfig.primaryUser.username;
+            passwordFile = config.sops.secrets."syncthing/gui_password".path;
+          };
+
           overrideDevices = true;
           overrideFolders = true;
-          settings = {
-            gui.user = config.primaryUser.username;
 
+          settings = {
             # Dynamically filter out the device if its key matches the current hostname
-            devices = lib.filterAttrs (n: _: n != config.networking.hostName) {
+            devices = lib.filterAttrs (n: _: n != osConfig.networking.hostName) {
               fileserver = {
                 name = "Fileserver";
                 id = config.sops.secrets."syncthing/devices/fileserver/id".path;
@@ -152,20 +150,20 @@
             folders = {
               "Calibre Library" = {
                 enable = true;
-                devices = lib.filter (d: d != config.networking.hostName) [
+                devices = lib.filter (d: d != osConfig.networking.hostName) [
                   "fileserver"
                   "oryp7"
                   "powerspec"
                 ];
                 id = config.sops.secrets."syncthing/folders/calibre-library".path;
                 label = "Calibre Library";
-                path = "/home/${config.primaryUser.username}/Data/Calibre Library";
+                path = "/home/${osConfig.primaryUser.username}/Data/Calibre Library";
                 type = "receiveonly";
                 versioning = null;
               };
               "Second Brain" = {
                 enable = true;
-                devices = lib.filter (d: d != config.networking.hostName) [
+                devices = lib.filter (d: d != osConfig.networking.hostName) [
                   "fileserver"
                   "pixel-tablet"
                   "s26ultra"
@@ -175,7 +173,7 @@
                 ];
                 id = config.sops.secrets."syncthing/folders/second-brain".path;
                 label = "Second Brain";
-                path = "/home/${config.primaryUser.username}/Data/Second Brain";
+                path = "/home/${osConfig.primaryUser.username}/Data/Second Brain";
                 type = "receiveonly";
                 versioning = null;
               };
@@ -188,6 +186,7 @@
   flake.homeModules.file-sharing = {
     imports = [
       self.homeModules.nextcloud
+      self.homeModules.syncthing
     ];
   };
 
