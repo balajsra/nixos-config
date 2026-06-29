@@ -151,7 +151,7 @@
                 id = "rrwzp-lps3f";
                 label = "Second Brain";
                 path = "/home/${osConfig.primaryUser.username}/Data/Second Brain";
-                type = "receiveonly";
+                type = "sendreceive"; # "sendreceive", "sendonly", "receiveonly", or "receiveencrypted"
                 versioning = null;
               };
             };
