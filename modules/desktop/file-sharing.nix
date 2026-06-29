@@ -138,19 +138,6 @@
               };
             };
             folders = {
-              "Calibre Library" = {
-                enable = true;
-                devices = lib.filter (d: d != osConfig.networking.hostName) [
-                  "fileserver"
-                  "oryp7"
-                  "powerspec"
-                ];
-                id = "kilky-avqjj";
-                label = "Calibre Library";
-                path = "/home/${osConfig.primaryUser.username}/Data/Calibre Library";
-                type = "receiveonly";
-                versioning = null;
-              };
               "Second Brain" = {
                 enable = true;
                 devices = lib.filter (d: d != osConfig.networking.hostName) [

@@ -10,7 +10,6 @@
       systemd.tmpfiles.rules = [
         # Type  Path                                 Mode  User     Group     Age  Argument
         "d      /data/${user}                        0700  ${user}  ${group}  -    -"
-        "d      /data/${user}/Calibre-Library        0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Documents              0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Downloads              0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Games                  0700  ${user}  ${group}  -    -"
@@ -35,8 +34,6 @@
     in
     {
       home.file."Data".source = config.lib.file.mkOutOfStoreSymlink "/data/${user}";
-      home.file."Calibre-Library".source =
-        config.lib.file.mkOutOfStoreSymlink "/data/${user}/Calibre-Library";
       home.file."Documents".source = config.lib.file.mkOutOfStoreSymlink "/data/${user}/Documents";
       home.file."Downloads".source = config.lib.file.mkOutOfStoreSymlink "/data/${user}/Downloads";
       home.file."Games".source = config.lib.file.mkOutOfStoreSymlink "/data/${user}/Games";
