@@ -180,6 +180,14 @@
             };
           };
         };
+
+        # Explicitly delay Syncthing until sops-nix has populated the symlink targets
+        systemd.user.services.syncthing = {
+          Unit = {
+            After = [ "sops-nix.service" ];
+            Wants = [ "sops-nix.service" ];
+          };
+        };
       };
     };
 
