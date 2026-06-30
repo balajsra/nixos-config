@@ -76,6 +76,15 @@ in
               default = "zen";
             };
 
+            office = {
+              gnucash.enable = false;
+              obsidian.enable = false;
+              qalculate.enable = false;
+              thunderbird.enable = false;
+              zathura.enable = false;
+              libreoffice.enable = false;
+            };
+
             networking = {
               ssh-server.enable = true;
               ssh-client.enable = true;
@@ -144,6 +153,7 @@ in
               self.homeModules.git
               self.homeModules.media
               self.homeModules.networking
+              self.homeModules.office
               self.homeModules.security
               self.homeModules.terminal
               self.homeModules.web-browser
@@ -169,6 +179,7 @@ in
         self.nixosModules.kernel
         self.nixosModules.location
         self.nixosModules.networking
+        self.nixosModules.office
         self.nixosModules.partitions
         self.nixosModules.racing-wheel
         self.nixosModules.removable-media

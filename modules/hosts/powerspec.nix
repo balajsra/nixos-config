@@ -76,6 +76,15 @@ in
               default = "zen";
             };
 
+            office = {
+              gnucash.enable = true;
+              obsidian.enable = true;
+              qalculate.enable = true;
+              thunderbird.enable = true;
+              zathura.enable = true;
+              libreoffice.enable = true;
+            };
+
             networking = {
               ssh-server.enable = false;
               ssh-client.enable = true;

@@ -107,6 +107,15 @@
           };
         };
 
+        office = {
+          gnucash.enable = lib.mkEnableOption "Enable GNUCash";
+          obsidian.enable = lib.mkEnableOption "Enable Obsidian";
+          qalculate.enable = lib.mkEnableOption "Enable Qalculate";
+          thunderbird.enable = lib.mkEnableOption "Enable Thunderbird";
+          zathura.enable = lib.mkEnableOption "Enable Zathura";
+          libreoffice.enable = lib.mkEnableOption "Enable Libre Office";
+        };
+
         networking = {
           ssh-server.enable = lib.mkEnableOption "Enable SSH server";
           ssh-client.enable = lib.mkEnableOption "Enable SSH client";
