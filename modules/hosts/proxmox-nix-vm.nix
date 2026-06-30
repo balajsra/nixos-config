@@ -104,6 +104,7 @@ in
 
             hardware = {
               bluetooth.enable = false;
+              sound.enable = false;
               system76.enable = false;
               racing-wheel = {
                 enable = false;
@@ -174,6 +175,7 @@ in
         self.nixosModules.racing-wheel
         self.nixosModules.removable-media
         self.nixosModules.security
+        self.nixosModules.sound
         self.nixosModules.system76
         self.nixosModules.utils
       ];

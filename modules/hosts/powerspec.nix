@@ -104,6 +104,7 @@ in
 
             hardware = {
               bluetooth.enable = true;
+              sound.enable = true;
               system76.enable = false;
               racing-wheel = {
                 enable = true;
