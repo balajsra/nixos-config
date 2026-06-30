@@ -116,6 +116,7 @@ in
             hardware = {
               bluetooth.enable = true;
               sound.enable = true;
+              printing.enable = true;
               system76.enable = false;
               racing-wheel = {
                 enable = true;
