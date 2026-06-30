@@ -103,6 +103,7 @@ in
             };
 
             hardware = {
+              bluetooth.enable = false;
               system76.enable = false;
               racing-wheel = {
                 enable = false;
@@ -155,6 +156,7 @@ in
     { pkgs, ... }:
     {
       imports = [
+        self.nixosModules.bluetooth
         self.nixosModules.boot-animation
         self.nixosModules.boot-loader
         self.nixosModules.core

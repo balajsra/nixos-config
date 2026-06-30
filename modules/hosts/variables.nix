@@ -147,6 +147,7 @@
         };
 
         hardware = {
+          bluetooth.enable = lib.mkEnableOption "Enable Bluetooth support";
           system76.enable = lib.mkEnableOption "Enable System76 hardware support";
           racing-wheel = {
             enable = lib.mkEnableOption "Enable racing wheel software";

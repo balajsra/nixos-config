@@ -103,6 +103,7 @@ in
             };
 
             hardware = {
+              bluetooth.enable = true;
               system76.enable = false;
               racing-wheel = {
                 enable = true;

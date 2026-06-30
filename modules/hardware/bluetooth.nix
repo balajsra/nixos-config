@@ -2,8 +2,15 @@
 
 {
   flake.nixosModules.bluetooth =
-    { pkgs, ... }:
     {
-      hardware.bluetooth.enable = true;
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    {
+      config = lib.mkIf (config.features.hardware.bluetooth.enable) {
+        hardware.bluetooth.enable = true;
+      };
     };
 }
