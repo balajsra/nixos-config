@@ -12,6 +12,8 @@ in
 {
   flake.nixosConfigurations."${hostname}" = inputs.nixpkgs.lib.nixosSystem {
     modules = [
+      { _module.args.inputs = inputs; }
+
       self.nixosModules."${hostname}-configuration"
       self.nixosModules."${hostname}-hardware"
       self.nixosModules.variables
@@ -20,21 +22,6 @@ in
         { config, lib, ... }:
         {
           nixpkgs.hostPlatform = lib.mkDefault "${architecture}";
-          # Unfree Software: https://wiki.nixos.org/wiki/Unfree_Software
-          nixpkgs.config.allowUnfree = true;
-
-          # Modify pkgs to include a `stable` keyword to reference stable package repo
-          # Unstable packages installed as `pkgs.<package-name>`
-          # Stable packages installed as `pkgs.stable.<package-name>`
-          nixpkgs.overlays = [
-            (final: prev: {
-              stable = import inputs.nixpkgs-stable {
-                system = final.stdenv.hostPlatform.system;
-                config = config.nixpkgs.config;
-              };
-            })
-            inputs.dracula-signal-desktop.overlays
-          ];
 
           storage = {
             lvm-luks-btrfs = {
@@ -175,6 +162,7 @@ in
         self.nixosModules.bluetooth
         self.nixosModules.boot-animation
         self.nixosModules.boot-loader
+        self.nixosModules.core
         self.nixosModules.data-dirs
         self.nixosModules.desktop-environment
         self.nixosModules.display-manager
@@ -200,30 +188,6 @@ in
 
       networking.hostName = "${hostname}";
       time.timeZone = "${timezone}";
-
-      # Run unpatched dynamic binaries on NixOS
-      programs.nix-ld.enable = true;
-
-      nix = {
-        settings.experimental-features = [
-          "nix-command"
-          "flakes"
-        ];
-
-        # Storage Optimization: https://wiki.nixos.org/wiki/Storage_optimization
-        # Optimising the store
-        optimise = {
-          automatic = true;
-          dates = [ "01:00" ]; # Daily at 1:00 AM (or next boot)
-        };
-
-        # Garbage Collection
-        gc = {
-          automatic = true;
-          dates = "weekly";
-          options = "--delete-older-than 30d";
-        };
-      };
 
       # Do not change, this is a safety anchor to prevent
       # system from breaking or losing data during an upgrade
