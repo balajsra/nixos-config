@@ -179,6 +179,12 @@
           android-tools.enable = lib.mkEnableOption "Enable Android Tools";
         };
 
+        security = {
+          sops.enable = lib.mkEnableOption "Enable sops-nix";
+          secret-service.enable = lib.mkEnableOption "Enable secret service";
+          bitwarden.enable = lib.mkEnableOption "Enable Bitwarden";
+        };
+
         fonts = {
           enable = lib.mkEnableOption "Enable font packages";
           nerd.enable = lib.mkEnableOption "Enable nerd fonts";

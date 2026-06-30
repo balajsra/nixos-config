@@ -135,6 +135,12 @@ in
               android-tools.enable = false;
             };
 
+            security = {
+              sops.enable = true;
+              secret-service.enable = true;
+              bitwarden.enable = true;
+            };
+
             fonts = {
               enable = true;
               nerd.enable = false;
