@@ -217,8 +217,8 @@
             button_map = 0;
 
             mouse_natural_scrolling = 0;
-            accel_profile = 1;
-            accel_speed = -0.25;
+            mouse_accel_profile = 1;
+            mouse_accel_speed = -0.25;
 
             gappih = 20;
             gappiv = 20;

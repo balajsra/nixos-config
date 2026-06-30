@@ -13,6 +13,11 @@
       # Unfree Software: https://wiki.nixos.org/wiki/Unfree_Software
       nixpkgs.config.allowUnfree = true;
 
+      # List of insecure overrides
+      nixpkgs.config.permittedInsecurePackages = [
+        "electron-39.8.10"
+      ];
+
       # Modify pkgs to include a `stable` keyword to reference stable package repo
       # Unstable packages installed as `pkgs.<package-name>`
       # Stable packages installed as `pkgs.stable.<package-name>`
