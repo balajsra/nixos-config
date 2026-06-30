@@ -123,7 +123,16 @@ in
               };
             };
 
-            comms.enable = true;
+            comms = {
+              beeper.enable = true;
+              signal.enable = true;
+              zoom.enable = true;
+            };
+
+            phone = {
+              kdeconnect.enable = true;
+              android-tools.enable = true;
+            };
 
             fonts = {
               enable = true;

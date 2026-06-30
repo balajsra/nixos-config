@@ -167,7 +167,16 @@
           };
         };
 
-        comms.enable = lib.mkEnableOption "Enable Communication Apps";
+        comms = {
+          beeper.enable = lib.mkEnableOption "Enable Beeper";
+          signal.enable = lib.mkEnableOption "Enable Signal";
+          zoom.enable = lib.mkEnableOption "Enable Zoom";
+        };
+
+        phone = {
+          kdeconnect.enable = lib.mkEnableOption "Enable KDE Connect";
+          android-tools.enable = lib.mkEnableOption "Enable Android Tools";
+        };
 
         fonts = {
           enable = lib.mkEnableOption "Enable font packages";

@@ -123,7 +123,16 @@ in
               };
             };
 
-            comms.enable = true;
+            comms = {
+              beeper.enable = false;
+              signal.enable = false;
+              zoom.enable = false;
+            };
+
+            phone = {
+              kdeconnect.enable = false;
+              android-tools.enable = false;
+            };
 
             fonts = {
               enable = true;
@@ -155,6 +164,7 @@ in
               self.homeModules.media
               self.homeModules.networking
               self.homeModules.office
+              self.homeModules.phone
               self.homeModules.security
               self.homeModules.terminal
               self.homeModules.web-browser
@@ -185,6 +195,7 @@ in
         self.nixosModules.networking
         self.nixosModules.office
         self.nixosModules.partitions
+        self.nixosModules.phone
         self.nixosModules.racing-wheel
         self.nixosModules.removable-media
         self.nixosModules.security
