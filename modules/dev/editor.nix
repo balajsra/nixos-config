@@ -46,7 +46,7 @@
       dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
-      config = lib.mkIf osConfig.features.editor.vim.enable {
+      config = lib.mkIf (osConfig.features.editor.vim.enable) {
         programs.vim = {
           enable = true;
         };
@@ -68,7 +68,7 @@
       dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
-      config = lib.mkIf osConfig.features.editor.vscode.enable {
+      config = lib.mkIf (osConfig.features.editor.vscode.enable) {
         programs.vscode = {
           enable = true;
           profiles.default.extensions = with pkgs.vscode-extensions; [
@@ -96,7 +96,7 @@
       ...
     }:
     {
-      config = lib.mkIf osConfig.features.editor.zed.enable {
+      config = lib.mkIf (osConfig.features.editor.zed.enable) {
         # https://wiki.nixos.org/wiki/Zed
         programs.zed-editor = {
           enable = true;

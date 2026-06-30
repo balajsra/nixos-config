@@ -21,7 +21,7 @@
   flake.homeModules.obsidian =
     { osConfig, lib, ... }:
     {
-      config = lib.mkIf osConfig.features.office.obsidian.enable {
+      config = lib.mkIf (osConfig.features.office.obsidian.enable) {
         # https://wiki.nixos.org/wiki/Obsidian
         programs.obsidian = {
           enable = true;
@@ -35,7 +35,7 @@
   flake.nixosModules.gnucash =
     { config, lib, ... }:
     {
-      config = lib.mkIf config.features.office.gnucash.enable {
+      config = lib.mkIf (config.features.office.gnucash.enable) {
         # Enable editing of settings from GUI
         programs.dconf.enable = true;
       };
@@ -49,7 +49,7 @@
       ...
     }:
     {
-      config = lib.mkIf osConfig.features.office.gnucash.enable {
+      config = lib.mkIf (osConfig.features.office.gnucash.enable) {
         home.packages = with pkgs; [
           gnucash
         ];
@@ -64,7 +64,7 @@
       ...
     }:
     {
-      config = lib.mkIf osConfig.features.office.qalculate.enable {
+      config = lib.mkIf (osConfig.features.office.qalculate.enable) {
         home.packages = with pkgs; [
           libqalculate
           qalculate-gtk
@@ -80,7 +80,7 @@
       ...
     }:
     {
-      config = lib.mkIf osConfig.features.office.thunderbird.enable {
+      config = lib.mkIf (osConfig.features.office.thunderbird.enable) {
         # https://wiki.nixos.org/wiki/Thunderbird
         home.packages = with pkgs; [
           thunderbird
@@ -101,7 +101,7 @@
   flake.homeModules.zathura =
     { osConfig, lib, ... }:
     {
-      config = lib.mkIf osConfig.features.office.zathura.enable {
+      config = lib.mkIf (osConfig.features.office.zathura.enable) {
         programs.zathura = {
           enable = true;
           options = {
@@ -171,7 +171,7 @@
       ...
     }:
     {
-      config = lib.mkIf osConfig.features.office.libreoffice.enable {
+      config = lib.mkIf (osConfig.features.office.libreoffice.enable) {
         # https://wiki.nixos.org/wiki/LibreOffice
         home.packages = with pkgs; [
           libreoffice

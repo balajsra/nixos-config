@@ -9,7 +9,7 @@
       ...
     }:
     {
-      config = lib.mkIf config.features.boot.grub-luks-btrfs.enable {
+      config = lib.mkIf (config.features.boot.grub-luks-btrfs.enable) {
         boot.loader = {
           efi = {
             canTouchEfiVariables = true;

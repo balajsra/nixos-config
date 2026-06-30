@@ -19,7 +19,7 @@
       ...
     }:
     {
-      config = lib.mkIf osConfig.features.media.scraper.enable {
+      config = lib.mkIf (osConfig.features.media.scraper.enable) {
         home.packages = with pkgs; [
           ani-cli
           yt-dlp
@@ -35,7 +35,7 @@
       ...
     }:
     {
-      config = lib.mkIf osConfig.features.media.video.enable {
+      config = lib.mkIf (osConfig.features.media.video.enable) {
         # https://wiki.nixos.org/wiki/MPV
         programs.mpv = {
           enable = true;
@@ -78,7 +78,7 @@
       ...
     }:
     {
-      config = lib.mkIf osConfig.features.media.audio.enable {
+      config = lib.mkIf (osConfig.features.media.audio.enable) {
         home.packages = with pkgs; [
           feishin
           pocket-casts
@@ -94,7 +94,7 @@
       ...
     }:
     {
-      config = lib.mkIf osConfig.features.media.audio.enable {
+      config = lib.mkIf (osConfig.features.media.audio.enable) {
         home.packages = with pkgs; [
           gimp
           ristretto
@@ -110,7 +110,7 @@
       ...
     }:
     {
-      config = lib.mkIf osConfig.features.media.management.enable {
+      config = lib.mkIf (osConfig.features.media.management.enable) {
         home.packages = with pkgs; [
           picard
         ];

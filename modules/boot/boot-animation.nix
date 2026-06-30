@@ -10,7 +10,7 @@
     }:
     {
       # https://wiki.nixos.org/wiki/Plymouth
-      config = lib.mkIf config.features.boot.plymouth.enable {
+      config = lib.mkIf (config.features.boot.plymouth.enable) {
         boot = {
           plymouth = {
             enable = true;

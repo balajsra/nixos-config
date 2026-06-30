@@ -4,7 +4,7 @@
   flake.nixosModules.location =
     { config, lib, ... }:
     {
-      config = lib.mkIf config.features.networking.location.enable {
+      config = lib.mkIf (config.features.networking.location.enable) {
         # https://wiki.nixos.org/wiki/Geoclue
         location.provider = "geoclue2";
 

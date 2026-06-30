@@ -13,7 +13,7 @@
       dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
-      config = lib.mkIf osConfig.features.comms.enable {
+      config = lib.mkIf (osConfig.features.comms.enable) {
         home.packages = with pkgs; [
           beeper
           signal-desktop
