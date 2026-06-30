@@ -103,6 +103,17 @@ in
               management.enable = true;
             };
 
+            gaming = {
+              gamemode.enable = true;
+              gamescope.enable = true;
+              steam.enable = true;
+              wine.enable = true;
+              vkbasalt.enable = true;
+              lutris.enable = true;
+              mangohud.enable = true;
+              chiaki.enable = true;
+            };
+
             hardware = {
               bluetooth.enable = true;
               sound.enable = true;

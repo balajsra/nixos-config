@@ -102,6 +102,17 @@ in
               management.enable = false;
             };
 
+            gaming = {
+              gamemode.enable = false;
+              gamescope.enable = false;
+              steam.enable = false;
+              wine.enable = false;
+              vkbasalt.enable = false;
+              lutris.enable = false;
+              mangohud.enable = false;
+              chiaki.enable = false;
+            };
+
             hardware = {
               bluetooth.enable = false;
               sound.enable = false;
@@ -139,6 +150,7 @@ in
               self.homeModules.desktop-environment
               self.homeModules.development
               self.homeModules.editor
+              self.homeModules.gaming
               self.homeModules.git
               self.homeModules.media
               self.homeModules.networking
@@ -166,6 +178,7 @@ in
         self.nixosModules.editor
         self.nixosModules.file-sharing
         self.nixosModules.fonts
+        self.nixosModules.gaming
         self.nixosModules.git
         self.nixosModules.kernel
         self.nixosModules.location

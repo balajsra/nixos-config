@@ -146,6 +146,17 @@
           management.enable = lib.mkEnableOption "Enable media management applications";
         };
 
+        gaming = {
+          gamemode.enable = lib.mkEnableOption "Enable Gamemode";
+          gamescope.enable = lib.mkEnableOption "Enable Gamescope";
+          steam.enable = lib.mkEnableOption "Enable Steam";
+          wine.enable = lib.mkEnableOption "Enable Wine/Proton";
+          vkbasalt.enable = lib.mkEnableOption "Enable VkBasalt";
+          lutris.enable = lib.mkEnableOption "Enable Lutris";
+          mangohud.enable = lib.mkEnableOption "Enable MangoHUD";
+          chiaki.enable = lib.mkEnableOption "Enable Chiaki PlayStation Remote Play Client";
+        };
+
         hardware = {
           bluetooth.enable = lib.mkEnableOption "Enable Bluetooth support";
           sound.enable = lib.mkEnableOption "Enable sound support";
