@@ -55,6 +55,7 @@
           ffmpeg
           fladder
           aegisub
+          kdePackages.kdenlive
         ];
 
         # https://wiki.nixos.org/wiki/Default_applications
