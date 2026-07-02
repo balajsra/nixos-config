@@ -41,7 +41,8 @@
         programs.uwsm = {
           enable = true;
           waylandCompositors = {
-            mangowc = {
+            # Make this session appear first alphabetically
+            "00-mangowc" = {
               prettyName = "MangoWC";
               comment = "Mango Wayland Compositor managed by UWSM";
               binPath = "/run/current-system/sw/bin/mango";
