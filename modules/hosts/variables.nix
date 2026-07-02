@@ -173,6 +173,10 @@
             thermald.enable = lib.mkEnableOption "Enable Intel CPU Thermal Daemon";
             auto-cpufreq.enable = lib.mkEnableOption "Enable Auto CPU Freq Power Management Utility";
           };
+          graphics = {
+            amd-gpu.enable = lib.mkEnableOption "Enable support for AMD GPU";
+            nvidia-gpu.enable = lib.mkEnableOption "Enable support for NVIDIA GPU";
+          };
         };
 
         comms = {

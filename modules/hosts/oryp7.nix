@@ -130,6 +130,10 @@ in
                 thermald.enable = true;
                 auto-cpufreq.enable = true;
               };
+              graphics = {
+                amd-gpu.enable = false;
+                nvidia-gpu.enable = true;
+              };
             };
 
             comms = {
@@ -208,6 +212,7 @@ in
         self.nixosModules.fonts
         self.nixosModules.gaming
         self.nixosModules.git
+        self.nixosModules.graphics
         self.nixosModules.kernel
         self.nixosModules.location
         self.nixosModules.networking
@@ -248,12 +253,10 @@ in
       # =========================================================================
       system.nixos.tags = [ "integrated-graphics" ];
 
-      hardware.graphics = {
-        enable = true;
-        enable32Bit = true;
-      };
+      # Disable NVIDIA GPU
+      features.hardware.graphics.nvidia-gpu.enable = lib.mkDefault false;
 
-      # 1. Force the system to ignore NVIDIA entirely in the base profile
+      # Force the system to ignore NVIDIA entirely in the base profile
       services.xserver.videoDrivers = [ "modesetting" ];
 
       boot.blacklistedKernelModules = [
@@ -262,7 +265,7 @@ in
         "nvidiafb" # Added to prevent framebuffer from keeping the card awake
       ];
 
-      # 2. UDEV RULE: Force Runtime Power Management
+      # UDEV RULE: Force Runtime Power Management
       # This tells the kernel to aggressively cut power to the PCI device
       # when the system is idle, regardless of whether a driver is loaded.
       services.udev.extraRules = ''
@@ -276,27 +279,23 @@ in
         discrete-gpu.configuration = {
           system.nixos.tags = [ "discrete-gpu" ];
 
-          # 1. Un-blacklist the proprietary driver
+          # Enable NVIDIA GPU
+          features.hardware.graphics.nvidia-gpu.enable = lib.mkForce true;
+
+          # Un-blacklist the proprietary driver
           boot.blacklistedKernelModules = lib.mkForce [ ];
 
-          # 2. Switch the display stack to the proprietary NVIDIA driver
-          services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
-
+          # Host specific GPU settings
           hardware.nvidia = {
-            modesetting.enable = true;
-            # THIS IS THE KEY: Powers down the chip when not in use
-            powerManagement.enable = true;
-            powerManagement.finegrained = true;
-
-            open = true;
-            nvidiaSettings = true;
-            package = config.boot.kernelPackages.nvidiaPackages.stable;
-          };
-
-          hardware.nvidia.prime = {
-            intelBusId = "PCI:0:2:0";
-            nvidiaBusId = "PCI:1:0:0";
-            offload.enable = true;
+            powerManagement = {
+              enable = true;
+              finegrained = true;
+            };
+            prime = {
+              intelBusId = "PCI:0:2:0";
+              nvidiaBusId = "PCI:1:0:0";
+              offload.enable = true;
+            };
           };
         };
       };

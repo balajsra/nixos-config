@@ -129,6 +129,10 @@ in
                 thermald.enable = false;
                 auto-cpufreq.enable = false;
               };
+              graphics = {
+                amd-gpu.enable = false;
+                nvidia-gpu.enable = false;
+              };
             };
 
             comms = {
@@ -204,6 +208,7 @@ in
         self.nixosModules.fonts
         self.nixosModules.gaming
         self.nixosModules.git
+        self.nixosModules.graphics
         self.nixosModules.kernel
         self.nixosModules.location
         self.nixosModules.networking
