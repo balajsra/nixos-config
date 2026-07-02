@@ -1,16 +1,16 @@
-{ self, ... }:
+{ self, inputs, ... }:
 
 {
-  flake.nixosModules.power =
-    { ... }:
-    {
-      imports = [
-        self.nixosModules.power-keys
-        self.nixosModules.lid-switch
-        self.nixosModules.wakeup-triggers
-        self.nixosModules.thermald
-      ];
-    };
+  flake.nixosModules.power = {
+    imports = [
+      self.nixosModules.power-keys
+      self.nixosModules.lid-switch
+      self.nixosModules.wakeup-triggers
+      self.nixosModules.thermald
+      inputs.auto-cpufreq.nixosModules.default
+      self.nixosModules.auto-cpufreq
+    ];
+  };
 
   flake.nixosModules.power-keys =
     { config, lib, ... }:
@@ -57,6 +57,24 @@
       config = lib.mkIf (config.features.hardware.power.thermald.enable) {
         # https://wiki.nixos.org/wiki/Laptop#thermald
         services.thermald.enable = true;
+      };
+    };
+
+  flake.nixosModules.auto-cpufreq =
+    { config, lib, ... }:
+    {
+      config = lib.mkIf (config.features.hardware.power.auto-cpufreq.enable) {
+        programs.auto-cpufreq.enable = true;
+        programs.auto-cpufreq.settings = {
+          charger = {
+            governor = "performance";
+            turbo = "auto";
+          };
+          battery = {
+            governor = "powersave";
+            turbo = "auto";
+          };
+        };
       };
     };
 }

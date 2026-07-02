@@ -171,6 +171,7 @@
             ignore-lid-switch.enable = lib.mkEnableOption "Ignore laptop lid power signal";
             disable-wakeup-triggers.enable = lib.mkEnableOption "Disable all wakeup triggers other than power button";
             thermald.enable = lib.mkEnableOption "Enable Intel CPU Thermal Daemon";
+            auto-cpufreq.enable = lib.mkEnableOption "Enable Auto CPU Freq Power Management Utility";
           };
         };
 

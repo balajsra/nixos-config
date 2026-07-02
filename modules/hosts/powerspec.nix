@@ -127,6 +127,7 @@ in
                 ignore-lid-switch.enable = false;
                 disable-wakeup-triggers.enable = true;
                 thermald.enable = false;
+                auto-cpufreq.enable = false;
               };
             };
 

@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "auto-cpufreq": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780814819,
+        "narHash": "sha256-tCqZRB4pvZlcz2cMi7mfvhFRsfdkbFMP67jGNciogmc=",
+        "owner": "AdnanHodzic",
+        "repo": "auto-cpufreq",
+        "rev": "f325b2a221ab9adb5bb729a1e5d7a45aea686382",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AdnanHodzic",
+        "repo": "auto-cpufreq",
+        "type": "github"
+      }
+    },
     "dank-material-shell": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -272,6 +292,7 @@
     },
     "root": {
       "inputs": {
+        "auto-cpufreq": "auto-cpufreq",
         "dank-material-shell": "dank-material-shell",
         "danksearch": "danksearch",
         "disko": "disko",
