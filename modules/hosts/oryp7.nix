@@ -123,6 +123,8 @@ in
                 enable = false;
                 logitech.enable = false;
               };
+              handle-power-keys.enable = true;
+              ignore-lid-switch.enable = true;
             };
 
             comms = {
@@ -207,6 +209,7 @@ in
         self.nixosModules.office
         self.nixosModules.partitions
         self.nixosModules.phone
+        self.nixosModules.power
         self.nixosModules.printing
         self.nixosModules.racing-wheel
         self.nixosModules.removable-media

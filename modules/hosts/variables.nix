@@ -166,6 +166,8 @@
             enable = lib.mkEnableOption "Enable racing wheel software";
             logitech.enable = lib.mkEnableOption "Enable Logitech racing wheel drivers";
           };
+          handle-power-keys.enable = lib.mkEnableOption "Enable handling power keys";
+          ignore-lid-switch.enable = lib.mkEnableOption "Ignore laptop lid power signal";
         };
 
         comms = {
