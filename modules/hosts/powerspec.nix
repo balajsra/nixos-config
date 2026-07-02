@@ -133,6 +133,7 @@ in
                 amd-gpu.enable = true;
                 nvidia-gpu.enable = false;
               };
+              firmware.enable = true;
             };
 
             comms = {
@@ -208,6 +209,7 @@ in
         self.nixosModules.display-manager
         self.nixosModules.editor
         self.nixosModules.file-sharing
+        self.nixosModules.firmware
         self.nixosModules.fonts
         self.nixosModules.gaming
         self.nixosModules.git
@@ -261,6 +263,5 @@ in
       boot.extraModulePackages = [ ];
 
       nixpkgs.hostPlatform = lib.mkDefault "${architecture}";
-      hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
 }

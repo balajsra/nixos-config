@@ -177,6 +177,7 @@
             amd-gpu.enable = lib.mkEnableOption "Enable support for AMD GPU";
             nvidia-gpu.enable = lib.mkEnableOption "Enable support for NVIDIA GPU";
           };
+          firmware.enable = lib.mkEnableOption "Enable firmware updating";
         };
 
         comms = {

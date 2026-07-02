@@ -134,6 +134,7 @@ in
                 amd-gpu.enable = false;
                 nvidia-gpu.enable = true;
               };
+              firmware.enable = true;
             };
 
             comms = {
@@ -209,6 +210,7 @@ in
         self.nixosModules.display-manager
         self.nixosModules.editor
         self.nixosModules.file-sharing
+        self.nixosModules.firmware
         self.nixosModules.fonts
         self.nixosModules.gaming
         self.nixosModules.git
