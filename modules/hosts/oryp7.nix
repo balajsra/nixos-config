@@ -123,9 +123,12 @@ in
                 enable = false;
                 logitech.enable = false;
               };
-              handle-power-keys.enable = true;
-              ignore-lid-switch.enable = true;
-              disable-wakeup-triggers.enable = true;
+              power = {
+                handle-power-keys.enable = true;
+                ignore-lid-switch.enable = true;
+                disable-wakeup-triggers.enable = true;
+                thermald.enable = true;
+              };
             };
 
             comms = {

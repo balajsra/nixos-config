@@ -166,9 +166,12 @@
             enable = lib.mkEnableOption "Enable racing wheel software";
             logitech.enable = lib.mkEnableOption "Enable Logitech racing wheel drivers";
           };
-          handle-power-keys.enable = lib.mkEnableOption "Enable handling power keys";
-          ignore-lid-switch.enable = lib.mkEnableOption "Ignore laptop lid power signal";
-          disable-wakeup-triggers.enable = lib.mkEnableOption "Disable all wakeup triggers other than power button";
+          power = {
+            handle-power-keys.enable = lib.mkEnableOption "Enable handling power keys";
+            ignore-lid-switch.enable = lib.mkEnableOption "Ignore laptop lid power signal";
+            disable-wakeup-triggers.enable = lib.mkEnableOption "Disable all wakeup triggers other than power button";
+            thermald.enable = lib.mkEnableOption "Enable Intel CPU Thermal Daemon";
+          };
         };
 
         comms = {
