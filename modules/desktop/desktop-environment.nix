@@ -23,6 +23,7 @@
       self.homeModules.danksearch
       inputs.danksearch.homeModules.dsearch
       self.homeModules.screenshot
+      self.homeModules.theme
     ];
   };
 
@@ -646,6 +647,71 @@
 
         # Enable the GNOME Desktop Environment.
         services.desktopManager.gnome.enable = true;
+      };
+    };
+
+  flake.homeModules.theme =
+    { pkgs, ... }:
+    {
+      gtk = {
+        enable = true;
+        colorScheme = "dark";
+
+        # Theme
+        gtk4.theme = null;
+        theme = {
+          name = "Dracula";
+          package = pkgs.dracula-theme;
+        };
+
+        # Icons
+        iconTheme = {
+          name = "Papirus-Dark";
+          package = pkgs.papirus-icon-theme;
+        };
+
+        # Cursors
+        cursorTheme = {
+          name = "breeze-hacked-cursor-theme";
+          package = pkgs.breeze-hacked-cursor-theme;
+          size = 24;
+        };
+      };
+
+      qt = {
+        enable = true;
+        platformTheme.name = "qtct";
+        style.name = "kvantum";
+      };
+
+      home.packages = with pkgs; [
+        dracula-theme
+        libsForQt5.qtstyleplugin-kvantum # Engine backing for Qt5 applications
+        kdePackages.qtstyleplugin-kvantum # Engine backing for Qt6 applications (Kdenlive)
+        libsForQt5.qt5ct # Layout controller for Qt5 apps
+        kdePackages.qt6ct # Layout controller for Qt6 apps
+      ];
+
+      xdg.configFile = {
+        "Kvantum/kvantum.kvconfig".text = ''
+          [General]
+          theme=Dracula-purple-solid
+        '';
+
+        "Kvantum/Dracula".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula";
+        "Kvantum/Dracula-purple".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula-purple";
+        "Kvantum/Dracula-purple-solid".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula-purple-solid";
+        "Kvantum/Dracula-Solid".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula-Solid";
+
+        "qt5ct/qt5ct.conf".text = ''
+          [Appearance]
+          style=kvantum
+        '';
+
+        "qt6ct/qt6ct.conf".text = ''
+          [Appearance]
+          style=kvantum
+        '';
       };
     };
 }
