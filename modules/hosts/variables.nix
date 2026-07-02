@@ -168,6 +168,7 @@
           };
           handle-power-keys.enable = lib.mkEnableOption "Enable handling power keys";
           ignore-lid-switch.enable = lib.mkEnableOption "Ignore laptop lid power signal";
+          disable-wakeup-triggers.enable = lib.mkEnableOption "Disable all wakeup triggers other than power button";
         };
 
         comms = {

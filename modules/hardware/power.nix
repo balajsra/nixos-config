@@ -7,6 +7,7 @@
       imports = [
         self.nixosModules.power-keys
         self.nixosModules.lid-switch
+        self.nixosModules.wakeup-triggers
       ];
     };
 
@@ -35,6 +36,17 @@
           HandleLidSwitchExternalPower = "ignore";
           HandleLidSwitchDocked = "ignore";
         };
+      };
+    };
+
+  flake.nixosModules.wakeup-triggers =
+    { config, lib, ... }:
+    {
+      config = lib.mkIf (config.features.hardware.disable-wakeup-triggers.enable) {
+        # https://wiki.nixos.org/wiki/Power_Management
+        services.udev.extraRules = ''
+          ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
+        '';
       };
     };
 }

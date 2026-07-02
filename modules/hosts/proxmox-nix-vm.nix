@@ -124,6 +124,7 @@ in
               };
               handle-power-keys.enable = false;
               ignore-lid-switch.enable = false;
+              disable-wakeup-triggers.enable = false;
             };
 
             comms = {
