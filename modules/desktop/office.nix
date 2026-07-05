@@ -15,6 +15,7 @@
       self.homeModules.thunderbird
       self.homeModules.zathura
       self.homeModules.libreoffice
+      self.homeModules.sweethome3d
     ];
   };
 
@@ -178,6 +179,23 @@
           hunspell
           hunspellDicts.en_US
           hyphenDicts.en_US
+        ];
+      };
+    };
+
+  flake.homeModules.sweethome3d =
+    {
+      osConfig,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.office.sweethome3d.enable) {
+        home.packages = with pkgs; [
+          sweethome3d.application
+          sweethome3d.textures-editor
+          sweethome3d.furniture-editor
         ];
       };
     };

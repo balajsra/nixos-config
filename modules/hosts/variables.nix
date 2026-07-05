@@ -114,6 +114,7 @@
           thunderbird.enable = lib.mkEnableOption "Enable Thunderbird";
           zathura.enable = lib.mkEnableOption "Enable Zathura";
           libreoffice.enable = lib.mkEnableOption "Enable Libre Office";
+          sweethome3d.enable = lib.mkEnableOption "Enable SweetHome3D";
         };
 
         networking = {

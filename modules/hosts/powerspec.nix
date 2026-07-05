@@ -70,6 +70,7 @@ in
               thunderbird.enable = true;
               zathura.enable = true;
               libreoffice.enable = true;
+              sweethome3d.enable = true;
             };
 
             networking = {
