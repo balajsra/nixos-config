@@ -9,7 +9,6 @@
         tree
         wget
         isd
-        unzip
       ];
     };
 }
