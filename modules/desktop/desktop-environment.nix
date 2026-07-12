@@ -459,6 +459,19 @@
             batteryNotificationType = 0;
             batteryCriticalThreshold = 10;
             batteryNotifyCritical = true;
+
+            # Night Mode
+            nightModeEnabled = true;
+            nightModeTemperature = 4500;
+            nightModeHighTemperature = 6500;
+            nightModeAutoEnabled = true;
+            nightModeAutoMode = "location";
+            nightModeStartHour = 18;
+            nightModeStartMinute = 0;
+            nightModeEndHour = 6;
+            nightModeEndMinute = 0;
+            nightModeUseIPLocation = true;
+            nightModeLocationProvider = "";
           };
 
           session = {
