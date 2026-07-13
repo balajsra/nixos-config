@@ -472,6 +472,75 @@
             nightModeEndMinute = 0;
             nightModeUseIPLocation = true;
             nightModeLocationProvider = "";
+
+            # Control Center
+            controlCenterTileColorMode = "primary";
+            controlCenterShowNetworkIcon = true;
+            controlCenterShowBluetoothIcon = true;
+            controlCenterShowAudioIcon = true;
+            controlCenterShowAudioPercent = false;
+            controlCenterShowVpnIcon = true;
+            controlCenterShowBrightnessIcon = false;
+            controlCenterShowBrightnessPercent = false;
+            controlCenterShowMicIcon = false;
+            controlCenterShowMicPercent = false;
+            controlCenterShowBatteryIcon = false;
+            controlCenterShowPrinterIcon = false;
+            controlCenterShowScreenSharingIcon = true;
+            controlCenterShowIdleInhibitorIcon = false;
+            controlCenterShowDoNotDisturbIcon = false;
+            controlCenterWidgets = [
+              {
+                id = "volumeSlider";
+                enabled = true;
+                width = 50;
+              }
+              {
+                id = "brightnessSlider";
+                enabled = true;
+                width = 50;
+              }
+              {
+                id = "wifi";
+                enabled = true;
+                width = 50;
+              }
+              {
+                id = "bluetooth";
+                enabled = true;
+                width = 50;
+              }
+              {
+                id = "audioOutput";
+                enabled = true;
+                width = 50;
+              }
+              {
+                id = "audioInput";
+                enabled = true;
+                width = 50;
+              }
+              {
+                id = "builtin_vpn";
+                enabled = true;
+                width = 50;
+              }
+              {
+                id = "doNotDisturb";
+                enabled = true;
+                width = 50;
+              }
+              {
+                id = "idleInhibitor";
+                enabled = true;
+                width = 50;
+              }
+              {
+                id = "nightMode";
+                enabled = true;
+                width = 50;
+              }
+            ];
           };
 
           session = {
