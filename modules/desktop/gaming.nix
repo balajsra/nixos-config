@@ -56,16 +56,26 @@
     };
   };
 
-  flake.nixosModules.steam = { lib, config, ... }: {
-    config = lib.mkIf (config.features.gaming.steam.enable) {
-      # https://wiki.nixos.org/wiki/Steam
-      programs.steam = {
-        enable = true;
-        remotePlay.openFirewall = true;
-        dedicatedServer.openFirewall = false;
+  flake.nixosModules.steam =
+    {
+      lib,
+      config,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (config.features.gaming.steam.enable) {
+        # https://wiki.nixos.org/wiki/Steam
+        programs.steam = {
+          enable = true;
+          remotePlay.openFirewall = true;
+          dedicatedServer.openFirewall = false;
+          extraCompatPackages = with pkgs; [
+            proton-ge-bin
+          ];
+        };
       };
     };
-  };
 
   flake.nixosModules.wine =
     {
@@ -82,6 +92,7 @@
           winetricks
           protonplus
           protontricks
+          protonup-qt
         ];
       };
     };
