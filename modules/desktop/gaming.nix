@@ -77,6 +77,10 @@
             pkgs.hidapi # Dependency for Steam Controller (2026)
           ];
         };
+
+        environment.systemPackages = with pkgs; [
+          steam-run # Allows running games that expect an FHS-like environment
+        ];
       };
     };
 
