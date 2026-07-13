@@ -73,6 +73,9 @@
           extraCompatPackages = with pkgs; [
             proton-ge-bin
           ];
+          extraPackages = [
+            pkgs.hidapi # Dependency for Steam Controller (2026)
+          ];
         };
       };
     };
