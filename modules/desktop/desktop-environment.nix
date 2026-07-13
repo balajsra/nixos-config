@@ -391,6 +391,24 @@
           enableClipboardPaste = true; # Pasting items from the clipboard (wtype)
 
           settings = {
+            # Wallpaper
+            wallpaperPath = "/home/sravan/NextCloud/Wallpapers/Desktop";
+            perMonitorWallpaper = false;
+            perModeWallpaper = false;
+            wallpaperTransition = "random";
+            includedTransitions = [
+              "fade"
+              "wipe"
+              "disc"
+              "stripes"
+              "iris bloom"
+              "pixelate"
+              "portal"
+            ];
+            wallpaperCyclingEnabled = true;
+            wallpaperCyclingMode = "time";
+            wallpaperCyclingTime = "00:00";
+
             # Theme
             currentThemeName = "custom";
             currentThemeCategory = "custom";
