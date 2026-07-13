@@ -48,7 +48,11 @@
 
   flake.nixosModules.gamescope = { lib, config, ... }: {
     config = lib.mkIf (config.features.gaming.gamescope.enable) {
-      programs.gamescope.enable = true;
+      programs.gamescope = {
+        enable = true;
+        enableWsi = true;
+        capSysNice = false;
+      };
     };
   };
 
