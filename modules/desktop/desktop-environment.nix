@@ -365,11 +365,13 @@
       osConfig,
       config,
       lib,
+      pkgs,
       ...
     }:
     let
       mangoConfigPath = toString /home/${osConfig.primaryUser.username}/.config/mango;
       dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+      wallpaperDir = "/home/${osConfig.primaryUser.username}/NextCloud/Wallpapers/Desktop";
     in
     {
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
@@ -532,7 +534,6 @@
 
           session = {
             # Wallpaper
-            wallpaperPath = "/home/sravan/NextCloud/Wallpapers/Desktop";
             perMonitorWallpaper = false;
             perModeWallpaper = false;
             wallpaperTransition = "random";
@@ -545,9 +546,7 @@
               "pixelate"
               "portal"
             ];
-            wallpaperCyclingEnabled = true;
-            wallpaperCyclingMode = "time";
-            wallpaperCyclingTime = "00:00";
+            wallpaperCyclingEnabled = false;
 
             # Night Mode
             nightModeEnabled = true;
@@ -569,6 +568,37 @@
 
         xdg.configFile."DankMaterialShell/themes/dracula.json".source =
           config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/dank-material-shell/.themes/dracula-dank-material-shell/themes/dracula/theme.json";
+
+        systemd.user.services.dms-wallpaper-randomizer = {
+          Unit = {
+            Description = "Select a random DMS wallpaper on startup";
+            BindsTo = [ "dms.service" ];
+            After = [
+              "graphical-session.target"
+              "dms.service"
+            ];
+          };
+
+          Service = {
+            Type = "oneshot";
+
+            # Sleep before running so DMS has time to complete startup and open its socket
+            ExecStartPre = "${pkgs.coreutils}/bin/sleep 2";
+
+            ExecStart = pkgs.writeShellScript "dms-random-picker" ''
+              if [ -d "${wallpaperDir}" ]; then
+                RANDOM_WP=$(find "${wallpaperDir}" -type f | ${pkgs.coreutils}/bin/shuf -n 1)
+                if [ -n "$RANDOM_WP" ]; then
+                  ${config.programs.dank-material-shell.package}/bin/dms ipc call wallpaper set "$RANDOM_WP"
+                fi
+              fi
+            '';
+          };
+
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
 
         # https://danklinux.com/docs/dankmaterialshell/compositors#mangowc-configuration
         wayland.windowManager.mango = {
