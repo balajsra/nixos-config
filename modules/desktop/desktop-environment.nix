@@ -391,24 +391,6 @@
           enableClipboardPaste = true; # Pasting items from the clipboard (wtype)
 
           settings = {
-            # Wallpaper
-            wallpaperPath = "/home/sravan/NextCloud/Wallpapers/Desktop";
-            perMonitorWallpaper = false;
-            perModeWallpaper = false;
-            wallpaperTransition = "random";
-            includedTransitions = [
-              "fade"
-              "wipe"
-              "disc"
-              "stripes"
-              "iris bloom"
-              "pixelate"
-              "portal"
-            ];
-            wallpaperCyclingEnabled = true;
-            wallpaperCyclingMode = "time";
-            wallpaperCyclingTime = "00:00";
-
             # Theme
             currentThemeName = "custom";
             currentThemeCategory = "custom";
@@ -477,19 +459,6 @@
             batteryNotificationType = 0;
             batteryCriticalThreshold = 10;
             batteryNotifyCritical = true;
-
-            # Night Mode
-            nightModeEnabled = true;
-            nightModeTemperature = 4500;
-            nightModeHighTemperature = 6500;
-            nightModeAutoEnabled = true;
-            nightModeAutoMode = "location";
-            nightModeStartHour = 18;
-            nightModeStartMinute = 0;
-            nightModeEndHour = 6;
-            nightModeEndMinute = 0;
-            nightModeUseIPLocation = true;
-            nightModeLocationProvider = "";
 
             # Control Center
             controlCenterTileColorMode = "primary";
@@ -562,6 +531,38 @@
           };
 
           session = {
+            # Wallpaper
+            wallpaperPath = "/home/sravan/NextCloud/Wallpapers/Desktop";
+            perMonitorWallpaper = false;
+            perModeWallpaper = false;
+            wallpaperTransition = "random";
+            includedTransitions = [
+              "fade"
+              "wipe"
+              "disc"
+              "stripes"
+              "iris bloom"
+              "pixelate"
+              "portal"
+            ];
+            wallpaperCyclingEnabled = true;
+            wallpaperCyclingMode = "time";
+            wallpaperCyclingTime = "00:00";
+
+            # Night Mode
+            nightModeEnabled = true;
+            nightModeTemperature = 4500;
+            nightModeHighTemperature = 6500;
+            nightModeAutoEnabled = true;
+            nightModeAutoMode = "location";
+            nightModeStartHour = 18;
+            nightModeStartMinute = 0;
+            nightModeEndHour = 6;
+            nightModeEndMinute = 0;
+            nightModeUseIPLocation = true;
+            nightModeLocationProvider = "";
+
+            # Dark Mode
             isLightMode = false;
           };
         };
