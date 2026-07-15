@@ -23,6 +23,8 @@
           inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
         ];
 
+        # TODO: Configure Zen Browser
+
         # https://wiki.nixos.org/wiki/Default_applications
         xdg.mimeApps = lib.mkIf (osConfig.features.browser.default == "zen") {
           enable = true;
