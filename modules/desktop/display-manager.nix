@@ -53,19 +53,6 @@
       compositor = config.features.desktop-environment;
     in
     {
-      # This is a hack to make the greeter work since the module expects `programs.mango.enable` to be set to
-      # true. This doesn't work because the mangowc module defines `programs.mangowc.enable`.
-      options.programs.mango = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = config.features.desktop-environment == "mango";
-        };
-        package = lib.mkOption {
-          type = lib.types.package;
-          default = pkgs.mangowc;
-        };
-      };
-
       config = lib.mkIf (config.features.display-manager == "dms-greeter") {
         # https://danklinux.com/docs/dankgreeter/nixos-flake#configuration-options
         programs.dank-material-shell.greeter = {
@@ -80,9 +67,6 @@
             path = "/tmp/dms-greeter.log";
           };
         };
-
-        # Hack to support mangowc
-        programs.mango.enable = (config.features.desktop-environment == "mango");
       };
     };
 }

@@ -36,7 +36,10 @@
     }:
     {
       config = lib.mkIf (config.features.desktop-environment == "mango") {
-        programs.mangowc.enable = true;
+        programs.mangowc = {
+          enable = true;
+          package = pkgs.mango;
+        };
 
         # "https://wiki.nixos.org/wiki/UWSM"
         programs.uwsm = {
@@ -92,7 +95,7 @@
         wayland.windowManager.mango = {
           enable = true;
           # Point Home Manager to system installed package
-          package = pkgs.mangowc;
+          package = pkgs.mango;
           # UWSM handles the service, so home manager shouldn't
           systemd.enable = false;
 
