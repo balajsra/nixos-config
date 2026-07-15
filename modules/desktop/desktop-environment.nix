@@ -533,6 +533,80 @@
                 width = 50;
               }
             ];
+
+            # Dank Bar
+            barConfigs = [
+              {
+                id = "default";
+                name = "Main Bar";
+                enabled = true;
+                position = 0;
+                screenPreferences = [
+                  "all"
+                ];
+                showOnLastDisplay = true;
+                leftWidgets = [
+                  "launcherButton"
+                  "workspaceSwitcher"
+                  "focusedWindow"
+                ];
+                centerWidgets = [
+                  "music"
+                  "clock"
+                  "weather"
+                ];
+                rightWidgets = [
+                  "systemTray"
+                  "clipboard"
+                  {
+                    id = "diskUsage";
+                    enabled = true;
+                    mountPath = "/";
+                    diskUsageMode = 0;
+                    minimumWidth = true;
+                  }
+                  "cpuUsage"
+                  "memUsage"
+                  {
+                    id = "controlCenterButton";
+                    enabled = true;
+                    showAudioPercent = true;
+                    showBrightnessIcon = true;
+                    showMicIcon = true;
+                    showMicPercent = true;
+                    showBatteryIcon = true;
+                    showPrinterIcon = true;
+                    showIdleInhibitorIcon = true;
+                    showDoNotDisturbIcon = true;
+                    showBrightnessPercent = true;
+                  }
+                  "notificationButton"
+                ];
+                spacing = 4;
+                innerPadding = 4;
+                bottomGap = 0;
+                transparency = 0;
+                widgetTransparency = 0.85;
+                squareCorners = false;
+                noBackground = false;
+                gothCornersEnabled = false;
+                gothCornerRadiusOverride = false;
+                borderEnabled = false;
+                fontScale = 1;
+                autoHide = false;
+                openOnOverview = false;
+                visible = true;
+                popupGapsAuto = true;
+                maximizeWidgetText = false;
+                removeWidgetPadding = false;
+                maximizeWidgetIcons = false;
+                widgetOutlineEnabled = false;
+                iconScale = 1;
+                barInsetPadding = 4;
+                useOverlayLayer = false;
+                hoverPopouts = false;
+              }
+            ];
           };
 
           session = {
