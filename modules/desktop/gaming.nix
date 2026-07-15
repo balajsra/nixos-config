@@ -131,9 +131,7 @@
       config = lib.mkIf (osConfig.features.gaming.lutris.enable) {
         programs.lutris = {
           enable = true;
-
-          # Unstable version of Lutris depends on openldap that has failing tests
-          package = pkgs.stable.lutris;
+          package = pkgs.lutris;
         };
 
         # TODO: Add Lutris settings
