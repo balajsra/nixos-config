@@ -8,7 +8,7 @@
 {
   flake.nixosModules.desktop-environment = {
     imports = [
-      self.nixosModules.mangowc
+      self.nixosModules.mango
       self.nixosModules.gnome
       self.nixosModules.file-explorer
     ];
@@ -16,7 +16,7 @@
 
   flake.homeModules.desktop-environment = {
     imports = [
-      self.homeModules.mangowc
+      self.homeModules.mango
       inputs.mango.hmModules.mango
       self.homeModules.dank-material-shell
       inputs.dank-material-shell.homeModules.dank-material-shell
@@ -27,7 +27,7 @@
     ];
   };
 
-  flake.nixosModules.mangowc =
+  flake.nixosModules.mango =
     {
       pkgs,
       config,
@@ -43,8 +43,8 @@
           enable = true;
           waylandCompositors = {
             # Make this session appear first alphabetically
-            "00-mangowc" = {
-              prettyName = "MangoWC";
+            "mango" = {
+              prettyName = "Mango";
               comment = "Mango Wayland Compositor managed by UWSM";
               binPath = "/run/current-system/sw/bin/mango";
             };
@@ -75,7 +75,7 @@
       };
     };
 
-  flake.homeModules.mangowc =
+  flake.homeModules.mango =
     {
       pkgs,
       config,
