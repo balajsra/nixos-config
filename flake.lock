@@ -156,7 +156,7 @@
     "flake-utils": {
       "inputs": {
         "systems": [
-          "mangowc",
+          "mango",
           "scenefx",
           "systems"
         ]
@@ -210,7 +210,7 @@
         "type": "github"
       }
     },
-    "mangowc": {
+    "mango": {
       "inputs": {
         "flake-parts": "flake-parts_2",
         "nixpkgs": [
@@ -322,7 +322,7 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
-        "mangowc": "mangowc",
+        "mango": "mango",
         "nix-secrets": "nix-secrets",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
@@ -334,7 +334,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": [
-          "mangowc",
+          "mango",
           "nixpkgs"
         ],
         "systems": "systems"

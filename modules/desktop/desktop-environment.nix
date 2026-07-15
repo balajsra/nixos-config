@@ -17,7 +17,7 @@
   flake.homeModules.desktop-environment = {
     imports = [
       self.homeModules.mangowc
-      inputs.mangowc.hmModules.mango
+      inputs.mango.hmModules.mango
       self.homeModules.dank-material-shell
       inputs.dank-material-shell.homeModules.dank-material-shell
       self.homeModules.danksearch
