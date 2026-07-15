@@ -8,7 +8,7 @@
 {
   flake.nixosModules.desktop-environment = {
     imports = [
-      self.nixosModules.mangowc
+      self.nixosModules.mango
       self.nixosModules.gnome
       self.nixosModules.file-explorer
     ];
@@ -16,8 +16,8 @@
 
   flake.homeModules.desktop-environment = {
     imports = [
-      self.homeModules.mangowc
-      inputs.mangowc.hmModules.mango
+      self.homeModules.mango
+      inputs.mango.hmModules.mango
       self.homeModules.dank-material-shell
       inputs.dank-material-shell.homeModules.dank-material-shell
       self.homeModules.danksearch
@@ -27,7 +27,7 @@
     ];
   };
 
-  flake.nixosModules.mangowc =
+  flake.nixosModules.mango =
     {
       pkgs,
       config,
@@ -36,15 +36,18 @@
     }:
     {
       config = lib.mkIf (config.features.desktop-environment == "mango") {
-        programs.mangowc.enable = true;
+        programs.mangowc = {
+          enable = true;
+          package = pkgs.mango;
+        };
 
         # "https://wiki.nixos.org/wiki/UWSM"
         programs.uwsm = {
           enable = true;
           waylandCompositors = {
             # Make this session appear first alphabetically
-            "00-mangowc" = {
-              prettyName = "MangoWC";
+            "mango" = {
+              prettyName = "Mango";
               comment = "Mango Wayland Compositor managed by UWSM";
               binPath = "/run/current-system/sw/bin/mango";
             };
@@ -75,7 +78,7 @@
       };
     };
 
-  flake.homeModules.mangowc =
+  flake.homeModules.mango =
     {
       pkgs,
       config,
@@ -92,7 +95,7 @@
         wayland.windowManager.mango = {
           enable = true;
           # Point Home Manager to system installed package
-          package = pkgs.mangowc;
+          package = pkgs.mango;
           # UWSM handles the service, so home manager shouldn't
           systemd.enable = false;
 

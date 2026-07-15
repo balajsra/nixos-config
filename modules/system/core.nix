@@ -29,6 +29,7 @@
           };
         })
         inputs.dracula-signal-desktop.overlays
+        inputs.mango.overlays.default
       ];
 
       # Run unpatched dynamic binaries on NixOS
