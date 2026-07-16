@@ -113,6 +113,7 @@ in
               lutris.enable = true;
               mangohud.enable = true;
               chiaki.enable = true;
+              prism-launcher.enable = true;
             };
 
             hardware = {

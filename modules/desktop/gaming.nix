@@ -16,6 +16,7 @@
       self.homeModules.lutris
       self.homeModules.mangohud
       self.homeModules.chiaki
+      self.homeModules.prism-launcher
     ];
   };
 
@@ -156,6 +157,22 @@
       config = lib.mkIf (osConfig.features.gaming.chiaki.enable) {
         home.packages = with pkgs; [
           chiaki-ng
+        ];
+      };
+    };
+
+  flake.homeModules.prism-launcher =
+    {
+      pkgs,
+      lib,
+      osConfig,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.gaming.prism-launcher.enable) {
+        # https://wiki.nixos.org/wiki/Prism_Launcher
+        home.packages = with pkgs; [
+          prismlauncher
         ];
       };
     };
