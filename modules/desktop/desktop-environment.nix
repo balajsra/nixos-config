@@ -481,6 +481,7 @@
             controlCenterShowScreenSharingIcon = true;
             controlCenterShowIdleInhibitorIcon = false;
             controlCenterShowDoNotDisturbIcon = false;
+            centeringMode = "geometric";
             controlCenterWidgets = [
               {
                 id = "volumeSlider";
