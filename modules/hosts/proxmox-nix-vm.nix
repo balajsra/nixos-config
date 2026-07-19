@@ -119,6 +119,7 @@ in
               bluetooth.enable = false;
               sound.enable = false;
               printing.enable = false;
+              scanning.enable = false;
               system76.enable = false;
               racing-wheel = {
                 enable = false;
@@ -220,7 +221,7 @@ in
         self.nixosModules.partitions
         self.nixosModules.phone
         self.nixosModules.power
-        self.nixosModules.printing
+        self.nixosModules.printer
         self.nixosModules.racing-wheel
         self.nixosModules.removable-media
         self.nixosModules.security
