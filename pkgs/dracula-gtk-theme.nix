@@ -18,14 +18,16 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    # 1. Prepare output directories
     mkdir -p $out/share/themes/Dracula
     mkdir -p $out/share/Kvantum
 
-    # 2. Copy GTK theme files into the GTK theme directory
+    # Copy root theme files
     cp -r assets gtk-2.0 gtk-3.0 gtk-4.0 index.theme $out/share/themes/Dracula/
 
-    # 3. Copy Kvantum files into the Kvantum directory (if they exist in the repo)
+    # Ensure assets are present inside gtk-3.0 and gtk-4.0 directories as well
+    cp -r assets $out/share/themes/Dracula/gtk-3.0/assets 2>/dev/null || true
+    cp -r assets $out/share/themes/Dracula/gtk-4.0/assets 2>/dev/null || true
+
     if [ -d src/Kvantum ]; then
       cp -r src/Kvantum/* $out/share/Kvantum/
     elif [ -d Kvantum ]; then

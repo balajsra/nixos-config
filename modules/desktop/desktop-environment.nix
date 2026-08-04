@@ -908,7 +908,25 @@
         kdePackages.qt6ct # Layout controller for Qt6 apps
       ];
 
+      dconf.settings = {
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          gtk-theme = "Dracula";
+          icon-theme = "Papirus-Dark";
+          cursor-theme = "breeze-hacked-cursor-theme";
+        };
+      };
+
+      home.sessionVariables = {
+        GTK_THEME = "Dracula";
+      };
+
       xdg.configFile = {
+        "gtk-4.0/assets".source = "${pkgs.dracula-gtk-theme}/share/themes/Dracula/gtk-4.0/assets";
+        "gtk-4.0/gtk.css".source = "${pkgs.dracula-gtk-theme}/share/themes/Dracula/gtk-4.0/gtk.css";
+        "gtk-4.0/gtk-dark.css".source =
+          "${pkgs.dracula-gtk-theme}/share/themes/Dracula/gtk-4.0/gtk-dark.css";
+
         "Kvantum/kvantum.kvconfig".text = ''
           [General]
           theme=Dracula-purple-solid
