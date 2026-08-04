@@ -1,4 +1,8 @@
-{ stdenv, fetchFromGitHub }:
+{
+  stdenv,
+  fetchFromGitHub,
+  lib,
+}:
 
 stdenv.mkDerivation {
   pname = "dracula-gtk-theme";
@@ -30,4 +34,11 @@ stdenv.mkDerivation {
 
     runHook postInstall
   '';
+
+  meta = with lib; {
+    description = "Dracula GTK theme";
+    homepage = "https://draculatheme.com/gtk";
+    license = licenses.gpl3Only;
+    platforms = platforms.linux;
+  };
 }
