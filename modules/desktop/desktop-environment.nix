@@ -36,7 +36,7 @@
     }:
     {
       config = lib.mkIf (config.features.desktop-environment == "mango") {
-        programs.mangowc = {
+        programs.mango = {
           enable = true;
           package = pkgs.mango;
         };
