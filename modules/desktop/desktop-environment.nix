@@ -877,7 +877,7 @@
         gtk4.theme = null;
         theme = {
           name = "Dracula";
-          package = pkgs.dracula-theme;
+          package = pkgs.dracula-gtk-theme;
         };
 
         # Icons
@@ -901,7 +901,7 @@
       };
 
       home.packages = with pkgs; [
-        dracula-theme
+        dracula-gtk-theme
         libsForQt5.qtstyleplugin-kvantum # Engine backing for Qt5 applications
         kdePackages.qtstyleplugin-kvantum # Engine backing for Qt6 applications (Kdenlive)
         libsForQt5.qt5ct # Layout controller for Qt5 apps
@@ -914,10 +914,11 @@
           theme=Dracula-purple-solid
         '';
 
-        "Kvantum/Dracula".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula";
-        "Kvantum/Dracula-purple".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula-purple";
-        "Kvantum/Dracula-purple-solid".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula-purple-solid";
-        "Kvantum/Dracula-Solid".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula-Solid";
+        "Kvantum/Dracula".source = "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula";
+        "Kvantum/Dracula-purple".source = "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula-purple";
+        "Kvantum/Dracula-purple-solid".source =
+          "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula-purple-solid";
+        "Kvantum/Dracula-Solid".source = "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula-Solid";
 
         "qt5ct/qt5ct.conf".text = ''
           [Appearance]

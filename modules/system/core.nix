@@ -30,6 +30,7 @@
         })
         inputs.dracula-signal-desktop.overlays
         inputs.mango.overlays.default
+        self.overlays.default
       ];
 
       # Run unpatched dynamic binaries on NixOS
@@ -55,6 +56,5 @@
           options = "--delete-older-than 30d";
         };
       };
-
     };
 }
