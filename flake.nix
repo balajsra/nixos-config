@@ -73,6 +73,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Display Manager for DankMaterialShell
+    dank-greeter = {
+      url = "github:AvengeMedia/dank-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Include submodules when building this flake
     self.submodules = true;
   };
