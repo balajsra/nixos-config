@@ -57,6 +57,7 @@
         # https://danklinux.com/docs/dankgreeter/nixos-flake#configuration-options
         programs.dms-greeter = {
           enable = true;
+          package = inputs.dank-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
           compositor.name = config.features.desktop-environment;
 
           # Sync user's DankMaterialShell theme with the greeter
@@ -67,6 +68,12 @@
             path = "/tmp/dms-greeter.log";
           };
         };
+
+        # Ensure state and cache directories exist with correct ownership
+        systemd.tmpfiles.rules = [
+          "d /var/lib/dms-greeter 0755 greeter greeter -"
+          "d /var/cache/dms-greeter 0755 greeter greeter -"
+        ];
       };
     };
 }
