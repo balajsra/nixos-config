@@ -36,7 +36,7 @@
     }:
     {
       config = lib.mkIf (config.features.desktop-environment == "mango") {
-        programs.mangowc = {
+        programs.mango = {
           enable = true;
           package = pkgs.mango;
         };
@@ -877,7 +877,7 @@
         gtk4.theme = null;
         theme = {
           name = "Dracula";
-          package = pkgs.dracula-theme;
+          package = pkgs.dracula-gtk-theme;
         };
 
         # Icons
@@ -901,23 +901,42 @@
       };
 
       home.packages = with pkgs; [
-        dracula-theme
+        dracula-gtk-theme
         libsForQt5.qtstyleplugin-kvantum # Engine backing for Qt5 applications
         kdePackages.qtstyleplugin-kvantum # Engine backing for Qt6 applications (Kdenlive)
         libsForQt5.qt5ct # Layout controller for Qt5 apps
         kdePackages.qt6ct # Layout controller for Qt6 apps
       ];
 
+      dconf.settings = {
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          gtk-theme = "Dracula";
+          icon-theme = "Papirus-Dark";
+          cursor-theme = "breeze-hacked-cursor-theme";
+        };
+      };
+
+      home.sessionVariables = {
+        GTK_THEME = "Dracula";
+      };
+
       xdg.configFile = {
+        "gtk-4.0/assets".source = "${pkgs.dracula-gtk-theme}/share/themes/Dracula/gtk-4.0/assets";
+        "gtk-4.0/gtk.css".source = "${pkgs.dracula-gtk-theme}/share/themes/Dracula/gtk-4.0/gtk.css";
+        "gtk-4.0/gtk-dark.css".source =
+          "${pkgs.dracula-gtk-theme}/share/themes/Dracula/gtk-4.0/gtk-dark.css";
+
         "Kvantum/kvantum.kvconfig".text = ''
           [General]
           theme=Dracula-purple-solid
         '';
 
-        "Kvantum/Dracula".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula";
-        "Kvantum/Dracula-purple".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula-purple";
-        "Kvantum/Dracula-purple-solid".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula-purple-solid";
-        "Kvantum/Dracula-Solid".source = "${pkgs.dracula-theme}/share/Kvantum/Dracula-Solid";
+        "Kvantum/Dracula".source = "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula";
+        "Kvantum/Dracula-purple".source = "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula-purple";
+        "Kvantum/Dracula-purple-solid".source =
+          "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula-purple-solid";
+        "Kvantum/Dracula-Solid".source = "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula-Solid";
 
         "qt5ct/qt5ct.conf".text = ''
           [Appearance]
