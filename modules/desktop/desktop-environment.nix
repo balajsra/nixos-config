@@ -660,16 +660,35 @@
           Service = {
             Type = "oneshot";
 
-            # Sleep before running so DMS has time to complete startup and open its socket
-            ExecStartPre = "${pkgs.coreutils}/bin/sleep 2";
-
             ExecStart = pkgs.writeShellScript "dms-random-picker" ''
-              if [ -d "${wallpaperDir}" ]; then
-                RANDOM_WP=$(find "${wallpaperDir}" -type f | ${pkgs.coreutils}/bin/shuf -n 1)
-                if [ -n "$RANDOM_WP" ]; then
-                  ${config.programs.dank-material-shell.package}/bin/dms ipc call wallpaper set "$RANDOM_WP"
-                fi
+              if [ ! -d "${wallpaperDir}" ]; then
+                echo "Error: Wallpaper directory '${wallpaperDir}' does not exist."
+                exit 1
               fi
+
+              # Select a random wallpaper
+              RANDOM_WP=$(${pkgs.findutils}/bin/find "${wallpaperDir}" -type f | ${pkgs.coreutils}/bin/shuf -n 1)
+
+              if [ -z "$RANDOM_WP" ]; then
+                echo "Error: No wallpaper files were found in '${wallpaperDir}'."
+                exit 1
+              fi
+
+              echo "Selected wallpaper candidate: '$RANDOM_WP'"
+
+              # Retry up to 15 seconds for DMS IPC target to become available
+              for i in $(${pkgs.coreutils}/bin/seq 1 15); do
+                OUTPUT=$(${config.programs.dank-material-shell.package}/bin/dms ipc call wallpaper set "$RANDOM_WP" 2>&1)
+                if [ $? -eq 0 ] && [[ "$OUTPUT" != *"Target not found"* ]]; then
+                  echo "Success: Set wallpaper to '$RANDOM_WP' on attempt $i."
+                  exit 0
+                fi
+                ${pkgs.coreutils}/bin/sleep 1
+              done
+
+              echo "Error: Timed out waiting for DMS IPC target 'wallpaper' after 15 seconds."
+              echo "Last DMS IPC response: $OUTPUT"
+              exit 1
             '';
           };
 
