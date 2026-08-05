@@ -921,6 +921,7 @@
 
       home.packages = with pkgs; [
         dracula-gtk-theme
+        hicolor-icon-theme
         libsForQt5.qtstyleplugin-kvantum # Engine backing for Qt5 applications
         kdePackages.qtstyleplugin-kvantum # Engine backing for Qt6 applications (Kdenlive)
         libsForQt5.qt5ct # Layout controller for Qt5 apps
@@ -938,6 +939,12 @@
 
       home.sessionVariables = {
         GTK_THEME = "Dracula";
+        NIXOS_OZONE_WL = "1";
+        XDG_DATA_DIRS = "$XDG_DATA_DIRS:${pkgs.papirus-icon-theme}/share:${pkgs.hicolor-icon-theme}/share";
+      };
+
+      systemd.user.sessionVariables = {
+        XDG_DATA_DIRS = "$XDG_DATA_DIRS:${pkgs.papirus-icon-theme}/share:${pkgs.hicolor-icon-theme}/share";
       };
 
       xdg.configFile = {
@@ -960,11 +967,13 @@
         "qt5ct/qt5ct.conf".text = ''
           [Appearance]
           style=kvantum
+          icon_theme=Papirus-Dark
         '';
 
         "qt6ct/qt6ct.conf".text = ''
           [Appearance]
           style=kvantum
+          icon_theme=Papirus-Dark
         '';
       };
     };
