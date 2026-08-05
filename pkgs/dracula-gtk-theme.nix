@@ -15,23 +15,25 @@ stdenv.mkDerivation {
     hash = "sha256-gbotOIGG55oqQZZNDkc9s5fPXvJQr+YHqxt5ZWS5bF8=";
   };
 
+  dontBuild = true;
+
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/share/themes/Dracula
-    mkdir -p $out/share/Kvantum
+    THEME_DIR="$out/share/themes/Dracula"
+    mkdir -p "$THEME_DIR"
+    mkdir -p "$out/share/Kvantum"
 
-    # Copy root theme files
-    cp -r assets gtk-2.0 gtk-3.0 gtk-4.0 index.theme $out/share/themes/Dracula/
+    cp -r * "$THEME_DIR/"
 
-    # Ensure assets are present inside gtk-3.0 and gtk-4.0 directories as well
-    cp -r assets $out/share/themes/Dracula/gtk-3.0/assets 2>/dev/null || true
-    cp -r assets $out/share/themes/Dracula/gtk-4.0/assets 2>/dev/null || true
+    # Link/Copy assets for GTK3/4 relative lookup
+    if [ -d "$THEME_DIR/assets" ]; then
+      cp -r "$THEME_DIR/assets" "$THEME_DIR/gtk-3.0/" 2>/dev/null || true
+      cp -r "$THEME_DIR/assets" "$THEME_DIR/gtk-4.0/" 2>/dev/null || true
+    fi
 
-    if [ -d src/Kvantum ]; then
-      cp -r src/Kvantum/* $out/share/Kvantum/
-    elif [ -d Kvantum ]; then
-      cp -r Kvantum/* $out/share/Kvantum/
+    if [ -d "$THEME_DIR/src/Kvantum" ]; then
+      cp -r "$THEME_DIR/src/Kvantum/"* $out/share/Kvantum/
     fi
 
     runHook postInstall
