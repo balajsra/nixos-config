@@ -4,7 +4,18 @@
   inputs,
   ...
 }:
+let
+  gtkThemeName = "Dracula";
+  gtkThemePackage = "dracula-gtk-theme";
 
+  iconThemeName = "Papirus-Dark";
+  iconThemePackage = "papirus-icon-theme";
+
+  cursorThemeName = "breeze-hacked-cursor-theme";
+  cursorThemeAltName = "Breeze_Hacked";
+  cursorThemePackage = "breeze-hacked-cursor-theme";
+  cursorSize = 24;
+in
 {
   flake.nixosModules.desktop-environment = {
     imports = [
@@ -71,9 +82,9 @@
         security.polkit.enable = true;
         security.soteria.enable = true;
 
-        environment.systemPackages = with pkgs; [
-          breeze-hacked-cursor-theme
-          papirus-icon-theme
+        environment.systemPackages = [
+          pkgs.${cursorThemePackage}
+          pkgs.${iconThemePackage}
         ];
       };
     };
@@ -194,8 +205,8 @@
             view_current_to_back = 0;
             enable_floating_snap = 1;
             snap_distance = 30;
-            cursor_size = 24;
-            cursor_theme = "Breeze_Hacked";
+            cursor_size = cursorSize;
+            cursor_theme = "${cursorThemeAltName}";
             no_border_when_single = 0;
             cursor_hide_timeout = 5;
             drag_tile_to_tile = 1;
@@ -407,10 +418,10 @@
             cornerRadius = 10;
 
             # Icon Theme
-            iconThemeDark = "Papirus-Dark";
+            iconThemeDark = "${iconThemeName}";
             iconThemeLight = "System Default";
             iconThemePerMode = false;
-            lastAppliedIconTheme = "Papirus-Dark";
+            lastAppliedIconTheme = "${iconThemeName}";
 
             # Time Format
             use24HourClock = false;
@@ -895,21 +906,21 @@
         # Theme
         gtk4.theme = null;
         theme = {
-          name = "Dracula";
-          package = pkgs.dracula-gtk-theme;
+          name = "${gtkThemeName}";
+          package = pkgs.${gtkThemePackage};
         };
 
         # Icons
         iconTheme = {
-          name = "Papirus-Dark";
-          package = pkgs.papirus-icon-theme;
+          name = "${iconThemeName}";
+          package = pkgs.${iconThemePackage};
         };
 
         # Cursors
         cursorTheme = {
-          name = "breeze-hacked-cursor-theme";
-          package = pkgs.breeze-hacked-cursor-theme;
-          size = 24;
+          name = "${cursorThemeName}";
+          package = pkgs.${cursorThemePackage};
+          size = cursorSize;
         };
       };
 
@@ -920,7 +931,6 @@
       };
 
       home.packages = with pkgs; [
-        dracula-gtk-theme
         hicolor-icon-theme
         libsForQt5.qtstyleplugin-kvantum # Engine backing for Qt5 applications
         kdePackages.qtstyleplugin-kvantum # Engine backing for Qt6 applications (Kdenlive)
@@ -931,49 +941,49 @@
       dconf.settings = {
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
-          gtk-theme = "Dracula";
-          icon-theme = "Papirus-Dark";
-          cursor-theme = "breeze-hacked-cursor-theme";
+          gtk-theme = "${gtkThemeName}";
+          icon-theme = "${iconThemeName}";
+          cursor-theme = "${cursorThemeName}";
         };
       };
 
       home.sessionVariables = {
-        GTK_THEME = "Dracula";
+        GTK_THEME = gtkThemeName;
         NIXOS_OZONE_WL = "1";
-        XDG_DATA_DIRS = "$XDG_DATA_DIRS:${pkgs.papirus-icon-theme}/share:${pkgs.hicolor-icon-theme}/share";
+        XDG_DATA_DIRS = "$XDG_DATA_DIRS:${pkgs.${iconThemePackage}}/share:${pkgs.hicolor-icon-theme}/share";
       };
 
       systemd.user.sessionVariables = {
-        XDG_DATA_DIRS = "$XDG_DATA_DIRS:${pkgs.papirus-icon-theme}/share:${pkgs.hicolor-icon-theme}/share";
+        XDG_DATA_DIRS = "$XDG_DATA_DIRS:${pkgs.${iconThemePackage}}/share:${pkgs.hicolor-icon-theme}/share";
       };
 
       xdg.configFile = {
-        "gtk-4.0/assets".source = "${pkgs.dracula-gtk-theme}/share/themes/Dracula/gtk-4.0/assets";
-        "gtk-4.0/gtk.css".source = "${pkgs.dracula-gtk-theme}/share/themes/Dracula/gtk-4.0/gtk.css";
+        "gtk-4.0/assets".source = "${pkgs.${gtkThemePackage}}/share/themes/Dracula/gtk-4.0/assets";
+        "gtk-4.0/gtk.css".source = "${pkgs.${gtkThemePackage}}/share/themes/Dracula/gtk-4.0/gtk.css";
         "gtk-4.0/gtk-dark.css".source =
-          "${pkgs.dracula-gtk-theme}/share/themes/Dracula/gtk-4.0/gtk-dark.css";
+          "${pkgs.${gtkThemePackage}}/share/themes/Dracula/gtk-4.0/gtk-dark.css";
 
         "Kvantum/kvantum.kvconfig".text = ''
           [General]
           theme=Dracula-purple-solid
         '';
 
-        "Kvantum/Dracula".source = "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula";
-        "Kvantum/Dracula-purple".source = "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula-purple";
+        "Kvantum/Dracula".source = "${pkgs.${gtkThemePackage}}/share/Kvantum/Dracula";
+        "Kvantum/Dracula-purple".source = "${pkgs.${gtkThemePackage}}/share/Kvantum/Dracula-purple";
         "Kvantum/Dracula-purple-solid".source =
-          "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula-purple-solid";
-        "Kvantum/Dracula-Solid".source = "${pkgs.dracula-gtk-theme}/share/Kvantum/Dracula-Solid";
+          "${pkgs.${gtkThemePackage}}/share/Kvantum/Dracula-purple-solid";
+        "Kvantum/Dracula-Solid".source = "${pkgs.${gtkThemePackage}}/share/Kvantum/Dracula-Solid";
 
         "qt5ct/qt5ct.conf".text = ''
           [Appearance]
           style=kvantum
-          icon_theme=Papirus-Dark
+          icon_theme=${iconThemeName}
         '';
 
         "qt6ct/qt6ct.conf".text = ''
           [Appearance]
           style=kvantum
-          icon_theme=Papirus-Dark
+          icon_theme=${iconThemeName}
         '';
       };
     };
