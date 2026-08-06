@@ -16,6 +16,7 @@
     imports = [
       self.homeModules.bash
       self.homeModules.fish
+      self.homeModules.tmux
     ];
   };
 
@@ -146,7 +147,22 @@
         };
         xdg.configFile."starship.toml".source =
           config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship/.config/starship.toml";
+      };
+    };
 
+  flake.homeModules.tmux =
+    {
+      config,
+      osConfig,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
+    {
+      config = lib.mkIf (osConfig.features.terminal.tmux.enable) {
         # https://wiki.nixos.org/wiki/Tmux
         programs.tmux = {
           enable = true;
