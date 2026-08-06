@@ -121,9 +121,6 @@
             and not set -q TMUX
                 tmux new-session
             end
-
-            # Devenv Auto Activation
-            deven hook fish | source
           '';
         };
         xdg.configFile."fish/themes/Dracula_Official.theme".source =

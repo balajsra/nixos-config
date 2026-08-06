@@ -8,7 +8,12 @@
   };
 
   flake.homeModules.nix-development =
-    { pkgs, ... }:
+    {
+      pkgs,
+      osConfig,
+      lib,
+      ...
+    }:
     {
       home.packages = with pkgs; [
         nixd
@@ -17,5 +22,19 @@
         just
         just-lsp
       ];
+
+      programs.bash = lib.mkIf osConfig.features.terminal.bash.enable {
+        bashrcExtra = ''
+          # Devenv Auto Activation
+          eval "$(devenv hook bash)"
+        '';
+      };
+
+      programs.fish = lib.mkIf osConfig.features.terminal.fish.enable {
+        interactiveShellInit = ''
+          # Devenv Auto Activation
+          devenv hook fish | source
+        '';
+      };
     };
 }
