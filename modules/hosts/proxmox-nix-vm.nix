@@ -46,6 +46,7 @@ in
             terminal = {
               bash.enable = true;
               fish.enable = true;
+              tmux.enable = true;
               emulator = "ghostty";
             };
 
