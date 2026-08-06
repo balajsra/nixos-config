@@ -16,6 +16,7 @@
     imports = [
       self.homeModules.bash
       self.homeModules.fish
+      self.homeModules.tmux
     ];
   };
 
@@ -115,15 +116,6 @@
                 printf %b '\e]PFffffff' # redefine 'bright-white'   as '#ffffff'
                 clear
             end
-
-            # Auto-start TMUX safely for interactive sessions
-            if status is-interactive
-            and not set -q TMUX
-                tmux new-session
-            end
-
-            # Devenv Auto Activation
-            deven hook fish | source
           '';
         };
         xdg.configFile."fish/themes/Dracula_Official.theme".source =
@@ -149,7 +141,22 @@
         };
         xdg.configFile."starship.toml".source =
           config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship/.config/starship.toml";
+      };
+    };
 
+  flake.homeModules.tmux =
+    {
+      config,
+      osConfig,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
+    {
+      config = lib.mkIf (osConfig.features.terminal.tmux.enable) {
         # https://wiki.nixos.org/wiki/Tmux
         programs.tmux = {
           enable = true;
@@ -267,7 +274,9 @@
           systemd.enable = true;
           settings = {
             command =
-              if osConfig.features.terminal.fish.enable then
+              if osConfig.features.terminal.tmux.enable then
+                "${pkgs.tmux}/bin/tmux"
+              else if osConfig.features.terminal.fish.enable then
                 "${pkgs.fish}/bin/fish"
               else if osConfig.features.terminal.bash.enable then
                 "${pkgs.bashInteractive}/bin/bash"

@@ -61,6 +61,7 @@
         terminal = {
           bash.enable = lib.mkEnableOption "Enable bash shell";
           fish.enable = lib.mkEnableOption "Enable fish shell";
+          tmux.enable = lib.mkEnableOption "Enable Tmux Terminal Multiplexer";
           emulator = lib.mkOption {
             type = lib.types.enum [
               "foot"
