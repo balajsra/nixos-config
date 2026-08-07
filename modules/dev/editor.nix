@@ -86,6 +86,14 @@
           config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vscode/.config/Code/User/keybindings.json";
         xdg.configFile."Code/User/settings.json".source =
           config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vscode/.config/Code/User/settings.json";
+
+        # https://wiki.nixos.org/wiki/Default_applications
+        xdg.mimeApps = {
+          enable = true;
+          defaultApplications = {
+            "text/plain" = "code.desktop";
+          };
+        };
       };
     };
 
