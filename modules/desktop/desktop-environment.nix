@@ -949,7 +949,6 @@ in
 
       home.sessionVariables = {
         GTK_THEME = gtkThemeName;
-        NIXOS_OZONE_WL = "1";
         XDG_DATA_DIRS = "$XDG_DATA_DIRS:${pkgs.${iconThemePackage}}/share:${pkgs.hicolor-icon-theme}/share";
       };
 
