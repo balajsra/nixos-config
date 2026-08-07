@@ -180,7 +180,7 @@
           max_genres=5
           min_genre_usage=90
           move_additional_files=true
-          move_additional_files_pattern=*.jpg *.png *.pdf
+          move_additional_files_pattern=*.jpg *.png *.pdf *.txt
           move_files=true
           move_files_to=/mnt/mediaserver/Music
           network_transfer_timeout_seconds=30
