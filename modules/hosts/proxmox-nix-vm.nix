@@ -43,6 +43,13 @@ in
             display-manager = "gdm";
             desktop-environment = "gnome";
 
+            display = {
+              kanshi = {
+                enable = false;
+                profiles = [ ];
+              };
+            };
+
             terminal = {
               bash.enable = true;
               fish.enable = true;

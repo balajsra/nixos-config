@@ -35,6 +35,7 @@ in
       inputs.danksearch.homeModules.dsearch
       self.homeModules.screenshot
       self.homeModules.theme
+      self.homeModules.display
     ];
   };
 
@@ -984,6 +985,23 @@ in
           style=kvantum
           icon_theme=${iconThemeName}
         '';
+      };
+    };
+
+  flake.homeModules.display =
+    {
+      config,
+      osConfig,
+      lib,
+      ...
+    }:
+    {
+      config = lib.mkIf osConfig.features.display.kanshi.enable {
+        services.kanshi = {
+          enable = true;
+          systemdTarget = "graphical-session.target";
+          settings = osConfig.features.display.kanshi.profiles;
+        };
       };
     };
 }

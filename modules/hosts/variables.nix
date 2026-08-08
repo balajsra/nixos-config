@@ -58,6 +58,17 @@
           description = "Which desktop environment to enable for this host";
         };
 
+        display = {
+          kanshi = {
+            enable = lib.mkEnableOption "Kanshi output autoconfiguration daemon";
+            profiles = lib.mkOption {
+              type = with lib.types; listOf attrs;
+              default = [ ];
+              description = "Per-host Kanshi profile configuration list";
+            };
+          };
+        };
+
         terminal = {
           bash.enable = lib.mkEnableOption "Enable bash shell";
           fish.enable = lib.mkEnableOption "Enable fish shell";

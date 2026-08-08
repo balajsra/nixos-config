@@ -44,6 +44,13 @@ in
             display-manager = "dms-greeter";
             desktop-environment = "mango";
 
+            display = {
+              kanshi = {
+                enable = false;
+                profiles = [ ];
+              };
+            };
+
             terminal = {
               bash.enable = true;
               fish.enable = true;
