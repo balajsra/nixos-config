@@ -26,14 +26,15 @@ stdenv.mkDerivation {
 
     cp -r * "$THEME_DIR/"
 
-    # Link/Copy assets for GTK3/4 relative lookup
+    # Copy assets for GTK3/4 relative lookup
     if [ -d "$THEME_DIR/assets" ]; then
       cp -r "$THEME_DIR/assets" "$THEME_DIR/gtk-3.0/" 2>/dev/null || true
       cp -r "$THEME_DIR/assets" "$THEME_DIR/gtk-4.0/" 2>/dev/null || true
     fi
 
-    if [ -d "$THEME_DIR/src/Kvantum" ]; then
-      cp -r "$THEME_DIR/src/Kvantum/"* $out/share/Kvantum/
+    # Copy assets for Qt/Kvantum
+    if [ -d "$THEME_DIR/kde/kvantum" ]; then
+      cp -r "$THEME_DIR/kde/kvantum/"* $out/share/Kvantum/
     fi
 
     runHook postInstall
