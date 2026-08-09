@@ -79,6 +79,7 @@ in
               zathura.enable = false;
               libreoffice.enable = false;
               sweethome3d.enable = false;
+              drawy.enable = false;
             };
 
             networking = {

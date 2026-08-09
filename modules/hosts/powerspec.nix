@@ -106,6 +106,7 @@ in
               zathura.enable = true;
               libreoffice.enable = true;
               sweethome3d.enable = true;
+              drawy.enable = true;
             };
 
             networking = {

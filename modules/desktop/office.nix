@@ -16,6 +16,7 @@
       self.homeModules.zathura
       self.homeModules.libreoffice
       self.homeModules.sweethome3d
+      self.homeModules.drawy
     ];
   };
 
@@ -196,6 +197,21 @@
           sweethome3d.application
           sweethome3d.textures-editor
           sweethome3d.furniture-editor
+        ];
+      };
+    };
+
+  flake.homeModules.drawy =
+    {
+      osConfig,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.office.drawy.enable) {
+        home.packages = with pkgs; [
+          drawy
         ];
       };
     };
