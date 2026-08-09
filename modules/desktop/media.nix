@@ -50,8 +50,7 @@
         home.packages = with pkgs; [
           mpv
           celluloid
-          # Unstable version broken as of 2026-07-15
-          stable.handbrake
+          handbrake
           mkvtoolnix
           ffmpeg
           fladder
