@@ -74,6 +74,7 @@
           profiles.default.extensions = with pkgs.vscode-extensions; [
             alefragnani.project-manager
             datakurre.devenv
+            eamodio.gitlens
             jnoortheen.nix-ide
             ms-vscode-remote.remote-ssh
             ms-vscode-remote.remote-ssh-edit
