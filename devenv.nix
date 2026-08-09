@@ -15,6 +15,7 @@
     nixd
     nixfmt
     just
+    just-lsp
   ];
 
   # https://devenv.sh/languages/
