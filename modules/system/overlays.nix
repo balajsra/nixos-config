@@ -2,17 +2,19 @@
 
 {
   # Export the overlay on the flake output so NixOS/HomeManager can reference it
-  flake.overlays.default = final: prev: (import ../../pkgs final);
+  flake.overlays.default = import ../../pkgs/default.nix;
 
-  perSystem = { system, ... }: {
-    # Expose packages so `nix build .#<package-name>` works directly
-    packages = import ../../pkgs (import inputs.nixpkgs { inherit system; });
+  perSystem =
+    { pkgs, system, lib, ... }:
+    {
+      # Apply the overlay to `pkgs` for all `perSystem` outputs in flake-parts
+      _module.args.pkgs = import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [ self.overlays.default ];
+      };
 
-    # Apply the overlay to `pkgs` for all `perSystem` outputs in flake-parts
-    _module.args.pkgs = import inputs.nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-      overlays = [ self.overlays.default ];
+      # Automatically filter and expose top-level derivations for `nix build .#<pkg>`
+      packages = lib.filterAttrs (_: v: lib.isDerivation v) (self.overlays.default pkgs pkgs);
     };
-  };
 }
