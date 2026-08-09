@@ -3,11 +3,11 @@
 {
   flake.homeModules.development = {
     imports = [
-      self.homeModules.nix-development
+      self.homeModules.devenv
     ];
   };
 
-  flake.homeModules.nix-development =
+  flake.homeModules.devenv =
     {
       pkgs,
       osConfig,
@@ -16,11 +16,7 @@
     }:
     {
       home.packages = with pkgs; [
-        nixd
-        nixfmt
         devenv
-        just
-        just-lsp
       ];
 
       programs.bash = lib.mkIf osConfig.features.terminal.bash.enable {
