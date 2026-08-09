@@ -72,13 +72,14 @@
         programs.vscode = {
           enable = true;
           profiles.default.extensions = with pkgs.vscode-extensions; [
-            vscodevim.vim
+            alefragnani.project-manager
+            datakurre.devenv
             jnoortheen.nix-ide
             ms-vscode-remote.remote-ssh
             ms-vscode-remote.remote-ssh-edit
             ms-vscode.remote-explorer
-            alefragnani.project-manager
-            datakurre.devenv
+            nefrob.vscode-just-syntax
+            vscodevim.vim
           ];
         };
 
