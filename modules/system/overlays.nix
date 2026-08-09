@@ -5,7 +5,12 @@
   flake.overlays.default = import ../../pkgs/default.nix;
 
   perSystem =
-    { pkgs, system, lib, ... }:
+    {
+      pkgs,
+      system,
+      lib,
+      ...
+    }:
     {
       # Apply the overlay to `pkgs` for all `perSystem` outputs in flake-parts
       _module.args.pkgs = import inputs.nixpkgs {
