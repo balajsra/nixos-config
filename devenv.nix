@@ -12,10 +12,11 @@
 
   # https://devenv.sh/packages/
   packages = with pkgs; [
-    nixd
-    nixfmt
     just
     just-lsp
+    nix-output-monitor
+    nixd
+    nixfmt
   ];
 
   # https://devenv.sh/languages/

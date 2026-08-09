@@ -16,7 +16,11 @@ flake-update input="":
 
 rebuild-test target='$(hostname)': git-intent-to-add
     @echo "Testing {{ target }}"
-    nixos-rebuild dry-activate --flake .#{{ target }} --show-trace --sudo
+    nixos-rebuild dry-activate \
+        --flake .#{{ target }} \
+        --log-format internal-json \
+        --verbose \
+        --sudo |& nom --json
 
 rebuild-test-all:
     #!/usr/bin/env bash
@@ -41,8 +45,16 @@ rebuild-test-all:
 
 rebuild-boot target='$(hostname)': git-intent-to-add
     @echo "Building {{ target }} for next boot"
-    nixos-rebuild boot --flake .#{{ target }} --show-trace --sudo
+    nixos-rebuild boot \
+        --flake .#{{ target }} \
+        --log-format internal-json \
+        --verbose \
+        --sudo |& nom --json
 
 rebuild-switch target='$(hostname)': git-intent-to-add
     @echo "Building and switching to {{ target }}"
-    nixos-rebuild switch --flake .#{{ target }} --show-trace --sudo
+    nixos-rebuild switch \
+        --flake .#{{ target }} \
+        --log-format internal-json \
+        --verbose \
+        --sudo |& nom --json
