@@ -17,6 +17,7 @@
       self.homeModules.mangohud
       self.homeModules.chiaki
       self.homeModules.prism-launcher
+      self.homeModules.heroic
     ];
   };
 
@@ -173,6 +174,22 @@
         # https://wiki.nixos.org/wiki/Prism_Launcher
         home.packages = with pkgs; [
           prismlauncher
+        ];
+      };
+    };
+
+  flake.homeModules.heroic =
+    {
+      pkgs,
+      lib,
+      osConfig,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.gaming.heroic.enable) {
+        # https://wiki.nixos.org/wiki/Heroic_Games_Launcher
+        home.packages = with pkgs; [
+          heroic
         ];
       };
     };

@@ -170,6 +170,7 @@
           mangohud.enable = lib.mkEnableOption "Enable MangoHUD";
           chiaki.enable = lib.mkEnableOption "Enable Chiaki PlayStation Remote Play Client";
           prism-launcher.enable = lib.mkEnableOption "Enable Prism Launcher";
+          heroic.enable = lib.mkEnableOption "Enable Heroic Games Launcher";
         };
 
         hardware = {

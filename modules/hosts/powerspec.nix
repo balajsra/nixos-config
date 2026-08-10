@@ -149,6 +149,7 @@ in
               mangohud.enable = true;
               chiaki.enable = true;
               prism-launcher.enable = true;
+              heroic.enable = true;
             };
 
             hardware = {
