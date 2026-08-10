@@ -1,3 +1,7 @@
+# Set /run/wrappers/bin at the front of PATH for all recipes to fix issue with VS Code integrated terminal
+# when using devenv extension
+export PATH := "/run/wrappers/bin:" + env('PATH')
+
 default:
     @just --list
 
