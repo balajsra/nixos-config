@@ -86,6 +86,7 @@
               ms-vscode-remote.remote-ssh-edit
               ms-vscode.remote-explorer
               nefrob.vscode-just-syntax
+              tomoki1207.pdf
               vscodevim.vim
             ];
 
