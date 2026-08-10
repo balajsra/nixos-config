@@ -14,7 +14,6 @@
   packages = with pkgs; [
     just
     just-lsp
-    nix-output-monitor
     nixd
     nixfmt
   ];

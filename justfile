@@ -18,9 +18,9 @@ rebuild-test target='$(hostname)': git-intent-to-add
     @echo "Testing {{ target }}"
     nixos-rebuild dry-activate \
         --flake .#{{ target }} \
-        --log-format internal-json \
+        --show-trace \
         --verbose \
-        --sudo |& nom --json
+        --sudo
 
 rebuild-test-all:
     #!/usr/bin/env bash
@@ -47,14 +47,10 @@ rebuild-boot target='$(hostname)': git-intent-to-add
     @echo "Building {{ target }} for next boot"
     nixos-rebuild boot \
         --flake .#{{ target }} \
-        --log-format internal-json \
-        --verbose \
-        --sudo |& nom --json
+        --sudo
 
 rebuild-switch target='$(hostname)': git-intent-to-add
     @echo "Building and switching to {{ target }}"
     nixos-rebuild switch \
         --flake .#{{ target }} \
-        --log-format internal-json \
-        --verbose \
-        --sudo |& nom --json
+        --sudo
