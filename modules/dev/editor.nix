@@ -489,7 +489,9 @@
               "auto-build.build.silent" = false;
               "platformio-ide.autoOpenPlatformIOIniFile" = false;
 
-              "devenv.path.nixBinPaths" = [ ];
+              "devenv.watchForChanges" = true;
+              "devenv.status.showChangesCount" = true;
+              "devenv.restart.automatic" = true;
 
               # Telemetry
               "telemetry.enableTelemetry" = false;
