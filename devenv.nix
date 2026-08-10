@@ -12,10 +12,12 @@
 
   # https://devenv.sh/packages/
   packages = with pkgs; [
+    git
     just
     just-lsp
     nixd
     nixfmt
+    yaml-language-server
   ];
 
   # https://devenv.sh/languages/
