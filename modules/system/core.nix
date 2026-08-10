@@ -28,6 +28,13 @@
       # Run unpatched dynamic binaries on NixOS
       programs.nix-ld.enable = true;
 
+      sops = {
+        secrets."access_tokens_string" = {
+          mode = "0444";
+          neededForUsers = true;
+        };
+      };
+
       nix = {
         settings.experimental-features = [
           "nix-command"
@@ -35,7 +42,6 @@
         ];
 
         # Storage Optimization: https://wiki.nixos.org/wiki/Storage_optimization
-        # Optimising the store
         optimise = {
           automatic = true;
           dates = [ "01:00" ]; # Daily at 1:00 AM (or next boot)
@@ -47,6 +53,10 @@
           dates = "weekly";
           options = "--delete-older-than 30d";
         };
+
+        extraOptions = ''
+          !include ${config.sops.secrets."access_tokens_string".path}
+        '';
       };
     };
 }
