@@ -5,8 +5,9 @@
     # Nix Packages
     # Unstable by default
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Stable available if needed
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+
+    # Any version of any nixpkgs package, from one flake input
+    multiverse.url = "github:fzakaria/nixpkgs-multiverse";
 
     # Dendritic Pattern Support
     flake-parts.url = "github:hercules-ci/flake-parts";

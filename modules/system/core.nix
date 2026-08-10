@@ -18,16 +18,8 @@
         "electron-39.8.10"
       ];
 
-      # Modify pkgs to include a `stable` keyword to reference stable package repo
-      # Unstable packages installed as `pkgs.<package-name>`
-      # Stable packages installed as `pkgs.stable.<package-name>`
+      # List of overlays
       nixpkgs.overlays = [
-        (final: prev: {
-          stable = import inputs.nixpkgs-stable {
-            system = final.stdenv.hostPlatform.system;
-            config = config.nixpkgs.config;
-          };
-        })
         inputs.dracula-signal-desktop.overlays
         inputs.mango.overlays.default
         self.overlays.default
