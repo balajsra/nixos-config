@@ -364,6 +364,7 @@
                   "bash"
                 else
                   "bash";
+              "terminal.integrated.shellIntegration.enabled" = false;
 
               # Language Specific Settings
               "[javascript]" = {
