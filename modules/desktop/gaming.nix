@@ -96,7 +96,7 @@
       config = lib.mkIf (config.features.gaming.wine.enable) {
         environment.systemPackages = with pkgs; [
           # https://wiki.nixos.org/wiki/Wine
-          wineWow64Packages.stable
+          wineWow64Packages.unstable
           winetricks
           protonplus
           protontricks
