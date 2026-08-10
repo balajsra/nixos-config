@@ -162,7 +162,13 @@
           enable = true;
           shortcut = "a"; # Changes prefix from C-b to C-a
           secureSocket = true;
-          shell = "/etc/profiles/per-user/${osConfig.primaryUser.username}/bin/fish";
+          shell =
+            if osConfig.features.terminal.fish.enable then
+              "${pkgs.fish}/bin/fish"
+            else if osConfig.features.terminal.bash.enable then
+              "${pkgs.bashInteractive}/bin/bash"
+            else
+              "/run/current-system/sw/bin/bash";
           mouse = true;
           sensibleOnTop = true;
 
