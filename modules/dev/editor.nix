@@ -365,6 +365,8 @@
                 else
                   "bash";
               "terminal.integrated.shellIntegration.enabled" = false;
+              "terminal.integrated.suggest.enabled" = false;
+              "terminal.integrated.suggest.inlineSuggestion" = "off";
 
               # Language Specific Settings
               "[javascript]" = {
