@@ -480,6 +480,7 @@
       osConfig,
       lib,
       pkgs,
+      inputs,
       ...
     }:
     let
@@ -517,7 +518,7 @@
 
             mouse-scroll-multiplier = 0.5;
 
-            theme = "Dracula";
+            theme = "dracula-pro";
             background-opacity = 0.8;
 
             window-decoration = false;
@@ -531,6 +532,8 @@
             desktop-notifications = true;
           };
         };
+
+        xdg.configFile."ghostty/themes/dracula-pro".source = "${inputs.dracula-pro-ghostty}/pro";
       };
     };
 }
