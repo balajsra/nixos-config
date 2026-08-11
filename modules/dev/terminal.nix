@@ -143,10 +143,192 @@
       osConfig,
       lib,
       pkgs,
+      inputs,
       ...
     }:
     let
       dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+
+      baseStarshipToml = builtins.readFile "${inputs.dracula-pro-starship}/starship/themes/dracula-pro.toml";
+      baseConfig = builtins.fromTOML baseStarshipToml;
+
+      myOverrides = {
+        add_newline = false;
+        command_timeout = 1000;
+
+        format = ''
+          [](comment)\
+          $directory\
+          [](fg:comment bg:pink)\
+          $git_branch\
+          $git_status\
+          [](fg:pink bg:cyan)\
+          $c\
+          $elixir\
+          $elm\
+          $golang\
+          $haskell\
+          $java\
+          $julia\
+          $nodejs\
+          $nim\
+          $rust\
+          [](fg:orange bg:green)\
+          $cmd_duration\
+          [](fg:green)\
+
+          $character
+        '';
+
+        character = {
+          format = "$symbol";
+          success_symbol = "[  󱞪 ❯❯❯](bold green)  ";
+          error_symbol = "[  󱞪 ❯❯❯](bold red)  ";
+        };
+
+        username = {
+          show_always = true;
+          style_user = "bg:current_line";
+          style_root = "bg:current_line";
+          format = "[ ]($style)";
+        };
+
+        directory = {
+          style = "bg:comment fg:foreground";
+          format = "[ $path ]($style)";
+          truncation_length = 4;
+          truncate_to_repo = true;
+          truncation_symbol = "…/";
+          read_only = "";
+          substitutions = {
+            "~" = " ";
+            ".config" = "  ";
+            "config" = "  ";
+            "Config" = "  ";
+            "Books" = " 󱉟 ";
+            "Data" = "  ";
+            "Desktop" = "  ";
+            "Documents" = " 󰈙 ";
+            "Finances" = "  ";
+            "Downloads" = "  ";
+            "Games" = "  ";
+            "Git" = " 󰊢";
+            "PrismLauncher" = " 󰍳 ";
+            "Steam" = "  ";
+            "ISOs" = " 󰗮 ";
+            "Music" = "  ";
+            "Spotify" = "  ";
+            "Pictures" = "  ";
+            "Personal" = "  ";
+            "System" = "  ";
+            "Videos" = "  ";
+            "dropbox" = "  ";
+            "google-drive" = "  ";
+            "onedrive" = "  ";
+            "Attachments" = " 󰁦 ";
+          };
+        };
+
+        direnv = {
+          symbol = "  ";
+          style = "bg:orange fg:background";
+          format = "[ $symbol$loaded/$allowed ]($style)";
+          disabled = true;
+        };
+
+        c = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        cmd_duration = {
+          min_time = 0;
+          style = "bg:green fg:background";
+          format = "[ 󱎫 $duration ]($style)";
+          show_notifications = true;
+          min_time_to_notify = 5000;
+        };
+
+        docker_context = {
+          symbol = " ";
+          style = "bg:orange fg:background";
+          format = "[ $symbol $context ]($style) $path";
+        };
+
+        elixir = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        elm = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        git_branch = {
+          symbol = "";
+          style = "bg:pink fg:background";
+          format = "[ $symbol $branch ]($style)";
+        };
+
+        git_status = {
+          style = "bg:pink fg:background";
+          format = "[($all_status$ahead_behind )]($style)";
+        };
+
+        golang = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        haskell = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        java = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        julia = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        nodejs = {
+          symbol = "";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        nim = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        rust = {
+          symbol = "";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        time = {
+          disabled = false;
+          time_format = "%X";
+          style = "bg:orange";
+          format = "[[  $time ](bg:orange)]($style)";
+        };
+      };
+      finalConfig = lib.recursiveUpdate baseConfig myOverrides;
     in
     {
       # https://wiki.nixos.org/wiki/Starship
@@ -154,10 +336,8 @@
         enable = true;
         enableBashIntegration = osConfig.features.terminal.bash.enable;
         enableFishIntegration = osConfig.features.terminal.fish.enable;
+        settings = finalConfig;
       };
-
-      xdg.configFile."starship.toml".source =
-        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship/.config/starship.toml";
     };
 
   flake.homeModules.tmux =
