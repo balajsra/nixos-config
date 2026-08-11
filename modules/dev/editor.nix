@@ -80,6 +80,7 @@
             extensions = with pkgs.vscode-extensions; [
               alefragnani.project-manager
               datakurre.devenv
+              dracula-theme-pro.theme-dracula-pro
               eamodio.gitlens
               jnoortheen.nix-ide
               ms-vscode-remote.remote-ssh

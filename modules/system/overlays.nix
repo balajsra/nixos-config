@@ -1,8 +1,8 @@
 { self, inputs, ... }:
 
 {
-  # Export the overlay on the flake output so NixOS/HomeManager can reference it
-  flake.overlays.default = import ../../pkgs/default.nix;
+  # Export the overlay on the flake output applied with `inputs`
+  flake.overlays.default = import ../../pkgs/default.nix inputs;
 
   perSystem =
     {
