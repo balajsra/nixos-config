@@ -43,7 +43,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Private secrets repo
+    # (Private) Secrets Repository
     # Authenticate via SSH and use shallow clone
     nix-secrets = {
       url = "git+ssh://git@forgejo.sravanbalaji.com:2222/sravan/nix-secrets.git?ref=main&shallow=1";
@@ -78,6 +78,36 @@
     dank-greeter = {
       url = "github:AvengeMedia/dank-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # (Private) Dracula Pro Starship Theme
+    dracula-pro-starship = {
+      url = "github:dracula-pro/starship";
+      flake = false;
+    };
+
+    # (Private) Dracula Pro Eza Theme
+    dracula-pro-eza = {
+      url = "github:dracula-pro/eza";
+      flake = false;
+    };
+
+    # (Private) Dracula Pro Ghostty Theme
+    dracula-pro-ghostty = {
+      url = "github:dracula-pro/ghostty";
+      flake = false;
+    };
+
+    # (Private) Dracula Pro VS Code Theme
+    dracula-pro-vscode = {
+      url = "github:dracula-pro/visual-studio-code";
+      flake = false;
+    };
+
+    # (Private) Dracula Pro Vim Theme
+    dracula-pro-vim = {
+      url = "github:dracula-pro/vim";
+      flake = false;
     };
 
     # Include submodules when building this flake

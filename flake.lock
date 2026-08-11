@@ -135,6 +135,86 @@
         "type": "github"
       }
     },
+    "dracula-pro-eza": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1723903940,
+        "narHash": "sha256-3sEFxohUfKXnh2Wt87IWrgdpGOM+xTfeM0n9I7Myh1w=",
+        "owner": "dracula-pro",
+        "repo": "eza",
+        "rev": "a1e952d449fcbc27c754979c386d8e61f4f1f178",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula-pro",
+        "repo": "eza",
+        "type": "github"
+      }
+    },
+    "dracula-pro-ghostty": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1740420415,
+        "narHash": "sha256-VSDPovHaF7x0R2+6zw2wc3Ggh31HoB434TnPd+l1WTs=",
+        "owner": "dracula-pro",
+        "repo": "ghostty",
+        "rev": "87cb5f5b4dad175641c44bd0b06049dafb77320d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula-pro",
+        "repo": "ghostty",
+        "type": "github"
+      }
+    },
+    "dracula-pro-starship": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1723573286,
+        "narHash": "sha256-ylVGX7TgCgChaEuUcSmgwBahWGdorkVBckG43Kwq3Lc=",
+        "owner": "dracula-pro",
+        "repo": "starship",
+        "rev": "b8a52763928ae27dc1570aef8547d1046eebc72f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula-pro",
+        "repo": "starship",
+        "type": "github"
+      }
+    },
+    "dracula-pro-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776891385,
+        "narHash": "sha256-TCc7j2mNlLTe4BCRYH5ov+NvX8eorK5B6i1K5jdXBYE=",
+        "owner": "dracula-pro",
+        "repo": "vim",
+        "rev": "dfba159e691482bd59fdd8e56dfe3d844c198737",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula-pro",
+        "repo": "vim",
+        "type": "github"
+      }
+    },
+    "dracula-pro-vscode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759769569,
+        "narHash": "sha256-zs0iSrRcVaLgUAlSKsr6KNGTmCr1pies2Qs6A55ay4E=",
+        "owner": "dracula-pro",
+        "repo": "visual-studio-code",
+        "rev": "301b5ad866d669d1b781d711f0a845fca0af5af2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula-pro",
+        "repo": "visual-studio-code",
+        "type": "github"
+      }
+    },
     "dracula-signal-desktop": {
       "inputs": {
         "nixpkgs": [
@@ -372,6 +452,11 @@
         "dank-material-shell": "dank-material-shell",
         "danksearch": "danksearch",
         "disko": "disko",
+        "dracula-pro-eza": "dracula-pro-eza",
+        "dracula-pro-ghostty": "dracula-pro-ghostty",
+        "dracula-pro-starship": "dracula-pro-starship",
+        "dracula-pro-vim": "dracula-pro-vim",
+        "dracula-pro-vscode": "dracula-pro-vscode",
         "dracula-signal-desktop": "dracula-signal-desktop",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
