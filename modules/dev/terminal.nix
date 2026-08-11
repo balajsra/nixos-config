@@ -16,6 +16,8 @@
     imports = [
       self.homeModules.bash
       self.homeModules.fish
+      self.homeModules.starship
+      self.homeModules.eza
       self.homeModules.tmux
     ];
   };
@@ -76,7 +78,6 @@
             # Replace ls and tree with eza
             ls = "eza";
             tree = "eza -T";
-            cat = "bat";
           };
 
           functions = {
@@ -130,18 +131,232 @@
 
         home.packages = with pkgs; [
           krabby
-          eza
-          bat
+        ];
+      };
+    };
+
+  flake.homeModules.starship =
+    {
+      config,
+      osConfig,
+      lib,
+      pkgs,
+      inputs,
+      ...
+    }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+
+      baseStarshipToml = builtins.readFile "${inputs.dracula-pro-starship}/starship/themes/dracula-pro.toml";
+      baseConfig = builtins.fromTOML baseStarshipToml;
+
+      myOverrides = {
+        add_newline = false;
+        command_timeout = 1000;
+
+        format = lib.concatStrings [
+          "[](comment)"
+          "$directory"
+          "[](fg:comment bg:pink)"
+          "$git_branch"
+          "$git_status"
+          "[](fg:pink bg:cyan)"
+          "$c"
+          "$elixir"
+          "$elm"
+          "$golang"
+          "$haskell"
+          "$java"
+          "$julia"
+          "$nodejs"
+          "$nim"
+          "$rust"
+          "[](fg:orange bg:green)"
+          "$cmd_duration"
+          "[](fg:green)"
+
+          "$character"
         ];
 
-        # https://wiki.nixos.org/wiki/Starship
-        programs.starship = {
-          enable = true;
-          enableFishIntegration = true;
+        character = {
+          format = "$symbol";
+          success_symbol = "[  󱞪 ❯❯❯](bold green)  ";
+          error_symbol = "[  󱞪 ❯❯❯](bold red)  ";
         };
-        xdg.configFile."starship.toml".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship/.config/starship.toml";
+
+        username = {
+          show_always = true;
+          style_user = "bg:current_line";
+          style_root = "bg:current_line";
+          format = "[ ]($style)";
+        };
+
+        directory = {
+          style = "bg:comment fg:foreground";
+          format = "[ $path ]($style)";
+          truncation_length = 4;
+          truncate_to_repo = true;
+          truncation_symbol = "…/";
+          read_only = "";
+          substitutions = {
+            ".config" = "  ";
+            "~" = " ";
+            "Attachments" = " 󰁦 ";
+            "Books" = " 󱉟 ";
+            "config" = "  ";
+            "Config" = "  ";
+            "Data" = "  ";
+            "Desktop" = "  ";
+            "Documents" = " 󰈙 ";
+            "Downloads" = "  ";
+            "dropbox" = "  ";
+            "Finances" = "  ";
+            "Games" = "  ";
+            "google-drive" = "  ";
+            "ISOs" = " 󰗮 ";
+            "Music" = "  ";
+            "onedrive" = "  ";
+            "Personal" = "  ";
+            "Pictures" = "  ";
+            "PrismLauncher" = " 󰍳 ";
+            "Projects" = " 󰊢";
+            "Spotify" = "  ";
+            "Steam" = "  ";
+            "System" = "  ";
+            "Videos" = "  ";
+          };
+        };
+
+        direnv = {
+          symbol = "  ";
+          style = "bg:orange fg:background";
+          format = "[ $symbol$loaded/$allowed ]($style)";
+          disabled = true;
+        };
+
+        c = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        cmd_duration = {
+          min_time = 0;
+          style = "bg:green fg:background";
+          format = "[ 󱎫 $duration ]($style)";
+          show_notifications = true;
+          min_time_to_notify = 5000;
+        };
+
+        docker_context = {
+          symbol = " ";
+          style = "bg:orange fg:background";
+          format = "[ $symbol $context ]($style) $path";
+        };
+
+        elixir = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        elm = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        git_branch = {
+          symbol = "";
+          style = "bg:pink fg:background";
+          format = "[ $symbol $branch ]($style)";
+        };
+
+        git_status = {
+          style = "bg:pink fg:background";
+          format = "[($all_status$ahead_behind )]($style)";
+        };
+
+        golang = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        haskell = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        java = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        julia = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        nodejs = {
+          symbol = "";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        nim = {
+          symbol = " ";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        rust = {
+          symbol = "";
+          style = "bg:cyan fg:background";
+          format = "[ $symbol ($version) ]($style)";
+        };
+
+        time = {
+          disabled = false;
+          time_format = "%X";
+          style = "bg:orange";
+          format = "[[  $time ](bg:orange)]($style)";
+        };
       };
+      finalConfig = lib.recursiveUpdate baseConfig myOverrides;
+    in
+    {
+      # https://wiki.nixos.org/wiki/Starship
+      programs.starship = {
+        enable = true;
+        enableBashIntegration = osConfig.features.terminal.bash.enable;
+        enableFishIntegration = osConfig.features.terminal.fish.enable;
+        settings = finalConfig;
+      };
+    };
+
+  flake.homeModules.eza =
+    {
+      config,
+      osConfig,
+      lib,
+      pkgs,
+      inputs,
+      ...
+    }:
+    {
+      programs.eza = {
+        enable = true;
+        enableBashIntegration = osConfig.features.terminal.bash.enable;
+        enableFishIntegration = osConfig.features.terminal.fish.enable;
+        git = true;
+        icons = "auto";
+      };
+
+      xdg.configFile."eza/theme.yml".source = "${inputs.eza-themes}/themes/dracula.yml";
     };
 
   flake.homeModules.tmux =
@@ -265,6 +480,7 @@
       osConfig,
       lib,
       pkgs,
+      inputs,
       ...
     }:
     let
@@ -302,7 +518,7 @@
 
             mouse-scroll-multiplier = 0.5;
 
-            theme = "Dracula";
+            theme = "dracula-pro";
             background-opacity = 0.8;
 
             window-decoration = false;
@@ -316,6 +532,8 @@
             desktop-notifications = true;
           };
         };
+
+        xdg.configFile."ghostty/themes/dracula-pro".source = "${inputs.dracula-pro-ghostty}/pro";
       };
     };
 }
