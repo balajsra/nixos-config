@@ -16,6 +16,7 @@
     imports = [
       self.homeModules.bash
       self.homeModules.fish
+      self.homeModules.starship
       self.homeModules.tmux
     ];
   };
@@ -133,15 +134,30 @@
           eza
           bat
         ];
-
-        # https://wiki.nixos.org/wiki/Starship
-        programs.starship = {
-          enable = true;
-          enableFishIntegration = true;
-        };
-        xdg.configFile."starship.toml".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship/.config/starship.toml";
       };
+    };
+
+  flake.homeModules.starship =
+    {
+      config,
+      osConfig,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
+    in
+    {
+      # https://wiki.nixos.org/wiki/Starship
+      programs.starship = {
+        enable = true;
+        enableBashIntegration = osConfig.features.terminal.bash.enable;
+        enableFishIntegration = osConfig.features.terminal.fish.enable;
+      };
+
+      xdg.configFile."starship.toml".source =
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship/.config/starship.toml";
     };
 
   flake.homeModules.tmux =
