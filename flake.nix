@@ -86,9 +86,9 @@
       flake = false;
     };
 
-    # (Private) Dracula Pro Eza Theme
-    dracula-pro-eza = {
-      url = "github:dracula-pro/eza";
+    # Eza Themes
+    eza-themes = {
+      url = "github:eza-community/eza-themes";
       flake = false;
     };
 

@@ -76,15 +76,15 @@
             rm = "rm -i";
 
             # Replace ls and tree with eza
-            ls = "${pkgs.eza}/bin/eza";
-            tree = "${pkgs.eza}/bin/eza -T";
+            ls = "eza";
+            tree = "eza -T";
           };
 
           functions = {
             fish_greeting = {
               body = ''
                 clear
-                ${pkgs.krabby}/bin/krabby random
+                krabby random
                 echo "¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸><(((º>"
               '';
             };
@@ -344,6 +344,7 @@
       osConfig,
       lib,
       pkgs,
+      inputs,
       ...
     }:
     {
@@ -352,8 +353,10 @@
         enableBashIntegration = osConfig.features.terminal.bash.enable;
         enableFishIntegration = osConfig.features.terminal.fish.enable;
         git = true;
-        icons = true;
+        icons = "auto";
       };
+
+      xdg.configFile."eza/theme.yml".source = "${inputs.eza-themes}/themes/dracula.yml";
     };
 
   flake.homeModules.tmux =

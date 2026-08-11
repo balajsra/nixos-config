@@ -135,22 +135,6 @@
         "type": "github"
       }
     },
-    "dracula-pro-eza": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1723903940,
-        "narHash": "sha256-3sEFxohUfKXnh2Wt87IWrgdpGOM+xTfeM0n9I7Myh1w=",
-        "owner": "dracula-pro",
-        "repo": "eza",
-        "rev": "a1e952d449fcbc27c754979c386d8e61f4f1f178",
-        "type": "github"
-      },
-      "original": {
-        "owner": "dracula-pro",
-        "repo": "eza",
-        "type": "github"
-      }
-    },
     "dracula-pro-ghostty": {
       "flake": false,
       "locked": {
@@ -232,6 +216,22 @@
       "original": {
         "owner": "dracula",
         "repo": "signal-desktop",
+        "type": "github"
+      }
+    },
+    "eza-themes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784485423,
+        "narHash": "sha256-53J0plgB+d6b4LzSwrCezmIhfVm7WZrKMA1ORGdUtQU=",
+        "owner": "eza-community",
+        "repo": "eza-themes",
+        "rev": "21184b55bfe34e8473c8160f9de0c03e4f76857f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "eza-community",
+        "repo": "eza-themes",
         "type": "github"
       }
     },
@@ -452,12 +452,12 @@
         "dank-material-shell": "dank-material-shell",
         "danksearch": "danksearch",
         "disko": "disko",
-        "dracula-pro-eza": "dracula-pro-eza",
         "dracula-pro-ghostty": "dracula-pro-ghostty",
         "dracula-pro-starship": "dracula-pro-starship",
         "dracula-pro-vim": "dracula-pro-vim",
         "dracula-pro-vscode": "dracula-pro-vscode",
         "dracula-signal-desktop": "dracula-signal-desktop",
+        "eza-themes": "eza-themes",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
