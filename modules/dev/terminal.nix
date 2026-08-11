@@ -156,29 +156,29 @@
         add_newline = false;
         command_timeout = 1000;
 
-        format = ''
-          [](comment)\
-          $directory\
-          [](fg:comment bg:pink)\
-          $git_branch\
-          $git_status\
-          [](fg:pink bg:cyan)\
-          $c\
-          $elixir\
-          $elm\
-          $golang\
-          $haskell\
-          $java\
-          $julia\
-          $nodejs\
-          $nim\
-          $rust\
-          [](fg:orange bg:green)\
-          $cmd_duration\
-          [](fg:green)\
+        format = lib.concatStrings [
+          "[](comment)"
+          "$directory"
+          "[](fg:comment bg:pink)"
+          "$git_branch"
+          "$git_status"
+          "[](fg:pink bg:cyan)"
+          "$c"
+          "$elixir"
+          "$elm"
+          "$golang"
+          "$haskell"
+          "$java"
+          "$julia"
+          "$nodejs"
+          "$nim"
+          "$rust"
+          "[](fg:orange bg:green)"
+          "$cmd_duration"
+          "[](fg:green)"
 
-          $character
-        '';
+          "$character"
+        ];
 
         character = {
           format = "$symbol";
