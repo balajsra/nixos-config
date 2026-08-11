@@ -40,6 +40,7 @@
       config,
       osConfig,
       lib,
+      pkgs,
       ...
     }:
     let
@@ -49,10 +50,100 @@
       config = lib.mkIf (osConfig.features.editor.vim.enable) {
         programs.vim = {
           enable = true;
-        };
 
-        home.file.".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vim/.vimrc";
-        home.file.".vim".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/vim/.vim";
+          plugins = with pkgs.vimPlugins; [
+            dracula-pro
+          ];
+
+          settings = {
+            number = true;
+            relativenumber = true;
+            tabstop = 4;
+            shiftwidth = 4;
+            expandtab = true;
+          };
+
+          extraConfig = ''
+            " Don't try to be vi compatible
+            set nocompatible
+
+            " Pick a leader key
+            let mapleader = "\\"
+
+            " Security
+            set modelines=0
+
+            " Show file stats
+            set ruler
+
+            " Blink cursors on error instead of beeping
+            set visualbell
+
+            " Encoding
+            set encoding=utf-8
+
+            " Whitespace & Indentation
+            set wrap
+            set textwidth=110
+            set formatoptions=tcqrn1
+            set softtabstop=4
+            set noshiftround
+            set smarttab
+            set autoindent
+
+            " Cursor Motion
+            set scrolloff=3
+            set backspace=indent,eol,start
+            set matchpairs+=<:>
+
+            " Allow hidden buffers
+            set hidden
+
+            " Rendering
+            set ttyfast
+
+            " Status bar
+            set laststatus=2
+
+            " Last line
+            set showmode
+            set showcmd
+
+            " Searching
+            set hlsearch
+            set incsearch
+            set ignorecase
+            set smartcase
+            set showmatch
+            nnoremap / /\v
+            vnoremap / /\v
+            map <leader><space> :let @/=""<cr>
+
+            " Formatting
+            map <leader>q gqip
+
+            " Visualize tabs and newlines
+            set listchars=tab:▸\ ,eol:¬
+            map <leader>l :set list!<CR>
+
+            " Exit Insert Mode Easily
+            inoremap jk <esc>
+
+            " UI Config
+            set cursorline
+            filetype indent on
+            set wildmenu
+            set lazyredraw
+
+            " Load start packages explicitly before activating theme
+            packloadall
+
+            " Enable Dracula Pro Theme
+            syntax enable
+            let g:dracula_colorterm = 0
+            colorscheme dracula_pro
+          '';
+        };
       };
     };
 
