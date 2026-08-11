@@ -17,6 +17,7 @@
       self.homeModules.bash
       self.homeModules.fish
       self.homeModules.starship
+      self.homeModules.eza
       self.homeModules.tmux
     ];
   };
@@ -75,16 +76,15 @@
             rm = "rm -i";
 
             # Replace ls and tree with eza
-            ls = "eza";
-            tree = "eza -T";
-            cat = "bat";
+            ls = "${pkgs.eza}/bin/eza";
+            tree = "${pkgs.eza}/bin/eza -T";
           };
 
           functions = {
             fish_greeting = {
               body = ''
                 clear
-                krabby random
+                ${pkgs.krabby}/bin/krabby random
                 echo "¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸><(((º>"
               '';
             };
@@ -131,8 +131,6 @@
 
         home.packages = with pkgs; [
           krabby
-          eza
-          bat
         ];
       };
     };
@@ -337,6 +335,24 @@
         enableBashIntegration = osConfig.features.terminal.bash.enable;
         enableFishIntegration = osConfig.features.terminal.fish.enable;
         settings = finalConfig;
+      };
+    };
+
+  flake.homeModules.eza =
+    {
+      config,
+      osConfig,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      programs.eza = {
+        enable = true;
+        enableBashIntegration = osConfig.features.terminal.bash.enable;
+        enableFishIntegration = osConfig.features.terminal.fish.enable;
+        git = true;
+        icons = true;
       };
     };
 
