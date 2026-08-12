@@ -247,12 +247,6 @@
           default = /etc/nixos;
           description = "The absolute path to NixOS configuration";
         };
-
-        dotfilesPath = lib.mkOption {
-          type = lib.types.path;
-          default = /etc/nixos/dotfiles;
-          description = "The absolute path to the dotfiles";
-        };
       };
     };
   };

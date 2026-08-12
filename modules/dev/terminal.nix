@@ -32,7 +32,6 @@
     }:
     let
       nixosConfigPath = toString osConfig.primaryUser.nixosConfigPath;
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
       config = lib.mkIf (osConfig.features.terminal.bash.enable) {
@@ -55,7 +54,6 @@
     }:
     let
       nixosConfigPath = toString osConfig.primaryUser.nixosConfigPath;
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
       config = lib.mkIf (osConfig.features.terminal.fish.enable) {
@@ -145,8 +143,6 @@
       ...
     }:
     let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-
       baseStarshipToml = builtins.readFile "${inputs.dracula-pro-starship}/starship/themes/dracula-pro.toml";
       baseConfig = builtins.fromTOML baseStarshipToml;
 
@@ -367,9 +363,6 @@
       pkgs,
       ...
     }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
     {
       config = lib.mkIf (osConfig.features.terminal.tmux.enable) {
         # https://wiki.nixos.org/wiki/Tmux
@@ -460,9 +453,6 @@
       lib,
       ...
     }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
     {
       config = lib.mkIf (osConfig.features.terminal.emulator == "foot") {
         programs.foot = {
@@ -483,9 +473,6 @@
       inputs,
       ...
     }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
     {
       config = lib.mkIf (osConfig.features.terminal.emulator == "ghostty") {
         # https://wiki.nixos.org/wiki/Ghostty

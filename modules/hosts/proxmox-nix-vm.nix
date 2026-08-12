@@ -180,7 +180,6 @@ in
             email = "sr98vn@gmail.com";
             username = "sravan";
             nixosConfigPath = /home/${config.primaryUser.username}/.config/nixos;
-            dotfilesPath = /home/${config.primaryUser.username}/.config/nixos/dotfiles;
           };
 
           imports = [ self.nixosModules.admin ];

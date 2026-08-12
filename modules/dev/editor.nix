@@ -43,9 +43,6 @@
       pkgs,
       ...
     }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
     {
       config = lib.mkIf (osConfig.features.editor.vim.enable) {
         programs.vim = {
@@ -155,9 +152,6 @@
       lib,
       ...
     }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
     {
       config = lib.mkIf (osConfig.features.editor.vscode.enable) {
         programs.vscode = {
