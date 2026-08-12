@@ -104,7 +104,7 @@
       flake = false;
     };
 
-    # Dracula Theme for Signal Desktop App
+    # Dracula Signal Desktop App Theme
     dracula-signal-desktop = {
       url = "github:dracula/signal-desktop";
       inputs.nixpkgs.follows = "nixpkgs";
