@@ -2,6 +2,9 @@
   description = "Flake of Sravan's NixOS";
 
   inputs = {
+    ##############
+    # Nix Config #
+    ##############
     # Nix Packages
     # Unstable by default
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -25,18 +28,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Mango Wayland Compositor
-    mango = {
-      url = "github:mangowm/mango";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Zen Browser
-    zen-browser = {
-      url = "github:youwen5/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+    ###########
+    # Secrets #
+    ###########
     # Secrets Management
     sops-nix = {
       url = "github:mic92/sops-nix";
@@ -50,9 +44,18 @@
       flake = false;
     };
 
-    # Dracula Theme for Signal Desktop App
-    dracula-signal-desktop = {
-      url = "github:dracula/signal-desktop";
+    ################
+    # Applications #
+    ################
+    # Automatic CPU Speed & Power Optimizer
+    auto-cpufreq = {
+      url = "github:AdnanHodzic/auto-cpufreq";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Display Manager for DankMaterialShell
+    dank-greeter = {
+      url = "github:AvengeMedia/dank-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -68,39 +71,57 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Automatic CPU Speed & Power Optimizer
-    auto-cpufreq = {
-      url = "github:AdnanHodzic/auto-cpufreq";
+    # Mango Wayland Compositor
+    mango = {
+      url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Display Manager for DankMaterialShell
-    dank-greeter = {
-      url = "github:AvengeMedia/dank-greeter";
+    # Zen Browser
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # (Private) Dracula Pro Starship Theme
-    dracula-pro-starship = {
-      url = "github:dracula-pro/starship";
+    ##################
+    # Dracula Themes #
+    ##################
+    # Dracula Beeper Theme
+    dracula-beeper = {
+      url = "github:dracula/beeper";
       flake = false;
     };
 
-    # Eza Themes
-    eza-themes = {
-      url = "github:eza-community/eza-themes";
+    # Dracula Dank Material Shell Theme
+    dracula-dank-material-shell = {
+      url = "github:dracula/dankmaterialshell";
       flake = false;
     };
 
+    # Dracula Fish Theme
+    dracula-fish = {
+      url = "github:dracula/fish";
+      flake = false;
+    };
+
+    # Dracula Theme for Signal Desktop App
+    dracula-signal-desktop = {
+      url = "github:dracula/signal-desktop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ######################
+    # Dracula Pro Themes #
+    ######################
     # (Private) Dracula Pro Ghostty Theme
     dracula-pro-ghostty = {
       url = "github:dracula-pro/ghostty";
       flake = false;
     };
 
-    # (Private) Dracula Pro VS Code Theme
-    dracula-pro-vscode = {
-      url = "github:dracula-pro/visual-studio-code";
+    # (Private) Dracula Pro Starship Theme
+    dracula-pro-starship = {
+      url = "github:dracula-pro/starship";
       flake = false;
     };
 
@@ -110,8 +131,20 @@
       flake = false;
     };
 
-    # Include submodules when building this flake
-    self.submodules = true;
+    # (Private) Dracula Pro VS Code Theme
+    dracula-pro-vscode = {
+      url = "github:dracula-pro/visual-studio-code";
+      flake = false;
+    };
+
+    ################
+    # Other Themes #
+    ################
+    # Eza Themes
+    eza-themes = {
+      url = "github:eza-community/eza-themes";
+      flake = false;
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);

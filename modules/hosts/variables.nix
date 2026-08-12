@@ -75,7 +75,6 @@
           tmux.enable = lib.mkEnableOption "Enable Tmux Terminal Multiplexer";
           emulator = lib.mkOption {
             type = lib.types.enum [
-              "foot"
               "ghostty"
             ];
             default = "ghostty";
@@ -246,12 +245,6 @@
           type = lib.types.path;
           default = /etc/nixos;
           description = "The absolute path to NixOS configuration";
-        };
-
-        dotfilesPath = lib.mkOption {
-          type = lib.types.path;
-          default = /etc/nixos/dotfiles;
-          description = "The absolute path to the dotfiles";
         };
       };
     };

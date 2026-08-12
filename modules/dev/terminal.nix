@@ -32,7 +32,6 @@
     }:
     let
       nixosConfigPath = toString osConfig.primaryUser.nixosConfigPath;
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
       config = lib.mkIf (osConfig.features.terminal.bash.enable) {
@@ -51,11 +50,11 @@
       config,
       osConfig,
       lib,
+      inputs,
       ...
     }:
     let
       nixosConfigPath = toString osConfig.primaryUser.nixosConfigPath;
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
     in
     {
       config = lib.mkIf (osConfig.features.terminal.fish.enable) {
@@ -120,7 +119,7 @@
           '';
         };
         xdg.configFile."fish/themes/Dracula_Official.theme".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/fish/.config/fish/themes/Dracula_Official.theme";
+          config.lib.file.mkOutOfStoreSymlink "${inputs.dracula-fish}/themes/Dracula Official.theme";
 
         home.sessionVariables = {
           # Dracula theme for Docker BuildKit - https://draculatheme.com/docker
@@ -145,8 +144,6 @@
       ...
     }:
     let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-
       baseStarshipToml = builtins.readFile "${inputs.dracula-pro-starship}/starship/themes/dracula-pro.toml";
       baseConfig = builtins.fromTOML baseStarshipToml;
 
@@ -367,9 +364,6 @@
       pkgs,
       ...
     }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
     {
       config = lib.mkIf (osConfig.features.terminal.tmux.enable) {
         # https://wiki.nixos.org/wiki/Tmux
@@ -448,31 +442,9 @@
 
   flake.homeModules.terminal-emulator = {
     imports = [
-      self.homeModules.foot
       self.homeModules.ghostty
     ];
   };
-
-  flake.homeModules.foot =
-    {
-      config,
-      osConfig,
-      lib,
-      ...
-    }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
-    {
-      config = lib.mkIf (osConfig.features.terminal.emulator == "foot") {
-        programs.foot = {
-          enable = true;
-          server.enable = true;
-        };
-        xdg.configFile."foot".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/foot/.config/foot";
-      };
-    };
 
   flake.homeModules.ghostty =
     {
@@ -483,9 +455,6 @@
       inputs,
       ...
     }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
     {
       config = lib.mkIf (osConfig.features.terminal.emulator == "ghostty") {
         # https://wiki.nixos.org/wiki/Ghostty

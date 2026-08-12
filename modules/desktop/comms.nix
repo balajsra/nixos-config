@@ -15,11 +15,9 @@
       config,
       osConfig,
       lib,
+      inputs,
       ...
     }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
     {
       config = lib.mkIf (osConfig.features.comms.beeper.enable) {
         home.packages = with pkgs; [
@@ -27,7 +25,7 @@
         ];
 
         xdg.configFile."BeeperTexts/custom.css".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/beeper/.themes/dracula-beeper/custom.css";
+          config.lib.file.mkOutOfStoreSymlink "${inputs.dracula-beeper}/custom.css";
       };
     };
 
