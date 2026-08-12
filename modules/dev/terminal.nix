@@ -19,6 +19,7 @@
       self.homeModules.starship
       self.homeModules.eza
       self.homeModules.tmux
+      self.homeModules.ripgrep
     ];
   };
 
@@ -77,22 +78,6 @@
         programs.fish = {
           enable = true;
           generateCompletions = true;
-
-          shellAliases = {
-            # Colorize grep output (good for log files)
-            grep = "grep --color=auto";
-            egrep = "egrep --color=auto";
-            fgrep = "fgrep --color=auto";
-
-            # confirm before overwriting something
-            cp = "cp -i";
-            mv = "mv -i";
-            rm = "rm -i";
-
-            # Replace ls and tree with eza
-            ls = "eza";
-            tree = "eza -T";
-          };
 
           functions = {
             fish_greeting = {
@@ -348,6 +333,12 @@
       };
 
       xdg.configFile."eza/theme.yml".source = "${inputs.eza-themes}/themes/dracula.yml";
+
+      home.shellAliases = {
+        # Replace ls and tree with eza
+        ls = "eza";
+        tree = "eza -T";
+      };
     };
 
   flake.homeModules.tmux =
@@ -418,6 +409,35 @@
           '';
         };
       };
+    };
+
+  flake.homeModules.ripgrep =
+    {
+      config,
+      osConfig,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      programs.ripgrep-all.enable = true;
+
+      home = {
+        sessionVariables = {
+          RIPGREP_CONFIG_PATH = "${config.xdg.configHome}/ripgrep/config";
+        };
+        shellAliases = {
+          rgrep = "rga";
+        };
+      };
+
+      xdg.configFile."ripgrep/config".text = ''
+        # Dracula theme for ripgrep - https://draculatheme.com/ripgrep
+        --colors=path:fg:0xbd,0x93,0xf9
+        --colors=line:fg:0x50,0xfa,0x7b
+        --colors=column:fg:0x50,0xfa,0x7b
+        --colors=match:fg:0xff,0x55,0x55
+      '';
     };
 
   flake.homeModules.terminal-emulator = {
