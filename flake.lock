@@ -135,6 +135,22 @@
         "type": "github"
       }
     },
+    "dracula-beeper": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1768557940,
+        "narHash": "sha256-uAwa1IQwEsgOOd2daDd0bg/SPGraxXvWMhkO9KEuBN8=",
+        "owner": "dracula",
+        "repo": "beeper",
+        "rev": "07249f1cf4b65d4527f6dd2606daa0f93cc0b21b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula",
+        "repo": "beeper",
+        "type": "github"
+      }
+    },
     "dracula-pro-ghostty": {
       "flake": false,
       "locked": {
@@ -316,11 +332,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786501082,
-        "narHash": "sha256-ROC70hdloiAY74yodpAgT0sP1dmYk+vchjYsrfmhfiM=",
+        "lastModified": 1786538400,
+        "narHash": "sha256-PH8B1YKxedcWKNw2xsk6cKPVk/rJoLgdlWd5d+Icies=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "99e84ee7387ff24cd112ff51f71c3465eb9cb770",
+        "rev": "e13ba5e5abbd9b912fa8c6979bd119e87ca7fdd9",
         "type": "github"
       },
       "original": {
@@ -452,6 +468,7 @@
         "dank-material-shell": "dank-material-shell",
         "danksearch": "danksearch",
         "disko": "disko",
+        "dracula-beeper": "dracula-beeper",
         "dracula-pro-ghostty": "dracula-pro-ghostty",
         "dracula-pro-starship": "dracula-pro-starship",
         "dracula-pro-vim": "dracula-pro-vim",

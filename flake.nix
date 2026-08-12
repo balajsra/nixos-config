@@ -110,6 +110,12 @@
       flake = false;
     };
 
+    # Dracula Beeper Theme
+    dracula-beeper = {
+      url = "github:dracula/beeper";
+      flake = false;
+    };
+
     # Include submodules when building this flake
     self.submodules = true;
   };
