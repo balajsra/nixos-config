@@ -3,10 +3,27 @@
 {
   flake.nixosModules.graphics = {
     imports = [
+      self.nixosModules.gpu-utils
       self.nixosModules.amd-gpu
       self.nixosModules.nvidia-gpu
     ];
   };
+
+  flake.nixosModules.gpu-utils =
+    { config, lib, ... }:
+    {
+      config =
+        lib.mkIf
+          (
+            config.features.hardware.graphics.amd-gpu.enable
+            || config.features.hardware.graphics.nvidia-gpu.enable
+          )
+          {
+            services.lact = {
+              enable = true;
+            };
+          };
+    };
 
   flake.nixosModules.amd-gpu =
     { config, lib, ... }:
@@ -21,7 +38,7 @@
           amdgpu = {
             initrd.enable = true;
             opencl.enable = true;
-            overdrive.enable = false;
+            overdrive.enable = true;
             zluda.enable = true;
           };
         };
