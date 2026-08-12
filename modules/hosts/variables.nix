@@ -75,7 +75,6 @@
           tmux.enable = lib.mkEnableOption "Enable Tmux Terminal Multiplexer";
           emulator = lib.mkOption {
             type = lib.types.enum [
-              "foot"
               "ghostty"
             ];
             default = "ghostty";

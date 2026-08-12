@@ -442,28 +442,9 @@
 
   flake.homeModules.terminal-emulator = {
     imports = [
-      self.homeModules.foot
       self.homeModules.ghostty
     ];
   };
-
-  flake.homeModules.foot =
-    {
-      config,
-      osConfig,
-      lib,
-      ...
-    }:
-    {
-      config = lib.mkIf (osConfig.features.terminal.emulator == "foot") {
-        programs.foot = {
-          enable = true;
-          server.enable = true;
-        };
-        xdg.configFile."foot".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/foot/.config/foot";
-      };
-    };
 
   flake.homeModules.ghostty =
     {
