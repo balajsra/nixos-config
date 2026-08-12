@@ -110,6 +110,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Dracula TTY Theme
+    dracula-tty = {
+      url = "github:dracula/tty";
+      flake = false;
+    };
+
     # Dracula Zathura Theme
     dracula-zathura = {
       url = "github:dracula/zathura";
