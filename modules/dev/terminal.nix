@@ -174,7 +174,7 @@
           "[](fg:orange bg:green)"
           "$cmd_duration"
           "[](fg:green)"
-
+          "\n"
           "$character"
         ];
 
