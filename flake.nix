@@ -122,6 +122,12 @@
       flake = false;
     };
 
+    # Dracula Fish Theme
+    dracula-fish = {
+      url = "github:dracula/fish";
+      flake = false;
+    };
+
     # Include submodules when building this flake
     self.submodules = true;
   };

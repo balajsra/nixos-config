@@ -50,6 +50,7 @@
       config,
       osConfig,
       lib,
+      inputs,
       ...
     }:
     let
@@ -118,7 +119,7 @@
           '';
         };
         xdg.configFile."fish/themes/Dracula_Official.theme".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/fish/.config/fish/themes/Dracula_Official.theme";
+          config.lib.file.mkOutOfStoreSymlink "${inputs.dracula-fish}/themes/Dracula Official.theme";
 
         home.sessionVariables = {
           # Dracula theme for Docker BuildKit - https://draculatheme.com/docker
