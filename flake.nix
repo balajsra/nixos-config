@@ -110,6 +110,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Dracula Zathura Theme
+    dracula-zathura = {
+      url = "github:dracula/zathura";
+      flake = false;
+    };
+
     ######################
     # Dracula Pro Themes #
     ######################

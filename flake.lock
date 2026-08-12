@@ -267,6 +267,22 @@
         "type": "github"
       }
     },
+    "dracula-zathura": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1710005413,
+        "narHash": "sha256-1bEJYF1T1bk0meySXcww7POCjjzSQpyXdh5YwoZRhRA=",
+        "owner": "dracula",
+        "repo": "zathura",
+        "rev": "d21609b0548eaf45cccc275791dd3cc5c22baa5e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula",
+        "repo": "zathura",
+        "type": "github"
+      }
+    },
     "eza-themes": {
       "flake": false,
       "locked": {
@@ -508,6 +524,7 @@
         "dracula-pro-vim": "dracula-pro-vim",
         "dracula-pro-vscode": "dracula-pro-vscode",
         "dracula-signal-desktop": "dracula-signal-desktop",
+        "dracula-zathura": "dracula-zathura",
         "eza-themes": "eza-themes",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
