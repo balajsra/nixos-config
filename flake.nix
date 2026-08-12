@@ -116,6 +116,12 @@
       flake = false;
     };
 
+    # Dracula Dank Material Shell Theme
+    dracula-dank-material-shell = {
+      url = "github:dracula/dankmaterialshell";
+      flake = false;
+    };
+
     # Include submodules when building this flake
     self.submodules = true;
   };

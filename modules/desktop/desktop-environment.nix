@@ -98,9 +98,6 @@ in
       lib,
       ...
     }:
-    let
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
-    in
     {
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
         # https://mangowm.github.io/docs/nix-options/
@@ -381,11 +378,11 @@ in
       config,
       lib,
       pkgs,
+      inputs,
       ...
     }:
     let
       mangoConfigPath = toString /home/${osConfig.primaryUser.username}/.config/mango;
-      dotfilesPath = toString osConfig.primaryUser.dotfilesPath;
       wallpaperDir = "/home/${osConfig.primaryUser.username}/NextCloud/Wallpapers/Desktop";
     in
     {
@@ -657,7 +654,7 @@ in
         };
 
         xdg.configFile."DankMaterialShell/themes/dracula.json".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/dank-material-shell/.themes/dracula-dank-material-shell/themes/dracula/theme.json";
+          config.lib.file.mkOutOfStoreSymlink "${inputs.dracula-dank-material-shell}/themes/dracula/theme.json";
 
         systemd.user.services.dms-wallpaper-randomizer = {
           Unit = {

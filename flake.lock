@@ -151,6 +151,22 @@
         "type": "github"
       }
     },
+    "dracula-dank-material-shell": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780325084,
+        "narHash": "sha256-/DdUjKfp7oaw2qug2CTvbMs02CUvwwRQ6bFmX/x6l6s=",
+        "owner": "dracula",
+        "repo": "dankmaterialshell",
+        "rev": "f1f56fb0f7b977199437f56194326135fae3c46d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula",
+        "repo": "dankmaterialshell",
+        "type": "github"
+      }
+    },
     "dracula-pro-ghostty": {
       "flake": false,
       "locked": {
@@ -469,6 +485,7 @@
         "danksearch": "danksearch",
         "disko": "disko",
         "dracula-beeper": "dracula-beeper",
+        "dracula-dank-material-shell": "dracula-dank-material-shell",
         "dracula-pro-ghostty": "dracula-pro-ghostty",
         "dracula-pro-starship": "dracula-pro-starship",
         "dracula-pro-vim": "dracula-pro-vim",
