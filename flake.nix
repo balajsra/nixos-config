@@ -127,9 +127,6 @@
       url = "github:dracula/fish";
       flake = false;
     };
-
-    # Include submodules when building this flake
-    self.submodules = true;
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
