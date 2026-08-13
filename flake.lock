@@ -183,6 +183,22 @@
         "type": "github"
       }
     },
+    "dracula-gimp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756107805,
+        "narHash": "sha256-R7VQZs5yCRa529L4LwpFQP+L5h9tp8Iz0zr/+2HmmYA=",
+        "owner": "dracula",
+        "repo": "gimp",
+        "rev": "c42e1b525b382c3485a7beef898b14ea03556593",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula",
+        "repo": "gimp",
+        "type": "github"
+      }
+    },
     "dracula-pro-ghostty": {
       "flake": false,
       "locked": {
@@ -535,6 +551,7 @@
         "dracula-beeper": "dracula-beeper",
         "dracula-dank-material-shell": "dracula-dank-material-shell",
         "dracula-fish": "dracula-fish",
+        "dracula-gimp": "dracula-gimp",
         "dracula-pro-ghostty": "dracula-pro-ghostty",
         "dracula-pro-starship": "dracula-pro-starship",
         "dracula-pro-vim": "dracula-pro-vim",

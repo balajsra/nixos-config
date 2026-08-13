@@ -104,6 +104,12 @@
       flake = false;
     };
 
+    # Dracula GIMP Theme
+    dracula-gimp = {
+      url = "github:dracula/gimp";
+      flake = false;
+    };
+
     # Dracula Signal Desktop App Theme
     dracula-signal-desktop = {
       url = "github:dracula/signal-desktop";

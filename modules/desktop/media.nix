@@ -92,14 +92,23 @@
       pkgs,
       osConfig,
       lib,
+      inputs,
       ...
     }:
+    let
+      gimpVersion = lib.versions.majorMinor pkgs.gimp.version;
+    in
     {
-      config = lib.mkIf (osConfig.features.media.audio.enable) {
+      config = lib.mkIf (osConfig.features.media.image.enable) {
         home.packages = with pkgs; [
           gimp
           ristretto
         ];
+
+        xdg.configFile."GIMP/${gimpVersion}/themes/Dracula".source = "${inputs.dracula-gimp}/Dracula";
+        xdg.configFile."GIMP/${gimpVersion}/gimprc".text = ''
+          (theme "Dracula")
+        '';
       };
     };
 
