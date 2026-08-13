@@ -20,6 +20,11 @@ stdenv.mkDerivation {
   installPhase = ''
     mkdir -p $out/share/plymouth/themes/fallout
     cp -r * $out/share/plymouth/themes/fallout/
+    cd $out/share/plymouth/themes/fallout
+
+    # Fix hardcoded path in .plymouth
+    substituteInPlace fallout.plymouth \
+      --replace-fail "/usr/share/plymouth/themes/fallout" "$out/share/plymouth/themes/fallout"
   '';
 
   meta = with lib; {
