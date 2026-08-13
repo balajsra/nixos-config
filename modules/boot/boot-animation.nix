@@ -14,11 +14,9 @@
         boot = {
           plymouth = {
             enable = true;
-            theme = "lone";
+            theme = "fallout";
             themePackages = with pkgs; [
-              (adi1090x-plymouth-themes.override {
-                selected_themes = [ "lone" ];
-              })
+              fallout-plymouth-theme
             ];
           };
 
