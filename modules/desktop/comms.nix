@@ -24,8 +24,7 @@
           beeper
         ];
 
-        xdg.configFile."BeeperTexts/custom.css".source =
-          config.lib.file.mkOutOfStoreSymlink "${inputs.dracula-beeper}/custom.css";
+        xdg.configFile."BeeperTexts/custom.css".source = "${inputs.dracula-beeper}/custom.css";
       };
     };
 

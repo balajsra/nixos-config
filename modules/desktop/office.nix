@@ -114,8 +114,7 @@
           enable = true;
         };
 
-        xdg.configFile."zathura/zathurarc".source =
-          config.lib.file.mkOutOfStoreSymlink "${inputs.dracula-zathura}/zathurarc";
+        xdg.configFile."zathura/zathurarc".source = "${inputs.dracula-zathura}/zathurarc";
 
         # https://wiki.nixos.org/wiki/Default_applications
         xdg.mimeApps = {

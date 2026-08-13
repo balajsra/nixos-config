@@ -98,7 +98,7 @@
           '';
         };
         xdg.configFile."fish/themes/Dracula_Official.theme".source =
-          config.lib.file.mkOutOfStoreSymlink "${inputs.dracula-fish}/themes/Dracula Official.theme";
+          "${inputs.dracula-fish}/themes/Dracula Official.theme";
 
         home.packages = with pkgs; [
           krabby

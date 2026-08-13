@@ -654,7 +654,7 @@ in
         };
 
         xdg.configFile."DankMaterialShell/themes/dracula.json".source =
-          config.lib.file.mkOutOfStoreSymlink "${inputs.dracula-dank-material-shell}/themes/dracula/theme.json";
+          "${inputs.dracula-dank-material-shell}/themes/dracula/theme.json";
 
         systemd.user.services.dms-wallpaper-randomizer = {
           Unit = {
