@@ -1,5 +1,7 @@
 inputs: final: prev: {
   dracula-gtk-theme = final.callPackage ./dracula-gtk-theme.nix { };
+  fallout-grub-theme = final.callPackage ./fallout-grub-theme.nix { };
+  fallout-plymouth-theme = final.callPackage ./fallout-plymouth-theme.nix { };
 
   vimPlugins = prev.vimPlugins // {
     dracula-pro = final.callPackage ./vimPlugins/dracula-pro.nix {
