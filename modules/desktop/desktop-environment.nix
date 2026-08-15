@@ -109,46 +109,199 @@ in
           systemd.enable = false;
 
           settings = {
+            #######################
+            # Basic Configuration #
+            #######################
+            # https://mangowm.github.io/docs/configuration/basics#autostart
+            exec-once = [
+              "uwsm finalize &"
+              "uwsm app -- fumon &"
+              "uwsm app -- kdeconnectd --replace &"
+              "uwsm app -- kdeconnect-indicator &"
+              "uwsm app -- udiskie -a -n -s &"
+              "uwsm app -- nextcloud &"
+            ];
+
+            ############
+            # Monitors #
+            ############
+            # https://mangowm.github.io/docs/configuration/monitors#tearing-game-mode
+            allow_tearing = 0;
+
+            #################
+            # Input Devices #
+            #################
+            # https://mangowm.github.io/docs/configuration/input/#keyboard-settings
+            repeat_rate = 25;
+            repeat_delay = 600;
+            numlockon = 1;
+            xkb_rules = {
+              layout = "us";
+            };
+
+            # https://mangowm.github.io/docs/configuration/input/#mouse-settings
+            mouse = {
+              natural_scrolling = 0;
+              accel_profile = 1;
+              accel_speed = -0.25;
+              left_handed = 0;
+              middle_button_emulation = false;
+              scroll_method = 1;
+              click_method = 2;
+              send_events_mode = 0;
+            };
+
+            # https://mangowm.github.io/docs/configuration/input/#trackpad-settings
+            disable_trackpad = 0;
+            tap_to_click = 1;
+            tap_and_drag = 1;
+            drag_lock = 1;
+            trackpad = {
+              natural_scrolling = 1;
+              accel_profile = 2;
+              accel_speed = 0.0;
+              scroll_method = 1;
+              click_method = 2;
+              send_events_mode = 0;
+              left_handed = 0;
+              disable_while_typing = 1;
+              scroll_factor = 1.0;
+            };
+            swipe_min_threshold = 1;
+            button_map = 0;
+
+            # https://mangowm.github.io/docs/configuration/input/#touchscreen-settings
+            touch = {
+              enable = 1;
+              enable_mouse_emulation = 0;
+            };
+
+            #################
+            # Miscellaneous #
+            #################
+            # https://mangowm.github.io/docs/configuration/miscellaneous#system--hardware
+            xwayland = {
+              persistence = 1;
+              ignore_scale = 0;
+            };
+            syncobj_enable = 0;
+            allow_lock_transparent = 0;
+            allow_shortcuts_inhibit = 1;
+
+            # https://mangowm.github.io/docs/configuration/miscellaneous#focus--input
+            focus_on_activate = 1;
+            sloppyfocus = 1;
+            warpcursor = 1;
+            cursor_hide_timeout = 5;
+            cursor_hide_on_keypress = 0;
+            drag_tile_to_tile = 1;
+            axis_bind_apply_timeout = 100;
+
+            # https://mangowm.github.io/docs/configuration/miscellaneous#multi-monitor--tags
+            focus_cross_monitor = 0;
+            exchange_cross_monitor = 1;
+            focus_cross_tag = 0;
+            view_current_to_back = 0;
+            scratchpad_cross_monitor = 1;
+            single_scratchpad = 1;
+
+            # https://mangowm.github.io/docs/configuration/miscellaneous#window-behavior
+            enable_floating_snap = 1;
+            snap_distance = 30;
+            no_border_when_single = 0;
+            idleinhibit_ignore_visible = 0;
+            tag_carousel = 0;
+
+            ###########
+            # Theming #
+            ###########
+            # https://mangowm.github.io/docs/visuals/theming#dimensions
+            borderpx = 2;
+            gappih = 20;
+            gappiv = 20;
+            gappoh = 30;
+            gappov = 30;
+
+            # https://mangowm.github.io/docs/visuals/theming#colors
+            rootcolor = "0x282a36ff";
+            bordercolor = "0x282a36ff";
+            focuscolor = "bd93f9ff";
+            urgentcolor = "0xff5555ff";
+
+            # https://mangowm.github.io/docs/visuals/theming#state-specific-colors
+            maximizescreencolor = "0x282a36ff";
+            scratchpadcolor = "0xf1fa8cff";
+            globalcolor = "0x8be9fdff";
+            overlaycolor = "0x50fa7bff";
+
+            # https://mangowm.github.io/docs/visuals/theming#cursor-theme
+            cursor_size = cursorSize;
+            cursor_theme = "${cursorThemeAltName}";
+
+            ##################
+            # Window Effects #
+            ##################
+            # https://mangowm.github.io/docs/visuals/effects#blur
             blur = 1;
             blur_layer = 0;
             blur_optimized = 1;
             blur_params = {
-              num_passes = 3;
               radius = 5;
+              num_passes = 3;
               noise = 0.0117;
               brightness = 1.0;
               contrast = 0.8916;
               saturation = 1.2;
             };
 
+            # https://mangowm.github.io/docs/visuals/effects#shadows
             shadows = 1;
-            shadow_only_floating = 1;
             layer_shadows = 1;
+            shadow_only_floating = 1;
             shadows_size = 10;
             shadows_blur = 15;
-            shadows_position_x = 0;
-            shadows_position_y = 0;
+            shadows_position = {
+              x = 0;
+              y = 0;
+            };
             shadowscolor = "0x1a1a1aee";
 
+            # https://mangowm.github.io/docs/visuals/effects#opacity--corner-radius
             border_radius = 10;
             no_radius_when_single = 0;
-
             focused_opacity = 1.0;
             unfocused_opacity = 1.0;
 
+            ##############
+            # Animations #
+            ##############
+            # https://mangowm.github.io/docs/visuals/animations#enabling-animations
             animations = 1;
             layer_animations = 1;
-            animation_type_open = "slide";
-            animation_type_close = "slide";
-            layer_animation_type_open = "slide";
-            layer_animation_type_close = "slide";
+
+            # https://mangowm.github.io/docs/visuals/animations#animation-types
+            animation_type = {
+              open = "slide";
+              close = "slide";
+            };
+            layer_animation_type = {
+              open = "slide";
+              close = "slide";
+            };
+
+            # https://mangowm.github.io/docs/visuals/animations#fade-settings
             animation_fade_in = 1;
             animation_fade_out = 1;
-            tag_animation_direction = 1;
-            zoom_initial_ratio = 0.3;
-            zoom_end_ratio = 0.8;
             fadein_begin_opacity = 0.5;
             fadeout_begin_opacity = 0.8;
+
+            # https://mangowm.github.io/docs/visuals/animations#zoom-settings
+            zoom = {
+              initial_ratio = 0.3;
+              end_ratio = 0.8;
+            };
+
+            # https://mangowm.github.io/docs/visuals/animations#durations
             animation_duration = {
               move = 500;
               open = 400;
@@ -156,6 +309,8 @@ in
               close = 800;
               focus = 0;
             };
+
+            # https://mangowm.github.io/docs/visuals/animations#custom-bezier-curves
             animation_curve = {
               open = "0.46,1.0,0.29,1";
               move = "0.46,1.0,0.29,1";
@@ -164,92 +319,38 @@ in
               focus = "0.46,1.0,0.29,1";
             };
 
+            # https://mangowm.github.io/docs/visuals/animations#tag-animation-direction
+            tag_animation_direction = 1;
+
+            ###########
+            # Layouts #
+            ###########
+            # https://mangowm.github.io/docs/window-management/layouts#scroller-layout
             scroller_structs = 20;
             scroller_default_proportion = 0.8;
             scroller_focus_center = 0;
             scroller_prefer_center = 0;
+            scroller_prefer_overspread = 1;
             edge_scroller_pointer_focus = 1;
+            edge_scroller_focus_allow_speed = 0.0;
+            scroller_proportion_preset = "0.5,0.8,1.0";
             scroller_ignore_proportion_single = 0;
             scroller_default_proportion_single = 1.0;
-            scroller_proportion_preset = "0.5,0.8,1.0";
 
+            # https://mangowm.github.io/docs/window-management/layouts#master-stack-layouts
             new_is_master = 1;
             default_mfact = 0.50;
             default_nmaster = 1;
+            tag_num = 9;
+            tag_gather = 0;
             smartgaps = 0;
             center_master_overspread = 0;
             center_when_single_stack = 1;
 
-            hotarea_size = 10;
-            enable_hotarea = 1;
-            ov_tab_mode = 1;
-            overviewgappi = 5;
-            overviewgappo = 30;
-
-            xwayland_persistence = 1;
-            syncobj_enable = 0;
-            allow_shortcuts_inhibit = 1;
-            allow_tearing = 0;
-            allow_lock_transparent = 0;
-            axis_bind_apply_timeout = 100;
-            focus_on_activate = 1;
-            idleinhibit_ignore_visible = 0;
-            sloppyfocus = 1;
-            warpcursor = 1;
-            focus_cross_monitor = 0;
-            exchange_cross_monitor = 1;
-            scratchpad_cross_monitor = 1;
-            focus_cross_tag = 0;
-            view_current_to_back = 0;
-            enable_floating_snap = 1;
-            snap_distance = 30;
-            cursor_size = cursorSize;
-            cursor_theme = "${cursorThemeAltName}";
-            no_border_when_single = 0;
-            cursor_hide_timeout = 5;
-            drag_tile_to_tile = 1;
-            single_scratchpad = 1;
-
-            repeat_rate = 25;
-            repeat_delay = 600;
-            numlockon = 1;
-
-            xkb_rules_layout = "us";
-
-            disable_trackpad = 0;
-            tap_to_click = 1;
-            tap_and_drag = 1;
-            drag_lock = 1;
-            trackpad_natural_scrolling = 1;
-            disable_while_typing = 1;
-            left_handed = 0;
-            middle_button_emulation = 0;
-            swipe_min_threshold = 1;
-            scroll_method = 1;
-            click_method = 0;
-            send_events_mode = 0;
-            button_map = 0;
-
-            mouse_natural_scrolling = 0;
-            mouse_accel_profile = 1;
-            mouse_accel_speed = -0.25;
-
-            gappih = 20;
-            gappiv = 20;
-            gappoh = 30;
-            gappov = 30;
-            scratchpad_width_ratio = 0.8;
-            scratchpad_height_ratio = 0.8;
-            borderpx = 2;
-            rootcolor = "0x282a36ff";
-            bordercolor = "0x282a36ff";
-            focuscolor = "bd93f9ff";
-            maximizescreencolor = "0x282a36ff";
-            urgentcolor = "0xff5555ff";
-            scratchpadcolor = "0xf1fa8cff";
-            globalcolor = "0x8be9fdff";
-            overlaycolor = "0x50fa7bff";
-
+            #########
+            # Rules #
+            #########
+            # https://mangowm.github.io/docs/window-management/rules#tag-rules
             tagrule = [
               "id:1,layout_name:tile"
               "id:2,layout_name:tile"
@@ -262,15 +363,28 @@ in
               "id:9,layout_name:tile"
             ];
 
-            exec-once = [
-              "uwsm finalize &"
-              "uwsm app -- fumon &"
-              "uwsm app -- kdeconnectd --replace &"
-              "uwsm app -- kdeconnect-indicator &"
-              "uwsm app -- udiskie -a -n -s &"
-              "uwsm app -- nextcloud &"
-            ];
+            ############
+            # Overview #
+            ############
+            # https://mangowm.github.io/docs/window-management/overview#overview-settings
+            hotarea_size = 10;
+            enable_hotarea = 1;
+            hotarea_corner = 0;
+            ov_tab_mode = 1;
+            overviewgappi = 5;
+            overviewgappo = 30;
 
+            ##############
+            # Scratchpad #
+            ##############
+            # https://mangowm.github.io/docs/window-management/scratchpad#appearance
+            scratchpad_width_ratio = 0.8;
+            scratchpad_height_ratio = 0.8;
+
+            ################
+            # Key Bindings #
+            ################
+            # https://mangowm.github.io/docs/bindings/keys#syntax
             bind = [
               "SUPER,r,reload_config"
 
@@ -356,6 +470,10 @@ in
               "SUPER+SHIFT+CTRL,minus,incgaps,-1"
             ];
 
+            ####################
+            # Mouse & Gestures #
+            ####################
+            # https://mangowm.github.io/docs/bindings/mouse-gestures#mouse-bindings
             mousebind = [
               "SUPER,btn_left,moveresize,curmove"
               "SUPER,btn_right,moveresize,curresize"
@@ -363,6 +481,7 @@ in
               # "NONE,btn_right,killclient"
             ];
 
+            # https://mangowm.github.io/docs/bindings/mouse-gestures#axis-bindings
             axisbind = [
               "SUPER,UP,viewtoright_have_client"
               "SUPER,DOWN,viewtoleft_have_client"
