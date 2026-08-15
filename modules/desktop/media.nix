@@ -23,6 +23,7 @@
         home.packages = with pkgs; [
           ani-cli
           yt-dlp
+          parabolic
         ];
       };
     };
