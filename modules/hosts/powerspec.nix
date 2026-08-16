@@ -145,6 +145,7 @@ in
               steam.enable = true;
               wine.enable = true;
               vkbasalt.enable = true;
+              sunshine.enable = true;
               lutris.enable = true;
               mangohud.enable = true;
               chiaki.enable = true;

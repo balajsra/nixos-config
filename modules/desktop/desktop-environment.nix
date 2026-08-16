@@ -115,6 +115,27 @@ in
             # https://mangowm.github.io/docs/configuration/basics#autostart
             exec-once = [
               "uwsm finalize &"
+
+              # Create the virtual output, wait until it appears in wlr-randr, then disable it
+              "${pkgs.writeShellScript "mango-init-headless" ''
+                set -euo pipefail
+
+                # Create virtual display
+                ${pkgs.mango}/bin/mmsg dispatch create_virtual_output
+
+                # Make sure virtual display gets created
+                for i in $(seq 1 60); do
+                  if ${pkgs.wlr-randr}/bin/wlr-randr | ${pkgs.gnugrep}/bin/grep -q "HEADLESS-1"; then
+                    break
+                  fi
+                  sleep 0.05
+                done
+
+                # Disable virtual display
+                ${pkgs.mango}/bin/mmsg dispatch disable_monitor,HEADLESS-1
+              ''}"
+
+              # Launch applications
               "uwsm app -- fumon &"
               "uwsm app -- kdeconnectd --replace &"
               "uwsm app -- kdeconnect-indicator &"
@@ -468,6 +489,11 @@ in
 
               "SUPER+SHIFT+CTRL,equal,incgaps,1"
               "SUPER+SHIFT+CTRL,minus,incgaps,-1"
+
+              # Moonlight Client Keybindings
+              "ALT+SHIFT,c,killclient"
+              "ALT+SHIFT,f,togglefullscreen"
+              "ALT+SHIFT,v,focusmon,HEADLESS-1"
             ];
 
             ####################

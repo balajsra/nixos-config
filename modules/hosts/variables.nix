@@ -165,6 +165,7 @@
           steam.enable = lib.mkEnableOption "Enable Steam";
           wine.enable = lib.mkEnableOption "Enable Wine/Proton";
           vkbasalt.enable = lib.mkEnableOption "Enable VkBasalt";
+          sunshine.enable = lib.mkEnableOption "Enable Sunshine Game Streaming Server";
           lutris.enable = lib.mkEnableOption "Enable Lutris";
           mangohud.enable = lib.mkEnableOption "Enable MangoHUD";
           chiaki.enable = lib.mkEnableOption "Enable Chiaki PlayStation Remote Play Client";

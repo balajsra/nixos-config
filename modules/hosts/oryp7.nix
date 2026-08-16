@@ -119,6 +119,7 @@ in
               steam.enable = true;
               wine.enable = true;
               vkbasalt.enable = true;
+              sunshine.enable = false;
               lutris.enable = true;
               mangohud.enable = true;
               chiaki.enable = true;
