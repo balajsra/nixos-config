@@ -22,19 +22,23 @@ stdenv.mkDerivation {
 
     THEME_DIR="$out/share/themes/Dracula"
     mkdir -p "$THEME_DIR"
-    mkdir -p "$out/share/Kvantum"
 
-    cp -r * "$THEME_DIR/"
+    # Copy the repository source into the theme path
+    cp -r . "$THEME_DIR"
 
-    # Copy assets for GTK3/4 relative lookup
-    if [ -d "$THEME_DIR/assets" ]; then
-      cp -r "$THEME_DIR/assets" "$THEME_DIR/gtk-3.0/" 2>/dev/null || true
-      cp -r "$THEME_DIR/assets" "$THEME_DIR/gtk-4.0/" 2>/dev/null || true
+    # Copy Kvantum theme assets if present
+    if [ -d "kde/kvantum" ]; then
+      mkdir -p "$out/share/Kvantum"
+      cp -r kde/kvantum/* "$out/share/Kvantum/" 2>/dev/null || true
     fi
 
-    # Copy assets for Qt/Kvantum
-    if [ -d "$THEME_DIR/kde/kvantum" ]; then
-      cp -r "$THEME_DIR/kde/kvantum/"* $out/share/Kvantum/
+    # Ensure gtk-3.0 and gtk-4.0 have fallback assets if upstream omits them
+    if [ -d "$THEME_DIR/assets" ]; then
+      for version in gtk-2.0 gtk-3.0 gtk-4.0; do
+        if [ -d "$THEME_DIR/$version" ] && [ ! -d "$THEME_DIR/$version/assets" ]; then
+          cp -r "$THEME_DIR/assets" "$THEME_DIR/$version/assets"
+        fi
+      done
     fi
 
     runHook postInstall
