@@ -489,6 +489,11 @@ in
 
               "SUPER+SHIFT+CTRL,equal,incgaps,1"
               "SUPER+SHIFT+CTRL,minus,incgaps,-1"
+
+              # Moonlight Client Keybindings
+              "ALT+SHIFT,c,killclient"
+              "ALT+SHIFT,f,togglefullscreen"
+              "ALT+SHIFT,v,focusmon,HEADLESS-1"
             ];
 
             ####################
