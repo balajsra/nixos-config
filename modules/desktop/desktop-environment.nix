@@ -1099,10 +1099,11 @@ in
       };
 
       xdg.configFile = {
-        "gtk-4.0/assets".source = "${pkgs.${gtkThemePackage}}/share/themes/Dracula/gtk-4.0/assets";
-        "gtk-4.0/gtk.css".source = "${pkgs.${gtkThemePackage}}/share/themes/Dracula/gtk-4.0/gtk.css";
-        "gtk-4.0/gtk-dark.css".source =
-          "${pkgs.${gtkThemePackage}}/share/themes/Dracula/gtk-4.0/gtk-dark.css";
+        # # Dracula GTK theme has a bug: https://github.com/dracula/gtk/issues/316
+        # "gtk-4.0/assets".source = "${pkgs.${gtkThemePackage}}/share/themes/Dracula/gtk-4.0/assets";
+        # "gtk-4.0/gtk.css".source = "${pkgs.${gtkThemePackage}}/share/themes/Dracula/gtk-4.0/gtk.css";
+        # "gtk-4.0/gtk-dark.css".source =
+        #   "${pkgs.${gtkThemePackage}}/share/themes/Dracula/gtk-4.0/gtk-dark.css";
 
         "Kvantum/kvantum.kvconfig".text = ''
           [General]
