@@ -1091,7 +1091,6 @@ in
       };
 
       home.sessionVariables = {
-        GTK_THEME = gtkThemeName;
         XDG_DATA_DIRS = "$XDG_DATA_DIRS:${pkgs.${iconThemePackage}}/share:${pkgs.hicolor-icon-theme}/share";
       };
 
