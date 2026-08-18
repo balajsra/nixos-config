@@ -54,7 +54,7 @@
           handbrake
           mkvtoolnix
           ffmpeg
-          fladder
+          jellyfin-desktop
           aegisub
           kdePackages.kdenlive
         ];
