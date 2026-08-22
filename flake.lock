@@ -425,6 +425,26 @@
         "type": "github"
       }
     },
+    "hytale-launcher": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787083398,
+        "narHash": "sha256-ey29CH7VCwJoq3QFzXqnTwVmNC+8f1rWY0F1TPjauLw=",
+        "owner": "JPyke3",
+        "repo": "hytale-launcher-nix",
+        "rev": "726e21f2b80d52e1e95ae12dc8f6a31c63f233a9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "JPyke3",
+        "repo": "hytale-launcher-nix",
+        "type": "github"
+      }
+    },
     "import-tree": {
       "locked": {
         "lastModified": 1784254960,
@@ -562,6 +582,7 @@
         "eza-themes": "eza-themes",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
+        "hytale-launcher": "hytale-launcher",
         "import-tree": "import-tree",
         "mango": "mango",
         "multiverse": "multiverse",

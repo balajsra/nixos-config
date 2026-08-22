@@ -124,6 +124,7 @@ in
               chiaki.enable = false;
               prism-launcher.enable = false;
               vintage-story.enable = false;
+              hytale-launcher.enable = false;
               heroic.enable = false;
             };
 

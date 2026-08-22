@@ -19,6 +19,7 @@
       self.homeModules.chiaki
       self.homeModules.prism-launcher
       self.homeModules.vintage-story
+      self.homeModules.hytale-launcher
       self.homeModules.heroic
     ];
   };
@@ -285,6 +286,22 @@
       config = lib.mkIf (osConfig.features.gaming.vintage-story.enable) {
         home.packages = with pkgs; [
           vintagestory
+        ];
+      };
+    };
+
+  flake.homeModules.hytale-launcher =
+    {
+      pkgs,
+      lib,
+      osConfig,
+      inputs,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.gaming.hytale-launcher.enable) {
+        home.packages = with pkgs; [
+          inputs.hytale-launcher.packages."${pkgs.stdenv.hostPlatform.system}".default
         ];
       };
     };

@@ -71,6 +71,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Hytale Launcher
+    hytale-launcher = {
+      url = "github:JPyke3/hytale-launcher-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Mango Wayland Compositor
     mango = {
       url = "github:mangowm/mango";
