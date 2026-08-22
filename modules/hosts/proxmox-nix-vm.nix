@@ -123,6 +123,7 @@ in
               mangohud.enable = false;
               chiaki.enable = false;
               prism-launcher.enable = false;
+              vintage-story.enable = false;
               heroic.enable = false;
             };
 

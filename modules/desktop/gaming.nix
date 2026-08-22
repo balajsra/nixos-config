@@ -18,6 +18,7 @@
       self.homeModules.mangohud
       self.homeModules.chiaki
       self.homeModules.prism-launcher
+      self.homeModules.vintage-story
       self.homeModules.heroic
     ];
   };
@@ -269,6 +270,21 @@
         # https://wiki.nixos.org/wiki/Prism_Launcher
         home.packages = with pkgs; [
           prismlauncher
+        ];
+      };
+    };
+
+  flake.homeModules.vintage-story =
+    {
+      pkgs,
+      lib,
+      osConfig,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.gaming.vintage-story.enable) {
+        home.packages = with pkgs; [
+          vintagestory
         ];
       };
     };
