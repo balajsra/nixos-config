@@ -21,6 +21,7 @@
       self.homeModules.vintage-story
       self.homeModules.hytale-launcher
       self.homeModules.heroic
+      self.homeModules.moonlight
     ];
   };
 
@@ -318,6 +319,21 @@
         # https://wiki.nixos.org/wiki/Heroic_Games_Launcher
         home.packages = with pkgs; [
           heroic
+        ];
+      };
+    };
+
+  flake.homeModules.moonlight =
+    {
+      pkgs,
+      lib,
+      osConfig,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.gaming.moonlight.enable) {
+        home.packages = with pkgs; [
+          moonlight-qt
         ];
       };
     };

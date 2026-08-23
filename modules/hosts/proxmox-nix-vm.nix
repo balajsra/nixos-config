@@ -119,6 +119,7 @@ in
               wine.enable = false;
               vkbasalt.enable = false;
               sunshine.enable = false;
+              moonlight.enable = false;
               lutris.enable = false;
               mangohud.enable = false;
               chiaki.enable = false;

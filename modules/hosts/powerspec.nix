@@ -146,6 +146,7 @@ in
               wine.enable = true;
               vkbasalt.enable = true;
               sunshine.enable = true;
+              moonlight.enable = false;
               lutris.enable = true;
               mangohud.enable = true;
               chiaki.enable = true;
