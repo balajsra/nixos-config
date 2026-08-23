@@ -181,9 +181,12 @@
           printing.enable = lib.mkEnableOption "Enable printing support";
           scanning.enable = lib.mkEnableOption "Enable scanning support";
           system76.enable = lib.mkEnableOption "Enable System76 hardware support";
-          racing-wheel = {
-            enable = lib.mkEnableOption "Enable racing wheel software";
-            logitech.enable = lib.mkEnableOption "Enable Logitech racing wheel drivers";
+          controller = {
+            xbox.enable = lib.mkEnableOption "Enable Xbox Controller Drivers";
+            racing-wheel = {
+              enable = lib.mkEnableOption "Enable racing wheel software";
+              logitech.enable = lib.mkEnableOption "Enable Logitech racing wheel drivers";
+            };
           };
           power = {
             handle-power-keys.enable = lib.mkEnableOption "Enable handling power keys";

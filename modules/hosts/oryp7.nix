@@ -135,9 +135,12 @@ in
               printing.enable = true;
               scanning.enable = true;
               system76.enable = true;
-              racing-wheel = {
-                enable = false;
-                logitech.enable = false;
+              controller = {
+                xbox.enable = true;
+                racing-wheel = {
+                  enable = false;
+                  logitech.enable = false;
+                };
               };
               power = {
                 handle-power-keys.enable = true;
@@ -219,6 +222,7 @@ in
         self.nixosModules.bluetooth
         self.nixosModules.boot-animation
         self.nixosModules.boot-loader
+        self.nixosModules.controller
         self.nixosModules.core
         self.nixosModules.data-dirs
         self.nixosModules.desktop-environment
@@ -238,7 +242,6 @@ in
         self.nixosModules.phone
         self.nixosModules.power
         self.nixosModules.printer
-        self.nixosModules.racing-wheel
         self.nixosModules.removable-media
         self.nixosModules.security
         self.nixosModules.sound
