@@ -105,7 +105,6 @@
           winetricks
           protonplus
           protontricks
-          protonup-qt
         ];
       };
     };
