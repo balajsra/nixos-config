@@ -184,6 +184,7 @@ in
 
             virtualization = {
               qemu.enable = true;
+              libvirt.enable = true;
               virt-manager.enable = true;
             };
           };

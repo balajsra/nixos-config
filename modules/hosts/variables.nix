@@ -230,6 +230,7 @@
 
         virtualization = {
           qemu.enable = lib.mkEnableOption "Enable QEMU";
+          libvirt.enable = lib.mkEnableOption "Enable libvirt";
           virt-manager.enable = lib.mkEnableOption "Enable virt-manager";
         };
       };

@@ -183,6 +183,7 @@ in
 
             virtualization = {
               qemu.enable = false;
+              libvirt.enable = false;
               virt-manager.enable = false;
             };
           };
