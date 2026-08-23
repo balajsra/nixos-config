@@ -21,6 +21,7 @@
         # https://wiki.nixos.org/wiki/QEMU
         environment.systemPackages = with pkgs; [
           qemu
+          quickemu
         ];
       };
     };
