@@ -27,7 +27,12 @@
     };
 
   flake.nixosModules.libvirt =
-    { config, lib, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       config = lib.mkIf (config.features.virtualization.libvirt.enable) {
         # https://wiki.nixos.org/wiki/Libvirt
@@ -41,6 +46,23 @@
 
           # Enable USB redirection
           spiceUSBRedirection.enable = true;
+        };
+
+        # Allow libvirt bridge traffic through the host firewall
+        networking.firewall.trustedInterfaces = [ "virbr0" ];
+
+        # Automatically start the 'default' libvirt network on boot
+        systemd.services.libvirt-default-network = {
+          description = "Start libvirt default network";
+          requires = [ "libvirtd.service" ];
+          after = [ "libvirtd.service" ];
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            ExecStart = "${pkgs.libvirt}/bin/virsh net-start default";
+            ExecStop = "${pkgs.libvirt}/bin/virsh net-destroy default";
+          };
         };
 
         users.users."${config.primaryUser.username}".extraGroups = [ "libvirtd" ];
