@@ -879,6 +879,9 @@ in
             "NONE,XF86AudioPause,spawn,dms ipc call mpris playPause"
             "NONE,XF86AudioPlay,spawn,dms ipc call mpris playPause"
             "NONE,XF86AudioPrev,spawn,dms ipc call mpris previous"
+
+            # Screenshot
+            "NONE,Print,spawn_shell,dms screenshot --stdout | ${pkgs.swappy}/bin/swappy -f -"
           ];
 
           extraConfig = ''
