@@ -227,6 +227,10 @@
           japanese.enable = lib.mkEnableOption "Enable Japanese fonts";
           korean.enable = lib.mkEnableOption "Enable Korean fonts";
         };
+
+        virtualization = {
+          virt-manager.enable = lib.mkEnableOption "Enable virt-manager";
+        };
       };
 
       primaryUser = {

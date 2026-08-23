@@ -181,6 +181,10 @@ in
               japanese.enable = true;
               korean.enable = true;
             };
+
+            virtualization = {
+              virt-manager.enable = true;
+            };
           };
 
           primaryUser = {
@@ -248,6 +252,7 @@ in
         self.nixosModules.sound
         self.nixosModules.system76
         self.nixosModules.utils
+        self.nixosModules.virtualization
       ];
 
       networking.hostName = "${hostname}";
