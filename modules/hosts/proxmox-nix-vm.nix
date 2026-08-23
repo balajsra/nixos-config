@@ -182,6 +182,7 @@ in
             };
 
             virtualization = {
+              qemu.enable = false;
               virt-manager.enable = false;
             };
           };

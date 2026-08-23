@@ -209,6 +209,7 @@ in
             };
 
             virtualization = {
+              qemu.enable = true;
               virt-manager.enable = true;
             };
           };

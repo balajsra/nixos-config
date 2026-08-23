@@ -3,9 +3,26 @@
 {
   flake.nixosModules.virtualization = {
     imports = [
+      self.nixosModules.qemu
       self.nixosModules.virt-manager
     ];
   };
+
+  flake.nixosModules.qemu =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (config.features.virtualization.qemu.enable) {
+        # https://wiki.nixos.org/wiki/QEMU
+        environment.systemPackages = with pkgs; [
+          qemu
+        ];
+      };
+    };
 
   flake.nixosModules.virt-manager =
     { config, lib, ... }:
