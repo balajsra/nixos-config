@@ -60,8 +60,18 @@
           serviceConfig = {
             Type = "oneshot";
             RemainAfterExit = true;
-            ExecStart = "${pkgs.libvirt}/bin/virsh net-start default";
-            ExecStop = "${pkgs.libvirt}/bin/virsh net-destroy default";
+            ExecStart = pkgs.writeShellScript "libvirt-default-network-start" ''
+              # Check if the network is active
+              if ! ${pkgs.libvirt}/bin/virsh net-info default 2>/dev/null | grep -q "Active:.*yes"; then
+                # If defined but inactive, start it
+                ${pkgs.libvirt}/bin/virsh net-start default || true
+              fi
+            '';
+            ExecStop = pkgs.writeShellScript "libvirt-default-network-stop" ''
+              if ${pkgs.libvirt}/bin/virsh net-info default 2>/dev/null | grep -q "Active:.*yes"; then
+                ${pkgs.libvirt}/bin/virsh net-destroy default || true
+              fi
+            '';
           };
         };
 
