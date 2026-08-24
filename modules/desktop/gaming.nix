@@ -237,12 +237,23 @@
       };
     };
 
-  flake.homeModules.mangohud = { lib, osConfig, ... }: {
-    config = lib.mkIf (osConfig.features.gaming.mangohud.enable) {
-      programs.mangohud.enable = true;
-      # TODO: Add mangohud settings
+  flake.homeModules.mangohud =
+    {
+      lib,
+      osConfig,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.gaming.mangohud.enable) {
+        home.packages = with pkgs; [
+          mangojuice
+        ];
+
+        programs.mangohud.enable = true;
+        # TODO: Add mangohud settings
+      };
     };
-  };
 
   flake.homeModules.chiaki =
     {
