@@ -227,6 +227,12 @@
           japanese.enable = lib.mkEnableOption "Enable Japanese fonts";
           korean.enable = lib.mkEnableOption "Enable Korean fonts";
         };
+
+        virtualization = {
+          qemu.enable = lib.mkEnableOption "Enable QEMU";
+          libvirt.enable = lib.mkEnableOption "Enable libvirt";
+          virt-manager.enable = lib.mkEnableOption "Enable virt-manager";
+        };
       };
 
       primaryUser = {
