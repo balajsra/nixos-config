@@ -148,6 +148,7 @@ in
               sunshine.enable = true;
               moonlight.enable = false;
               lutris.enable = true;
+              faugus.enable = false;
               mangohud.enable = true;
               chiaki.enable = true;
               prism-launcher.enable = true;

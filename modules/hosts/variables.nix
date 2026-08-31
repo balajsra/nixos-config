@@ -168,6 +168,7 @@
           sunshine.enable = lib.mkEnableOption "Enable Sunshine Game Streaming Server";
           moonlight.enable = lib.mkEnableOption "Enable Moonlight Game Streaming Client";
           lutris.enable = lib.mkEnableOption "Enable Lutris";
+          faugus.enable = lib.mkEnableOption "Enable Faugus";
           mangohud.enable = lib.mkEnableOption "Enable MangoHUD";
           chiaki.enable = lib.mkEnableOption "Enable Chiaki PlayStation Remote Play Client";
           prism-launcher.enable = lib.mkEnableOption "Enable Prism Launcher";

@@ -15,6 +15,7 @@
   flake.homeModules.gaming = {
     imports = [
       self.homeModules.lutris
+      self.homeModules.faugus
       self.homeModules.mangohud
       self.homeModules.chiaki
       self.homeModules.prism-launcher
@@ -234,6 +235,23 @@
         };
 
         # TODO: Add Lutris settings
+      };
+    };
+
+  flake.homeModules.faugus =
+    {
+      pkgs,
+      osConfig,
+      lib,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.gaming.faugus.enable) {
+        home.packages = with pkgs; [
+          faugus-launcher
+        ];
+
+        # TODO: Add Faugus settings
       };
     };
 
