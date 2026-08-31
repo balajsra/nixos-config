@@ -206,13 +206,19 @@
           };
 
           applications.apps = [
-            {
-              name = "Lutris";
-              cmd = "${pkgs.lutris}/bin/lutris";
-              auto-detach = false;
-              exclude-global-prep-cmd = false;
-            }
-          ];
+          ]
+          ++ lib.optional config.features.gaming.lutris.enable {
+            name = "Lutris";
+            cmd = "${pkgs.lutris}/bin/lutris";
+            auto-detach = false;
+            exclude-global-prep-cmd = false;
+          }
+          ++ lib.optional config.features.gaming.faugus.enable {
+            name = "Faugus";
+            cmd = "${pkgs.faugus-launcher}/bin/faugus-launcher";
+            auto-detach = false;
+            exclude-global-prep-cmd = false;
+          };
         };
 
         users.users."${config.primaryUser.username}".extraGroups = [ "uinput" ];
