@@ -15,6 +15,7 @@
   flake.homeModules.gaming = {
     imports = [
       self.homeModules.lutris
+      self.homeModules.faugus
       self.homeModules.mangohud
       self.homeModules.chiaki
       self.homeModules.prism-launcher
@@ -205,13 +206,19 @@
           };
 
           applications.apps = [
-            {
-              name = "Lutris";
-              cmd = "${pkgs.lutris}/bin/lutris";
-              auto-detach = false;
-              exclude-global-prep-cmd = false;
-            }
-          ];
+          ]
+          ++ lib.optional config.features.gaming.lutris.enable {
+            name = "Lutris";
+            cmd = "${pkgs.lutris}/bin/lutris";
+            auto-detach = false;
+            exclude-global-prep-cmd = false;
+          }
+          ++ lib.optional config.features.gaming.faugus.enable {
+            name = "Faugus";
+            cmd = "${pkgs.faugus-launcher}/bin/faugus-launcher";
+            auto-detach = false;
+            exclude-global-prep-cmd = false;
+          };
         };
 
         users.users."${config.primaryUser.username}".extraGroups = [ "uinput" ];
@@ -234,6 +241,91 @@
         };
 
         # TODO: Add Lutris settings
+      };
+    };
+
+  flake.homeModules.faugus =
+    {
+      pkgs,
+      config,
+      osConfig,
+      lib,
+      ...
+    }:
+    let
+      user = osConfig.primaryUser.username;
+
+      baseConfig = {
+        "accent-color" = "system";
+        "auto-close-on-launch" = "False";
+        "automatic-updates" = "True";
+        "autostart-enabled" = "False";
+        "background-mode" = "default";
+        "backup-auto-enabled" = "False";
+        "backup-dest-dir" = "";
+        "backup-frequency" = "daily";
+        "backup-last-date" = "";
+        "backup-target-day" = "0";
+        "banner-enabled" = "True";
+        "categories-and-sort-enabled" = "True";
+        "category" = "all";
+        "cover-size" = "100";
+        "default-prefix" = "/home/${osConfig.primaryUser.username}/Games/Faugus";
+        "default-runner" = "Proton-GE Latest";
+        "discrete-gpu" = "False";
+        "donate-last" = "";
+        "gamepad-navigation" = "True";
+        "gamemode" = "True";
+        "header-bar" = "True";
+        "height" = "720";
+        "interface-mode" = "SteamGridDB";
+        "interface-theme" = "system";
+        "labels-enabled" = "False";
+        "language" = "en_US";
+        "logging-enabled" = "False";
+        "logging-warning" = "False";
+        "lossless-location" = "";
+        "mangohud" = "True";
+        "minimized-startup-enabled" = "False";
+        "mono-icon" = "False";
+        "no-sleep-enabled" = "True";
+        "playtime" = 0;
+        "sdl-enabled" = "False";
+        "show-donate" = "True";
+        "show-hidden" = "False";
+        "sort" = "alpha";
+        "splash-window-enabled" = "True";
+        "startup-window-size" = "None";
+        "steam-user" = "all";
+        "steamgriddb-api-key" = "@API_KEY@"; # Placeholder
+        "system-tray" = "True";
+        "theme-engine" = "system";
+        "wayland-driver" = "False";
+        "width" = "1280";
+        "wow64-enabled" = "False";
+        "zoom-enabled" = "True";
+      };
+
+      configFileTemplate = pkgs.writeText "faugus-config-template.json" (builtins.toJSON baseConfig);
+    in
+    {
+      config = lib.mkIf (osConfig.features.gaming.faugus.enable) {
+        home.packages = with pkgs; [
+          faugus-launcher
+        ];
+
+        sops.secrets."api_keys/steamgriddb" = { };
+        # Replace placeholder with secret on home-manager switch/activation
+        home.activation.setupFaugusConfig = lib.hm.dag.entryAfter [ "writeBoundary" "sops-nix" ] ''
+          KEY=$(cat ${config.sops.secrets."api_keys/steamgriddb".path} 2>/dev/null || echo "")
+
+          # Target directory (change to ~/.config/faugus-launcher if needed)
+          TARGET_DIR="$HOME/faugus-launcher"
+          mkdir -p "$TARGET_DIR"
+
+          ${pkgs.gnused}/bin/sed "s|@API_KEY@|$KEY|g" ${configFileTemplate} > "$TARGET_DIR/config.json"
+          chmod 600 "$TARGET_DIR/config.json"
+        '';
       };
     };
 

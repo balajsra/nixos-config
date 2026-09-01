@@ -1,7 +1,7 @@
 { self, config, ... }:
 {
   flake.nixosModules.data-dirs =
-    { config, ... }:
+    { config, lib, ... }:
     let
       user = config.primaryUser.username;
       group = config.users.users.${user}.group;
@@ -13,11 +13,6 @@
         "d      /data/${user}/Documents              0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Downloads              0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Games                  0700  ${user}  ${group}  -    -"
-        "d      /data/${user}/Games/EA-App           0700  ${user}  ${group}  -    -"
-        "d      /data/${user}/Games/Heroic           0700  ${user}  ${group}  -    -"
-        "d      /data/${user}/Games/Prism-Launcher   0700  ${user}  ${group}  -    -"
-        "d      /data/${user}/Games/Steam            0700  ${user}  ${group}  -    -"
-        "d      /data/${user}/Games/Ubisoft-Connect  0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Music                  0700  ${user}  ${group}  -    -"
         "d      /data/${user}/NextCloud              0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Pictures               0700  ${user}  ${group}  -    -"
@@ -25,7 +20,19 @@
         "d      /data/${user}/Second-Brain           0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Videos                 0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Virtual-Machines       0700  ${user}  ${group}  -    -"
-      ];
+      ]
+      /*nixfmt:disable*/
+      ++ lib.optional (config.features.gaming.heroic.enable)
+        "d      /data/${user}/Games/Heroic           0700  ${user}  ${group}  -    -"
+      ++ lib.optional (config.features.gaming.prism-launcher.enable)
+        "d      /data/${user}/Games/Prism-Launcher   0700  ${user}  ${group}  -    -"
+      ++ lib.optional (config.features.gaming.steam.enable)
+        "d      /data/${user}/Games/Steam            0700  ${user}  ${group}  -    -"
+      ++ lib.optional (config.features.gaming.lutris.enable)
+        "d      /data/${user}/Games/Lutris           0700  ${user}  ${group}  -    -"
+      ++ lib.optional (config.features.gaming.faugus.enable)
+        "d      /data/${user}/Games/Faugus           0700  ${user}  ${group}  -    -";
+      /*nixfmt:enable*/
     };
 
   flake.homeModules.data-dirs =
