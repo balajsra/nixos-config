@@ -31,8 +31,6 @@
     }:
     let
       user = config.primaryUser.username;
-      keyDir = "/var/lib/sops-nix";
-      keyFile = "${keyDir}/user-key.txt";
     in
     {
       config = lib.mkIf (config.features.security.sops.enable) {
@@ -43,26 +41,15 @@
           mkpasswd
         ];
 
-        # Ensure directory is traversable (755) and derive the user age key from SSH host key
-        system.activationScripts.sopsUserKey = {
-          supportsDryActivation = true;
-          text = ''
-            mkdir -p ${keyDir}
-            chmod 755 ${keyDir}
-            if [ -f /etc/ssh/ssh_host_ed25519_key ]; then
-              ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key > ${keyFile}
-              chown ${user}:users ${keyFile}
-              chmod 600 ${keyFile}
-            fi
-          '';
-        };
-
         sops = {
           defaultSopsFile = "/home/${user}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
+
           age = {
-            # Use host SSH key directly for NixOS system secrets (e.g. hashedPasswordFile)
+            # sops-nix natively converts SSH keys to age keys in early setup
             sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+            # Set keyFile to host key or fallback path if needed
+            keyFile = "/var/lib/sops/age/keys.txt";
           };
         };
       };
@@ -90,8 +77,8 @@
     {
       config = lib.mkIf (osConfig.features.security.sops.enable) {
         sops = {
-          # Home Manager uses the user-owned age key derived from the host key
-          age.keyFile = "/var/lib/sops-nix/user-key.txt";
+          # Point Home Manager to the host SSH key directly or user SSH key
+          age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
           defaultSopsFile = "/home/${osConfig.primaryUser.username}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
