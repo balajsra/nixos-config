@@ -37,13 +37,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # (Private) Secrets Repository
-    # Authenticate via SSH and use shallow clone
-    nix-secrets = {
-      url = "git+ssh://git@forgejo.sravanbalaji.com:2222/sravan/nix-secrets.git?ref=main&shallow=1";
-      flake = false;
-    };
-
     ################
     # Applications #
     ################
