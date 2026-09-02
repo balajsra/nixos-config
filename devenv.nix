@@ -13,6 +13,7 @@
   # https://devenv.sh/packages/
   packages = with pkgs; [
     git
+    jq
     just
     just-lsp
     nixd

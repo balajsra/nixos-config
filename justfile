@@ -20,6 +20,8 @@ build-setup:
 
 generate-secrets:
     #!/usr/bin/env bash
+    set -euo pipefail
+
     echo "Unlocking Bitwarden session..."
     export BW_SESSION=$(bw unlock --raw)
 
@@ -29,8 +31,24 @@ generate-secrets:
     echo "Deriving Age key from system SSH host key..."
     AGE_KEY=$(ssh-to-age -i {{ SSH_HOST_KEY }}.pub)
 
+    # Export raw JSON from secretspec
+    RAW_JSON=$(secretspec export --format json)
+
+    # Find all keys matching the PASSWORDS__* prefix
+    PASSWORD_KEYS=$(echo "$RAW_JSON" | jq -r 'keys[] | select(startswith("PASSWORDS__"))')
+
+    # Hash each matching key with mkpasswd
+    for KEY in $PASSWORD_KEYS; do
+        PLAIN_VAL=$(echo "$RAW_JSON" | jq -r --arg k "$KEY" '.[$k] // empty')
+        if [ -n "$PLAIN_VAL" ]; then
+            echo "Hashing password key: $KEY"
+            HASHED_VAL=$(printf '%s' "$PLAIN_VAL" | mkpasswd -m sha-512 -s)
+            RAW_JSON=$(echo "$RAW_JSON" | jq --arg k "$KEY" --arg v "$HASHED_VAL" '.[$k] = $v')
+        fi
+    done
+
     echo "Building and encrypting {{ SECRETS_FILE }}..."
-    secretspec export --format json | yq -y '.' | sops --input-type yaml --encrypt --age "${AGE_KEY}" /dev/stdin > {{ SECRETS_FILE }}
+    echo "$RAW_JSON" | yq -y '.' | sops --input-type yaml --encrypt --age "${AGE_KEY}" /dev/stdin > {{ SECRETS_FILE }}
 
     echo "Successfully generated and encrypted {{ SECRETS_FILE }}"
 
