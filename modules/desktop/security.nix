@@ -46,10 +46,7 @@
           validateSopsFiles = false;
 
           age = {
-            # sops-nix natively converts SSH keys to age keys in early setup
             sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-            # Set keyFile to host key or fallback path if needed
-            keyFile = "/var/lib/sops/age/keys.txt";
           };
         };
       };
@@ -77,7 +74,6 @@
     {
       config = lib.mkIf (osConfig.features.security.sops.enable) {
         sops = {
-          # Point Home Manager to the host SSH key directly or user SSH key
           age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
           defaultSopsFile = "/home/${osConfig.primaryUser.username}/.config/nixos/secrets.yaml";
