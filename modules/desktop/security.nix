@@ -29,9 +29,6 @@
       lib,
       ...
     }:
-    let
-      secretsPath = builtins.toString inputs.nix-secrets;
-    in
     {
       config = lib.mkIf (config.features.security.sops.enable) {
         environment.systemPackages = with pkgs; [
@@ -42,7 +39,7 @@
         ];
 
         sops = {
-          defaultSopsFile = "${secretsPath}/secrets.yaml";
+          defaultSopsFile = "${inputs.self}/secrets.yaml";
           validateSopsFiles = false;
           age = {
             # automatically import host SSH keys as age keys
@@ -75,16 +72,13 @@
 
   flake.homeModules.sops =
     { osConfig, lib, ... }:
-    let
-      secretsPath = builtins.toString inputs.nix-secrets;
-    in
     {
       config = lib.mkIf (osConfig.features.security.sops.enable) {
         sops = {
           # This is the dev access key and needs to have been copied to this location on the host
           age.keyFile = "/home/${osConfig.primaryUser.username}/.config/sops/age/keys.txt";
 
-          defaultSopsFile = "${secretsPath}/secrets.yaml";
+          defaultSopsFile = "${inputs.self}/secrets.yaml";
           validateSopsFiles = false;
         };
       };

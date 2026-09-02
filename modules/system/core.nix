@@ -29,7 +29,7 @@
       programs.nix-ld.enable = true;
 
       sops = {
-        secrets."access_tokens_string" = {
+        secrets."ACCESS_TOKENS_STRING" = {
           mode = "0444";
           neededForUsers = true;
         };
@@ -55,7 +55,7 @@
         };
 
         extraOptions = ''
-          !include ${config.sops.secrets."access_tokens_string".path}
+          !include ${config.sops.secrets."ACCESS_TOKENS_STRING".path}
         '';
       };
     };

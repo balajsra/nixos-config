@@ -31,7 +31,7 @@
     {
       config = lib.mkIf (config.features.file-sharing.samba-client.fileserver.enable) {
         sops.secrets = {
-          "samba-client/fileserver" = { };
+          "SAMBA_CLIENT__FILESERVER" = { };
         };
 
         fileSystems."/mnt/fileserver" = {
@@ -41,7 +41,7 @@
             let
               uid = toString config.users.users.${config.primaryUser.username}.uid;
               gid = toString config.users.groups."${config.primaryUser.username}".gid;
-              credentials = config.sops.secrets."samba-client/fileserver".path;
+              credentials = config.sops.secrets."SAMBA_CLIENT__FILESERVER".path;
             in
             [
               "_netdev,credentials=${credentials},iocharset=utf8,uid=${uid},gid=${gid},rw,nofail"
@@ -55,7 +55,7 @@
     {
       config = lib.mkIf (config.features.file-sharing.samba-client.mediaserver.enable) {
         sops.secrets = {
-          "samba-client/mediaserver" = { };
+          "SAMBA_CLIENT__MEDIASERVER" = { };
         };
 
         fileSystems."/mnt/mediaserver" = {
@@ -65,7 +65,7 @@
             let
               uid = toString config.users.users.${config.primaryUser.username}.uid;
               gid = toString config.users.groups."${config.primaryUser.username}".gid;
-              credentials = config.sops.secrets."samba-client/mediaserver".path;
+              credentials = config.sops.secrets."SAMBA_CLIENT__MEDIASERVER".path;
             in
             [
               "_netdev,credentials=${credentials},iocharset=utf8,uid=${uid},gid=${gid},rw,nofail"
@@ -84,13 +84,13 @@
     {
       config = lib.mkIf (osConfig.features.file-sharing.syncthing.enable) {
         sops.secrets = {
-          "syncthing/gui_password" = { };
+          "SYNCTHING__GUI_PASSWORD" = { };
 
-          "syncthing/devices/${osConfig.networking.hostName}/cert" = {
+          "SYNCTHING__DEVICES__${lib.toUpper osConfig.networking.hostName}__CERT" = {
             path = "/home/${osConfig.primaryUser.username}/.local/state/syncthing/cert.pem";
             mode = "0600";
           };
-          "syncthing/devices/${osConfig.networking.hostName}/key" = {
+          "SYNCTHING__DEVICES__${lib.toUpper osConfig.networking.hostName}__KEY" = {
             path = "/home/${osConfig.primaryUser.username}/.local/state/syncthing/key.pem";
             mode = "0600";
           };
@@ -103,7 +103,7 @@
 
           guiCredentials = {
             username = osConfig.primaryUser.username;
-            passwordFile = config.sops.secrets."syncthing/gui_password".path;
+            passwordFile = config.sops.secrets."SYNCTHING__GUI_PASSWORD".path;
           };
 
           overrideDevices = true;

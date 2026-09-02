@@ -23,9 +23,10 @@
     {
       config = lib.mkIf (osConfig.features.networking.ssh-client.enable) {
         sops.secrets = {
-          "private_keys/${osConfig.networking.hostName}/${osConfig.primaryUser.username}" = {
-            path = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
-          };
+          "PRIVATE_KEYS__${lib.toUpper osConfig.networking.hostName}__${lib.toUpper osConfig.primaryUser.username}" =
+            {
+              path = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
+            };
         };
 
         programs.ssh = {
@@ -130,10 +131,10 @@
     {
       config = lib.mkIf (config.features.networking.vpn.home) {
         sops.secrets = {
-          "home_vpn_wireguard/${config.networking.hostName}/full_tunnel" = {
+          "HOME_VPN_WIREGUARD__${lib.toUpper config.networking.hostName}__FULL_TUNNEL" = {
             path = "/run/secrets/homefull.conf";
           };
-          "home_vpn_wireguard/${config.networking.hostName}/split_tunnel" = {
+          "HOME_VPN_WIREGUARD__${lib.toUpper config.networking.hostName}__SPLIT_TUNNEL" = {
             path = "/run/secrets/homesplit.conf";
           };
         };
@@ -189,7 +190,7 @@
     }:
     {
       config = lib.mkIf (config.features.networking.vpn.proton) {
-        sops.secrets."proton_vpn_wireguard/jp-free-20" = {
+        sops.secrets."PROTON_VPN_WIREGUARD__JP_FREE_20" = {
           path = "/run/secrets/protonjp.conf";
         };
 
