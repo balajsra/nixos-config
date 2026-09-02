@@ -2,11 +2,31 @@
 # when using devenv extension
 export PATH := "/run/wrappers/bin:" + env('PATH')
 
+export SECRETS_FILE := "secrets.yaml"
+export SSH_HOST_KEY := "/etc/ssh/ssh_host_ed25519_key"
+
 default:
     @just --list
 
 git-intent-to-add:
     git add -N .
+
+generate-secrets:
+    #!/usr/bin/env bash
+    echo "Unlocking Bitwarden session..."
+    export BW_SESSION=$(bw unlock --raw)
+
+    echo "Deriving Age key from system SSH host key..."
+    AGE_KEY=$(ssh-to-age -i {{ SSH_HOST_KEY }}.pub)
+
+    echo "Building and encrypting {{ SECRETS_FILE }}..."
+    secretspec export --format json | yq -y '.' | sops --input-type yaml --encrypt --age "${AGE_KEY}" /dev/stdin > {{ SECRETS_FILE }}
+
+    echo "Successfully generated and encrypted {{ SECRETS_FILE }}"
+
+decrypt-secrets :
+    #!/usr/bin/env bash
+    SOPS_AGE_KEY=$(sudo ssh-to-age -private-key -i {{ SSH_HOST_KEY }}) sops --decrypt {{ SECRETS_FILE }}
 
 flake-update input="":
     #!/usr/bin/env bash
