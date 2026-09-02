@@ -2,7 +2,7 @@
 
 {
   # Export the overlay on the flake output applied with `inputs`
-  flake.overlays.default = import ../../pkgs/default.nix inputs;
+  flake.overlays.default = import "${inputs.self}/pkgs/default.nix" inputs;
 
   perSystem =
     {
