@@ -16,6 +16,8 @@ build-setup:
     else
         echo "{{ SECRETS_FILE }} exists. Skipping generation."
     fi
+
+    # Stage all untracked changes for Nix evaluation
     git add -N .
 
 generate-secrets:
