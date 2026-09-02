@@ -8,13 +8,23 @@ export SSH_HOST_KEY := "/etc/ssh/ssh_host_ed25519_key"
 default:
     @just --list
 
-git-intent-to-add:
+build-setup:
+    #!/usr/bin/env bash
+    if [ ! -f "{{ SECRETS_FILE }}" ]; then
+        echo "{{ SECRETS_FILE }} not found. Generating..."
+        just generate-secrets
+    else
+        echo "{{ SECRETS_FILE }} exists. Skipping generation."
+    fi
     git add -N .
 
 generate-secrets:
     #!/usr/bin/env bash
     echo "Unlocking Bitwarden session..."
     export BW_SESSION=$(bw unlock --raw)
+
+    echo "Syncing Bitwarden vault..."
+    bw sync
 
     echo "Deriving Age key from system SSH host key..."
     AGE_KEY=$(ssh-to-age -i {{ SSH_HOST_KEY }}.pub)
@@ -38,7 +48,7 @@ flake-update input="":
         nix flake update --flake . "{{ input }}"
     fi
 
-rebuild-test target='$(hostname)': git-intent-to-add
+rebuild-test target='$(hostname)': build-setup
     @echo "Testing {{ target }}"
     nixos-rebuild dry-activate \
         --flake .#{{ target }} \
@@ -67,13 +77,13 @@ rebuild-test-all:
         just rebuild-test "$host"
     done
 
-rebuild-boot target='$(hostname)': git-intent-to-add
+rebuild-boot target='$(hostname)': build-setup
     @echo "Building {{ target }} for next boot"
     nixos-rebuild boot \
         --flake .#{{ target }} \
         --sudo
 
-rebuild-switch target='$(hostname)': git-intent-to-add
+rebuild-switch target='$(hostname)': build-setup
     @echo "Building and switching to {{ target }}"
     nixos-rebuild switch \
         --flake .#{{ target }} \
