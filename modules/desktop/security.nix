@@ -29,6 +29,11 @@
       lib,
       ...
     }:
+    let
+      user = config.primaryUser.username;
+      keyDir = "/var/lib/sops-nix";
+      keyFile = "${keyDir}/user-key.txt";
+    in
     {
       config = lib.mkIf (config.features.security.sops.enable) {
         environment.systemPackages = with pkgs; [
@@ -38,14 +43,27 @@
           mkpasswd
         ];
 
+        # Ensure /var/lib/sops-nix exists and generate the derived key at system boot/activation
+        system.activationScripts.sopsUserKey = {
+          supportsDryActivation = true;
+          text = ''
+            mkdir -p ${keyDir}
+            if [ -f /etc/ssh/ssh_host_ed25519_key ]; then
+              ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key > ${keyFile}
+              chown ${user}:users ${keyFile}
+              chmod 600 ${keyFile}
+            fi
+          '';
+        };
+
         sops = {
-          defaultSopsFile = "${inputs.self}/secrets.yaml";
+          defaultSopsFile = "/home/${user}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
           age = {
             # automatically import host SSH keys as age keys
             sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
             # this will use an age key that is expected to already be in the filesystem
-            keyFile = "/var/lib/sops-nix/key.txt";
+            keyFile = "${keyDir}/key.txt";
             # generate a new key if the key specified above does not exist
             generateKey = true;
           };
@@ -75,10 +93,9 @@
     {
       config = lib.mkIf (osConfig.features.security.sops.enable) {
         sops = {
-          # This is the dev access key and needs to have been copied to this location on the host
-          age.keyFile = "/home/${osConfig.primaryUser.username}/.config/sops/age/keys.txt";
+          age.keyFile = "/var/lib/sops-nix/user-key.txt";
 
-          defaultSopsFile = "${inputs.self}/secrets.yaml";
+          defaultSopsFile = "/home/${osConfig.primaryUser.username}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
         };
       };
