@@ -18,6 +18,7 @@
     nixd
     nixfmt
     yaml-language-server
+    yq
   ];
 
   # https://devenv.sh/languages/
