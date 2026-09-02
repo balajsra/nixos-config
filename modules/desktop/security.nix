@@ -43,11 +43,12 @@
           mkpasswd
         ];
 
-        # Ensure /var/lib/sops-nix exists and generate the derived key at system boot/activation
+        # Ensure directory is traversable (755) and derive the user age key from SSH host key
         system.activationScripts.sopsUserKey = {
           supportsDryActivation = true;
           text = ''
             mkdir -p ${keyDir}
+            chmod 755 ${keyDir}
             if [ -f /etc/ssh/ssh_host_ed25519_key ]; then
               ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key > ${keyFile}
               chown ${user}:users ${keyFile}
@@ -60,12 +61,8 @@
           defaultSopsFile = "/home/${user}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
           age = {
-            # automatically import host SSH keys as age keys
+            # Use host SSH key directly for NixOS system secrets (e.g. hashedPasswordFile)
             sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-            # this will use an age key that is expected to already be in the filesystem
-            keyFile = "${keyDir}/key.txt";
-            # generate a new key if the key specified above does not exist
-            generateKey = true;
           };
         };
       };
@@ -93,6 +90,7 @@
     {
       config = lib.mkIf (osConfig.features.security.sops.enable) {
         sops = {
+          # Home Manager uses the user-owned age key derived from the host key
           age.keyFile = "/var/lib/sops-nix/user-key.txt";
 
           defaultSopsFile = "/home/${osConfig.primaryUser.username}/.config/nixos/secrets.yaml";
