@@ -18,6 +18,7 @@
     just-lsp
     nixd
     nixfmt
+    ssh-to-age
     yaml-language-server
     yq
   ];
