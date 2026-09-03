@@ -15,6 +15,12 @@ build-setup:
     #!/usr/bin/env bash
     set -euo pipefail
 
+    if [ ! -f "{{ SSH_HOST_KEY }}" ]; then
+        echo "{{ SSH_HOST_KEY }} not found. Generating..."
+        just generate-ssh-key
+    else
+        echo "{{ SSH_HOST_KEY }} exists. Skipping generation."
+    fi
 
     if [ ! -f "{{ SECRETS_FILE }}" ]; then
         echo "{{ SECRETS_FILE }} not found. Generating..."
@@ -25,6 +31,15 @@ build-setup:
 
     # Stage all untracked changes for Nix evaluation
     git add -N .
+
+generate-ssh-key:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    sudo mkdir -p /etc/ssh
+    sudo ssh-keygen -t ed25519 -N "" -f {{ SSH_HOST_KEY }}
+    sudo chmod 600 {{ SSH_HOST_KEY }}
+    sudo chmod 644 "{{ SSH_HOST_KEY }}.pub"
 
 generate-secrets:
     #!/usr/bin/env bash
