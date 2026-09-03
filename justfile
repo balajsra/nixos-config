@@ -3,7 +3,8 @@
 export PATH := "/run/wrappers/bin:" + env('PATH')
 
 export SECRETS_FILE := "secrets.yaml"
-export SSH_HOST_KEY := "/etc/ssh/ssh_host_ed25519_key"
+export AGE_KEY_DIR := env('HOME') + "/.config/sops/age"
+export AGE_KEY_FILE := "${AGE_KEY_DIR}/keys.txt"
 
 default:
     @just --list
@@ -30,8 +31,11 @@ generate-secrets:
     echo "Syncing Bitwarden vault..."
     bw sync
 
-    echo "Deriving Age key from system SSH host key..."
-    AGE_KEY=$(ssh-to-age -i {{ SSH_HOST_KEY }}.pub)
+    echo "Generating standalone age key..."
+    mkdir -p "{{ AGE_KEY_DIR }}"
+    age-keygen -pq > "{{ AGE_KEY_FILE }}"
+    chmod 600 "{{ AGE_KEY_FILE }}"
+    AGE_PUBLIC_KEY=$(age-keygen -y "{{ AGE_KEY_FILE }}")
 
     # Export raw JSON from secretspec
     RAW_JSON=$(secretspec export --format json)
@@ -50,13 +54,13 @@ generate-secrets:
     done
 
     echo "Building and encrypting {{ SECRETS_FILE }}..."
-    echo "$RAW_JSON" | yq -y '.' | sops --input-type yaml --encrypt --age "${AGE_KEY}" /dev/stdin > {{ SECRETS_FILE }}
+    echo "$RAW_JSON" | yq -y '.' | sops --input-type yaml --encrypt --age "${AGE_PUBLIC_KEY}" /dev/stdin > {{ SECRETS_FILE }}
 
     echo "Successfully generated and encrypted {{ SECRETS_FILE }}"
 
 decrypt-secrets :
     #!/usr/bin/env bash
-    SOPS_AGE_KEY=$(sudo ssh-to-age -private-key -i {{ SSH_HOST_KEY }}) sops --decrypt {{ SECRETS_FILE }}
+    SOPS_AGE_KEY_FILE="{{ AGE_KEY_FILE }}" sops --decrypt {{ SECRETS_FILE }}
 
 flake-update input="":
     #!/usr/bin/env bash
