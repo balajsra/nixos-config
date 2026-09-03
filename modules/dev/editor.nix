@@ -173,6 +173,7 @@
               ms-vscode.remote-explorer
               nefrob.vscode-just-syntax
               redhat.vscode-yaml
+              tamasfe.even-better-toml
               tomoki1207.pdf
               vscodevim.vim
             ];

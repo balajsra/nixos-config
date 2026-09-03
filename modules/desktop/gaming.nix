@@ -314,10 +314,10 @@
           faugus-launcher
         ];
 
-        sops.secrets."api_keys/steamgriddb" = { };
+        sops.secrets."API_KEYS__STEAMGRIDDB" = { };
         # Replace placeholder with secret on home-manager switch/activation
         home.activation.setupFaugusConfig = lib.hm.dag.entryAfter [ "writeBoundary" "sops-nix" ] ''
-          KEY=$(cat ${config.sops.secrets."api_keys/steamgriddb".path} 2>/dev/null || echo "")
+          KEY=$(cat ${config.sops.secrets."API_KEYS__STEAMGRIDDB".path} 2>/dev/null || echo "")
 
           # Target directory (change to ~/.config/faugus-launcher if needed)
           TARGET_DIR="$HOME/faugus-launcher"

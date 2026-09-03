@@ -7,19 +7,22 @@
 
 {
   flake.nixosModules.admin =
-    { config, ... }:
+    { lib, config, ... }:
+    let
+      hostname = config.networking.hostName;
+      normalizedHost = builtins.replaceStrings [ "-" ] [ "_" ] (lib.toUpper hostname);
+      userPasswordKey = "PASSWORDS__${normalizedHost}__${lib.toUpper config.primaryUser.username}";
+    in
     {
-      # Decrypt <username>-password to /run/secrets-for-users/ so it can be used to create the user
-      sops.secrets."passwords/${config.networking.hostName}/${config.primaryUser.username}".neededForUsers =
-        true;
+      # Decrypt user password to /run/secrets-for-users/ so it can be used to create the user
+      sops.secrets."${userPasswordKey}".neededForUsers = true;
       # Required for password to be set via sops during system activation
       users.mutableUsers = false;
 
       # Define a user account. Don't forget to set a password with ‘passwd’.
       users.users."${config.primaryUser.username}" = {
         isNormalUser = true;
-        hashedPasswordFile =
-          config.sops.secrets."passwords/${config.networking.hostName}/${config.primaryUser.username}".path;
+        hashedPasswordFile = config.sops.secrets."${userPasswordKey}".path;
         extraGroups = [
           "wheel"
           "users"
