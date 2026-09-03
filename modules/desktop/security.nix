@@ -29,9 +29,6 @@
       lib,
       ...
     }:
-    let
-      user = config.primaryUser.username;
-    in
     {
       config = lib.mkIf (config.features.security.sops.enable) {
         environment.systemPackages = with pkgs; [
@@ -41,7 +38,7 @@
         ];
 
         sops = {
-          defaultSopsFile = "/home/${user}/.config/nixos/secrets.yaml";
+          defaultSopsFile = "/etc/nixos/secrets.yaml";
           validateSopsFiles = false;
 
           # System activation uses the host SSH key
@@ -80,7 +77,7 @@
     {
       config = lib.mkIf (osConfig.features.security.sops.enable) {
         sops = {
-          defaultSopsFile = "/home/${osConfig.primaryUser.username}/.config/nixos/secrets.yaml";
+          defaultSopsFile = "/etc/nixos/secrets.yaml";
           validateSopsFiles = false;
 
           # Home manager activation uses the user age key

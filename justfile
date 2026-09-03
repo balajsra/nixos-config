@@ -2,7 +2,8 @@
 # when using devenv extension
 export PATH := "/run/wrappers/bin:" + env('PATH')
 
-export SECRETS_FILE := "secrets.yaml"
+export SECRETS_FILE_DIR := "/etc/nixos"
+export SECRETS_FILE := "${SECRETS_FILE_DIR}/secrets.yaml"
 export SSH_HOST_KEY := "/etc/ssh/ssh_host_ed25519_key"
 export AGE_KEY_DIR := env('HOME') + "/.config/sops/age"
 export AGE_KEY_FILE := "${AGE_KEY_DIR}/keys.txt"
@@ -61,6 +62,7 @@ generate-secrets:
     done
 
     echo "Building and encrypting {{ SECRETS_FILE }} for both host and user keys..."
+    mkdir -p {{ SECRETS_FILE_DIR }}
     echo "$RAW_JSON" | yq -y '.' | sops --input-type yaml --encrypt --age "${HOST_AGE_KEY},${USER_AGE_KEY}" /dev/stdin > {{ SECRETS_FILE }}
 
     echo "Successfully generated and encrypted {{ SECRETS_FILE }}"
