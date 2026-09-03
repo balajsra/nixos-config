@@ -9,7 +9,9 @@
   flake.nixosModules.admin =
     { lib, config, ... }:
     let
-      userPasswordKey = "PASSWORDS__${lib.toUpper config.networking.hostName}__${lib.toUpper config.primaryUser.username}";
+      hostname = config.networking.hostName;
+      normalizedHost = builtins.replaceStrings [ "-" ] [ "_" ] (lib.toUpper hostname);
+      userPasswordKey = "PASSWORDS__${normalizedHost}__${lib.toUpper config.primaryUser.username}";
     in
     {
       # Decrypt user password to /run/secrets-for-users/ so it can be used to create the user
