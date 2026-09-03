@@ -37,17 +37,13 @@
         environment.systemPackages = with pkgs; [
           age
           sops
-          ssh-to-age
           mkpasswd
         ];
 
         sops = {
           defaultSopsFile = "/home/${user}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
-
-          age = {
-            sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-          };
+          age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
         };
       };
     };
@@ -70,12 +66,16 @@
     };
 
   flake.homeModules.sops =
-    { osConfig, lib, ... }:
+    {
+      osConfig,
+      config,
+      lib,
+      ...
+    }:
     {
       config = lib.mkIf (osConfig.features.security.sops.enable) {
         sops = {
-          age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-
+          age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
           defaultSopsFile = "/home/${osConfig.primaryUser.username}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
         };
