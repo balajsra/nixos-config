@@ -41,9 +41,11 @@
         ];
 
         sops = {
-          age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
           defaultSopsFile = "/home/${user}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
+
+          # System activation uses the host SSH key
+          age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
         };
       };
     };
@@ -78,9 +80,11 @@
     {
       config = lib.mkIf (osConfig.features.security.sops.enable) {
         sops = {
-          age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
           defaultSopsFile = "/home/${osConfig.primaryUser.username}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
+
+          # Home manager activation uses the user age key
+          age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
         };
       };
     };
