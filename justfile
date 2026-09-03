@@ -13,6 +13,9 @@ default:
 
 build-setup:
     #!/usr/bin/env bash
+    set -euo pipefail
+
+
     if [ ! -f "{{ SECRETS_FILE }}" ]; then
         echo "{{ SECRETS_FILE }} not found. Generating..."
         just generate-secrets
@@ -72,10 +75,14 @@ generate-secrets:
 
 decrypt-secrets :
     #!/usr/bin/env bash
+    set -euo pipefail
+
     SOPS_AGE_KEY_FILE="{{ AGE_KEY_FILE }}" sops --decrypt {{ SECRETS_FILE }}
 
 flake-update input="":
     #!/usr/bin/env bash
+    set -euo pipefail
+
     if [ -z "{{ input }}" ]; then
         echo "Updating all flake inputs..."
         nix flake update --flake .
