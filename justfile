@@ -62,8 +62,11 @@ generate-secrets:
     done
 
     echo "Building and encrypting {{ SECRETS_FILE }} for both host and user keys..."
-    mkdir -p {{ SECRETS_FILE_DIR }}
-    echo "$RAW_JSON" | yq -y '.' | sops --input-type yaml --encrypt --age "${HOST_AGE_KEY},${USER_AGE_KEY}" /dev/stdin > {{ SECRETS_FILE }}
+    TMP_SECRETS=$(mktemp)
+    trap 'rm -f "${TMP_SECRETS}"' EXIT
+    echo "$RAW_JSON" | yq -y '.' | sops --input-type yaml --encrypt --age "${HOST_AGE_KEY},${USER_AGE_KEY}" /dev/stdin > ${TMP_SECRETS}
+    sudo mkdir -p {{ SECRETS_FILE_DIR }}
+    sudo install -m 0644 -o root -g root "${TMP_SECRETS}" {{ SECRETS_FILE }}
 
     echo "Successfully generated and encrypted {{ SECRETS_FILE }}"
 
