@@ -11,6 +11,7 @@ export AGE_KEY_FILE := "${AGE_KEY_DIR}/keys.txt"
 default:
     @just --list
 
+[private]
 build-setup:
     #!/usr/bin/env bash
     set -euo pipefail
