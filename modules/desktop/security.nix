@@ -41,9 +41,9 @@
         ];
 
         sops = {
+          age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
           defaultSopsFile = "/home/${user}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
-          age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
         };
       };
     };
@@ -72,10 +72,13 @@
       lib,
       ...
     }:
+    let
+      user = config.primaryUser.username;
+    in
     {
       config = lib.mkIf (osConfig.features.security.sops.enable) {
         sops = {
-          age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+          age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
           defaultSopsFile = "/home/${osConfig.primaryUser.username}/.config/nixos/secrets.yaml";
           validateSopsFiles = false;
         };
