@@ -41,7 +41,7 @@ generate-secrets:
     age-keygen -pq > "{{ AGE_KEY_FILE }}"
     chmod 600 "{{ AGE_KEY_FILE }}"
 
-    echo "Extracing host and user public age keys..."
+    echo "Extracting host and user public age keys..."
     USER_AGE_KEY=$(age-keygen -y "{{ AGE_KEY_FILE }}")
     HOST_AGE_KEY=$(ssh-to-age -i {{ SSH_HOST_KEY }}.pub)
 
