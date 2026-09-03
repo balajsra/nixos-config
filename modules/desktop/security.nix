@@ -75,7 +75,7 @@
       ...
     }:
     let
-      user = config.primaryUser.username;
+      user = osConfig.primaryUser.username;
     in
     {
       config = lib.mkIf (osConfig.features.security.sops.enable) {
