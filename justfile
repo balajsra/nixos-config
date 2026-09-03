@@ -3,6 +3,7 @@
 export PATH := "/run/wrappers/bin:" + env('PATH')
 
 export SECRETS_FILE := "secrets.yaml"
+export SSH_HOST_KEY := "/etc/ssh/ssh_host_ed25519_key"
 export AGE_KEY_DIR := env('HOME') + "/.config/sops/age"
 export AGE_KEY_FILE := "${AGE_KEY_DIR}/keys.txt"
 
@@ -34,11 +35,14 @@ generate-secrets:
     echo "Check that all secretspec secrets are available..."
     secretspec check
 
-    echo "Generating standalone age key..."
+    echo "Generating user age key..."
     mkdir -p "{{ AGE_KEY_DIR }}"
     age-keygen -pq > "{{ AGE_KEY_FILE }}"
     chmod 600 "{{ AGE_KEY_FILE }}"
-    AGE_PUBLIC_KEY=$(age-keygen -y "{{ AGE_KEY_FILE }}")
+
+    echo "Extracing host and user public age keys..."
+    USER_AGE_KEY=$(age-keygen -y "{{ AGE_KEY_FILE }}")
+    HOST_AGE_KEY=$(ssh-to-age -i {{ SSH_HOST_KEY }}.pub)
 
     echo "Exporting secretspec to JSON..."
     RAW_JSON=$(secretspec export --format json)
@@ -56,8 +60,8 @@ generate-secrets:
         fi
     done
 
-    echo "Building and encrypting {{ SECRETS_FILE }}..."
-    echo "$RAW_JSON" | yq -y '.' | sops --input-type yaml --encrypt --age "${AGE_PUBLIC_KEY}" /dev/stdin > {{ SECRETS_FILE }}
+    echo "Building and encrypting {{ SECRETS_FILE }} for both host and user keys..."
+    echo "$RAW_JSON" | yq -y '.' | sops --input-type yaml --encrypt --age "${HOST_AGE_KEY},${USER_AGE_KEY}" /dev/stdin > {{ SECRETS_FILE }}
 
     echo "Successfully generated and encrypted {{ SECRETS_FILE }}"
 
