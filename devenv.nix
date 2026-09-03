@@ -12,6 +12,7 @@
 
   # https://devenv.sh/packages/
   packages = with pkgs; [
+    age
     git
     jq
     just
