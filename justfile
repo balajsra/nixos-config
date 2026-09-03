@@ -31,13 +31,16 @@ generate-secrets:
     echo "Syncing Bitwarden vault..."
     bw sync
 
+    echo "Check that all secretspec secrets are available..."
+    secretspec check
+
     echo "Generating standalone age key..."
     mkdir -p "{{ AGE_KEY_DIR }}"
     age-keygen -pq > "{{ AGE_KEY_FILE }}"
     chmod 600 "{{ AGE_KEY_FILE }}"
     AGE_PUBLIC_KEY=$(age-keygen -y "{{ AGE_KEY_FILE }}")
 
-    # Export raw JSON from secretspec
+    echo "Exporting secretspec to JSON..."
     RAW_JSON=$(secretspec export --format json)
 
     # Find all keys matching the PASSWORDS__* prefix
