@@ -429,7 +429,7 @@ in
               "SUPER+CTRL,f,togglefakefullscreen"
               "SUPER+SHIFT+CTRL,f,togglemaximizescreen"
 
-              "SUPER,o,toggleoverview"
+              "SUPER,o,overcircle,next"
 
               "SUPER,s,switch_proportion_preset"
 
