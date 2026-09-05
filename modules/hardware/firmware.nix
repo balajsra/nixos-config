@@ -14,6 +14,8 @@
       config = lib.mkIf (config.features.hardware.firmware.enable) {
         # https://wiki.nixos.org/wiki/Fwupd
         services.fwupd.enable = true;
+
+        hardware.enableAllFirmware = true;
       };
     };
 
