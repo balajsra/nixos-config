@@ -233,6 +233,32 @@
       lib,
       ...
     }:
+    let
+      gamePreLaunch = pkgs.writeShellScript "game-pre-launch" ''
+        ${lib.optionalString (osConfig.features.gaming.gamemode.enable) ''
+          ${pkgs.gamemode}/bin/gamemoded -r &
+          STATUS=$(${pkgs.gamemode}/bin/gamemoded -s)
+          ${pkgs.libnotify}/bin/notify-send -i input-gaming -u normal "GameMode" "$STATUS"
+        ''}
+
+        ${lib.optionalString (osConfig.features.desktop-environment == "mango") ''
+          dms ipc call inhibit enable
+          dms ipc call notifications enableDoNotDisturbIndefinitely
+        ''}
+      '';
+      gamePostExit = pkgs.writeShellScript "game-mode-disable" ''
+        ${lib.optionalString (osConfig.features.desktop-environment == "mango") ''
+          dms ipc call notifications disableDoNotDisturb
+          dms ipc call inhibit disable
+        ''}
+
+        ${lib.optionalString (osConfig.features.gaming.gamemode.enable) ''
+          pkill gamemoded
+          STATUS=$(${pkgs.gamemode}/bin/gamemoded -s)
+          ${pkgs.libnotify}/bin/notify-send -i input-gaming -u normal "GameMode" "$STATUS"
+        ''}
+      '';
+    in
     {
       config = lib.mkIf (osConfig.features.gaming.lutris.enable) {
         programs.lutris = {
@@ -241,6 +267,10 @@
         };
 
         # TODO: Add Lutris settings
+
+        # Pre Launch and Post Exit Scripts
+        home.file.".local/bin/game-pre-launch.sh".source = gamePreLaunch;
+        home.file.".local/bin/game-post-exit.sh".source = gamePostExit;
       };
     };
 
