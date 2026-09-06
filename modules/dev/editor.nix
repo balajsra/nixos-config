@@ -479,7 +479,7 @@
               "python.linting.enabled" = true;
               "python.languageServer" = "Pylance";
 
-              "nix.enableLanguageServer" = false;
+              "nix.enableLanguageServer" = true;
               "nix.serverPath" = "nixd";
               "nix.serverSettings" = {
                 nixd = {
