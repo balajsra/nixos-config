@@ -264,6 +264,7 @@
             userSettings = {
               # Window
               "window.menuBarVisibility" = "classic";
+              "window.density.layout" = "compact";
 
               # Workbench
               "workbench.colorTheme" = "Dracula Pro";
@@ -276,6 +277,7 @@
               "workbench.panel.defaultLocation" = "bottom";
               "workbench.editor.highlightModifiedTabs" = true;
               "workbench.settings.enableNaturalLanguageSearch" = false;
+              "workbench.experimental.modernUI" = true;
 
               # Editor
               "editor.fontFamily" = "MonaspiceNe Nerd Font";
