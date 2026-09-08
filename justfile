@@ -8,9 +8,11 @@ export SSH_HOST_KEY := "/etc/ssh/ssh_host_ed25519_key"
 export AGE_KEY_DIR := env('HOME') + "/.config/sops/age"
 export AGE_KEY_FILE := "${AGE_KEY_DIR}/keys.txt"
 
+# List available options
 default:
     @just --list
 
+# Check / perform pre-requisites for builds
 [private]
 build-setup:
     #!/usr/bin/env bash
@@ -33,6 +35,7 @@ build-setup:
     # Stage all untracked changes for Nix evaluation
     git add -N .
 
+# Generate Host SSH key
 generate-ssh-key:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -42,6 +45,7 @@ generate-ssh-key:
     sudo chmod 600 {{ SSH_HOST_KEY }}
     sudo chmod 644 "{{ SSH_HOST_KEY }}.pub"
 
+# Generate secrets file using SecretSpec
 generate-secrets:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -89,12 +93,14 @@ generate-secrets:
 
     echo "Successfully generated and encrypted {{ SECRETS_FILE }}"
 
+# Decrypt secrets file for inspection
 decrypt-secrets :
     #!/usr/bin/env bash
     set -euo pipefail
 
     SOPS_AGE_KEY_FILE="{{ AGE_KEY_FILE }}" sops --decrypt {{ SECRETS_FILE }}
 
+# Update all or some flake inputs
 flake-update input="":
     #!/usr/bin/env bash
     set -euo pipefail
@@ -107,6 +113,7 @@ flake-update input="":
         nix flake update --flake . "{{ input }}"
     fi
 
+# Test building specific system
 rebuild-test target='$(hostname)': build-setup
     @echo "Testing {{ target }}"
     nixos-rebuild dry-activate \
@@ -115,6 +122,7 @@ rebuild-test target='$(hostname)': build-setup
         --verbose \
         --sudo
 
+# Test building all systems
 rebuild-test-all:
     #!/usr/bin/env bash
     set -euxo pipefail
@@ -136,14 +144,25 @@ rebuild-test-all:
         just rebuild-test "$host"
     done
 
+# Rebuild system and load on boot
 rebuild-boot target='$(hostname)': build-setup
     @echo "Building {{ target }} for next boot"
     nixos-rebuild boot \
         --flake .#{{ target }} \
         --sudo
 
+# Rebuild system and switch
 rebuild-switch target='$(hostname)': build-setup
     @echo "Building and switching to {{ target }}"
     nixos-rebuild switch \
         --flake .#{{ target }} \
         --sudo
+
+# Search multiverse flake input for all available versions of package
+multiverse-search query:
+    #!/usr/bin/env bash
+    set -euxo pipefail
+
+    CPU_ARCHITECTURE=$(uname -m)
+    nix eval --json --apply 'f: f "{{ query }}"' \
+    github:fzakaria/nixpkgs-multiverse#multiverse.${CPU_ARCHITECTURE}-linux.versionsOf | jq
