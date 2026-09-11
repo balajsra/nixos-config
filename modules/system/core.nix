@@ -15,7 +15,7 @@
 
       # List of insecure overrides
       nixpkgs.config.permittedInsecurePackages = [
-        "electron-39.8.10"
+        "electron-41.10.6"
       ];
 
       # List of overlays
