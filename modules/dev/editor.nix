@@ -477,6 +477,9 @@
               "[python]" = {
                 "editor.defaultFormatter" = "ms-python.python";
               };
+              "[markdown]" = {
+                "editor.defaultFormatter" = "yzhang.markdown-all-in-one";
+              };
 
               # Extension Settings
               "python.linting.pylintEnabled" = true;
