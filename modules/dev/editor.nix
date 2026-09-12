@@ -176,6 +176,7 @@
               tamasfe.even-better-toml
               tomoki1207.pdf
               vscodevim.vim
+              yzhang.markdown-all-in-one
             ];
 
             keybindings = [
