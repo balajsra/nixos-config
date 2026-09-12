@@ -167,15 +167,23 @@
               datakurre.devenv
               dracula-theme-pro.theme-dracula-pro
               eamodio.gitlens
+              esbenp.prettier-vscode
+              james-yu.latex-workshop
               jnoortheen.nix-ide
+              miguelsolorio.fluent-icons
+              ms-python.python
               ms-vscode-remote.remote-ssh
               ms-vscode-remote.remote-ssh-edit
+              ms-vscode.cmake-tools
+              ms-vscode.cpptools
               ms-vscode.remote-explorer
               nefrob.vscode-just-syntax
               redhat.vscode-yaml
               tamasfe.even-better-toml
               tomoki1207.pdf
+              vscode-icons-team.vscode-icons
               vscodevim.vim
+              yzhang.markdown-all-in-one
             ];
 
             keybindings = [
@@ -264,18 +272,17 @@
             userSettings = {
               # Window
               "window.menuBarVisibility" = "classic";
+              "window.density.layout" = "compact";
 
               # Workbench
               "workbench.colorTheme" = "Dracula Pro";
               "workbench.iconTheme" = "vscode-icons";
               "workbench.productIconTheme" = "fluent-icons";
-              "workbench.editorAssociations" = {
-                "*.ipynb" = "jupyter.notebook.ipynb";
-              };
               "workbench.sideBar.location" = "left";
               "workbench.panel.defaultLocation" = "bottom";
               "workbench.editor.highlightModifiedTabs" = true;
               "workbench.settings.enableNaturalLanguageSearch" = false;
+              "workbench.experimental.modernUI" = true;
 
               # Editor
               "editor.fontFamily" = "MonaspiceNe Nerd Font";
@@ -473,13 +480,16 @@
               "[python]" = {
                 "editor.defaultFormatter" = "ms-python.python";
               };
+              "[markdown]" = {
+                "editor.defaultFormatter" = "yzhang.markdown-all-in-one";
+              };
 
               # Extension Settings
               "python.linting.pylintEnabled" = true;
               "python.linting.enabled" = true;
               "python.languageServer" = "Pylance";
 
-              "nix.enableLanguageServer" = false;
+              "nix.enableLanguageServer" = true;
               "nix.serverPath" = "nixd";
               "nix.serverSettings" = {
                 nixd = {
@@ -586,8 +596,7 @@
               "devenv.restart.automatic" = true;
 
               # Telemetry
-              "telemetry.enableTelemetry" = false;
-              "telemetry.enableCrashReporter" = false;
+              "telemetry.telemetryLevel" = "off";
 
               # Security
               "security.workspace.trust.untrustedFiles" = "open";
