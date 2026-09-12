@@ -590,8 +590,7 @@
               "devenv.restart.automatic" = true;
 
               # Telemetry
-              "telemetry.enableTelemetry" = false;
-              "telemetry.enableCrashReporter" = false;
+              "telemetry.telemetryLevel" = "off";
 
               # Security
               "security.workspace.trust.untrustedFiles" = "open";
