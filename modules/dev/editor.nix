@@ -171,6 +171,7 @@
               james-yu.latex-workshop
               jnoortheen.nix-ide
               miguelsolorio.fluent-icons
+              ms-python.python
               ms-vscode-remote.remote-ssh
               ms-vscode-remote.remote-ssh-edit
               ms-vscode.cmake-tools
@@ -277,9 +278,6 @@
               "workbench.colorTheme" = "Dracula Pro";
               "workbench.iconTheme" = "vscode-icons";
               "workbench.productIconTheme" = "fluent-icons";
-              "workbench.editorAssociations" = {
-                "*.ipynb" = "jupyter.notebook.ipynb";
-              };
               "workbench.sideBar.location" = "left";
               "workbench.panel.defaultLocation" = "bottom";
               "workbench.editor.highlightModifiedTabs" = true;
