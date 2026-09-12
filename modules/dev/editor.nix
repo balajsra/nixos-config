@@ -167,6 +167,7 @@
               datakurre.devenv
               dracula-theme-pro.theme-dracula-pro
               eamodio.gitlens
+              esbenp.prettier-vscode
               jnoortheen.nix-ide
               ms-vscode-remote.remote-ssh
               ms-vscode-remote.remote-ssh-edit
