@@ -168,14 +168,19 @@
               dracula-theme-pro.theme-dracula-pro
               eamodio.gitlens
               esbenp.prettier-vscode
+              james-yu.latex-workshop
               jnoortheen.nix-ide
+              miguelsolorio.fluent-icons
               ms-vscode-remote.remote-ssh
               ms-vscode-remote.remote-ssh-edit
+              ms-vscode.cmake-tools
+              ms-vscode.cpptools
               ms-vscode.remote-explorer
               nefrob.vscode-just-syntax
               redhat.vscode-yaml
               tamasfe.even-better-toml
               tomoki1207.pdf
+              vscode-icons-team.vscode-icons
               vscodevim.vim
               yzhang.markdown-all-in-one
             ];
