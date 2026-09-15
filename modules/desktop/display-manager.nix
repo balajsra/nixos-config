@@ -5,7 +5,7 @@
     imports = [
       self.nixosModules.gdm
       self.nixosModules.greetd
-      self.nixosModules.dms-greeter
+      self.nixosModules.dank-greeter
       inputs.dank-greeter.nixosModules.default
     ];
   };
@@ -41,7 +41,7 @@
       };
     };
 
-  flake.nixosModules.dms-greeter =
+  flake.nixosModules.dank-greeter =
     {
       options,
       pkgs,
@@ -53,7 +53,7 @@
       compositor = config.features.desktop-environment;
     in
     {
-      config = lib.mkIf (config.features.display-manager == "dms-greeter") {
+      config = lib.mkIf (config.features.display-manager == "dank-greeter") {
         # https://danklinux.com/docs/dankgreeter/nixos-flake#configuration-options
         programs.dms-greeter = {
           enable = true;
