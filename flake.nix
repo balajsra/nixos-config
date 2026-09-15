@@ -59,7 +59,7 @@
     };
 
     # Search interface for DankMaterialShell
-    danksearch = {
+    dank-search = {
       url = "github:AvengeMedia/danksearch";
       inputs.nixpkgs.follows = "nixpkgs";
     };

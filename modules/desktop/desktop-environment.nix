@@ -31,8 +31,8 @@ in
       inputs.mango.hmModules.mango
       self.homeModules.dank-material-shell
       inputs.dank-material-shell.homeModules.dank-material-shell
-      self.homeModules.danksearch
-      inputs.danksearch.homeModules.dsearch
+      self.homeModules.dank-search
+      inputs.dank-search.homeModules.dsearch
       self.homeModules.screenshot
       self.homeModules.theme
       self.homeModules.display
@@ -957,7 +957,7 @@ in
       };
     };
 
-  flake.homeModules.danksearch =
+  flake.homeModules.dank-search =
     {
       osConfig,
       config,

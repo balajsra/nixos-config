@@ -95,7 +95,7 @@
         "type": "github"
       }
     },
-    "danksearch": {
+    "dank-search": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -548,7 +548,7 @@
         "auto-cpufreq": "auto-cpufreq",
         "dank-greeter": "dank-greeter",
         "dank-material-shell": "dank-material-shell",
-        "danksearch": "danksearch",
+        "dank-search": "dank-search",
         "disko": "disko",
         "dracula-beeper": "dracula-beeper",
         "dracula-dank-material-shell": "dracula-dank-material-shell",
