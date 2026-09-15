@@ -7,7 +7,6 @@
       self.nixosModules.lid-switch
       self.nixosModules.wakeup-triggers
       self.nixosModules.thermald
-      inputs.auto-cpufreq.nixosModules.default
       self.nixosModules.auto-cpufreq
     ];
   };
@@ -63,6 +62,10 @@
   flake.nixosModules.auto-cpufreq =
     { config, lib, ... }:
     {
+      imports = [
+        inputs.auto-cpufreq.nixosModules.default
+      ];
+
       config = lib.mkIf (config.features.hardware.power.auto-cpufreq.enable) {
         programs.auto-cpufreq.enable = true;
         programs.auto-cpufreq.settings = {

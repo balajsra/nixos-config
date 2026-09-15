@@ -10,7 +10,6 @@
     imports = [
       self.nixosModules.sops
       self.nixosModules.secret-service
-      inputs.sops-nix.nixosModules.sops
     ];
   };
 
@@ -18,7 +17,6 @@
     imports = [
       self.homeModules.bitwarden
       self.homeModules.sops
-      inputs.sops-nix.homeManagerModules.sops
     ];
   };
 
@@ -30,6 +28,10 @@
       ...
     }:
     {
+      imports = [
+        inputs.sops-nix.nixosModules.sops
+      ];
+
       config = lib.mkIf (config.features.security.sops.enable) {
         environment.systemPackages = with pkgs; [
           age
@@ -75,6 +77,10 @@
       user = osConfig.primaryUser.username;
     in
     {
+      imports = [
+        inputs.sops-nix.homeManagerModules.sops
+      ];
+
       config = lib.mkIf (osConfig.features.security.sops.enable) {
         sops = {
           defaultSopsFile = "/etc/nixos/secrets.yaml";

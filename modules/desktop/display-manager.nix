@@ -6,7 +6,6 @@
       self.nixosModules.gdm
       self.nixosModules.greetd
       self.nixosModules.dank-greeter
-      inputs.dank-greeter.nixosModules.default
     ];
   };
 
@@ -53,6 +52,10 @@
       compositor = config.features.desktop-environment;
     in
     {
+      imports = [
+        inputs.dank-greeter.nixosModules.default
+      ];
+
       config = lib.mkIf (config.features.display-manager == "dank-greeter") {
         # https://danklinux.com/docs/dankgreeter/nixos-flake#configuration-options
         programs.dms-greeter = {

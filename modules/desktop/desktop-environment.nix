@@ -28,11 +28,8 @@ in
   flake.homeModules.desktop-environment = {
     imports = [
       self.homeModules.mango
-      inputs.mango.hmModules.mango
       self.homeModules.dank-material-shell
-      inputs.dank-material-shell.homeModules.dank-material-shell
       self.homeModules.dank-search
-      inputs.dank-search.homeModules.dsearch
       self.homeModules.screenshot
       self.homeModules.theme
       self.homeModules.display
@@ -99,6 +96,10 @@ in
       ...
     }:
     {
+      imports = [
+        inputs.mango.hmModules.mango
+      ];
+
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
         # https://mangowm.github.io/docs/nix-options/
         wayland.windowManager.mango = {
@@ -530,6 +531,10 @@ in
       wallpaperDir = "/home/${osConfig.primaryUser.username}/NextCloud/Wallpapers/Desktop";
     in
     {
+      imports = [
+        inputs.dank-material-shell.homeModules.dank-material-shell
+      ];
+
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
         # https://danklinux.com/docs/dankmaterialshell/nixos-flake#configuration-options
         programs.dank-material-shell = {
@@ -965,6 +970,10 @@ in
       ...
     }:
     {
+      imports = [
+        inputs.dank-search.homeModules.dsearch
+      ];
+
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
         # https://danklinux.com/docs/danksearch/nixos-flake
         programs.dsearch = {
