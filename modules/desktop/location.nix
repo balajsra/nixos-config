@@ -1,5 +1,3 @@
-{ self, ... }:
-
 {
   flake.nixosModules.location =
     { config, lib, ... }:

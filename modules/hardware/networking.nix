@@ -1,16 +1,14 @@
 { self, ... }:
 
 {
-  flake.nixosModules.networking =
-    { config, ... }:
-    {
-      imports = [
-        self.nixosModules.networkmanager
-        self.nixosModules.firewall
-        self.nixosModules.ssh-server
-        self.nixosModules.vpn
-      ];
-    };
+  flake.nixosModules.networking = {
+    imports = [
+      self.nixosModules.networkmanager
+      self.nixosModules.firewall
+      self.nixosModules.ssh-server
+      self.nixosModules.vpn
+    ];
+  };
 
   flake.homeModules.networking = {
     imports = [

@@ -1,4 +1,3 @@
-{ self, config, ... }:
 {
   flake.nixosModules.data-dirs =
     { config, lib, ... }:

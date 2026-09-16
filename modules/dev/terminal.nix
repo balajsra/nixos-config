@@ -1,8 +1,8 @@
-{ self, config, ... }:
+{ self, ... }:
 
 {
   flake.homeModules.terminal =
-    { pkgs, osConfig, ... }:
+    { osConfig, ... }:
     {
       imports = [
         self.homeModules.shell
@@ -26,14 +26,12 @@
   flake.homeModules.bash =
     {
       pkgs,
-      config,
       osConfig,
       lib,
       inputs,
       ...
     }:
     let
-      nixosConfigPath = toString osConfig.primaryUser.nixosConfigPath;
       bashTtyScript = builtins.readFile "${inputs.dracula-tty}/dracula-tty.sh";
     in
     {
@@ -55,15 +53,12 @@
   flake.homeModules.fish =
     {
       pkgs,
-      config,
       osConfig,
       lib,
       inputs,
       ...
     }:
     let
-      nixosConfigPath = toString osConfig.primaryUser.nixosConfigPath;
-
       bashTtyScript = builtins.readFile "${inputs.dracula-tty}/dracula-tty.sh";
       # Convert POSIX 'if/then/fi' syntax to native Fish 'if/end' syntax dynamically
       fishTtyScript =
@@ -108,16 +103,14 @@
 
   flake.homeModules.starship =
     {
-      config,
       osConfig,
       lib,
-      pkgs,
       inputs,
       ...
     }:
     let
       baseStarshipToml = builtins.readFile "${inputs.dracula-pro-starship}/starship/themes/dracula-pro.toml";
-      baseConfig = builtins.fromTOML baseStarshipToml;
+      baseConfig = fromTOML baseStarshipToml;
 
       myOverrides = {
         add_newline = false;
@@ -309,10 +302,7 @@
 
   flake.homeModules.eza =
     {
-      config,
       osConfig,
-      lib,
-      pkgs,
       inputs,
       ...
     }:
@@ -336,7 +326,6 @@
 
   flake.homeModules.tmux =
     {
-      config,
       osConfig,
       lib,
       pkgs,
@@ -407,9 +396,6 @@
   flake.homeModules.grep =
     {
       config,
-      osConfig,
-      lib,
-      pkgs,
       ...
     }:
     {
@@ -455,7 +441,6 @@
 
   flake.homeModules.ghostty =
     {
-      config,
       osConfig,
       lib,
       pkgs,

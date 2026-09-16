@@ -1,13 +1,11 @@
 { self, inputs, ... }:
 
 {
-  flake.homeModules.web-browser =
-    { pkgs, ... }:
-    {
-      imports = [
-        self.homeModules.zen-browser
-      ];
-    };
+  flake.homeModules.web-browser = {
+    imports = [
+      self.homeModules.zen-browser
+    ];
+  };
 
   flake.homeModules.zen-browser =
     {
@@ -19,7 +17,7 @@
     {
       config = lib.mkIf (osConfig.features.browser.zen.enable) {
         # https://wiki.nixos.org/wiki/Zen_Browser
-        home.packages = with pkgs; [
+        home.packages = [
           inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
         ];
 

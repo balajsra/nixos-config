@@ -1,4 +1,5 @@
 { self, inputs, ... }:
+
 {
   flake.nixosModules.partitions = {
     imports = [

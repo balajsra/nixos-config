@@ -1,7 +1,6 @@
 {
   self,
   inputs,
-  withSystem,
   ...
 }:
 let
@@ -249,55 +248,51 @@ in
     ];
   };
 
-  flake.nixosModules."${hostname}-configuration" =
-    { pkgs, ... }:
-    {
-      imports = [
-        self.nixosModules.bluetooth
-        self.nixosModules.boot-animation
-        self.nixosModules.boot-loader
-        self.nixosModules.controller
-        self.nixosModules.core
-        self.nixosModules.data-dirs
-        self.nixosModules.desktop-environment
-        self.nixosModules.display-manager
-        self.nixosModules.editor
-        self.nixosModules.file-sharing
-        self.nixosModules.firmware
-        self.nixosModules.fonts
-        self.nixosModules.gaming
-        self.nixosModules.git
-        self.nixosModules.graphics
-        self.nixosModules.kernel
-        self.nixosModules.location
-        self.nixosModules.networking
-        self.nixosModules.office
-        self.nixosModules.partitions
-        self.nixosModules.phone
-        self.nixosModules.power
-        self.nixosModules.printer
-        self.nixosModules.removable-media
-        self.nixosModules.security
-        self.nixosModules.sound
-        self.nixosModules.system76
-        self.nixosModules.utils
-        self.nixosModules.virtualization
-      ];
+  flake.nixosModules."${hostname}-configuration" = {
+    imports = [
+      self.nixosModules.bluetooth
+      self.nixosModules.boot-animation
+      self.nixosModules.boot-loader
+      self.nixosModules.controller
+      self.nixosModules.core
+      self.nixosModules.data-dirs
+      self.nixosModules.desktop-environment
+      self.nixosModules.display-manager
+      self.nixosModules.editor
+      self.nixosModules.file-sharing
+      self.nixosModules.firmware
+      self.nixosModules.fonts
+      self.nixosModules.gaming
+      self.nixosModules.git
+      self.nixosModules.graphics
+      self.nixosModules.kernel
+      self.nixosModules.location
+      self.nixosModules.networking
+      self.nixosModules.office
+      self.nixosModules.partitions
+      self.nixosModules.phone
+      self.nixosModules.power
+      self.nixosModules.printer
+      self.nixosModules.removable-media
+      self.nixosModules.security
+      self.nixosModules.sound
+      self.nixosModules.system76
+      self.nixosModules.utils
+      self.nixosModules.virtualization
+    ];
 
-      networking.hostName = "${hostname}";
-      time.timeZone = "${timezone}";
+    networking.hostName = "${hostname}";
+    time.timeZone = "${timezone}";
 
-      # Do not change, this is a safety anchor to prevent
-      # system from breaking or losing data during an upgrade
-      system.stateVersion = "25.11";
-    };
+    # Do not change, this is a safety anchor to prevent
+    # system from breaking or losing data during an upgrade
+    system.stateVersion = "25.11";
+  };
 
   flake.nixosModules."${hostname}-hardware" =
     {
       modulesPath,
       lib,
-      config,
-      pkgs,
       ...
     }:
     {

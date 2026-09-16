@@ -1,5 +1,3 @@
-{ self, ... }:
-
 {
   flake.nixosModules.removable-media =
     { pkgs, ... }:

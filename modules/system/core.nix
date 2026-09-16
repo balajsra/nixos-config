@@ -4,8 +4,6 @@
   flake.nixosModules.core =
     {
       config,
-      lib,
-      pkgs,
       inputs,
       ...
     }:

@@ -1,4 +1,4 @@
-{ self, config, ... }:
+{ self, ... }:
 
 {
   flake.nixosModules.gaming = {
@@ -283,8 +283,6 @@
       ...
     }:
     let
-      user = osConfig.primaryUser.username;
-
       baseConfig = {
         "accent-color" = "system";
         "auto-close-on-launch" = "False";
@@ -433,7 +431,7 @@
     }:
     {
       config = lib.mkIf (osConfig.features.gaming.hytale-launcher.enable) {
-        home.packages = with pkgs; [
+        home.packages = [
           inputs.hytale-launcher.packages."${pkgs.stdenv.hostPlatform.system}".default
         ];
       };

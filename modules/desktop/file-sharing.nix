@@ -204,7 +204,6 @@
     {
       config,
       lib,
-      pkgs,
       ...
     }:
     {

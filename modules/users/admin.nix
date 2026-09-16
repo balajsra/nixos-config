@@ -1,7 +1,6 @@
 {
   self,
   lib,
-  config,
   ...
 }:
 
@@ -37,7 +36,7 @@
     };
 
   flake.homeModules.admin =
-    { config, osConfig, ... }:
+    { osConfig, ... }:
     {
       imports = [
         self.homeModules.admin-git
@@ -49,7 +48,7 @@
     };
 
   flake.homeModules.admin-git =
-    { config, osConfig, ... }:
+    { osConfig, ... }:
     {
       programs.git = {
         settings = {

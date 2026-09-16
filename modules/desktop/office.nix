@@ -103,7 +103,6 @@
   flake.homeModules.zathura =
     {
       osConfig,
-      config,
       lib,
       inputs,
       ...

@@ -1,5 +1,3 @@
-{ self, ... }:
-
 {
   flake.nixosModules.system76 =
     { config, lib, ... }:

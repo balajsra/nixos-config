@@ -1,9 +1,6 @@
-{ self, ... }:
-
 {
   flake.nixosModules.bluetooth =
     {
-      pkgs,
       lib,
       config,
       ...

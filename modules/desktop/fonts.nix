@@ -1,17 +1,15 @@
 { self, lib, ... }:
 
 {
-  flake.nixosModules.fonts =
-    { pkgs, ... }:
-    {
-      imports = [
-        self.nixosModules.fonts-base
-        self.nixosModules.fonts-nerd
-        self.nixosModules.fonts-emojis
-        self.nixosModules.fonts-japanese
-        self.nixosModules.fonts-korean
-      ];
-    };
+  flake.nixosModules.fonts = {
+    imports = [
+      self.nixosModules.fonts-base
+      self.nixosModules.fonts-nerd
+      self.nixosModules.fonts-emojis
+      self.nixosModules.fonts-japanese
+      self.nixosModules.fonts-korean
+    ];
+  };
 
   flake.nixosModules.fonts-base =
     { pkgs, config, ... }:

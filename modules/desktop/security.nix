@@ -1,8 +1,6 @@
 {
   self,
   inputs,
-  config,
-  osConfig,
   ...
 }:
 {
@@ -69,7 +67,6 @@
   flake.homeModules.sops =
     {
       osConfig,
-      config,
       lib,
       ...
     }:

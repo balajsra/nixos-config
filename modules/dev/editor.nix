@@ -1,4 +1,4 @@
-{ self, config, ... }:
+{ self, ... }:
 
 {
   flake.nixosModules.editor = {
@@ -24,20 +24,19 @@
     };
 
   flake.nixosModules.nano =
-    { config, pkgs, ... }:
+    { config, ... }:
     {
       programs.nano.enable = config.features.editor.nano.enable;
     };
 
   flake.nixosModules.vim =
-    { config, pkgs, ... }:
+    { config, ... }:
     {
       programs.vim.enable = config.features.editor.vim.enable;
     };
 
   flake.homeModules.vim =
     {
-      config,
       osConfig,
       lib,
       pkgs,
@@ -147,7 +146,6 @@
   flake.homeModules.vscode =
     {
       pkgs,
-      config,
       osConfig,
       lib,
       ...
@@ -619,7 +617,6 @@
 
   flake.homeModules.zed =
     {
-      config,
       osConfig,
       lib,
       ...

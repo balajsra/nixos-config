@@ -1,5 +1,3 @@
-{ self, inputs, ... }:
-
 {
   flake.nixosModules.kernel =
     { pkgs, config, ... }:

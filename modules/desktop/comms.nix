@@ -1,4 +1,4 @@
-{ self, config, ... }:
+{ self, ... }:
 
 {
   flake.homeModules.comms = {
@@ -12,7 +12,6 @@
   flake.homeModules.beeper =
     {
       pkgs,
-      config,
       osConfig,
       lib,
       inputs,
@@ -31,7 +30,6 @@
   flake.homeModules.signal =
     {
       pkgs,
-      config,
       osConfig,
       lib,
       ...
@@ -47,7 +45,6 @@
   flake.homeModules.zoom =
     {
       pkgs,
-      config,
       osConfig,
       lib,
       ...

@@ -42,15 +42,11 @@
 
   flake.nixosModules.dank-greeter =
     {
-      options,
       pkgs,
       config,
       lib,
       ...
     }:
-    let
-      compositor = config.features.desktop-environment;
-    in
     {
       imports = [
         inputs.dank-greeter.nixosModules.default

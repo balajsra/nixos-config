@@ -1,6 +1,5 @@
 {
   self,
-  config,
   inputs,
   ...
 }:
@@ -90,7 +89,6 @@ in
   flake.homeModules.mango =
     {
       pkgs,
-      config,
       osConfig,
       lib,
       ...
@@ -527,7 +525,6 @@ in
       ...
     }:
     let
-      mangoConfigPath = toString /home/${osConfig.primaryUser.username}/.config/mango;
       wallpaperDir = "/home/${osConfig.primaryUser.username}/NextCloud/Wallpapers/Desktop";
     in
     {
@@ -965,7 +962,6 @@ in
   flake.homeModules.dank-search =
     {
       osConfig,
-      config,
       lib,
       ...
     }:
@@ -1143,7 +1139,6 @@ in
 
   flake.homeModules.display =
     {
-      config,
       osConfig,
       lib,
       ...

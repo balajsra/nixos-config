@@ -1,9 +1,6 @@
-{ self, ... }:
-
 {
   flake.nixosModules.sound =
     {
-      pkgs,
       lib,
       config,
       ...
