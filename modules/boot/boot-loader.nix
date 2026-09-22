@@ -20,6 +20,7 @@
             enableCryptodisk = true; # Allows GRUB to "see" encrypted partitions
             theme = pkgs.fallout-grub-theme;
             gfxmodeEfi = "1920x1080";
+            configurationLimit = 5;
           };
         };
 
