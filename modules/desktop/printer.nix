@@ -26,12 +26,20 @@
 
         services.printing = {
           enable = true;
-          drivers = with pkgs; [
-            cups-filters
-            cups-browsed
-            hplip
-            hplipWithPlugin
-          ];
+          drivers =
+            with pkgs;
+            [
+              cups-filters
+              cups-browsed
+            ]
+            ++ lib.optionals config.features.hardware.printing.hp.enable [
+              hplip
+              hplipWithPlugin
+            ]
+            ++ lib.optionals config.features.hardware.printing.epson.enable [
+              epson-escpr
+              epson-escpr2
+            ];
         };
       };
     };
@@ -48,9 +56,9 @@
         # https://wiki.nixos.org/wiki/Scanners
         hardware.sane = {
           enable = true;
-          extraBackends = with pkgs; [
-            hplipWithPlugin
-          ];
+          extraBackends =
+            lib.optionals config.features.hardware.scanning.hp.enable [ pkgs.hplipWithPlugin ]
+            ++ lib.optionals config.features.hardware.scanning.epson.enable [ pkgs.sane-airscan ];
         };
 
         users.users."${config.primaryUser.username}".extraGroups = [

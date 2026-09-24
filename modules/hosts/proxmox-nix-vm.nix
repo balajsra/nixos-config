@@ -132,8 +132,16 @@ in
             hardware = {
               bluetooth.enable = false;
               sound.enable = false;
-              printing.enable = false;
-              scanning.enable = false;
+              printing = {
+                enable = false;
+                hp.enable = false;
+                epson.enable = false;
+              };
+              scanning = {
+                enable = false;
+                hp.enable = false;
+                epson.enable = false;
+              };
               system76.enable = false;
               controller = {
                 xbox.enable = false;
