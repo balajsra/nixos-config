@@ -292,7 +292,7 @@
               "editor.formatOnPaste" = true;
               "editor.linkedEditing" = true;
               "editor.lineNumbers" = "relative";
-              "editor.cursorBlinking" = "phase";
+              "editor.cursorBlinking" = "smooth";
               "editor.cursorSmoothCaretAnimation" = "on";
               "editor.quickSuggestionsDelay" = 0;
               "editor.quickSuggestions" = {
