@@ -76,6 +76,7 @@ in
               qalculate.enable = false;
               thunderbird.enable = false;
               zathura.enable = false;
+              okular.enable = false;
               libreoffice.enable = false;
               sweethome3d.enable = false;
               drawy.enable = false;

@@ -14,6 +14,7 @@
       self.homeModules.qalculate
       self.homeModules.thunderbird
       self.homeModules.zathura
+      self.homeModules.okular
       self.homeModules.libreoffice
       self.homeModules.sweethome3d
       self.homeModules.drawy
@@ -122,6 +123,21 @@
             "application/pdf" = "org.pwmt.zathura.desktop";
           };
         };
+      };
+    };
+
+  flake.homeModules.okular =
+    {
+      osConfig,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.office.okular.enable) {
+        home.packages = with pkgs.kdePackages; [
+          okular
+        ];
       };
     };
 

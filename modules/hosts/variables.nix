@@ -124,6 +124,7 @@
           qalculate.enable = lib.mkEnableOption "Enable Qalculate";
           thunderbird.enable = lib.mkEnableOption "Enable Thunderbird";
           zathura.enable = lib.mkEnableOption "Enable Zathura";
+          okular.enable = lib.mkEnableOption "Enable Okular";
           libreoffice.enable = lib.mkEnableOption "Enable Libre Office";
           sweethome3d.enable = lib.mkEnableOption "Enable SweetHome3D";
           drawy.enable = lib.mkEnableOption "Enable Drawy Infinite Whiteboard";

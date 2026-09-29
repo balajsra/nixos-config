@@ -103,6 +103,7 @@ in
               qalculate.enable = true;
               thunderbird.enable = true;
               zathura.enable = true;
+              okular.enable = true;
               libreoffice.enable = true;
               sweethome3d.enable = true;
               drawy.enable = true;
