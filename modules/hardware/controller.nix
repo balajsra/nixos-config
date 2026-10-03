@@ -52,6 +52,10 @@
           oversteer
         ];
 
+        services.udev.packages = with pkgs; [
+          oversteer
+        ];
+
         hardware.new-lg4ff.enable = config.features.hardware.controller.racing-wheel.logitech.enable;
       };
     };
