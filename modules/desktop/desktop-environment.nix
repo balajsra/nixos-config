@@ -112,7 +112,7 @@ in
             # Basic Configuration #
             #######################
             # https://mangowm.github.io/docs/configuration/basics#autostart
-            exec-once = [
+            exec_once = [
               "uwsm finalize &"
 
               # Create the virtual output, wait until it appears in wlr-randr, then disable it
@@ -154,7 +154,7 @@ in
             # https://mangowm.github.io/docs/configuration/input/#keyboard-settings
             repeat_rate = 25;
             repeat_delay = 600;
-            numlockon = 1;
+            numlock_on = 1;
             xkb_rules = {
               layout = "us";
             };
@@ -204,14 +204,14 @@ in
               persistence = 1;
               ignore_scale = 0;
             };
-            syncobj_enable = 0;
+            sync_obj_enable = 0;
             allow_lock_transparent = 0;
             allow_shortcuts_inhibit = 1;
 
             # https://mangowm.github.io/docs/configuration/miscellaneous#focus--input
             focus_on_activate = 1;
-            sloppyfocus = 1;
-            warpcursor = 1;
+            sloppy_focus = 1;
+            warp_cursor = 1;
             cursor_hide_timeout = 5;
             cursor_hide_on_keypress = 0;
             drag_tile_to_tile = 1;
@@ -229,30 +229,30 @@ in
             enable_floating_snap = 1;
             snap_distance = 30;
             no_border_when_single = 0;
-            idleinhibit_ignore_visible = 0;
+            idle_inhibit_ignore_visible = 0;
             tag_carousel = 0;
 
             ###########
             # Theming #
             ###########
             # https://mangowm.github.io/docs/visuals/theming#dimensions
-            borderpx = 2;
-            gappih = 20;
-            gappiv = 20;
-            gappoh = 30;
-            gappov = 30;
+            border_px = 2;
+            gap_inner_horizontal = 20;
+            gap_inner_vertical = 20;
+            gap_outer_horizontal = 30;
+            gap_outer_vertical = 30;
 
             # https://mangowm.github.io/docs/visuals/theming#colors
-            rootcolor = "0x282a36ff";
-            bordercolor = "0x282a36ff";
-            focuscolor = "bd93f9ff";
-            urgentcolor = "0xff5555ff";
+            root_color = "0x282a36ff";
+            border_color = "0x282a36ff";
+            focus_color = "bd93f9ff";
+            urgent_color = "0xff5555ff";
 
             # https://mangowm.github.io/docs/visuals/theming#state-specific-colors
-            maximizescreencolor = "0x282a36ff";
-            scratchpadcolor = "0xf1fa8cff";
-            globalcolor = "0x8be9fdff";
-            overlaycolor = "0x50fa7bff";
+            maximized_screen_color = "0x282a36ff";
+            scratchpad_color = "0xf1fa8cff";
+            global_color = "0x8be9fdff";
+            overlay_color = "0x50fa7bff";
 
             # https://mangowm.github.io/docs/visuals/theming#cursor-theme
             cursor_size = cursorSize;
@@ -284,7 +284,7 @@ in
               x = 0;
               y = 0;
             };
-            shadowscolor = "0x1a1a1aee";
+            shadows_color = "0x1a1a1aee";
 
             # https://mangowm.github.io/docs/visuals/effects#opacity--corner-radius
             border_radius = 10;
@@ -312,8 +312,8 @@ in
             # https://mangowm.github.io/docs/visuals/animations#fade-settings
             animation_fade_in = 1;
             animation_fade_out = 1;
-            fadein_begin_opacity = 0.5;
-            fadeout_begin_opacity = 0.8;
+            fade_in_begin_opacity = 0.5;
+            fade_out_begin_opacity = 0.8;
 
             # https://mangowm.github.io/docs/visuals/animations#zoom-settings
             zoom = {
@@ -359,11 +359,11 @@ in
 
             # https://mangowm.github.io/docs/window-management/layouts#master-stack-layouts
             new_is_master = 1;
-            default_mfact = 0.50;
-            default_nmaster = 1;
+            default_master_factor = 0.50;
+            default_master_count = 1;
             tag_num = 9;
             tag_gather = 0;
-            smartgaps = 0;
+            smart_gaps = 0;
             center_master_overspread = 0;
             center_when_single_stack = 1;
 
@@ -371,7 +371,7 @@ in
             # Rules #
             #########
             # https://mangowm.github.io/docs/window-management/rules#tag-rules
-            tagrule = [
+            tag_rule = [
               "id:1,layout_name:tile"
               "id:2,layout_name:tile"
               "id:3,layout_name:tile"
@@ -390,8 +390,8 @@ in
             hotarea_size = 10;
             enable_hotarea = 1;
             hotarea_corner = 0;
-            overviewgappi = 5;
-            overviewgappo = 30;
+            overview_gap_inner = 5;
+            overview_gap_outer = 30;
 
             ##############
             # Scratchpad #
@@ -854,40 +854,46 @@ in
 
         # https://danklinux.com/docs/dankmaterialshell/compositors#mangowc-configuration
         wayland.windowManager.mango = {
-          settings.bind = [
-            # Application Launchers
-            "SUPER,p,spawn,dms ipc call spotlight toggle"
-            "SUPER,b,spawn,dms ipc call bar toggle index 0"
-            "SUPER,w,spawn,dms ipc call dankdash wallpaper"
+          settings = {
+            bind = [
+              # Application Launchers
+              "SUPER,p,spawn,dms ipc call spotlight toggle"
+              "SUPER,b,spawn,dms ipc call bar toggle index 0"
+              "SUPER,w,spawn,dms ipc call dankdash wallpaper"
 
-            # Menus
-            "SUPER+CTRL,p,spawn,dms ipc call control-center toggle"
-            "SUPER+CTRL,c,spawn,dms ipc call clipboard toggle"
-            "SUPER+CTRL,n,spawn,dms ipc call notifications toggle"
-            "SUPER+CTRL,q,spawn,dms ipc call powermenu toggle"
+              # Menus
+              "SUPER+CTRL,p,spawn,dms ipc call control-center toggle"
+              "SUPER+CTRL,c,spawn,dms ipc call clipboard toggle"
+              "SUPER+CTRL,n,spawn,dms ipc call notifications toggle"
+              "SUPER+CTRL,q,spawn,dms ipc call powermenu toggle"
 
-            # Volume Controls
-            "NONE,XF86AudioRaiseVolume,spawn,dms ipc call audio increment 5"
-            "NONE,XF86AudioLowerVolume,spawn,dms ipc call audio decrement 5"
-            "NONE,XF86AudioMute,spawn,dms ipc call audio mute"
+              # Volume Controls
+              "NONE,XF86AudioRaiseVolume,spawn,dms ipc call audio increment 5"
+              "NONE,XF86AudioLowerVolume,spawn,dms ipc call audio decrement 5"
+              "NONE,XF86AudioMute,spawn,dms ipc call audio mute"
 
-            # Brightness Controls
-            "NONE,XF86MonBrightnessUp,spawn,dms ipc call brightness increment 5"
-            "NONE,XF86MonBrightnessDown,spawn,dms ipc call brightness decrement 5"
+              # Brightness Controls
+              "NONE,XF86MonBrightnessUp,spawn,dms ipc call brightness increment 5"
+              "NONE,XF86MonBrightnessDown,spawn,dms ipc call brightness decrement 5"
 
-            # Media Controls
-            "NONE,XF86AudioNext,spawn,dms ipc call mpris next"
-            "NONE,XF86AudioPause,spawn,dms ipc call mpris playPause"
-            "NONE,XF86AudioPlay,spawn,dms ipc call mpris playPause"
-            "NONE,XF86AudioPrev,spawn,dms ipc call mpris previous"
+              # Media Controls
+              "NONE,XF86AudioNext,spawn,dms ipc call mpris next"
+              "NONE,XF86AudioPrev,spawn,dms ipc call mpris previous"
 
-            # Screenshot
-            "NONE,Print,spawn_shell,dms screenshot --stdout | ${pkgs.swappy}/bin/swappy -f -"
-          ];
+              # Screenshot
+              "NONE,Print,spawn_shell,dms screenshot --stdout | ${pkgs.swappy}/bin/swappy -f -"
+            ];
+
+            # Allow keybind conflict for play/pause button
+            bindc = [
+              "NONE,XF86AudioPause,spawn,dms ipc call mpris playPause"
+              "NONE,XF86AudioPlay,spawn,dms ipc call mpris playPause"
+            ];
+          };
 
           extraConfig = ''
             # Disable animation on DMS layers
-            layerrule=noanim:1,layer_name:^dms
+            layer_rule=no_animation:1,layer_name:^dms
           '';
         };
       };
