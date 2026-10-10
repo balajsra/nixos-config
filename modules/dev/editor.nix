@@ -165,6 +165,7 @@
               datakurre.devenv
               dracula-theme-pro.theme-dracula-pro
               eamodio.gitlens
+              elijah-potter.harper
               esbenp.prettier-vscode
               james-yu.latex-workshop
               jnoortheen.nix-ide
