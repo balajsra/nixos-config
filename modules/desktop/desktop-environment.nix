@@ -131,6 +131,7 @@ in
                 done
 
                 # Disable virtual display
+                sleep 0.5
                 ${pkgs.mango}/bin/mmsg dispatch disable_monitor,HEADLESS-1
               ''}"
 
