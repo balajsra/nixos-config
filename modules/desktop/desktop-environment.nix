@@ -707,7 +707,14 @@ in
                   "focusedWindow"
                 ];
                 centerWidgets = [
-                  "music"
+                  {
+                    id = "music";
+                    enabled = true;
+                    mediaShowLyrics = false;
+                    mediaShowCoverArt = true;
+                    mediaAdaptiveWidthEnabled = true;
+                    mediaSize = 1;
+                  }
                   "clock"
                   "weather"
                 ];
