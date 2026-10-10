@@ -52,23 +52,27 @@ in
                       {
                         criteria = "LG Electronics LG ULTRAGEAR 112NTTQC0153";
                         status = "enable";
-                        mode = "2560x1440@164.955994";
+                        mode = "2560x1440@165";
                         position = "5120,0";
                         scale = 1.0;
                       }
                       {
                         criteria = "LG Electronics LG ULTRAGEAR 305MXUN80518";
                         status = "enable";
-                        mode = "2560x1440@164.955994";
+                        mode = "2560x1440@165";
                         position = "2560,0";
                         scale = 1.0;
                       }
                       {
                         criteria = "LG Electronics LG ULTRAGEAR 111NTUWM4574";
                         status = "enable";
-                        mode = "2560x1440@164.955994";
+                        mode = "2560x1440@165";
                         position = "0,0";
                         scale = 1.0;
+                      }
+                      {
+                        criteria = "HEADLESS-1";
+                        status = "disable";
                       }
                     ];
                   }
