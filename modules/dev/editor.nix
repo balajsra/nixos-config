@@ -174,6 +174,7 @@
               ms-vscode-remote.remote-ssh-edit
               ms-vscode.cmake-tools
               ms-vscode.cpptools
+              ms-vscode.live-server
               ms-vscode.remote-explorer
               nefrob.vscode-just-syntax
               redhat.vscode-yaml
