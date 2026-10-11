@@ -208,6 +208,7 @@ in
             sync_obj_enable = 0;
             allow_lock_transparent = 0;
             allow_shortcuts_inhibit = 1;
+            auto_reload_config = 1;
 
             # https://mangowm.github.io/docs/configuration/miscellaneous#focus--input
             focus_on_activate = 1;
