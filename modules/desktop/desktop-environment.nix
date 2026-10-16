@@ -414,6 +414,7 @@ in
               "SUPER,u,spawn_shell,uwsm app -- ${osConfig.features.browser.default}"
 
               "SUPER+SHIFT,c,killclient"
+              "SUPER+SHIFT+CTRL,c,killclient,force"
 
               "SUPER,j,focusstack,next"
               "SUPER,k,focusstack,prev"
