@@ -23,6 +23,19 @@
 
         # TODO: Configure Zen Browser
 
+        # Installed Extensions
+        # - Dark Reader
+        # - Enhancer for YouTube
+        # - KeePassXC-Browser
+        # - linkding extension
+        # - Obsidian Web Clipper
+        # - Return YouTube Dislike
+        # - Save Image As Type
+        # - SponsorBlock for YouTube - Skip Sponsorships
+        # - SteamDB
+        # - uBlock Origin
+        # - Vimium
+
         # https://wiki.nixos.org/wiki/Default_applications
         xdg.mimeApps = lib.mkIf (osConfig.features.browser.default == "zen") {
           enable = true;
