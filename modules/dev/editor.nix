@@ -162,6 +162,7 @@
 
             extensions = with pkgs.vscode-extensions; [
               alefragnani.project-manager
+              bodil.file-browser
               datakurre.devenv
               dracula-theme-pro.theme-dracula-pro
               eamodio.gitlens
@@ -169,8 +170,9 @@
               esbenp.prettier-vscode
               james-yu.latex-workshop
               jnoortheen.nix-ide
+              johnpapa.vscode-peacock
+              kahole.magit
               miguelsolorio.fluent-icons
-              ms-python.python
               ms-vscode-remote.remote-ssh
               ms-vscode-remote.remote-ssh-edit
               ms-vscode.cmake-tools
@@ -179,139 +181,71 @@
               ms-vscode.remote-explorer
               nefrob.vscode-just-syntax
               redhat.vscode-yaml
+              rust-lang.rust-analyzer
               tamasfe.even-better-toml
               tomoki1207.pdf
+              usernamehw.errorlens
               vscode-icons-team.vscode-icons
               vscodevim.vim
+              vspacecode.vspacecode
+              vspacecode.whichkey
               yzhang.markdown-all-in-one
             ];
 
-            keybindings = [
-              {
-                key = "tab";
-                command = "tab";
-                when = "editorTextFocus && !editorTabMovesFocus";
-              }
-              {
-                key = "shift+tab";
-                command = "outdent";
-                when = "editorTextFocus && !editorTabMovesFocus";
-              }
-              {
-                key = "ctrl+h";
-                command = "workbench.action.focusLeftGroup";
-                when = "editorTextFocus && vim.active && vim.mode != 'Insert'";
-              }
-              {
-                key = "ctrl+l";
-                command = "workbench.action.focusRightGroup";
-                when = "editorTextFocus && vim.active && vim.mode != 'Insert'";
-              }
-              {
-                key = "ctrl+k";
-                command = "workbench.action.focusAboveGroup";
-                when = "editorTextFocus && vim.active && vim.mode != 'Insert'";
-              }
-              {
-                key = "ctrl+j";
-                command = "workbench.action.focusBelowGroup";
-                when = "editorTextFocus && vim.active && vim.mode != 'Insert'";
-              }
-              {
-                key = "\\\\ t";
-                command = "workbench.action.toggleSidebarVisibility";
-                when = "!editorTextFocus";
-              }
-              {
-                key = "ctrl+h";
-                command = "list.collapse";
-                when = "listFocus && !inputFocus";
-              }
-              {
-                key = "ctrl+l";
-                command = "list.expand";
-                when = "listFocus && !inputFocus";
-              }
-              {
-                key = "ctrl+k";
-                command = "list.focusUp";
-                when = "listFocus && !inputFocus";
-              }
-              {
-                key = "ctrl+j";
-                command = "list.focusDown";
-                when = "listFocus && !inputFocus";
-              }
-              {
-                key = "ctrl+j";
-                command = "selectNextSuggestion";
-                when = "suggestWidgetVisible";
-              }
-              {
-                key = "ctrl+k";
-                command = "selectPrevSuggestion";
-                when = "suggestWidgetVisible";
-              }
-              {
-                key = "ctrl+j";
-                command = "workbench.action.quickOpenSelectNext";
-                when = "inQuickOpen";
-              }
-              {
-                key = "ctrl+k";
-                command = "workbench.action.quickOpenSelectPrevious";
-                when = "inQuickOpen";
-              }
-              {
-                key = "ctrl+p";
-                command = "-extension.vim_ctrl+p";
-                when = "editorTextFocus && vim.active && vim.use<C-p> && !inDebugRepl || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'SearchInProgressMode'";
-              }
-            ];
-
             userSettings = {
-              # Window
-              "window.menuBarVisibility" = "classic";
+              ##########
+              # Window #
+              ##########
               "window.density.layout" = "compact";
+              "window.menuBarVisibility" = "classic";
 
-              # Workbench
+              #############
+              # Workbench #
+              #############
+              "workbench.activityBar.location" = "hidden";
               "workbench.colorTheme" = "Dracula Pro";
-              "workbench.iconTheme" = "vscode-icons";
-              "workbench.productIconTheme" = "fluent-icons";
-              "workbench.sideBar.location" = "left";
-              "workbench.panel.defaultLocation" = "bottom";
               "workbench.editor.highlightModifiedTabs" = true;
-              "workbench.settings.enableNaturalLanguageSearch" = false;
+              "workbench.editor.showTabs" = "none";
+              "workbench.editorAssociations" = {
+                "git-rebase-todo" = "default";
+              };
               "workbench.experimental.modernUI" = true;
+              "workbench.iconTheme" = "vscode-icons";
+              "workbench.panel.defaultLocation" = "bottom";
+              "workbench.productIconTheme" = "fluent-icons";
+              "workbench.secondarySideBar.defaultVisibility" = "hidden";
+              "workbench.settings.enableNaturalLanguageSearch" = false;
+              "workbench.sideBar.location" = "left";
 
-              # Editor
-              "editor.fontFamily" = "MonaspiceNe Nerd Font";
-              "editor.fontSize" = 14;
-              "editor.fontLigatures" =
-                "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
-              "editor.formatOnSave" = true;
-              "editor.formatOnSaveMode" = "file";
-              "editor.formatOnPaste" = true;
-              "editor.linkedEditing" = true;
-              "editor.lineNumbers" = "relative";
+              ##########
+              # Editor #
+              ##########
+              "editor.bracketPairColorization.enabled" = true;
               "editor.cursorBlinking" = "smooth";
               "editor.cursorSmoothCaretAnimation" = "on";
-              "editor.quickSuggestionsDelay" = 0;
+              "editor.fontFamily" = "MonaspiceNe Nerd Font";
+              "editor.fontLigatures" =
+                "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
+              "editor.fontSize" = 14;
+              "editor.formatOnPaste" = true;
+              "editor.formatOnSave" = true;
+              "editor.formatOnSaveMode" = "file";
+              "editor.guides.bracketPairs" = "active";
+              "editor.insertSpaces" = true;
+              "editor.lineNumbers" = "relative";
+              "editor.linkedEditing" = true;
+              "editor.minimap.enabled" = false;
               "editor.quickSuggestions" = {
                 other = true;
                 comments = true;
                 strings = true;
               };
-              "editor.suggestSelection" = "first";
-              "editor.rulers" = [ 110 ];
-              "editor.wordWrap" = "on";
-              "editor.minimap.enabled" = false;
-              "editor.smoothScrolling" = true;
-              "editor.tabSize" = 4;
-              "editor.insertSpaces" = true;
+              "editor.quickSuggestionsDelay" = 0;
               "editor.renderWhitespace" = "all";
-              "editor.bracketPairColorization.enabled" = true;
-              "editor.guides.bracketPairs" = "active";
+              "editor.rulers" = [ 110 ];
+              "editor.smoothScrolling" = true;
+              "editor.suggestSelection" = "first";
+              "editor.tabSize" = 4;
               "editor.tokenColorCustomizations" = {
                 textMateRules = [
                   {
@@ -342,22 +276,34 @@
                   }
                 ];
               };
+              "editor.wordWrap" = "on";
 
-              # Explorer
+              ############
+              # Explorer #
+              ############
               "explorer.autoReveal" = false;
               "explorer.confirmDelete" = false;
               "explorer.confirmDragAndDrop" = false;
 
-              # Files
-              "files.trimTrailingWhitespace" = true;
-              "files.insertFinalNewline" = true;
-              "files.trimFinalNewlines" = true;
+              #########
+              # Files #
+              #########
               "files.associations" = {
                 "*.rasi" = "css";
               };
+              "files.insertFinalNewline" = true;
+              "files.trimFinalNewlines" = true;
+              "files.trimTrailingWhitespace" = true;
 
-              # Vim
-              "vim.insertModeKeyBindings" = [
+              #######
+              # Vim #
+              #######
+              "vim.easymotion" = true;
+              "vim.handleKeys" = {
+                "<C-b>" = false;
+              };
+              "vim.hlsearch" = true;
+              "vim.insertModeKeyBindingsNonRecursive" = [
                 {
                   before = [
                     "j"
@@ -366,129 +312,135 @@
                   after = [ "<Esc>" ];
                 }
               ];
-              "vim.normalModeKeyBindings" = [
-                {
-                  before = [
-                    "g"
-                    "D"
-                  ];
-                  commands = [ "editor.action.revealDefintionsAside" ];
-                }
-              ];
               "vim.normalModeKeyBindingsNonRecursive" = [
                 {
-                  before = [
-                    "<leader>"
-                    "t"
-                  ];
-                  commands = [ "workbench.action.toggleSidebarVisibility" ];
+                  before = [ "<space>" ];
+                  commands = [ "vspacecode.space" ];
                 }
                 {
-                  before = [
-                    "<leader>"
-                    "f"
-                  ];
-                  commands = [ "revealInExplorer" ];
-                }
-                {
-                  before = [
-                    "<leader>"
-                    "c"
-                  ];
+                  before = [ "," ];
                   commands = [
-                    "editor.action.commentLine"
-                    "extension.vim_escape"
+                    "vspacecode.space"
+                    {
+                      command = "whichkey.triggerKey";
+                      args = "m";
+                    }
                   ];
-                }
-                {
-                  before = [
-                    "<leader>"
-                    "r"
-                    "e"
-                  ];
-                  commands = [ "editor.action.rename" ];
-                }
-                {
-                  before = [
-                    "<leader>"
-                    "o"
-                    "g"
-                  ];
-                  commands = [ "workbench.action.showAllSymbols" ];
-                }
-                {
-                  before = [
-                    "<leader>"
-                    "o"
-                    "o"
-                  ];
-                  commands = [ "workbench.action.showEditorsInActiveGroup" ];
-                }
-                {
-                  before = [
-                    "<leader>"
-                    "o"
-                    "p"
-                  ];
-                  commands = [ "workbench.action.quickOpen" ];
                 }
               ];
-              "vim.visualModeKeyBindings" = [
-                {
-                  before = [
-                    "<leader>"
-                    "c"
-                  ];
-                  commands = [ "editor.action.commentLine" ];
-                  when = "editorTextFocus && !editorReadonly";
-                }
-              ];
-              "vim.hlsearch" = true;
-              "vim.leader" = "\\\\";
-              "vim.easymotion" = true;
               "vim.surround" = true;
               "vim.useSystemClipboard" = true;
+              "vim.visualModeKeyBindingsNonRecursive" = [
+                {
+                  before = [ "<space>" ];
+                  commands = [ "vspacecode.space" ];
+                }
+                {
+                  before = [ "," ];
+                  commands = [
+                    "vspacecode.space"
+                    {
+                      command = "whichkey.triggerKey";
+                      args = "m";
+                    }
+                  ];
+                }
+                {
+                  before = [ ">" ];
+                  commands = [ "editor.action.indentLines" ];
+                }
+                {
+                  before = [ "<" ];
+                  commands = [ "editor.action.outdentLines" ];
+                }
+              ];
 
-              # Terminal
-              "terminal.integrated.cursorStyle" = "line";
+              ##############
+              # VSpaceCode #
+              ##############
+              "vspacecode.bindingOverrides" = [
+                # Use project manager extension for switching
+                {
+                  keys = [
+                    "p"
+                    "p"
+                  ];
+                  name = "+Switch project";
+                  type = "command";
+                  command = "projectManager.listProjects";
+                }
+                # Remove redundant keybind
+                {
+                  keys = [
+                    "p"
+                    "l"
+                  ];
+                  position = -1;
+                }
+                # Save project to project manager
+                {
+                  keys = [
+                    "p"
+                    "s"
+                  ];
+                  name = "+Save project";
+                  type = "command";
+                  command = "projectManager.saveProject";
+                }
+                # Edit projects in project manager
+                {
+                  keys = [
+                    "p"
+                    "e"
+                  ];
+                  name = "Edit projects";
+                  type = "command";
+                  command = "projectManager.editProjects";
+                }
+              ];
+
+              ############
+              # Terminal #
+              ############
               "terminal.integrated.cursorBlinking" = true;
-              "terminal.integrated.fontFamily" = "MonaspiceNe Nerd Font";
+              "terminal.integrated.cursorStyle" = "line";
               "terminal.integrated.defaultProfile.linux" =
-                if osConfig.features.terminal.fish.enable then
+                if osConfig.features.terminal.tmux.enable then
+                  "tmux"
+                else if osConfig.features.terminal.fish.enable then
                   "fish"
                 else if osConfig.features.terminal.bash.enable then
                   "bash"
                 else
                   "bash";
+              "terminal.integrated.fontFamily" = "MonaspiceNe Nerd Font";
+              "terminal.integrated.sendKeybindingsToShell" = "all-commands";
               "terminal.integrated.shellIntegration.enabled" = false;
               "terminal.integrated.suggest.enabled" = false;
               "terminal.integrated.suggest.inlineSuggestion" = "off";
 
-              # Language Specific Settings
-              "[javascript]" = {
-                "editor.defaultFormatter" = "esbenp.prettier-vscode";
+              ##############################
+              # Language Specific Settings #
+              ##############################
+              "[cpp]" = {
+                "editor.defaultFormatter" = "ms-vscode.cpptools";
               };
               "[html]" = {
+                "editor.defaultFormatter" = "esbenp.prettier-vscode";
+              };
+              "[javascript]" = {
                 "editor.defaultFormatter" = "esbenp.prettier-vscode";
               };
               "[latex]" = {
                 "editor.defaultFormatter" = "James-Yu.latex-workshop";
               };
-              "[cpp]" = {
-                "editor.defaultFormatter" = "ms-vscode.cpptools";
-              };
-              "[python]" = {
-                "editor.defaultFormatter" = "ms-python.python";
-              };
               "[markdown]" = {
                 "editor.defaultFormatter" = "yzhang.markdown-all-in-one";
               };
 
-              # Extension Settings
-              "python.linting.pylintEnabled" = true;
-              "python.linting.enabled" = true;
-              "python.languageServer" = "Pylance";
-
+              #######
+              # Nix #
+              #######
               "nix.enableLanguageServer" = true;
               "nix.serverPath" = "nixd";
               "nix.serverSettings" = {
@@ -499,45 +451,59 @@
                 };
               };
 
-              "todo-tree.regex.regex" = "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)";
-              "todo-tree.tree.showScanModeButton" = false;
-              "todo-tree.general.tags" = [
-                "BUG"
-                "HACK"
-                "FIXME"
-                "TODO"
-                "XXX"
-                "DONE"
-                "[ ]"
-                "[x]"
-              ];
-
+              ############
+              # Prettier #
+              ############
               "prettier.endOfLine" = "auto";
               "prettier.proseWrap" = "always";
               "prettier.tabWidth" = 4;
               "prettier.useTabs" = true;
 
-              "liveServer.settings.donotVerifyTags" = true;
-              "liveServer.settings.donotShowInfoMsg" = true;
-
+              ##################
+              # Latex Workshop #
+              ##################
               "latex-workshop.view.pdf.viewer" = "tab";
 
-              "jupyter.sendSelectionToInteractiveWindow" = false;
-              "jupyter.alwaysTrustNotebooks" = true;
-
+              #######
+              # Git #
+              #######
               "git.autofetch" = true;
 
+              #########
+              # CMake #
+              #########
               "cmake.configureOnOpen" = false;
 
+              ###############
+              # Diff Editor #
+              ###############
               "diffEditor.ignoreTrimWhitespace" = false;
 
+              ###################
+              # Project Manager #
+              ###################
+              "projectManager.cacheProjectsBetweenSessions" = true;
+              "projectManager.checkInvalidPathsBeforeListing" = true;
               "projectManager.git.baseFolders" = [
-                "/home/sravan/Projects"
-                "/home/sravan/.config"
+                "$home/Projects"
+                "$home/.config"
               ];
+              "projectManager.ignoreProjectsWithinProjects" = true;
+              "projectManager.removeCurrentProjectFromList" = false;
+              "projectManager.showParentFolderInfoOnDuplicates" = true;
+              "projectManager.showProjectNameInStatusBar" = true;
+              "projectManager.sortList" = "Name";
+              "projectManager.supportSymlinksOnBaseFolders" = true;
 
+              ############
+              # VS Icons #
+              ############
               "vsicons.dontShowNewVersionMessage" = true;
 
+              ###########
+              # Peacock #
+              ###########
+              "peacock.affectTabActiveBorder" = true;
               "peacock.favoriteColors" = [
                 {
                   name = "Dark";
@@ -584,26 +550,196 @@
                   value = "#6272a4";
                 }
               ];
-              "peacock.affectTabActiveBorder" = true;
 
-              "auto-build.defaultEnv.name" = "STM32F103RE_creality";
-              "auto-build.build.reveal" = false;
-              "auto-build.build.silent" = false;
-              "platformio-ide.autoOpenPlatformIOIniFile" = false;
-
-              "devenv.watchForChanges" = true;
-              "devenv.status.showChangesCount" = true;
+              ##########
+              # Devenv #
+              ##########
               "devenv.restart.automatic" = true;
+              "devenv.status.showChangesCount" = true;
+              "devenv.watchForChanges" = true;
 
-              # Telemetry
+              #############
+              # Telemetry #
+              #############
               "telemetry.telemetryLevel" = "off";
 
-              # Security
+              ############
+              # Security #
+              ############
               "security.workspace.trust.untrustedFiles" = "open";
 
-              # AI
+              ######
+              # AI #
+              ######
               "chat.disableAIFeatures" = true;
             };
+
+            keybindings = [
+              # Trigger vspacecode in empty editor group
+              {
+                key = "space";
+                command = "vspacecode.space";
+                when = "activeEditorGroupEmpty && focusedView == '' && !whichkeyActive && !inputFocus";
+              }
+              # Trigger vspacecode when sidebar is in focus
+              {
+                key = "space";
+                command = "vspacecode.space";
+                when = "sideBarFocus && !inputFocus && !whichkeyActive";
+              }
+              # Keybindings required for edamagit
+              # https://github.com/kahole/edamagit#vim-support-vscodevim
+              # Cannot be added to package.json because keybinding replacements
+              {
+                key = "tab";
+                command = "extension.vim_tab";
+                when = "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert' && editorLangId != 'magit'";
+              }
+              {
+                key = "tab";
+                command = "-extension.vim_tab";
+                when = "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'";
+              }
+              {
+                key = "x";
+                command = "magit.discard-at-point";
+                when = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
+              }
+              {
+                key = "k";
+                command = "-magit.discard-at-point";
+              }
+              {
+                key = "-";
+                command = "magit.reverse-at-point";
+                when = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
+              }
+              {
+                key = "v";
+                command = "-magit.reverse-at-point";
+              }
+              {
+                key = "shift+-";
+                command = "magit.reverting";
+                when = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
+              }
+              {
+                key = "shift+v";
+                command = "-magit.reverting";
+              }
+              {
+                key = "shift+o";
+                command = "magit.resetting";
+                when = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
+              }
+              {
+                key = "shift+x";
+                command = "-magit.resetting";
+              }
+              {
+                key = "x";
+                command = "-magit.reset-mixed";
+              }
+              {
+                key = "ctrl+u x";
+                command = "-magit.reset-hard";
+              }
+              # Extra ref menu support for edamagit with the key "y"
+              # Cannot be added to package.json because keybinding replacements
+              {
+                key = "y";
+                command = "-magit.show-refs";
+              }
+              {
+                key = "y";
+                command = "vspacecode.showMagitRefMenu";
+                when = "editorTextFocus && editorLangId == 'magit' && vim.mode == 'Normal'";
+              }
+              # Extra refresh menu support for edamagit with the key "g"
+              # Cannot be added to package.json because keybinding replacements
+              {
+                key = "g";
+                command = "-magit.refresh";
+                when = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
+              }
+              {
+                key = "g";
+                command = "vspacecode.showMagitRefreshMenu";
+                when = "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/";
+              }
+              # Easy navigation in quick open/QuickPick
+              {
+                key = "ctrl+j";
+                command = "workbench.action.quickOpenSelectNext";
+                when = "inQuickOpen";
+              }
+              {
+                key = "ctrl+k";
+                command = "workbench.action.quickOpenSelectPrevious";
+                when = "inQuickOpen";
+              }
+              # Easy navigation in suggestion/intellisense
+              # Cannot be added to package.json because of conflict with vim's default bindings
+              {
+                key = "ctrl+j";
+                command = "selectNextSuggestion";
+                when = "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus";
+              }
+              {
+                key = "ctrl+k";
+                command = "selectPrevSuggestion";
+                when = "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus";
+              }
+              {
+                key = "ctrl+l";
+                command = "acceptSelectedSuggestion";
+                when = "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus";
+              }
+              # Easy navigation in parameter hint (i.e. traverse the hints when there's multiple overload for one method)
+              # Cannot be added to package.json because of conflict with vim's default bindings
+              {
+                key = "ctrl+j";
+                command = "showNextParameterHint";
+                when = "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible";
+              }
+              {
+                key = "ctrl+k";
+                command = "showPrevParameterHint";
+                when = "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible";
+              }
+              # Easy navigation in code action
+              {
+                key = "ctrl+j";
+                command = "selectNextCodeAction";
+                when = "codeActionMenuVisible";
+              }
+              {
+                key = "ctrl+k";
+                command = "selectPrevCodeAction";
+                when = "codeActionMenuVisible";
+              }
+              {
+                key = "ctrl+l";
+                command = "acceptSelectedCodeAction";
+                when = "codeActionMenuVisible";
+              }
+              # Add ctrl+h/l to navigate in file browser
+              {
+                key = "ctrl+h";
+                command = "file-browser.stepOut";
+                when = "inFileBrowser";
+              }
+              {
+                key = "ctrl+l";
+                command = "file-browser.stepIn";
+                when = "inFileBrowser";
+              }
+              # Toggle sidebar with ctrl+b
+              {
+                key = "ctrl+b";
+                command = "workbench.action.toggleSidebarVisibility";
+              }
+            ];
           };
         };
 
