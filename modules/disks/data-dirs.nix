@@ -17,6 +17,7 @@
         "d      /data/${user}/Pictures               0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Projects               0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Second-Brain           0700  ${user}  ${group}  -    -"
+        "d      /data/${user}/Vault                  0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Videos                 0700  ${user}  ${group}  -    -"
         "d      /data/${user}/Virtual-Machines       0700  ${user}  ${group}  -    -"
       ]
@@ -49,6 +50,7 @@
       home.file."Pictures".source = config.lib.file.mkOutOfStoreSymlink "/data/${user}/Pictures";
       home.file."Projects".source = config.lib.file.mkOutOfStoreSymlink "/data/${user}/Projects";
       home.file."Second-Brain".source = config.lib.file.mkOutOfStoreSymlink "/data/${user}/Second-Brain";
+      home.file."Vault".source = config.lib.file.mkOutOfStoreSymlink "/data/${user}/Vault";
       home.file."Videos".source = config.lib.file.mkOutOfStoreSymlink "/data/${user}/Videos";
       home.file."Virtual-Machines".source =
         config.lib.file.mkOutOfStoreSymlink "/data/${user}/Virtual-Machines";

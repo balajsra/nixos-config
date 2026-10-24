@@ -154,6 +154,22 @@
                 type = "sendreceive"; # "sendreceive", "sendonly", "receiveonly", or "receiveencrypted"
                 versioning = null;
               };
+              "Vault" = {
+                enable = true;
+                devices = lib.filter (d: d != osConfig.networking.hostName) [
+                  "fileserver"
+                  "pixel-tablet"
+                  "s26ultra"
+                  "steam-deck"
+                  "oryp7"
+                  "powerspec"
+                ];
+                id = "wm5da-67m23";
+                label = "Vault";
+                path = "/home/${osConfig.primaryUser.username}/Data/Vault";
+                type = "sendreceive"; # "sendreceive", "sendonly", "receiveonly", or "receiveencrypted"
+                versioning = null;
+              };
             };
           };
         };
