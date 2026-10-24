@@ -14,6 +14,7 @@
   flake.homeModules.security = {
     imports = [
       self.homeModules.bitwarden
+      self.homeModules.keepass
       self.homeModules.sops
     ];
   };
@@ -61,6 +62,59 @@
           bitwarden-cli
           bitwarden-menu
         ];
+      };
+    };
+
+  flake.homeModules.keepass =
+    {
+      osConfig,
+      lib,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.security.keepass.enable) {
+        programs.keepassxc = {
+          autostart = false;
+          enable = true;
+          settings = {
+            General = {
+              SingleInstance = true;
+              RememberLastDatabases = true;
+              NumberOfRememberedLastDatabases = 1;
+              OpenPreviousDatabasesOnStartup = true;
+              AutoSaveAfterEveryChange = false;
+              AutoReloadOnChange = true;
+              AutoSaveOnExit = true;
+              AutoSaveNonDataChanges = true;
+              BackupBeforeSave = true;
+              BackupFilePathPattern = "{DB_FILENAME}.old.kdbx";
+            };
+
+            GUI = {
+              ColorPasswords = true;
+              ToolButtonStyle = 0;
+              ShowTrayIcon = true;
+              TrayIconAppearance = "colorful";
+              MinimizeToTray = false;
+              MinimizeOnStartup = false;
+              MinimizeOnClose = false;
+            };
+
+            Browser = {
+              Enabled = true;
+              ShowNotification = true;
+              UnlockDatabase = true;
+              MatchUrlScheme = true;
+              SupportBrowserProxy = true;
+              AlwaysAllowAccess = true;
+              Browser_AllowLocalhostWithPasskeys = true;
+            };
+
+            Security = {
+              IconDownloadFallback = true;
+            };
+          };
+        };
       };
     };
 

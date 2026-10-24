@@ -179,7 +179,8 @@ in
             security = {
               sops.enable = true;
               secret-service.enable = true;
-              bitwarden.enable = true;
+              bitwarden.enable = false;
+              keepass.enable = true;
             };
 
             fonts = {

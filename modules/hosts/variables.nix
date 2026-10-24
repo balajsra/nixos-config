@@ -226,8 +226,9 @@
 
         security = {
           sops.enable = lib.mkEnableOption "Enable sops-nix";
-          secret-service.enable = lib.mkEnableOption "Enable secret service";
+          secret-service.enable = lib.mkEnableOption "Enable Secret Service";
           bitwarden.enable = lib.mkEnableOption "Enable Bitwarden";
+          keepass.enable = lib.mkEnableOption "Enable KeePass";
         };
 
         fonts = {
