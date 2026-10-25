@@ -216,6 +216,8 @@
               "workbench.secondarySideBar.defaultVisibility" = "hidden";
               "workbench.settings.enableNaturalLanguageSearch" = false;
               "workbench.sideBar.location" = "left";
+              "workbench.startupEditor" = "none";
+              "workbench.welcomePage.walkthroughs.openOnInstall" = false;
 
               ##########
               # Editor #
