@@ -46,6 +46,14 @@ unlock-bitwarden:
     echo "Syncing Bitwarden vault..."
     bw sync
 
+# Unlock KeePass vault
+unlock-keepass:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    echo "Unlocking keepass vault..."
+    secretspec config provider login keepass_vault
+
 # Generate Host SSH key
 generate-ssh-key:
     #!/usr/bin/env bash
