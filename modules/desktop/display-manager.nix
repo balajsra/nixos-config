@@ -5,7 +5,7 @@
     imports = [
       self.nixosModules.gdm
       self.nixosModules.greetd
-      self.nixosModules.dank-greeter
+      self.nixosModules.dux-greeter
     ];
   };
 
@@ -40,7 +40,7 @@
       };
     };
 
-  flake.nixosModules.dank-greeter =
+  flake.nixosModules.dux-greeter =
     {
       pkgs,
       config,
@@ -49,17 +49,17 @@
     }:
     {
       imports = [
-        inputs.dank-greeter.nixosModules.default
+        inputs.dux-greeter.nixosModules.default
       ];
 
-      config = lib.mkIf (config.features.display-manager == "dank-greeter") {
-        # https://danklinux.com/docs/dankgreeter/nixos-flake#configuration-options
+      config = lib.mkIf (config.features.display-manager == "dux-greeter") {
+        # https://duxlabs.dev/docs/dms-greeter/nixos-flake#configuration-options
         programs.dms-greeter = {
           enable = true;
-          package = inputs.dank-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          package = inputs.dux-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
           compositor.name = config.features.desktop-environment;
 
-          # Sync user's DankMaterialShell theme with the greeter
+          # Sync user's Dux Shell theme with the greeter
           configHome = "/home/${config.primaryUser.username}";
 
           logs = {

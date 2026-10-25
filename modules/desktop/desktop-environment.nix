@@ -27,8 +27,8 @@ in
   flake.homeModules.desktop-environment = {
     imports = [
       self.homeModules.mango
-      self.homeModules.dank-material-shell
-      self.homeModules.dank-search
+      self.homeModules.dux-shell
+      self.homeModules.dux-search
       self.homeModules.screenshot
       self.homeModules.theme
       self.homeModules.display
@@ -518,7 +518,7 @@ in
       };
     };
 
-  flake.homeModules.dank-material-shell =
+  flake.homeModules.dux-shell =
     {
       osConfig,
       config,
@@ -532,17 +532,17 @@ in
     in
     {
       imports = [
-        inputs.dank-material-shell.homeModules.dank-material-shell
+        inputs.dux-shell.homeModules.dank-material-shell
       ];
 
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
-        # https://danklinux.com/docs/dankmaterialshell/nixos-flake#configuration-options
+        # https://duxlabs.dev/docs/dms/nixos-flake#configuration-options
         programs.dank-material-shell = {
           enable = true;
 
           systemd = {
             enable = true; # Systemd service for auto-start
-            restartIfChanged = true; # Auto-restart dms.service when dank-material-shell changes
+            restartIfChanged = true; # Auto-restart dms.service when dux-shell changes
           };
 
           # Core features
@@ -557,7 +557,7 @@ in
             # Theme
             currentThemeName = "custom";
             currentThemeCategory = "custom";
-            customThemeFile = "/home/${osConfig.primaryUser.username}/.config/DankMaterialShell/themes/dracula.json";
+            customThemeFile = "/home/${osConfig.primaryUser.username}/.config/dms/themes/dracula.json";
             dynamicTheming = false;
 
             # Widget Styling
@@ -693,7 +693,7 @@ in
               }
             ];
 
-            # Dank Bar
+            # Dux Bar
             barConfigs = [
               {
                 id = "default";
@@ -809,8 +809,8 @@ in
           };
         };
 
-        xdg.configFile."DankMaterialShell/themes/dracula.json".source =
-          "${inputs.dracula-dank-material-shell}/themes/dracula/theme.json";
+        xdg.configFile."dms/themes/dracula.json".source =
+          "${inputs.dracula-dux-shell}/themes/dracula/theme.json";
 
         systemd.user.services.dms-wallpaper-randomizer = {
           Unit = {
@@ -862,7 +862,7 @@ in
           };
         };
 
-        # https://danklinux.com/docs/dankmaterialshell/compositors#mangowc-configuration
+        # https://duxlabs.dev/docs/dms/compositors#mangowc-configuration
         wayland.windowManager.mango = {
           settings = {
             bind = [
@@ -975,7 +975,7 @@ in
       };
     };
 
-  flake.homeModules.dank-search =
+  flake.homeModules.dux-search =
     {
       osConfig,
       lib,
@@ -983,16 +983,16 @@ in
     }:
     {
       imports = [
-        inputs.dank-search.homeModules.dsearch
+        inputs.dux-search.homeModules.dsearch
       ];
 
       config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
-        # https://danklinux.com/docs/danksearch/nixos-flake
+        # https://duxlabs.dev/docs/dsearch/nixos-flake
         programs.dsearch = {
           enable = true;
 
           # Custom configuration (TOML format)
-          # See https://danklinux.com/docs/danksearch/configuration for full list of options
+          # See https://duxlabs.dev/docs/dsearch/configuration for full list of options
           config = {
             # Server configuration
             listen_addr = ":43654";

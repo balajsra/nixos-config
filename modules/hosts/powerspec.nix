@@ -39,7 +39,7 @@ in
               kernel = "vanilla-latest";
             };
 
-            display-manager = "dank-greeter";
+            display-manager = "dux-greeter";
             desktop-environment = "mango";
 
             display = {

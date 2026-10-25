@@ -46,21 +46,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Display Manager for DankMaterialShell
-    dank-greeter = {
-      url = "github:AvengeMedia/dank-greeter";
+    # Display Manager for Dux Shell
+    dux-greeter = {
+      url = "github:duxlabs-dev/dux-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Desktop Shell for Window Managers
-    dank-material-shell = {
-      url = "github:AvengeMedia/DankMaterialShell";
+    # Desktop Shell for Wayland Compositors
+    dux-shell = {
+      url = "github:duxlabs-dev/dux-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Search interface for DankMaterialShell
-    dank-search = {
-      url = "github:AvengeMedia/danksearch";
+    # Search interface for Dux Shell
+    dux-search = {
+      url = "github:duxlabs-dev/dux-search";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -91,8 +91,8 @@
       flake = false;
     };
 
-    # Dracula Dank Material Shell Theme
-    dracula-dank-material-shell = {
+    # Dracula Dux Shell Theme
+    dracula-dux-shell = {
       url = "github:dracula/dankmaterialshell";
       flake = false;
     };
