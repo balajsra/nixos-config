@@ -45,5 +45,33 @@
           end
         '';
       };
+
+      xdg.configFile."secretspec/config.toml".source =
+        (pkgs.formats.toml { }).generate "secretspec-config"
+          {
+            defaults = {
+              provider =
+                if osConfig.features.security.keepass.enable then
+                  "keepass_vault"
+                else if osConfig.features.security.bitwarden.enable then
+                  "bitwarden_vault"
+                else
+                  "null_vault";
+              profile = "development";
+
+              providers = {
+                keepass_vault = {
+                  uri = "kdbx:/data/${osConfig.primaryUser.username}/Vault/Vault.kdbx";
+                  credentials.password = "keyring";
+                };
+                bitwarden_vault = {
+                  uri = "bw://";
+                };
+                null_vault = {
+                  uri = "null://";
+                };
+              };
+            };
+          };
     };
 }
