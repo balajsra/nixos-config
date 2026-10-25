@@ -21,9 +21,13 @@
     {
       config = lib.mkIf (osConfig.features.networking.ssh-client.enable) {
         sops.secrets = {
-          "PRIVATE_KEYS__${lib.toUpper osConfig.networking.hostName}__${lib.toUpper osConfig.primaryUser.username}" =
+          "PRIVATE_SSH_KEY__${lib.toUpper osConfig.networking.hostName}__${lib.toUpper osConfig.primaryUser.username}" =
             {
               path = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519";
+            };
+          "PUBLIC_SSH_KEY__${lib.toUpper osConfig.networking.hostName}__${lib.toUpper osConfig.primaryUser.username}" =
+            {
+              path = "/home/${osConfig.primaryUser.username}/.ssh/id_ed25519.pub";
             };
         };
 
