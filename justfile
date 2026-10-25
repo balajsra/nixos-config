@@ -35,6 +35,17 @@ build-setup:
     # Stage all untracked changes for Nix evaluation
     git add -N .
 
+# Unlock and sync Bitwarden vault
+unlock-bitwarden:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    echo "Unlocking Bitwarden session..."
+    export BW_SESSION=$(bw unlock --raw)
+
+    echo "Syncing Bitwarden vault..."
+    bw sync
+
 # Generate Host SSH key
 generate-ssh-key:
     #!/usr/bin/env bash
@@ -49,12 +60,6 @@ generate-ssh-key:
 generate-secrets:
     #!/usr/bin/env bash
     set -euo pipefail
-
-    echo "Unlocking Bitwarden session..."
-    export BW_SESSION=$(bw unlock --raw)
-
-    echo "Syncing Bitwarden vault..."
-    bw sync
 
     echo "Check that all secretspec secrets are available..."
     secretspec check
