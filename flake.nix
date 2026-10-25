@@ -46,6 +46,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # File Manager for Dux Shell
+    dux-files = {
+      url = "github:duxlabs-dev/dux-files";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Display Manager for Dux Shell
     dux-greeter = {
       url = "github:duxlabs-dev/dux-greeter";

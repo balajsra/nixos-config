@@ -32,6 +32,7 @@ in
       self.homeModules.screenshot
       self.homeModules.theme
       self.homeModules.display
+      self.homeModules.file-explorer
     ];
   };
 
@@ -946,32 +947,54 @@ in
   flake.nixosModules.file-explorer =
     {
       pkgs,
-      lib,
-      config,
       ...
     }:
     {
-      config = lib.mkIf (config.features.desktop-environment == "mango") {
-        # https://wiki.nixos.org/wiki/Thunar
-        programs.thunar = {
-          enable = true;
-          plugins = with pkgs; [
-            thunar-archive-plugin
-            thunar-media-tags-plugin
-            thunar-vcs-plugin
-            thunar-volman
-          ];
-        };
-        programs.xfconf.enable = true;
-        services.gvfs.enable = true; # Mount, trash, and other functionalities
-        services.tumbler.enable = true; # Thumbnail support for images
+      environment.systemPackages = with pkgs; [
+        engrampa
+        p7zip
+        unzip
+        zip
+      ];
+    };
 
-        environment.systemPackages = with pkgs; [
-          engrampa
-          p7zip
-          unzip
-          zip
-        ];
+  flake.homeModules.file-explorer =
+    {
+      lib,
+      osConfig,
+      ...
+    }:
+    {
+      imports = [
+        inputs.dux-files.homeModules.dux-files
+      ];
+
+      config = lib.mkIf (osConfig.features.desktop-environment == "mango") {
+        # https://duxlabs.dev/docs/dfiles/nixos-flake#configuration-options
+        programs.dux-files = {
+          enable = true;
+
+          # Keep a resident instance so windows open fast and the portal answers at once
+          systemd = {
+            enable = true;
+            target = "graphical-session.target";
+            restartIfChanged = true;
+          };
+
+          # Serve other apps' open and save dialogs
+          portal = {
+            enable = true; # register the dfiles backend with xdg-desktop-portal
+            preferred = true; # prefer it for org.freedesktop.impl.portal.FileChooser
+            desktop = "mango"; # which xdg.portal.config entry gets the preference, "common" by default
+          };
+
+          settings = {
+            themeMode = "dark";
+            radiusStrength = 50;
+            defaultView = "list";
+            vimKeys = true;
+          };
+        };
       };
     };
 
