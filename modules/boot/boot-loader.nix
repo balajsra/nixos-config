@@ -25,7 +25,6 @@
         };
 
         boot.initrd = {
-          systemd.enable = true;
           services.lvm.enable = true;
           supportedFilesystems = [ "btrfs" ];
           availableKernelModules = [
