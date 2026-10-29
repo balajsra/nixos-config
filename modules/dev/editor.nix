@@ -211,6 +211,8 @@
               };
               "workbench.experimental.modernUI" = true;
               "workbench.iconTheme" = "vscode-icons";
+              "workbench.modernUIFrostedGlass" = true;
+              "workbench.modernUIFrostedGlassOpacity" = 80;
               "workbench.panel.defaultLocation" = "bottom";
               "workbench.productIconTheme" = "fluent-icons";
               "workbench.secondarySideBar.defaultVisibility" = "hidden";
