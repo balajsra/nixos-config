@@ -595,11 +595,6 @@ in
             soundPluggedIn = true;
             muteSoundsWhenMediaPlaying = true;
 
-            # Workspace Settings
-            showWorkspaceIndex = false;
-            showWorkspaceName = true;
-            showWorkspacePadding = false;
-
             # On-screen Displays
             osdAlwaysShowValue = true;
             osdPosition = 5;
@@ -707,7 +702,15 @@ in
                 showOnLastDisplay = true;
                 leftWidgets = [
                   "launcherButton"
-                  "workspaceSwitcher"
+                  {
+                    id = "workspaceSwitcher";
+                    enabled = true;
+                    workspaceIndicatorCompact = false;
+                    showWorkspaceIndex = true;
+                    showWorkspaceName = false;
+                    showWorkspaceApps = false;
+                    workspaceIndicatorStyle = "cards";
+                  }
                   "focusedWindow"
                 ];
                 centerWidgets = [
