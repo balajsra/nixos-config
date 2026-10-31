@@ -1,19 +1,14 @@
 {
   stdenv,
-  fetchFromGitHub,
   lib,
+  src,
 }:
 
 stdenv.mkDerivation {
   pname = "dracula-gtk-theme";
   version = "unstable";
 
-  src = fetchFromGitHub {
-    owner = "dracula";
-    repo = "gtk";
-    rev = "master";
-    hash = "sha256-gbotOIGG55oqQZZNDkc9s5fPXvJQr+YHqxt5ZWS5bF8=";
-  };
+  inherit src;
 
   dontBuild = true;
 

@@ -814,7 +814,7 @@ in
         };
 
         xdg.configFile."dms/themes/dracula.json".source =
-          "${inputs.dracula-dux-shell}/themes/dracula/theme.json";
+          "${inputs.dracula-dux-shell-theme}/themes/dracula/theme.json";
 
         systemd.user.services.dms-wallpaper-randomizer = {
           Unit = {

@@ -1,11 +1,19 @@
 inputs: final: prev: {
-  dracula-gtk-theme = final.callPackage ./dracula-gtk-theme.nix { };
-  fallout-grub-theme = final.callPackage ./fallout-grub-theme.nix { };
-  fallout-plymouth-theme = final.callPackage ./fallout-plymouth-theme.nix { };
+  dracula-gtk-theme = final.callPackage ./dracula-gtk-theme.nix {
+    src = inputs.dracula-gtk-theme;
+  };
+
+  fallout-grub-theme = final.callPackage ./fallout-grub-theme.nix {
+    src = inputs.fallout-grub-theme;
+  };
+
+  fallout-plymouth-theme = final.callPackage ./fallout-plymouth-theme.nix {
+    src = inputs.fallout-plymouth-theme;
+  };
 
   vimPlugins = prev.vimPlugins // {
     dracula-pro = final.callPackage ./vimPlugins/dracula-pro.nix {
-      src = inputs.dracula-pro-vim;
+      src = inputs.dracula-pro-vim-theme;
     };
   };
 
@@ -16,7 +24,7 @@ inputs: final: prev: {
 
     dracula-theme-pro = (prev.vscode-extensions.dracula-theme-pro or { }) // {
       theme-dracula-pro = final.callPackage ./vscode-extensions/theme-dracula-pro.nix {
-        src = "${inputs.dracula-pro-vscode}/dracula-pro.vsix";
+        src = "${inputs.dracula-pro-vscode-theme}/dracula-pro.vsix";
       };
     };
   };

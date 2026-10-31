@@ -32,7 +32,7 @@
       ...
     }:
     let
-      bashTtyScript = builtins.readFile "${inputs.dracula-tty}/dracula-tty.sh";
+      bashTtyScript = builtins.readFile "${inputs.dracula-tty-theme}/dracula-tty.sh";
     in
     {
       config = lib.mkIf (osConfig.features.terminal.bash.enable) {
@@ -59,7 +59,7 @@
       ...
     }:
     let
-      bashTtyScript = builtins.readFile "${inputs.dracula-tty}/dracula-tty.sh";
+      bashTtyScript = builtins.readFile "${inputs.dracula-tty-theme}/dracula-tty.sh";
       # Convert POSIX 'if/then/fi' syntax to native Fish 'if/end' syntax dynamically
       fishTtyScript =
         builtins.replaceStrings
@@ -93,7 +93,7 @@
           '';
         };
         xdg.configFile."fish/themes/Dracula_Official.theme".source =
-          "${inputs.dracula-fish}/themes/Dracula Official.theme";
+          "${inputs.dracula-fish-theme}/themes/Dracula Official.theme";
 
         home.packages = with pkgs; [
           krabby
@@ -109,7 +109,7 @@
       ...
     }:
     let
-      baseStarshipToml = builtins.readFile "${inputs.dracula-pro-starship}/starship/themes/dracula-pro.toml";
+      baseStarshipToml = builtins.readFile "${inputs.dracula-pro-starship-theme}/starship/themes/dracula-pro.toml";
       baseConfig = fromTOML baseStarshipToml;
 
       myOverrides = {
@@ -494,7 +494,7 @@
           };
         };
 
-        xdg.configFile."ghostty/themes/dracula-pro".source = "${inputs.dracula-pro-ghostty}/pro";
+        xdg.configFile."ghostty/themes/dracula-pro".source = "${inputs.dracula-pro-ghostty-theme}/pro";
       };
     };
 }

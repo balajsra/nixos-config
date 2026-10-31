@@ -92,43 +92,49 @@
     # Dracula Themes #
     ##################
     # Dracula Beeper Theme
-    dracula-beeper = {
+    dracula-beeper-theme = {
       url = "github:dracula/beeper";
       flake = false;
     };
 
     # Dracula Dux Shell Theme
-    dracula-dux-shell = {
+    dracula-dux-shell-theme = {
       url = "github:dracula/dankmaterialshell";
       flake = false;
     };
 
     # Dracula Fish Theme
-    dracula-fish = {
+    dracula-fish-theme = {
       url = "github:dracula/fish";
       flake = false;
     };
 
     # Dracula GIMP Theme
-    dracula-gimp = {
+    dracula-gimp-theme = {
       url = "github:dracula/gimp";
       flake = false;
     };
 
+    # Dracula GTK Theme
+    dracula-gtk-theme = {
+      url = "github:dracula/gtk";
+      flake = false;
+    };
+
     # Dracula Signal Desktop App Theme
-    dracula-signal-desktop = {
+    dracula-signal-desktop-theme = {
       url = "github:dracula/signal-desktop";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Dracula TTY Theme
-    dracula-tty = {
+    dracula-tty-theme = {
       url = "github:dracula/tty";
       flake = false;
     };
 
     # Dracula Zathura Theme
-    dracula-zathura = {
+    dracula-zathura-theme = {
       url = "github:dracula/zathura";
       flake = false;
     };
@@ -137,25 +143,25 @@
     # Dracula Pro Themes #
     ######################
     # (Private) Dracula Pro Ghostty Theme
-    dracula-pro-ghostty = {
+    dracula-pro-ghostty-theme = {
       url = "github:dracula-pro/ghostty";
       flake = false;
     };
 
     # (Private) Dracula Pro Starship Theme
-    dracula-pro-starship = {
+    dracula-pro-starship-theme = {
       url = "github:dracula-pro/starship";
       flake = false;
     };
 
     # (Private) Dracula Pro Vim Theme
-    dracula-pro-vim = {
+    dracula-pro-vim-theme = {
       url = "github:dracula-pro/vim";
       flake = false;
     };
 
     # (Private) Dracula Pro VS Code Theme
-    dracula-pro-vscode = {
+    dracula-pro-vscode-theme = {
       url = "github:dracula-pro/visual-studio-code";
       flake = false;
     };
@@ -166,6 +172,18 @@
     # Eza Themes
     eza-themes = {
       url = "github:eza-community/eza-themes";
+      flake = false;
+    };
+
+    # Fallout GRUB Theme
+    fallout-grub-theme = {
+      url = "github:shvchk/fallout-grub-theme";
+      flake = false;
+    };
+
+    # Fallout Plymouth Theme
+    fallout-plymouth-theme = {
+      url = "github:balajsra/fallout-plymouth-theme";
       flake = false;
     };
   };

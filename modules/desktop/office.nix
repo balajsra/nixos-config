@@ -114,7 +114,7 @@
           enable = true;
         };
 
-        xdg.configFile."zathura/zathurarc".source = "${inputs.dracula-zathura}/zathurarc";
+        xdg.configFile."zathura/zathurarc".source = "${inputs.dracula-zathura-theme}/zathurarc";
 
         # https://wiki.nixos.org/wiki/Default_applications
         xdg.mimeApps = {

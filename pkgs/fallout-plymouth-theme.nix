@@ -1,6 +1,6 @@
 {
   stdenv,
-  fetchFromGitHub,
+  src,
   lib,
 }:
 
@@ -8,12 +8,7 @@ stdenv.mkDerivation {
   pname = "fallout-plymouth-theme";
   version = "1.0";
 
-  src = fetchFromGitHub {
-    owner = "balajsra";
-    repo = "fallout-plymouth-theme";
-    rev = "main";
-    hash = "sha256-I15QnTUqyPm4rJKgisgrURzYeXs4mW5DIjiUAVVJHhE=";
-  };
+  inherit src;
 
   dontBuild = true;
 

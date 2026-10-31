@@ -23,7 +23,7 @@
           beeper
         ];
 
-        xdg.configFile."BeeperTexts/custom.css".source = "${inputs.dracula-beeper}/custom.css";
+        xdg.configFile."BeeperTexts/custom.css".source = "${inputs.dracula-beeper-theme}/custom.css";
       };
     };
 

@@ -18,7 +18,7 @@
 
       # List of overlays
       nixpkgs.overlays = [
-        inputs.dracula-signal-desktop.overlays
+        inputs.dracula-signal-desktop-theme.overlays
         inputs.mango.overlays.default
         self.overlays.default
       ];

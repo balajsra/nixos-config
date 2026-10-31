@@ -106,7 +106,7 @@
           ristretto
         ];
 
-        xdg.configFile."GIMP/${gimpVersion}/themes/Dracula".source = "${inputs.dracula-gimp}/Dracula";
+        xdg.configFile."GIMP/${gimpVersion}/themes/Dracula".source = "${inputs.dracula-gimp-theme}/Dracula";
         xdg.configFile."GIMP/${gimpVersion}/gimprc".text = ''
           (theme "Dracula")
         '';
