@@ -689,6 +689,10 @@ in
               }
             ];
 
+            # Disable Shadows on Bar
+            barElevationEnabled = false;
+            shadowIntensity = 0;
+
             # Dux Bar
             barConfigs = [
               {
@@ -775,6 +779,7 @@ in
                 barInsetPadding = 4;
                 useOverlayLayer = false;
                 hoverPopouts = false;
+                followInterfaceStyle = false;
               }
             ];
           };
