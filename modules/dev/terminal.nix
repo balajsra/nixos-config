@@ -20,6 +20,7 @@
       self.homeModules.eza
       self.homeModules.tmux
       self.homeModules.grep
+      self.homeModules.yazi
     ];
   };
 
@@ -431,6 +432,40 @@
         --colors=column:fg:0x50,0xfa,0x7b
         --colors=match:fg:0xff,0x55,0x55
       '';
+    };
+
+  flake.homeModules.yazi =
+    {
+      pkgs,
+      osConfig,
+      inputs,
+      ...
+    }:
+    {
+      programs.yazi = {
+        enable = true;
+        enableBashIntegration = osConfig.features.terminal.bash.enable;
+        enableFishIntegration = osConfig.features.terminal.fish.enable;
+        extraPackages = with pkgs; [
+          ffmpeg
+          _7zz-rar
+          jq
+          poppler
+          fd
+          ripgrep
+          fzf
+          zoxide
+          resvg
+          imagemagick
+          wl-clipboard
+        ];
+        flavors = {
+          dracula = inputs.dracula-yazi-theme;
+        };
+        shellWrapperName = "y";
+
+        # TODO: Configure yazi settings
+      };
     };
 
   flake.homeModules.terminal-emulator = {

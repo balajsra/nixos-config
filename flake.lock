@@ -268,6 +268,22 @@
         "type": "github"
       }
     },
+    "dracula-yazi-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763517765,
+        "narHash": "sha256-wie3trdC7nGGOvuPTzo8SG9lg+lKKQb2tlMjrLVMMRU=",
+        "owner": "dracula",
+        "repo": "yazi",
+        "rev": "1b1a8d1083474defa9e4c1c3de4db9576f23175f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula",
+        "repo": "yazi",
+        "type": "github"
+      }
+    },
     "dracula-zathura-theme": {
       "flake": false,
       "locked": {
@@ -643,6 +659,7 @@
         "dracula-pro-vscode-theme": "dracula-pro-vscode-theme",
         "dracula-signal-desktop-theme": "dracula-signal-desktop-theme",
         "dracula-tty-theme": "dracula-tty-theme",
+        "dracula-yazi-theme": "dracula-yazi-theme",
         "dracula-zathura-theme": "dracula-zathura-theme",
         "dux-files": "dux-files",
         "dux-greeter": "dux-greeter",

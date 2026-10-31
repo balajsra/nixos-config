@@ -133,6 +133,12 @@
       flake = false;
     };
 
+    # Dracula Yazi Theme
+    dracula-yazi-theme = {
+      url = "github:dracula/yazi";
+      flake = false;
+    };
+
     # Dracula Zathura Theme
     dracula-zathura-theme = {
       url = "github:dracula/zathura";
