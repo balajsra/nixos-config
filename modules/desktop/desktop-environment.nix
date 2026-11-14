@@ -782,6 +782,15 @@ in
                 followInterfaceStyle = false;
               }
             ];
+
+            # Dock
+            dockConfigs = [
+              {
+                id = "dock";
+                name = "Dock";
+                enabled = false;
+              }
+            ];
           };
 
           session = {
