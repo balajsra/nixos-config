@@ -170,9 +170,9 @@
     {
       config = lib.mkIf (osConfig.features.office.sweethome3d.enable) {
         home.packages = with pkgs; [
-          sweethome3d.application
-          sweethome3d.textures-editor
-          sweethome3d.furniture-editor
+          sweethome3d
+          sweethome3d-textures-editor
+          sweethome3d-furniture-editor
         ];
       };
     };
