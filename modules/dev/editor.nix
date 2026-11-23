@@ -218,6 +218,10 @@
               "workbench.secondarySideBar.defaultVisibility" = "hidden";
               "workbench.settings.enableNaturalLanguageSearch" = false;
               "workbench.sideBar.location" = "left";
+              "workbench.sizeCustomizations" = {
+                "panels.cornerRadius" = 10;
+                "panels.spacing" = 20;
+              };
               "workbench.startupEditor" = "none";
               "workbench.welcomePage.walkthroughs.openOnInstall" = false;
 
