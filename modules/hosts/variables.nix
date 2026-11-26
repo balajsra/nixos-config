@@ -120,6 +120,7 @@
 
         office = {
           gnucash.enable = lib.mkEnableOption "Enable GNUCash";
+          orca-slicer.enable = lib.mkEnableOption "Enable Orca Slicer";
           obsidian.enable = lib.mkEnableOption "Enable Obsidian";
           qalculate.enable = lib.mkEnableOption "Enable Qalculate";
           thunderbird.enable = lib.mkEnableOption "Enable Thunderbird";

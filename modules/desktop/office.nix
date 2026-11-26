@@ -18,6 +18,7 @@
       self.homeModules.libreoffice
       self.homeModules.sweethome3d
       self.homeModules.drawy
+      self.homeModules.orca-slicer
     ];
   };
 
@@ -188,6 +189,21 @@
       config = lib.mkIf (osConfig.features.office.drawy.enable) {
         home.packages = with pkgs; [
           drawy
+        ];
+      };
+    };
+
+  flake.homeModules.orca-slicer =
+    {
+      osConfig,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf (osConfig.features.office.orca-slicer.enable) {
+        home.packages = with pkgs; [
+          orca-slicer
         ];
       };
     };

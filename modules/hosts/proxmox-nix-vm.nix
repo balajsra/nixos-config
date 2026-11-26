@@ -72,6 +72,7 @@ in
 
             office = {
               gnucash.enable = false;
+              orca-slicer.enable = false;
               obsidian.enable = false;
               qalculate.enable = false;
               thunderbird.enable = false;

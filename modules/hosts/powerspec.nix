@@ -103,6 +103,7 @@ in
 
             office = {
               gnucash.enable = true;
+              orca-slicer.enable = true;
               obsidian.enable = true;
               qalculate.enable = true;
               thunderbird.enable = true;
