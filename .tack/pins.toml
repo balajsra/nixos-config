@@ -133,3 +133,6 @@ url = "gh:mic92/sops-nix"
 
 [inputs.zen-browser]
 url = "gh:youwen5/zen-browser-flake"
+
+[inputs.tack]
+url = "gh:manic-systems/tack"
