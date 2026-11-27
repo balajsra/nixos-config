@@ -69,6 +69,7 @@
             "audio/flac" = "io.github.celluloid_player.Celluloid.desktop";
           };
         };
+        xdg.configFile."mimeapps.list".force = true;
       };
     };
 
