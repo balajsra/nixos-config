@@ -1,11 +1,48 @@
 {
+  "$declared": {
+    "auto-cpufreq": "github:AdnanHodzic/auto-cpufreq",
+    "disko": "github:nix-community/disko",
+    "dracula-beeper-theme": "github:dracula/beeper",
+    "dracula-dux-shell-theme": "github:dracula/dankmaterialshell",
+    "dracula-fish-theme": "github:dracula/fish",
+    "dracula-gimp-theme": "github:dracula/gimp",
+    "dracula-gtk-theme": "github:dracula/gtk",
+    "dracula-pro-ghostty-theme": "git+ssh://git@github.com/dracula-pro/ghostty",
+    "dracula-pro-starship-theme": "git+ssh://git@github.com/dracula-pro/starship",
+    "dracula-pro-vim-theme": "git+ssh://git@github.com/dracula-pro/vim",
+    "dracula-pro-vscode-theme": "git+ssh://git@github.com/dracula-pro/visual-studio-code",
+    "dracula-signal-desktop-theme": "github:dracula/signal-desktop",
+    "dracula-tty-theme": "github:dracula/tty",
+    "dracula-yazi-theme": "github:dracula/yazi",
+    "dracula-zathura-theme": "github:dracula/zathura",
+    "dux-files": "github:duxlabs-dev/dux-files",
+    "dux-greeter": "github:duxlabs-dev/dux-greeter",
+    "dux-search": "github:duxlabs-dev/dux-search",
+    "dux-shell": "github:duxlabs-dev/dux-shell",
+    "eza-themes": "github:eza-community/eza-themes",
+    "fallout-grub-theme": "github:shvchk/fallout-grub-theme",
+    "fallout-plymouth-theme": "github:balajsra/fallout-plymouth-theme",
+    "flake-parts": "github:hercules-ci/flake-parts",
+    "home-manager": "github:nix-community/home-manager",
+    "hytale-launcher": "github:JPyke3/hytale-launcher-nix",
+    "import-tree": "github:vic/import-tree",
+    "mango": "github:mangowm/mango",
+    "multiverse": "github:fzakaria/nixpkgs-multiverse",
+    "nixpkgs": "github:nixos/nixpkgs/nixos-unstable",
+    "sops-nix": "github:mic92/sops-nix",
+    "tack": "github:manic-systems/tack",
+    "zen-browser": "github:youwen5/zen-browser-flake"
+  },
   "auto-cpufreq": {
     "type": "github",
     "owner": "AdnanHodzic",
     "repo": "auto-cpufreq",
-    "rev": "fe7b13baeca002b368b1261bcc681ca9995055cf",
-    "narHash": "sha256-9Qx3rQmpOseLwvHoO3AeKZX+qjdeoyDLai0oIQmrzVU=",
-    "lastModified": 1793162579
+    "rev": "35d8015afc1bc2c4b30526828dddde4c53925976",
+    "narHash": "sha256-ELFDT4hBow4fOmzMapWcqKnY5pXrfnrPHiNrfJaa6j0=",
+    "lastModified": 1791097055,
+    "public": true,
+    "tag": "v3.2.0",
+    "version": "3.2.0"
   },
   "disko": {
     "type": "github",
@@ -136,33 +173,45 @@
     "type": "github",
     "owner": "duxlabs-dev",
     "repo": "dux-files",
-    "rev": "2a6305ac2c139aa16e7f75e3c500436664c26f60",
-    "narHash": "sha256-44/iX2CoieiESb2+wHKcsLldRr+ieYH/3mxkFNcWR7c=",
-    "lastModified": 1795715511
+    "rev": "994e99772f78e52dc4b8cb9b947c95159252be10",
+    "narHash": "sha256-QvzIP92EzO2d+1soAE2rZna+wmirZUfYdT+DPuWKF5k=",
+    "lastModified": 1794152728,
+    "public": true,
+    "tag": "v2.1.2",
+    "version": "2.1.2"
   },
   "dux-greeter": {
     "type": "github",
     "owner": "duxlabs-dev",
     "repo": "dux-greeter",
-    "rev": "a25b9e594f937166b6b7978f8de6b3faec76863d",
-    "narHash": "sha256-9xOF3pjZgyzsQYIXT5THUsIBFIsP2E4XiVwND4x+qhM=",
-    "lastModified": 1795621027
+    "rev": "c1e6a0352d56a4ef169edffedf04361d0b9d0550",
+    "narHash": "sha256-utF7VJ+2Pnv0TjCBHxg9RJl+G6T7tX6L8MkAPo/JFZs=",
+    "lastModified": 1794152731,
+    "public": true,
+    "tag": "v2.1.2",
+    "version": "2.1.2"
   },
   "dux-search": {
     "type": "github",
     "owner": "duxlabs-dev",
     "repo": "dux-search",
-    "rev": "a25a7be5626ef4776a1600b1013583cff5ed71f9",
-    "narHash": "sha256-gZENm8lqgHN4UIg7pceXZEvYRy4UkbnW5cdsz2l1f3E=",
-    "lastModified": 1794282582
+    "rev": "c6be234e35eec5f9c867fd7588ce793e1d5dc03b",
+    "narHash": "sha256-/zbzTMX+LW5tUin2BkflxNx80I/dXywlr0b0j5xEtMk=",
+    "lastModified": 1793984466,
+    "public": true,
+    "tag": "v2.1.1",
+    "version": "2.1.1"
   },
   "dux-shell": {
     "type": "github",
     "owner": "duxlabs-dev",
     "repo": "dux-shell",
-    "rev": "ce9b7f2c67741c015540bad06856e415627a47e0",
-    "narHash": "sha256-DivZwEg1ELagWe4z9Rz+KuSHlJfj3/VKvtgVWliuMKw=",
-    "lastModified": 1795774260
+    "rev": "43255a46ea01e9d0de1fe8ce9897c0d71566b2a8",
+    "narHash": "sha256-D8Ps69xp345EKBDqgznn5kDeb2UEOtNX5+wChMKGBDo=",
+    "lastModified": 1794152448,
+    "public": true,
+    "tag": "v2.1.2",
+    "version": "2.1.2"
   },
   "eza-themes": {
     "type": "github",
@@ -224,9 +273,12 @@
     "type": "github",
     "owner": "mangowm",
     "repo": "mango",
-    "rev": "f3b4a5aa38e9a451d6f5f56a1910ccb26aaa3794",
-    "narHash": "sha256-REdqOAC5ysisj8v2+/Aml3rgOen4PR8ME95JnDeZy78=",
-    "lastModified": 1795786626
+    "rev": "9e8938671089a2053680bba968e9995e31dec2ac",
+    "narHash": "sha256-SoUPfCz8Cz5GPIPYiETaQktxwS6lZc+otu35ZCLubNY=",
+    "lastModified": 1795745474,
+    "public": true,
+    "tag": "0.19.3",
+    "version": "0.19.3"
   },
   "multiverse": {
     "type": "github",

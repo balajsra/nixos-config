@@ -13,7 +13,7 @@ gh-ssh = "git+ssh://git@github.com/{path}"
 # opt out per-input with exclude_follow
 [all_follow]
 nixpkgs = "nixpkgs"
-# nixpkgs = ["nixpkgs-stable", "nixpkgs-unstable"]
+flake-parts = "flake-parts"
 
 # inputs.<name> fields
 #   url             required, shorturl ok, ?rev=<sha> pins an exact commit
@@ -26,114 +26,198 @@ nixpkgs = "nixpkgs"
 #   unpack          fixed-only tarball or file
 [inputs]
 
-[inputs.auto-cpufreq]
-url = "gh:AdnanHodzic/auto-cpufreq"
+##############
+# Nix Config #
+##############
+# Nix Packages
+# Unstable by default
+[inputs.nixpkgs]
+url = "gh:nixos/nixpkgs/nixos-unstable"
+group = "nix-config"
 
+# Any version of any nixpkgs package, from one flake input
+[inputs.multiverse]
+url = "gh:fzakaria/nixpkgs-multiverse"
+group = "nix-config"
+
+# Dendritic Pattern Support (Flake Parts)
+[inputs.flake-parts]
+url = "gh:hercules-ci/flake-parts"
+group = "nix-config"
+
+# Dendritic Pattern Support (Import Tree)
+[inputs.import-tree]
+url = "gh:vic/import-tree"
+group = "nix-config"
+
+# Home Manager
+[inputs.home-manager]
+url = "gh:nix-community/home-manager"
+group = "nix-config"
+
+# Declarative disk partitioning and formatting
 [inputs.disko]
 url = "gh:nix-community/disko"
+group = "nix-config"
 
+# Full-featured, user-focused pinning system for nix inputs
+[inputs.tack]
+url = "gh:manic-systems/tack"
+exclude_follow = ["nixpkgs"]
+group = "nix-config"
+
+# Secrets Management
+[inputs.sops-nix]
+url = "gh:mic92/sops-nix"
+group = "nix-config"
+
+################
+# Applications #
+################
+# Automatic CPU Speed & Power Optimizer
+[inputs.auto-cpufreq]
+url = "gh:AdnanHodzic/auto-cpufreq"
+tag = "v{version}"
+group = "applications"
+
+# File Manager for Dux Shell
+[inputs.dux-files]
+url = "gh:duxlabs-dev/dux-files"
+tag = "v{version}"
+group = "applications"
+
+# Hytale Launcher
+[inputs.hytale-launcher]
+url = "gh:JPyke3/hytale-launcher-nix"
+group = "applications"
+
+# Zen Browser
+[inputs.zen-browser]
+url = "gh:youwen5/zen-browser-flake"
+group = "applications"
+
+###########
+# Desktop #
+###########
+# Display Manager for Dux Shell
+[inputs.dux-greeter]
+url = "gh:duxlabs-dev/dux-greeter"
+tag = "v{version}"
+group = "desktop"
+
+# Desktop Shell for Wayland Compositors
+[inputs.dux-shell]
+url = "gh:duxlabs-dev/dux-shell"
+tag = "v{version}"
+group = "desktop"
+
+# Search interface for Dux Shell
+[inputs.dux-search]
+url = "gh:duxlabs-dev/dux-search"
+tag = "v{version}"
+group = "desktop"
+
+# Mango Wayland Compositor
+[inputs.mango]
+url = "gh:mangowm/mango"
+tag = "{version}"
+group = "desktop"
+
+##########
+# Themes #
+##########
+# Dracula Beeper Theme
 [inputs.dracula-beeper-theme]
 url = "gh:dracula/beeper"
 type = "fetch"
+group = "themes"
 
+# Dracula Dux Shell Theme
 [inputs.dracula-dux-shell-theme]
 url = "gh:dracula/dankmaterialshell"
 type = "fetch"
+group = "themes"
 
+# Dracula Fish Theme
 [inputs.dracula-fish-theme]
 url = "gh:dracula/fish"
 type = "fetch"
+group = "themes"
 
+# Dracula GIMP Theme
 [inputs.dracula-gimp-theme]
 url = "gh:dracula/gimp"
 type = "fetch"
+group = "themes"
 
+# Dracula GTK Theme
 [inputs.dracula-gtk-theme]
 url = "gh:dracula/gtk"
 type = "fetch"
+group = "themes"
 
-[inputs.dracula-pro-ghostty-theme]
-url = "gh-ssh:dracula-pro/ghostty"
-type = "fetch"
-
-[inputs.dracula-pro-starship-theme]
-url = "gh-ssh:dracula-pro/starship"
-type = "fetch"
-
-[inputs.dracula-pro-vim-theme]
-url = "gh-ssh:dracula-pro/vim"
-type = "fetch"
-
-[inputs.dracula-pro-vscode-theme]
-url = "gh-ssh:dracula-pro/visual-studio-code"
-type = "fetch"
-
+# Dracula Signal Desktop App Theme
 [inputs.dracula-signal-desktop-theme]
 url = "gh:dracula/signal-desktop"
 patches = ["patches/dracula-signal-desktop-theme/outputs-args.patch"]
+group = "themes"
 
+# Dracula TTY Theme
 [inputs.dracula-tty-theme]
 url = "gh:dracula/tty"
 type = "fetch"
+group = "themes"
 
+# Dracula Yazi Theme
 [inputs.dracula-yazi-theme]
 url = "gh:dracula/yazi"
 type = "fetch"
+group = "themes"
 
+# Dracula Zathura Theme
 [inputs.dracula-zathura-theme]
 url = "gh:dracula/zathura"
 type = "fetch"
+group = "themes"
 
-[inputs.dux-files]
-url = "gh:duxlabs-dev/dux-files"
+# (Private) Dracula Pro Ghostty Theme
+[inputs.dracula-pro-ghostty-theme]
+url = "gh-ssh:dracula-pro/ghostty"
+type = "fetch"
+group = "themes"
 
-[inputs.dux-greeter]
-url = "gh:duxlabs-dev/dux-greeter"
+# (Private) Dracula Pro Starship Theme
+[inputs.dracula-pro-starship-theme]
+url = "gh-ssh:dracula-pro/starship"
+type = "fetch"
+group = "themes"
 
-[inputs.dux-search]
-url = "gh:duxlabs-dev/dux-search"
+# (Private) Dracula Pro Vim Theme
+[inputs.dracula-pro-vim-theme]
+url = "gh-ssh:dracula-pro/vim"
+type = "fetch"
+group = "themes"
 
-[inputs.dux-shell]
-url = "gh:duxlabs-dev/dux-shell"
+# (Private) Dracula Pro VS Code Theme
+[inputs.dracula-pro-vscode-theme]
+url = "gh-ssh:dracula-pro/visual-studio-code"
+type = "fetch"
+group = "themes"
 
+# Eza Themes
 [inputs.eza-themes]
 url = "gh:eza-community/eza-themes"
 type = "fetch"
+group = "themes"
 
+# Fallout GRUB Theme
 [inputs.fallout-grub-theme]
 url = "gh:shvchk/fallout-grub-theme"
 type = "fetch"
+group = "themes"
 
+# Fallout Plymouth Theme
 [inputs.fallout-plymouth-theme]
 url = "gh:balajsra/fallout-plymouth-theme"
 type = "fetch"
-
-[inputs.flake-parts]
-url = "gh:hercules-ci/flake-parts"
-
-[inputs.home-manager]
-url = "gh:nix-community/home-manager"
-
-[inputs.hytale-launcher]
-url = "gh:JPyke3/hytale-launcher-nix"
-
-[inputs.import-tree]
-url = "gh:vic/import-tree"
-
-[inputs.mango]
-url = "gh:mangowm/mango"
-
-[inputs.multiverse]
-url = "gh:fzakaria/nixpkgs-multiverse"
-
-[inputs.nixpkgs]
-url = "gh:nixos/nixpkgs/nixos-unstable"
-
-[inputs.sops-nix]
-url = "gh:mic92/sops-nix"
-
-[inputs.zen-browser]
-url = "gh:youwen5/zen-browser-flake"
-
-[inputs.tack]
-url = "gh:manic-systems/tack"
+group = "themes"
