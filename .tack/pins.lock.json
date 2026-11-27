@@ -93,7 +93,20 @@
     "repo": "signal-desktop",
     "rev": "ee66763f5ae9699454f210718551c22bc8c07f36",
     "narHash": "sha256-1iJ1XzMCANUZEy80hX8GzaJ61wLtXlio1VMT+vokvr0=",
-    "lastModified": 1791757186
+    "lastModified": 1791757186,
+    "patched": {
+      "path": "/nix/store/8jfm305hn9r85xfzlyaayvvhb0jqhhn0-source",
+      "narHash": "sha256-ouuJx0J7M2o6H8Ja57ldkTnDABSZe9+nVCpSnLJJNF0=",
+      "lastModified": 1791757186,
+      "patches": [
+        {
+          "source": "patches/dracula-signal-desktop-theme/outputs-args.patch",
+          "file": "patches/dracula-signal-desktop-theme/outputs-args.patch",
+          "sha256": "9d040b2c4cad9a02142b3cba6c92b2b36d5004360830ceb30d90f243df8f484a"
+        }
+      ],
+      "diff": "64a40b954f7efc744ec01913b38f12767863edd3e6f3bfdd3b23b36de256dacf"
+    }
   },
   "dracula-tty-theme": {
     "type": "github",

@@ -70,6 +70,7 @@ type = "fetch"
 
 [inputs.dracula-signal-desktop-theme]
 url = "gh:dracula/signal-desktop"
+patches = ["patches/dracula-signal-desktop-theme/outputs-args.patch"]
 
 [inputs.dracula-tty-theme]
 url = "gh:dracula/tty"
