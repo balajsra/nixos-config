@@ -449,7 +449,8 @@ in
               "SUPER,8,view,8,0"
               "SUPER,9,view,9,0"
 
-              "SUPER,Tab,focuslast"
+              "SUPER,Tab,toggleworkspaceoverview,all"
+              "ALT,Tab,focuslast"
 
               "SUPER+CTRL,1,toggleview,1"
               "SUPER+CTRL,2,toggleview,2"
