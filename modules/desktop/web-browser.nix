@@ -47,6 +47,7 @@
             "x-scheme-handler/unknown" = "zen.desktop";
           };
         };
+        xdg.configFile."mimeapps.list".force = true;
       };
     };
 }

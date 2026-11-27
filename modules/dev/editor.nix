@@ -758,6 +758,7 @@
             "text/plain" = "code.desktop";
           };
         };
+        xdg.configFile."mimeapps.list".force = true;
       };
     };
 

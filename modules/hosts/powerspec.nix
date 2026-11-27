@@ -272,6 +272,7 @@ in
       self.nixosModules.core
       self.nixosModules.data-dirs
       self.nixosModules.desktop-environment
+      self.nixosModules.development
       self.nixosModules.display-manager
       self.nixosModules.editor
       self.nixosModules.file-sharing

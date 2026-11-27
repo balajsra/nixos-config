@@ -1,10 +1,35 @@
-{ self, ... }:
+{ self, inputs, ... }:
 
 {
+  flake.nixosModules.development = {
+    imports = [
+      self.nixosModules.tack
+    ];
+  };
+
   flake.homeModules.development = {
     imports = [
       self.homeModules.devenv
     ];
+  };
+
+  flake.nixosModules.tack = {
+    # Use tack repo's module instead of nixpkgs
+    imports = [
+      inputs.tack.nixosModules.default
+    ];
+    disabledModules = [ "programs/tack.nix" ];
+    nix.settings = {
+      extra-substituters = [ "https://cache.manic.systems" ];
+      extra-trusted-public-keys = [
+        "cache.manic.systems-1:s6OZanN8Us8vRi0jVivP3qlMn0cYHBjBALKrNe5nH8s="
+      ];
+    };
+
+    programs.tack = {
+      enable = true;
+      nixConfTokens = true;
+    };
   };
 
   flake.homeModules.devenv =

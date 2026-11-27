@@ -1,0 +1,11 @@
+--- a/flake.nix
++++ b/flake.nix
+@@ -5,7 +5,7 @@
+   };
+
+   outputs =
+-    { self, nixpkgs }:
++    { self, ... }:
+     {
+
+       overlays = f: p: {

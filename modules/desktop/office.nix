@@ -97,6 +97,7 @@
             "x-scheme-handler/mailto" = "thunderbird.desktop";
           };
         };
+        xdg.configFile."mimeapps.list".force = true;
 
         # TODO: Use home manager to configure Thunderbird
       };
@@ -124,6 +125,7 @@
             "application/pdf" = "org.pwmt.zathura.desktop";
           };
         };
+        xdg.configFile."mimeapps.list".force = true;
       };
     };
 

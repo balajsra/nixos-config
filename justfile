@@ -35,6 +35,9 @@ build-setup:
     # Stage all untracked changes for Nix evaluation
     git add -N .
 
+    # Rebuild patched tack pins missing from the store (no-op if present)
+    tack materialize
+
 # Unlock and sync Bitwarden vault
 unlock-bitwarden:
     #!/usr/bin/env bash
@@ -113,18 +116,13 @@ decrypt-secrets :
 
     SOPS_AGE_KEY_FILE="{{ AGE_KEY_FILE }}" sops --decrypt {{ SECRETS_FILE }}
 
-# Update all or some flake inputs
-flake-update input="":
-    #!/usr/bin/env bash
-    set -euo pipefail
+# Update all or some tack pins (names or groups)
+pins-update *pins:
+    tack update {{ pins }}
 
-    if [ -z "{{ input }}" ]; then
-        echo "Updating all flake inputs..."
-        nix flake update --flake .
-    else
-        echo "Updating flake input: {{ input }}..."
-        nix flake update --flake . "{{ input }}"
-    fi
+# Report pins with newer upstream revisions
+pins-look *pins:
+    tack look {{ pins }}
 
 # Test building specific system
 rebuild-test target='$(hostname)': build-setup
