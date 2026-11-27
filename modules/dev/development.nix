@@ -1,10 +1,23 @@
 { self, ... }:
 
 {
+  flake.nixosModules.development = {
+    imports = [
+      self.nixosModules.tack
+    ];
+  };
+
   flake.homeModules.development = {
     imports = [
       self.homeModules.devenv
     ];
+  };
+
+  flake.nixosModules.tack = {
+    programs.tack = {
+      enable = true;
+      nixConfTokens = true;
+    };
   };
 
   flake.homeModules.devenv =

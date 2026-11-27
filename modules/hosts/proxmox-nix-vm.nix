@@ -238,6 +238,7 @@ in
       self.nixosModules.controller
       self.nixosModules.core
       self.nixosModules.desktop-environment
+      self.nixosModules.development
       self.nixosModules.display-manager
       self.nixosModules.editor
       self.nixosModules.file-sharing
