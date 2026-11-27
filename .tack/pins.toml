@@ -1,0 +1,135 @@
+# tack pins
+# edit by hand or with tack add / rm / alias
+# nix reads pins.lock.json
+# this file drives tack update
+
+# shorturl schemes
+# scheme rest expands rest into {path}
+[shorturls]
+gh = "github:{path}"
+gh-ssh = "git+ssh://git@github.com/{path}"
+
+# all_follow maps input names to the top-level pin they follow
+# opt out per-input with exclude_follow
+[all_follow]
+nixpkgs = "nixpkgs"
+# nixpkgs = ["nixpkgs-stable", "nixpkgs-unstable"]
+
+# inputs.<name> fields
+#   url             required, shorturl ok, ?rev=<sha> pins an exact commit
+#   type            flake (default), fetch, or fixed
+#   flake           legacy false means type = "fetch"
+#   follows         { child = "pin" } override map
+#   exclude_follow  all_follow names to skip
+#   dir             subdir holding flake.nix
+#   submodules      fetch git submodules
+#   unpack          fixed-only tarball or file
+[inputs]
+
+[inputs.auto-cpufreq]
+url = "gh:AdnanHodzic/auto-cpufreq"
+
+[inputs.disko]
+url = "gh:nix-community/disko"
+
+[inputs.dracula-beeper-theme]
+url = "gh:dracula/beeper"
+type = "fetch"
+
+[inputs.dracula-dux-shell-theme]
+url = "gh:dracula/dankmaterialshell"
+type = "fetch"
+
+[inputs.dracula-fish-theme]
+url = "gh:dracula/fish"
+type = "fetch"
+
+[inputs.dracula-gimp-theme]
+url = "gh:dracula/gimp"
+type = "fetch"
+
+[inputs.dracula-gtk-theme]
+url = "gh:dracula/gtk"
+type = "fetch"
+
+[inputs.dracula-pro-ghostty-theme]
+url = "gh-ssh:dracula-pro/ghostty"
+type = "fetch"
+
+[inputs.dracula-pro-starship-theme]
+url = "gh-ssh:dracula-pro/starship"
+type = "fetch"
+
+[inputs.dracula-pro-vim-theme]
+url = "gh-ssh:dracula-pro/vim"
+type = "fetch"
+
+[inputs.dracula-pro-vscode-theme]
+url = "gh-ssh:dracula-pro/visual-studio-code"
+type = "fetch"
+
+[inputs.dracula-signal-desktop-theme]
+url = "gh:dracula/signal-desktop"
+
+[inputs.dracula-tty-theme]
+url = "gh:dracula/tty"
+type = "fetch"
+
+[inputs.dracula-yazi-theme]
+url = "gh:dracula/yazi"
+type = "fetch"
+
+[inputs.dracula-zathura-theme]
+url = "gh:dracula/zathura"
+type = "fetch"
+
+[inputs.dux-files]
+url = "gh:duxlabs-dev/dux-files"
+
+[inputs.dux-greeter]
+url = "gh:duxlabs-dev/dux-greeter"
+
+[inputs.dux-search]
+url = "gh:duxlabs-dev/dux-search"
+
+[inputs.dux-shell]
+url = "gh:duxlabs-dev/dux-shell"
+
+[inputs.eza-themes]
+url = "gh:eza-community/eza-themes"
+type = "fetch"
+
+[inputs.fallout-grub-theme]
+url = "gh:shvchk/fallout-grub-theme"
+type = "fetch"
+
+[inputs.fallout-plymouth-theme]
+url = "gh:balajsra/fallout-plymouth-theme"
+type = "fetch"
+
+[inputs.flake-parts]
+url = "gh:hercules-ci/flake-parts"
+
+[inputs.home-manager]
+url = "gh:nix-community/home-manager"
+
+[inputs.hytale-launcher]
+url = "gh:JPyke3/hytale-launcher-nix"
+
+[inputs.import-tree]
+url = "gh:vic/import-tree"
+
+[inputs.mango]
+url = "gh:mangowm/mango"
+
+[inputs.multiverse]
+url = "gh:fzakaria/nixpkgs-multiverse"
+
+[inputs.nixpkgs]
+url = "gh:nixos/nixpkgs/nixos-unstable"
+
+[inputs.sops-nix]
+url = "gh:mic92/sops-nix"
+
+[inputs.zen-browser]
+url = "gh:youwen5/zen-browser-flake"

@@ -1,0 +1,250 @@
+{
+  "auto-cpufreq": {
+    "type": "github",
+    "owner": "AdnanHodzic",
+    "repo": "auto-cpufreq",
+    "rev": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+    "narHash": "sha256-9Qx3rQmpOseLwvHoO3AeKZX+qjdeoyDLai0oIQmrzVU=",
+    "lastModified": 1793162579
+  },
+  "disko": {
+    "type": "github",
+    "owner": "nix-community",
+    "repo": "disko",
+    "rev": "44761d4f745b95e037458a0e57133c5700c8e320",
+    "narHash": "sha256-D35n2Q2v1KrlF9LS/pFl8Z3EBMJW6qvPw5q4HMbXXLg=",
+    "lastModified": 1795168368
+  },
+  "dracula-beeper-theme": {
+    "type": "github",
+    "owner": "dracula",
+    "repo": "beeper",
+    "rev": "07249f1cf4b65d4527f6dd2606daa0f93cc0b21b",
+    "narHash": "sha256-uAwa1IQwEsgOOd2daDd0bg/SPGraxXvWMhkO9KEuBN8=",
+    "lastModified": 1768557940
+  },
+  "dracula-dux-shell-theme": {
+    "type": "github",
+    "owner": "dracula",
+    "repo": "dankmaterialshell",
+    "rev": "f1f56fb0f7b977199437f56194326135fae3c46d",
+    "narHash": "sha256-/DdUjKfp7oaw2qug2CTvbMs02CUvwwRQ6bFmX/x6l6s=",
+    "lastModified": 1780325084
+  },
+  "dracula-fish-theme": {
+    "type": "github",
+    "owner": "dracula",
+    "repo": "fish",
+    "rev": "269cd7d76d5104fdc2721db7b8848f6224bdf554",
+    "narHash": "sha256-Hyq4EfSmWmxwCYhp3O8agr7VWFAflcUe8BUKh50fNfY=",
+    "lastModified": 1687538751
+  },
+  "dracula-gimp-theme": {
+    "type": "github",
+    "owner": "dracula",
+    "repo": "gimp",
+    "rev": "c42e1b525b382c3485a7beef898b14ea03556593",
+    "narHash": "sha256-R7VQZs5yCRa529L4LwpFQP+L5h9tp8Iz0zr/+2HmmYA=",
+    "lastModified": 1756107805
+  },
+  "dracula-gtk-theme": {
+    "type": "github",
+    "owner": "dracula",
+    "repo": "gtk",
+    "rev": "71640b9456110f3bac2130d0b387a3154a9fb4d2",
+    "narHash": "sha256-95Lfr4yiu7Yyff/pVgLCyKRX/btjdTASIqJ785XePG0=",
+    "lastModified": 1787601927
+  },
+  "dracula-pro-ghostty-theme": {
+    "type": "git",
+    "url": "ssh://git@github.com/dracula-pro/ghostty",
+    "ref": "HEAD",
+    "rev": "cbc3f6f08b1d889d649ff7ac6d69217b70996805",
+    "narHash": "sha256-wfuKdOy9Sh90Ni+MAzNOaeoYNXdFeWLO3ESnONzF++A=",
+    "lastModified": 1793157174
+  },
+  "dracula-pro-starship-theme": {
+    "type": "git",
+    "url": "ssh://git@github.com/dracula-pro/starship",
+    "ref": "HEAD",
+    "rev": "b8a52763928ae27dc1570aef8547d1046eebc72f",
+    "narHash": "sha256-ylVGX7TgCgChaEuUcSmgwBahWGdorkVBckG43Kwq3Lc=",
+    "lastModified": 1723573286
+  },
+  "dracula-pro-vim-theme": {
+    "type": "git",
+    "url": "ssh://git@github.com/dracula-pro/vim",
+    "ref": "HEAD",
+    "rev": "779492054e7b6402144b54fe35a2263377817fee",
+    "narHash": "sha256-vpS139tw5MujNVIEcsGwjv8Y2JPdIkRz28ZOU2RLfMY=",
+    "lastModified": 1794419784
+  },
+  "dracula-pro-vscode-theme": {
+    "type": "git",
+    "url": "ssh://git@github.com/dracula-pro/visual-studio-code",
+    "ref": "HEAD",
+    "rev": "0aa8add9d6fcca211b53c73afebfb25735072585",
+    "narHash": "sha256-Fvb0rgKckMdVZTUJgKq976mGltQrJJei2yclJKpjicA=",
+    "lastModified": 1793172652
+  },
+  "dracula-signal-desktop-theme": {
+    "type": "github",
+    "owner": "dracula",
+    "repo": "signal-desktop",
+    "rev": "ee66763f5ae9699454f210718551c22bc8c07f36",
+    "narHash": "sha256-1iJ1XzMCANUZEy80hX8GzaJ61wLtXlio1VMT+vokvr0=",
+    "lastModified": 1791757186
+  },
+  "dracula-tty-theme": {
+    "type": "github",
+    "owner": "dracula",
+    "repo": "tty",
+    "rev": "40efe0cbbf5bbe4c60e55f0a6c290ffde395f9ca",
+    "narHash": "sha256-NGE2v5b4H2ynh34Jol/LUV+UsSyAtMpDKn94MpmKvw0=",
+    "lastModified": 1647827834
+  },
+  "dracula-yazi-theme": {
+    "type": "github",
+    "owner": "dracula",
+    "repo": "yazi",
+    "rev": "1b1a8d1083474defa9e4c1c3de4db9576f23175f",
+    "narHash": "sha256-wie3trdC7nGGOvuPTzo8SG9lg+lKKQb2tlMjrLVMMRU=",
+    "lastModified": 1763517765
+  },
+  "dracula-zathura-theme": {
+    "type": "github",
+    "owner": "dracula",
+    "repo": "zathura",
+    "rev": "d21609b0548eaf45cccc275791dd3cc5c22baa5e",
+    "narHash": "sha256-1bEJYF1T1bk0meySXcww7POCjjzSQpyXdh5YwoZRhRA=",
+    "lastModified": 1710005413
+  },
+  "dux-files": {
+    "type": "github",
+    "owner": "duxlabs-dev",
+    "repo": "dux-files",
+    "rev": "2a6305ac2c139aa16e7f75e3c500436664c26f60",
+    "narHash": "sha256-44/iX2CoieiESb2+wHKcsLldRr+ieYH/3mxkFNcWR7c=",
+    "lastModified": 1795715511
+  },
+  "dux-greeter": {
+    "type": "github",
+    "owner": "duxlabs-dev",
+    "repo": "dux-greeter",
+    "rev": "a25b9e594f937166b6b7978f8de6b3faec76863d",
+    "narHash": "sha256-9xOF3pjZgyzsQYIXT5THUsIBFIsP2E4XiVwND4x+qhM=",
+    "lastModified": 1795621027
+  },
+  "dux-search": {
+    "type": "github",
+    "owner": "duxlabs-dev",
+    "repo": "dux-search",
+    "rev": "a25a7be5626ef4776a1600b1013583cff5ed71f9",
+    "narHash": "sha256-gZENm8lqgHN4UIg7pceXZEvYRy4UkbnW5cdsz2l1f3E=",
+    "lastModified": 1794282582
+  },
+  "dux-shell": {
+    "type": "github",
+    "owner": "duxlabs-dev",
+    "repo": "dux-shell",
+    "rev": "ce9b7f2c67741c015540bad06856e415627a47e0",
+    "narHash": "sha256-DivZwEg1ELagWe4z9Rz+KuSHlJfj3/VKvtgVWliuMKw=",
+    "lastModified": 1795774260
+  },
+  "eza-themes": {
+    "type": "github",
+    "owner": "eza-community",
+    "repo": "eza-themes",
+    "rev": "21184b55bfe34e8473c8160f9de0c03e4f76857f",
+    "narHash": "sha256-53J0plgB+d6b4LzSwrCezmIhfVm7WZrKMA1ORGdUtQU=",
+    "lastModified": 1784485423
+  },
+  "fallout-grub-theme": {
+    "type": "github",
+    "owner": "shvchk",
+    "repo": "fallout-grub-theme",
+    "rev": "b441e25a6d115614dc00ee6d11355d019a4969bf",
+    "narHash": "sha256-dNRLM9tQjWOyi3s4Q2er5Xn2bpG/yQ/D/+F/lfYXrs8=",
+    "lastModified": 1766560567
+  },
+  "fallout-plymouth-theme": {
+    "type": "github",
+    "owner": "balajsra",
+    "repo": "fallout-plymouth-theme",
+    "rev": "74773cf9f5e02261eb6e578b590a34500c007cdb",
+    "narHash": "sha256-I15QnTUqyPm4rJKgisgrURzYeXs4mW5DIjiUAVVJHhE=",
+    "lastModified": 1786583037
+  },
+  "flake-parts": {
+    "type": "github",
+    "owner": "hercules-ci",
+    "repo": "flake-parts",
+    "rev": "ea2630b7470978622c7689a1ff75d2b389175399",
+    "narHash": "sha256-V1h85lUaJBQoHFrB2vpXZOE0Ju1MYSnIpsehoVZYlDo=",
+    "lastModified": 1793576659
+  },
+  "home-manager": {
+    "type": "github",
+    "owner": "nix-community",
+    "repo": "home-manager",
+    "rev": "54f903fdaaf5d5720ed36706fe75332af69eb793",
+    "narHash": "sha256-J1iQ1QMnkFwZFXnlPt2t3Qx7TsGjw08/0L3QMqNt+Wg=",
+    "lastModified": 1795748630
+  },
+  "hytale-launcher": {
+    "type": "github",
+    "owner": "JPyke3",
+    "repo": "hytale-launcher-nix",
+    "rev": "84f95fb9c9e949e1b55223916ee182a82d7ed1b8",
+    "narHash": "sha256-nudRmZ8RqT67xGQqjjw5/pK7GijqmeokS8ELTirXMcM=",
+    "lastModified": 1795546920
+  },
+  "import-tree": {
+    "type": "github",
+    "owner": "vic",
+    "repo": "import-tree",
+    "rev": "eb1b52eaecc57f7c136d07ae8a93e724dfecac46",
+    "narHash": "sha256-ljEMTXP/rH0tOvDzc9gzwww6KcHRPRnEHzd9lK48V7s=",
+    "lastModified": 1788467110
+  },
+  "mango": {
+    "type": "github",
+    "owner": "mangowm",
+    "repo": "mango",
+    "rev": "f3b4a5aa38e9a451d6f5f56a1910ccb26aaa3794",
+    "narHash": "sha256-REdqOAC5ysisj8v2+/Aml3rgOen4PR8ME95JnDeZy78=",
+    "lastModified": 1795786626
+  },
+  "multiverse": {
+    "type": "github",
+    "owner": "fzakaria",
+    "repo": "nixpkgs-multiverse",
+    "rev": "aef007415062953fe09eb989570186c3f9c2d8b5",
+    "narHash": "sha256-lLXuXL4Us1X26gOSCV5S4dKT7KXsbzEVrNv0VNFrrIE=",
+    "lastModified": 1795624153
+  },
+  "nixpkgs": {
+    "type": "github",
+    "owner": "nixos",
+    "repo": "nixpkgs",
+    "rev": "2786a2a72088ecf32aea5b3ec52099e6a7cff78f",
+    "narHash": "sha256-f/VVvxf5RsQgWVhUtefoca5ktVg0DA2bnkMOcmSnozo=",
+    "lastModified": 1795234589
+  },
+  "sops-nix": {
+    "type": "github",
+    "owner": "mic92",
+    "repo": "sops-nix",
+    "rev": "d5abe5e53200ad48254e8e6bd95e6cef94e66577",
+    "narHash": "sha256-2p8/wnENYHU2Z79Ir/rpq+V1sMI9mSD6xGAlvlbVBUY=",
+    "lastModified": 1795471345
+  },
+  "zen-browser": {
+    "type": "github",
+    "owner": "youwen5",
+    "repo": "zen-browser-flake",
+    "rev": "dda00955fd67d2ff9975eafc78fef5f1e41c3b44",
+    "narHash": "sha256-JUkgT0FFtwFTNjn+bA9AljIUNHnBm09XBMEy1Sb4Zvo=",
+    "lastModified": 1795091293
+  }
+}
